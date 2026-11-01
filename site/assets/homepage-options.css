@@ -1,0 +1,7 @@
+.homepage-options{padding:13px 0;background:var(--paper-deep);border-bottom:1px solid var(--line)}
+.homepage-options .container{display:flex;align-items:center;gap:12px 24px;flex-wrap:wrap;font-size:.76rem;line-height:1.5}
+.homepage-options span{color:var(--muted)}
+.homepage-options a{text-underline-offset:4px}
+.homepage-options a[aria-current="page"]{color:var(--orange);font-weight:700;text-decoration:none}
+@media(max-width:520px){.homepage-options .container{gap:6px 20px;font-size:.72rem}.homepage-options span{flex-basis:100%}}
+@media print{.homepage-options{display:none}}
