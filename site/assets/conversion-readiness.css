@@ -1,0 +1,19 @@
+/* Bounded onboarding navigation. Existing homepage layouts remain unchanged. */
+.access-next-step{margin-top:24px;padding:22px 24px;border:1px solid var(--line);border-radius:12px;background:var(--white);max-width:960px}
+.access-next-step h2{font-size:1.15rem;line-height:1.4;margin:0 0 14px}
+.access-actions{display:flex;align-items:center;gap:16px 24px;flex-wrap:wrap;margin-bottom:14px}
+.access-next-step .small{font-size:.8rem;line-height:1.6;max-width:100ch;margin:9px 0 0;color:var(--muted)}
+.access-next-step .small a{color:var(--ink)}
+.onboarding-jumps{display:flex;align-items:center;gap:10px 22px;flex-wrap:wrap;margin-top:22px;font-size:.82rem}
+.onboarding-jumps>span{color:var(--muted)}
+.onboarding-jumps a{text-underline-offset:4px}
+body[data-page="getting-started.html"] .page-hero{padding:38px 0 30px}
+@media(max-width:680px){
+ .access-next-step{padding:18px;margin-top:20px}
+ .access-actions{align-items:flex-start;gap:14px}
+ .access-actions .button{white-space:normal;line-height:1.5;text-align:left;font-size:.86rem;padding:13px 16px}
+ .access-actions .text-link{font-size:.8rem}
+ .onboarding-jumps{gap:12px 18px;font-size:.8rem}
+ .onboarding-jumps>span{flex-basis:100%}
+ body[data-page="getting-started.html"] .page-hero{padding-top:28px}
+}
