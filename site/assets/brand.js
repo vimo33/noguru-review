@@ -1,5 +1,1 @@
-(() => {
- const key='noguru-preview-logo';let choice='a';try{choice=localStorage.getItem(key)||'a';}catch{}if(!['a','b','c'].includes(choice))choice='a';
- function apply(v){choice=v;document.documentElement.dataset.logo=v;document.querySelectorAll('.site-header .wordmark,.footer-intro .wordmark').forEach(el=>{el.replaceChildren();const img=document.createElement('img');img.src='/noguru-review/assets/logo-'+v+'.svg';img.alt='NoGuru';img.width=250;img.height=65;el.append(img);});const icon=document.querySelector('link[rel=icon]');if(icon)icon.href='/noguru-review/assets/favicon-'+v+'.svg';document.querySelectorAll('[data-logo-choice]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.logoChoice===v)));const status=document.getElementById('logo-status');if(status)status.textContent='Option '+v.toUpperCase()+' is shown in the header and favicon. '+(v==='a'?'Provisional default; no final logo selected.':'Local comparison only; no final logo selected.');}
- document.querySelectorAll('[data-logo-choice]').forEach(b=>b.addEventListener('click',()=>{const v=b.dataset.logoChoice;try{if(v==='a')localStorage.removeItem(key);else localStorage.setItem(key,v);}catch{}apply(v);}));apply(choice);
-})();
+/* NoGuru uses the selected Joined no identity in static HTML. No browser-stored logo selection. */

@@ -17,3 +17,17 @@
 .main-nav a.nav-cta[aria-current="page"],.main-nav a.nav-cta[aria-current="page"]:hover,.main-nav a.nav-cta[aria-current="page"]:focus{color:#fff}
 
 
+
+/* Selected Joined no identity: static markup works without JavaScript. */
+.site-header .wordmark,.footer-intro .wordmark{display:inline-flex;align-items:center;flex-shrink:0}
+.site-header .wordmark img,.footer-intro .wordmark img{display:block;width:142px;height:auto;aspect-ratio:328/100}
+.role-circle .brand-role-mark{width:46px;height:auto}
+.brand-identity-grid{display:grid;grid-template-columns:1.3fr 1.3fr .8fr;gap:24px}
+.brand-identity-sample{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;min-height:240px;padding:35px 28px;border:1px solid var(--line);border-radius:var(--radius);background:var(--white)}
+.brand-identity-sample img{width:min(100%,280px);height:auto}
+.brand-identity-sample figcaption{font-size:.76rem;color:var(--muted);text-align:center;line-height:1.5}
+.brand-identity-dark{background:var(--ink);border-color:var(--ink)}
+.brand-identity-dark figcaption{color:#d6d9d3}
+.brand-identity-compact img{width:80px}
+@media(max-width:780px){.brand-identity-grid{grid-template-columns:1fr}.brand-identity-sample{min-height:210px}}
+@media(max-width:520px){.site-header .wordmark img,.footer-intro .wordmark img{width:132px}}
