@@ -7,8 +7,8 @@
   <meta name="theme-color" content="#F7F3EA">
   <title>NoGuru — Experience review</title>
   <link rel="icon" href="assets/companion-mark.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="styles.css?v=ea794bfc9003">
-  <link rel="stylesheet" href="fit-screen.css?v=0435b94255f3">
+  <link rel="stylesheet" href="styles.css?v=ae4124f99b4b">
+  <link rel="stylesheet" href="fit-screen.css?v=52892e0220e6">
 </head>
 <body data-view="entrance" data-stage="buy" data-motion="paused">
   <a class="skip-link" href="#main">Skip to content</a>
@@ -21,7 +21,7 @@
       <a class="brand" href="?view=entrance" data-go="entrance" aria-label="NoGuru home">
         <img class="brand-mark" src="assets/companion-mark.svg" alt=""><span>NoGuru<span class="brand-dot">.</span></span>
       </a>
-      <div class="header-right"><span class="concept-label">Quiet Company / a new direction</span><button class="text-link evidence-link" data-go="evidence">Explore <span aria-hidden="true">↗</span></button><button class="icon-button back-story" data-back aria-label="Return to your place"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6M8 12h12"/></svg></button></div>
+      <div class="header-right"><span class="concept-label">Quiet Company / a new direction</span><button class="text-link evidence-link" data-go="evidence">Evidence</button><button class="site-menu-toggle" id="site-menu-toggle" type="button" aria-haspopup="dialog" aria-controls="site-menu-dialog" aria-expanded="false"><span>Menu</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14M5 16h14"/></svg></button></div>
     </header>
     <main id="main">
       <section class="view entrance" data-page="entrance" aria-labelledby="entrance-title">
@@ -148,6 +148,17 @@
     <p class="learning-scope-note">Public introductions are available; full lessons require member access.</p><p class="learning-scope-note">The Academy covers wider trading topics. Not every concept is a NoGuru setting.</p>
     <div class="learning-return"><p>Your place and choices stay here.</p><button class="button primary" id="return-from-learning">Back to where I was <span aria-hidden="true">↶</span></button></div>
   </dialog>
-  <script src="app.js?v=9e4347493454"></script>
+  <dialog id="site-menu-dialog" aria-labelledby="site-menu-title">
+    <button class="icon-button modal-close" id="close-site-menu" type="button" aria-label="Close menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+    <div class="site-menu-heading"><p class="eyebrow"><span></span> NoGuru</p><h2 id="site-menu-title">Take a look<br><em>around.</em></h2><img src="assets/companion-mark.svg" alt=""></div>
+    <nav class="menu-experience" aria-label="In this experience">
+      <button class="menu-route menu-story-route" type="button" data-menu-go="story"><span><strong>Experience NoGuru</strong><small>Return to the guided story</small></span><span aria-hidden="true">→</span></button>
+      <button class="menu-route" type="button" data-menu-go="evidence"><span><strong>Evidence</strong><small>Historical model and assumptions</small></span><span aria-hidden="true">→</span></button>
+      <button class="menu-route" type="button" data-menu-go="onboarding"><span><strong id="menu-journey-title">Your personal guide</strong><small id="menu-journey-detail">Meet your guide, at your pace</small></span><span aria-hidden="true">→</span></button>
+    </nav>
+    <div class="menu-website"><h3>The current NoGuru website</h3><p id="menu-external-note">These links open in a new tab. Your place and choices here stay intact.</p><nav class="menu-external-links" aria-label="Current NoGuru website"><a href="https://noguru.io/how-it-works.html" target="_blank" rel="noopener noreferrer" aria-describedby="menu-external-note">How it works <span aria-hidden="true">↗</span></a><a href="https://noguru.io/pricing.html" target="_blank" rel="noopener noreferrer" aria-describedby="menu-external-note">Pricing <span aria-hidden="true">↗</span></a><a href="https://noguru.io/academy/" target="_blank" rel="noopener noreferrer" aria-describedby="menu-external-note">Academy <span aria-hidden="true">↗</span></a><a href="https://noguru.io/glossary.html" target="_blank" rel="noopener noreferrer" aria-describedby="menu-external-note">Glossary <span aria-hidden="true">↗</span></a><a href="https://noguru.io/track-record.html" target="_blank" rel="noopener noreferrer" aria-describedby="menu-external-note">Track record <span aria-hidden="true">↗</span></a><a href="https://noguru.io/dashboard.html" target="_blank" rel="noopener noreferrer" aria-describedby="menu-external-note">Live dashboard <span aria-hidden="true">↗</span></a><a href="https://noguru.io/digest/" target="_blank" rel="noopener noreferrer" aria-describedby="menu-external-note">Digest <span aria-hidden="true">↗</span></a><a href="https://noguru.io/" target="_blank" rel="noopener noreferrer" aria-describedby="menu-external-note">Home <span aria-hidden="true">↗</span></a></nav></div>
+    <button class="button primary" id="return-from-menu" type="button">Back to where I was <span aria-hidden="true">↶</span></button>
+  </dialog>
+  <script src="app.js?v=500a5347db7d"></script>
 </body>
 </html>

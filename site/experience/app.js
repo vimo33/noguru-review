@@ -14,6 +14,9 @@
   const learningDialog=$('#learning-dialog');
   const learningState={open:false,context:null};
   let learningReturn=null;
+  const siteMenuDialog=$('#site-menu-dialog');
+  const menuState={open:false,openedFrom:null};
+  let menuReturn=null;
   const stageOrder=Object.keys(stages);
   const journeyOrder=['meet','capital','imagine','expectations','risks','preferences','review'];
   const journeyCopy={
@@ -142,6 +145,7 @@
     if(!['entrance','story','evidence','account','onboarding'].includes(view))view='entrance';
     if(view==='evidence'&&state.view!=='evidence')state.previousView=state.view;
     state.view=view;body.dataset.view=view;
+    refreshNavigation();
     $$('[data-page]').forEach(page=>page.hidden=page.dataset.page!==view);
     setMotion(false);
     if(view==='onboarding')renderJourney();
@@ -153,6 +157,55 @@
     state.journey.step=normalizeStep(step);state.journey.editingFromReview=editing;
     showView('onboarding',{focus});
   }
+  function refreshNavigation(){
+    const evidenceButton=$('.site-header .evidence-link');
+    if(state.view==='evidence')evidenceButton.setAttribute('aria-current','page');else evidenceButton.removeAttribute('aria-current');
+    $$('[data-menu-go]').forEach(button=>{if(button.dataset.menuGo===state.view)button.setAttribute('aria-current','page');else button.removeAttribute('aria-current');});
+    const hasJourney=state.journey.step!=='meet'||state.journey.allocationDraft!==''||state.preferences.name!=='NoGuru'||state.preferences.accent!=='apricot';
+    $('#menu-journey-title').textContent=state.journey.completed?'Revisit your journey':hasJourney?'Continue your journey':'Your personal guide';
+    $('#menu-journey-detail').textContent=hasJourney?`${journeyOrder.indexOf(state.journey.step)+1} of ${journeyOrder.length} · ${journeyCopy[state.journey.step].label}`:'Meet your guide, at your pace';
+  }
+  function captureOverflow(element){
+    const props={};
+    ['overflow','overflow-x','overflow-y'].forEach(property=>{props[property]={value:element.style.getPropertyValue(property),priority:element.style.getPropertyPriority(property)};});
+    return {element,props};
+  }
+  function restoreOverflow(record){
+    ['overflow','overflow-x','overflow-y'].forEach(property=>record.element.style.removeProperty(property));
+    Object.entries(record.props).forEach(([property,saved])=>{if(saved.value)record.element.style.setProperty(property,saved.value,saved.priority);});
+  }
+  function finishMenuClose({restore=true}={}){
+    menuState.open=false;
+    $('#site-menu-toggle').setAttribute('aria-expanded','false');
+    const back=menuReturn;menuReturn=null;
+    if(!back)return;
+    back.overflow.forEach(restoreOverflow);
+    if(back.page){back.page.scrollTop=back.pageTop;back.page.scrollLeft=back.pageLeft;}
+    if(restore){
+      if(back.element&&back.element.isConnected&&back.element.getClientRects().length)back.element.focus({preventScroll:true});
+      window.scrollTo({left:back.x,top:back.y,behavior:'instant'});
+    }
+  }
+  function openSiteMenu(){
+    if(siteMenuDialog.open)return;
+    const page=$(`[data-page="${state.view}"]`);
+    menuReturn={element:document.activeElement,x:window.scrollX,y:window.scrollY,page,pageTop:page? page.scrollTop:0,pageLeft:page? page.scrollLeft:0,overflow:[captureOverflow(document.documentElement),captureOverflow(document.body),...(page?[captureOverflow(page)]:[])]};
+    setMotion(false);refreshNavigation();
+    menuReturn.overflow.forEach(record=>record.element.style.setProperty('overflow','hidden'));
+    menuState.open=true;menuState.openedFrom=state.view;
+    $('#site-menu-toggle').setAttribute('aria-expanded','true');
+    siteMenuDialog.showModal();
+  }
+  function closeSiteMenu({restore=true}={}){
+    if(siteMenuDialog.open)siteMenuDialog.close();
+    finishMenuClose({restore});
+  }
+  $('#site-menu-toggle').addEventListener('click',openSiteMenu);
+  $('#close-site-menu').addEventListener('click',()=>closeSiteMenu());
+  $('#return-from-menu').addEventListener('click',()=>closeSiteMenu());
+  siteMenuDialog.addEventListener('close',()=>finishMenuClose());
+  siteMenuDialog.addEventListener('click',event=>{if(event.target===siteMenuDialog){const r=siteMenuDialog.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)closeSiteMenu();}});
+  $$('[data-menu-go]').forEach(button=>button.addEventListener('click',()=>{const destination=button.dataset.menuGo;closeSiteMenu({restore:false});showView(destination,{focus:true});}));
   $$('[data-go]').forEach(button=>button.addEventListener('click',event=>{event.preventDefault();showView(button.dataset.go,{focus:true});}));
   $$('[data-back]').forEach(button=>button.addEventListener('click',()=>showView(state.previousView==='evidence'?'story':state.previousView,{focus:true})));
   $$('.stage-tabs button').forEach(button=>button.addEventListener('click',()=>{setStage(button.dataset.stage);if(state.motion)setMotion(true);}));
@@ -221,7 +274,7 @@
   state.journey.step=normalizeStep(legacyPersonalize?'meet':params.get('step'));
   showView(legacyPersonalize?'onboarding':params.get('view')||'entrance',{url:legacyPersonalize,scroll:false});
   window.NoGuruPreview={
-    getState:()=>({view:state.view,stage:state.stage,motion:state.motion,captions:state.captions,reducedMotion:reducedMotion.matches,preferences:{...state.preferences},accountConnected:false,updateExampleVisible:!$('#account-update').hidden,onboarding:{...state.journey,stepNumber:journeyOrder.indexOf(state.journey.step)+1,stepCount:journeyOrder.length},actualAccount:{value:null,cash:null,openPositions:null,completedTrades:null},learning:{...learningState}}),
+    getState:()=>({view:state.view,stage:state.stage,motion:state.motion,captions:state.captions,reducedMotion:reducedMotion.matches,preferences:{...state.preferences},accountConnected:false,updateExampleVisible:!$('#account-update').hidden,onboarding:{...state.journey,stepNumber:journeyOrder.indexOf(state.journey.step)+1,stepCount:journeyOrder.length},actualAccount:{value:null,cash:null,openPositions:null,completedTrades:null},learning:{...learningState},menu:{...menuState,scrollLocked:menuReturn!==null}}),
     validatePlanningAmount,
     config:Object.freeze({joinDestination:null,audioProduced:false,liveData:false,storage:false,updatesSent:false,minimum:{supplierStatedUSDT:3000,recordedDate:'2026-11-09',verifyBeforeSetup:true},technicalMaximumMinor:MAX_MINOR.toString(),academy:{index:'https://noguru.io/academy/',checkedDate:'2026-11-11',contexts:Object.keys(academyContexts)},permissions:{read:false,trade:false,transfer:false,payment:false}})
   };

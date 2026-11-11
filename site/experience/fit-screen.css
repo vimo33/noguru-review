@@ -131,3 +131,10 @@ dialog{max-height:calc(100svh - 24px);max-height:calc(100dvh - 24px);overflow-y:
  .narrator-label{font-size:10px}.narrator-label>span>span{font-size:8px}.narrator-portrait{height:26px;width:22px}
  .story-bottom>p{font-size:9px}.story-bottom .text-link{font-size:9px;max-width:95px}
 }
+
+/* Evidence is a naturally scrolling document. The story and account retain their screen-fit behavior. */
+body[data-view=evidence] .site-shell{height:auto;min-height:100svh;min-height:100dvh;display:block}
+body[data-view=evidence] .site-header{height:var(--header-height)}
+body[data-view=evidence] #main{height:auto;min-height:0}
+body[data-view=evidence] .evidence{height:auto;min-height:0;overflow:visible;overscroll-behavior:auto;scrollbar-gutter:auto;padding-right:0;padding-bottom:30px}
+body[data-view=evidence] .evidence-footer{position:static;inset:auto;z-index:auto;background:transparent;box-shadow:none;padding-bottom:0}
