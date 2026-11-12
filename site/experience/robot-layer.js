@@ -101,7 +101,6 @@
     }
     fail() { this.failed = true; this.requested = false; this.stop(); this.element.dataset.ready = 'false'; this.element.dataset.unavailable='true';
       let status=this.element.querySelector('.robot-motion-status');if(!status){status=document.createElement('span');status.className='robot-motion-status';status.setAttribute('role','status');status.textContent='Motion is unavailable. Your guide is still here.';this.element.append(status);}
-      if(this.name==='entrance'){const button=document.querySelector('#hello-guide');if(button){button.disabled=true;button.textContent='Your guide is here';}}
     }
     set(action, play, {restart=false}={}) {
       const changed = action !== this.action;

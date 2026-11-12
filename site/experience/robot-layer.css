@@ -80,3 +80,4 @@ body[data-sale-complete=true] .story .cash-flow i{opacity:0}
 @media(prefers-reduced-motion:reduce){.robot-layer{animation:none!important}.story .cash-flow i{animation:none!important}.hello-control{opacity:.65}}
 
 .robot-motion-status{position:absolute;left:0;right:0;bottom:0;z-index:2;text-align:center;font:500 11px/1.4 var(--body);color:var(--muted-ink);background:#f7f3eae8;border-radius:8px;padding:5px}
+.entrance .robot-motion-status{top:3%;bottom:auto;left:12%;right:12%}

@@ -9,8 +9,9 @@
   <link rel="icon" href="assets/companion-mark.svg" type="image/svg+xml">
   <link rel="stylesheet" href="styles.css?v=ae4124f99b4b">
   <link rel="stylesheet" href="fit-screen.css?v=52892e0220e6">
-  <link rel="stylesheet" href="robot-layer.css?v=outline-20261112-2">
+  <link rel="stylesheet" href="robot-layer.css?v=content-20261112-1">
   <link rel="stylesheet" href="entrance-orbit.css?v=20261112-1">
+  <link rel="stylesheet" href="evidence-story.css?v=20261112-1">
 </head>
 <body data-view="entrance" data-stage="buy" data-motion="paused">
   <a class="skip-link" href="#main">Skip to content</a>
@@ -80,12 +81,35 @@
       <section class="view evidence" data-page="evidence" hidden aria-labelledby="evidence-title">
         <div class="evidence-heading"><div><p class="eyebrow"><span></span> A closer look</p><h1 id="evidence-title">The whole picture.<br><em>Including the waiting.</em></h1></div><p>Completed profits matter.<br> So does the value of what’s still held.</p></div>
         <div class="evidence-meta"><span class="status-badge">Historical proportional model</span><span>1 Aug – 9 Nov 2026 · intraday snapshot</span><span>Initial allocation: 10,000 USDT</span></div>
-        <div class="evidence-metrics">
-          <article class="metric-card profit-metric"><p class="metric-eyebrow"><span class="metric-icon">✓</span> Closed net trading profit</p><h2>+32.16<span>%</span></h2><p class="metric-basis">of the initial 10,000 USDT<br>1 Aug–9 Nov 2026</p><div class="value-line"><strong>3,216.08 <small>USDT</small></strong><span>Net profit from completed trades</span></div><div class="included-note"><span aria-hidden="true">↳</span><p>Already included in the account.<br>Not extra cash to add again.</p></div></article>
-          <article class="metric-card total-metric"><p class="metric-eyebrow"><span class="metric-icon">↗</span> Total account-value change</p><h2>+11.43<span>%</span></h2><p class="metric-basis">of the initial 10,000 USDT<br>1 Aug–9 Nov 2026</p><div class="value-line"><strong>11,142.71 <small>USDT</small></strong><span>Total account value</span></div><div class="account-composition"><span class="cash-part"></span><span class="holdings-part"></span></div><p class="composition-key"><span><i></i> Cash + current value of held coins</span></p></article>
+        <div class="evidence-sequence">
+          <article class="result-step profit-metric" aria-labelledby="completed-result-title">
+            <div class="result-number"><p class="metric-eyebrow" id="completed-result-title"><span class="result-index">01</span> Closed net trading profit</p><h2>+32.16<span>%</span></h2><p class="metric-basis">of the initial 10,000 USDT<br>1 Aug–9 Nov 2026</p></div>
+            <div class="result-context"><h3>What the completed<br>cycles contributed.</h3><p class="result-amount">3,216.08 <span>USDT net trading profit</span></p><p>Already included in the portfolio. This is not extra cash to add again.</p><p class="evidence-method-note">Proportional historical model, not a funded or live customer account. Trading fees modeled at 0.1% per side; subscriptions and other costs excluded.</p></div>
+          </article>
+          <p class="evidence-transition"><span aria-hidden="true">↓</span> Now include the coins still held.</p>
+          <article class="result-step total-metric" aria-labelledby="portfolio-result-title">
+            <div class="result-number"><p class="metric-eyebrow" id="portfolio-result-title"><span class="result-index">02</span> Total account-value change</p><h2>+11.43<span>%</span></h2><p class="metric-basis">of the same initial 10,000 USDT<br>1 Aug–9 Nov 2026</p></div>
+            <div class="result-context"><h3>The whole portfolio,<br>at the snapshot.</h3><p class="result-amount">11,142.71 <span>USDT total account value</span></p><p>Cash plus the current value of open holdings. The completed profit is already inside this result.</p></div>
+          </article>
         </div>
-        <p class="evidence-method-note">Historical model, not a funded customer account. Trading fees modeled at 0.1% per side; subscriptions and other costs excluded.</p>
-        <details class="model-details"><summary><span>What this model includes</span><span class="details-plus" aria-hidden="true">+</span></summary><div><p>A proportional historical model, not a funded or live customer account. Modeled trading fees are 0.1% per side. Subscriptions and other costs are excluded. Open holdings are marked at the snapshot value; they can lose value while held.</p><p>Historical results do not predict your results. Source: frozen v18 reconciliation, checked 11 November 2026.</p></div></details>
+        <section class="accounting-bridge" aria-labelledby="bridge-title">
+          <div class="bridge-intro"><p class="eyebrow">One account, reconciled</p><h2 id="bridge-title">Where the difference went.</h2><p>The coins still held cost <strong>12,101.62 USDT</strong>. Their snapshot value was <strong>10,040.35 USDT</strong>. Waiting does not make that decline disappear.</p></div>
+          <dl class="bridge-rows">
+            <div><dt>Initial allocation</dt><dd>10,000.00 <span>USDT</span></dd></div>
+            <div><dt>Completed net trading profit<br><small>+32.16% of initial allocation</small></dt><dd>+3,216.08 <span>USDT</span></dd></div>
+            <div><dt>Held-value difference<br><small>versus purchase cost</small></dt><dd>−2,061.27 <span>USDT</span></dd></div>
+            <div><dt>Already-paid open-entry fees</dt><dd>−12.10 <span>USDT</span></dd></div>
+            <div class="bridge-total"><dt>Ending account value</dt><dd>11,142.71 <span>USDT</span></dd></div>
+          </dl>
+          <div class="snapshot-composition"><p><span>Coins at snapshot value</span><strong>10,040.35 <small>USDT</small></strong></p><span aria-hidden="true">+</span><p><span>Available cash</span><strong>1,102.35 <small>USDT</small></strong></p></div>
+          <p class="accounting-note">Cash and holdings are independently rounded and differ from the exact total by one cent. The entry fees above are already counted; do not deduct them twice. All values use the same 9 November model snapshot.</p>
+        </section>
+        <div class="evidence-details">
+          <details class="model-details" id="activity-details"><summary><span>What the published activity shows</span><span class="details-plus" aria-hidden="true">+</span></summary><div><h3>1,047 completed cycles since 1 August</h3><p>At the 11 November 2026 capture, <strong>79% of completed cycles closed within 24 hours</strong>, with a four-hour median. The 20 cycles still open are excluded. About 72 completed cycles per week uses the source’s 102-day date window.</p><p>These are published signal records, not customer executions or an order count. One cycle may contain several buys. Completed-only durations do not predict when open holdings will recover.</p></div></details>
+          <details class="model-details" id="cash-details"><summary><span>How cash reserves changed</span><span class="details-plus" aria-hidden="true">+</span></summary><div><p>Across 100 complete daily observations from 1 August to 8 November, cash averaged <strong>51.4% of account value</strong>. At the 9 November intraday snapshot it was <strong>9.9%</strong>.</p><p>Completed sales can replenish cash; further purchases use it. These are dated model observations, not a promised reserve or guaranteed availability for future buys.</p></div></details>
+          <details class="model-details" id="cost-details"><summary><span>Costs and the trading minimum</span><span class="details-plus" aria-hidden="true">+</span></summary><div><dl class="cost-rows"><div><dt>NoGuru</dt><dd>$49/month founding offer or $99/month standard pricing.<small>Alternative rates, recorded 11 Nov 2026. Check the current offer and eligibility.</small></dd></div><div><dt>Cornix Advanced</dt><dd>$49.90/month, billed separately.<small>Monthly plan checked 12 Nov 2026.</small></dd></div><div><dt>Combined subscriptions</dt><dd>$98.90 or $148.90/month.<small>Before trading fees and other costs, using the monthly Cornix plan.</small></dd></div></dl><h3>Plan around the operating minimum.</h3><p>NoGuru’s supplier-stated operating minimum is <strong>3,000 USDT</strong>, with subscriptions separate. Confirm current setup requirements. A smaller planning amount in this preview does not establish setup eligibility.</p><p class="cost-source-links"><a href="https://noguru.io/pricing.html" target="_blank" rel="noopener noreferrer">NoGuru pricing ↗</a><a href="https://cornix.io/pricing/" target="_blank" rel="noopener noreferrer">Cornix pricing ↗</a><span>External websites · open in new tabs</span></p><h3>How the fee illustration works.</h3><p>Historical monthly trading-profit rate: <strong>9.87% of allocated capital</strong>. Published by NoGuru, checked 11 November 2026. This measures completed-trade profit, adjusted to a monthly rate; it is not total portfolio growth.</p><p>If a month earned that rate, about <strong>500 or 1,010 USDT</strong> would correspond to one $49 or $99 NoGuru fee. This rounds upward, assumes USD/USDT parity and covers NoGuru’s fee only. It is not the trading minimum, and no part of your capital is guaranteed to pay the bill.</p></div></details>
+          <details class="model-details" id="model-scope-details"><summary><span>What this model includes</span><span class="details-plus" aria-hidden="true">+</span></summary><div><p>A proportional historical model, not a funded or live customer account. Modeled trading fees are 0.1% per side. Subscriptions and other costs are excluded. Open holdings are marked at the snapshot value; they can lose value while held.</p><p>The performance model ends at the 9 November intraday snapshot. The separately dated 11 November activity count is not a newer account valuation. Historical results do not predict your results. Source: frozen v18 reconciliation, checked 11 November 2026.</p></div></details>
+        </div>
         <div class="evidence-footer"><div class="evidence-signoff"><img class="small-mark" src="assets/companion-mark.svg" alt=""><p>I’ll bring the strategy.<br><strong>You bring your own judgment.</strong></p></div><div class="join-actions"><button class="button primary" data-join>Join <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m13 6 6 6-6 6M4 12h15"/></svg></button><button class="text-link" data-back>Return to your place <span aria-hidden="true">↶</span></button></div></div>
         <p class="evidence-disclaimer">Identity and experience preview · No live feed, trading connection or signup.</p>
       </section>
@@ -143,6 +167,7 @@
     <div class="learning-heading"><div><p class="eyebrow"><span></span> <b id="learning-source-kind">Academy lesson</b></p><h2 id="learning-title">A little more<br><em>context.</em></h2></div><img src="assets/noguru-guide-attentive.png" alt="NoGuru, beside the explanation" loading="lazy"></div>
     <p class="learning-intro" id="learning-intro"></p>
     <div class="learning-summary"><span id="learning-topic"></span><p id="learning-summary"></p></div>
+    <div class="learning-mechanics" id="learning-mechanics" hidden></div>
     <a class="learning-lesson" id="learning-lesson" target="_blank" rel="noopener noreferrer" aria-describedby="academy-link-note"><span id="learning-link-action">Continue with this lesson</span><strong id="learning-lesson-title"></strong><span aria-hidden="true">↗</span></a>
     <a class="text-link" id="learning-secondary" target="_blank" rel="noopener noreferrer" aria-describedby="academy-link-note" hidden></a>
     <p id="academy-link-note">Opens the NoGuru website in a new tab.</p>
@@ -161,8 +186,8 @@
     <div class="menu-website"><h3>The current NoGuru website</h3><p id="menu-external-note">These links open in a new tab. Your place and choices here stay intact.</p><nav class="menu-external-links" aria-label="Current NoGuru website"><a href="https://noguru.io/how-it-works.html" target="_blank" rel="noopener noreferrer" aria-describedby="menu-external-note">How it works <span aria-hidden="true">↗</span></a><a href="https://noguru.io/pricing.html" target="_blank" rel="noopener noreferrer" aria-describedby="menu-external-note">Pricing <span aria-hidden="true">↗</span></a><a href="https://noguru.io/academy/" target="_blank" rel="noopener noreferrer" aria-describedby="menu-external-note">Academy <span aria-hidden="true">↗</span></a><a href="https://noguru.io/glossary.html" target="_blank" rel="noopener noreferrer" aria-describedby="menu-external-note">Glossary <span aria-hidden="true">↗</span></a><a href="https://noguru.io/track-record.html" target="_blank" rel="noopener noreferrer" aria-describedby="menu-external-note">Track record <span aria-hidden="true">↗</span></a><a href="https://noguru.io/dashboard.html" target="_blank" rel="noopener noreferrer" aria-describedby="menu-external-note">Live dashboard <span aria-hidden="true">↗</span></a><a href="https://noguru.io/digest/" target="_blank" rel="noopener noreferrer" aria-describedby="menu-external-note">Digest <span aria-hidden="true">↗</span></a><a href="https://noguru.io/" target="_blank" rel="noopener noreferrer" aria-describedby="menu-external-note">Home <span aria-hidden="true">↗</span></a></nav></div>
     <button class="button primary" id="return-from-menu" type="button">Back to where I was <span aria-hidden="true">↶</span></button>
   </dialog>
-  <script src="robot-layer.js?v=outline-20261112-2"></script>
+  <script src="robot-layer.js?v=content-20261112-1"></script>
   <script src="entrance-orbit.js?v=20261112-1"></script>
-  <script src="app.js?v=outline-20261112-2"></script>
+  <script src="app.js?v=content-20261112-1"></script>
 </body>
 </html>
