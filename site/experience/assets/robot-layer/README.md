@@ -1,33 +1,29 @@
-# NoGuru transparent actions
+# NoGuru transparent actions — native edge revision
 
-A reusable 2D character layer with real alpha. The surrounding world, floor and
-ground shadow have been removed. This is not a mesh, rig or editable 3D model.
+A reusable 2D character layer with real alpha. The world, floor and ground
+shadow are absent. This is not a mesh, rig or editable 3D model.
 
-## Files and playback
+`manifest.json` declares 600×620 frames, a transparent `poster-v2.png`, and four
+actions (`welcome`, `explain`, `wait`, `nod`). Paths are relative to the manifest.
+Draw each explicit `src`/`x`/`y`/`w`/`h` rectangle at the desired canvas size.
+The character is approximately 550 pixels tall at native source resolution.
 
-`manifest.json` declares fixed 416 × 432 pixel frames, a transparent `poster.png`,
-and four actions: `welcome`, `explain`, `wait`, `nod`. Every frame gives a WebP
-atlas filename and an explicit source rectangle (`x`, `y`, `w`, `h`). Paths are
-relative to the manifest. Draw that rectangle at your chosen canvas size.
-The character itself is approximately 384 pixels tall.
+Play at 12 fps. Only `wait` loops, using an explicit forward/reverse quiet sequence.
+Other actions hold their final frame. `posterFrame` gives a useful static index.
+Each 1800×1860 atlas holds up to 9 frames. Two decoded RGBA pages use 26,784,000 bytes;
+use lazy decode and a bounded two-page cache. Respect reduced motion, pause and
+offscreen visibility. There is no audio. Atlas filenames are versioned to avoid
+reusing cached earlier files. Use DPR-aware canvas backing and high-quality
+smoothing; do not enlarge the source to imply unavailable detail.
 
-Play at each action's `fps` (12). Non-looping actions hold their final frame;
-`wait` loops. It is an explicit forward/reverse quiet sequence to avoid a seam.
-Each atlas is 1664 × 1728 pixels with at most 16 frames. Decode only required
-pages and use a bounded cache (two decoded pages is sufficient during playback).
-RGB is WebP quality 90; the alpha channel is verified lossless after decoding.
-Use the poster for reduced motion, pause, loading or an unavailable canvas.
-Stop advancing frames when the page or character is offscreen. There is no audio.
+The native-resolution revision improves boundary coverage and removes blue
+edge contamination. Only the narrow outline band is refined. Original opaque
+interior pixels are unchanged before compression. RGB is WebP quality 90; alpha
+is verified lossless. Generated source texture/hand variation remains, and
+cross-action switches are cuts, not guaranteed seamless motion or mouth sync.
 
-## Source and limitations
-
-Generated for the NoGuru project from its approved character reference, then
-color-keyed, cropped and edge-defringed. Alpha is lossless; no body, face or hand
-pixels were newly drawn, and genuine gaps were not filled. The source is rendered
-AI motion and contains minor shape/texture variation. The acknowledgement is a
-restrained head movement. There is no skeletal animation or mouth/audio sync.
-Action switches are deterministic cuts, not guaranteed seamless transitions.
-
-Supplied as NoGuru project media. No additional third-party asset licence or
-trademark rights are granted by this package. Original generation provenance
-and processing audit are retained separately by the project.
+Generated for NoGuru from its approved character reference, then background
+removed and edge-refined. Supplied as NoGuru project media; no additional
+third-party asset licence or trademark rights are granted. Generation provenance
+and processing audit are retained separately. No raw clips or internal records
+are included here.

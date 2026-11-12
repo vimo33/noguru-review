@@ -1,6 +1,6 @@
 (() => {
   'use strict';
-  const state = {view:'entrance',previousView:'entrance',stage:'buy',motion:false,captions:true,sound:false,timer:null,preferences:{name:'NoGuru',accent:'apricot',narration:'text',cadence:'request'},journey:{step:'meet',allocationDraft:'',amountMinor:null,amountUSDT:null,amountDisplay:null,belowMinimum:null,editingFromReview:false,connectionPreviewed:false,completed:false}};
+  const state = {view:'entrance',previousView:'entrance',stage:'buy',motion:false,captions:true,sound:false,entrancePaused:false,entranceMotion:false,timer:null,preferences:{name:'NoGuru',accent:'apricot',narration:'text',cadence:'request'},journey:{step:'meet',allocationDraft:'',amountMinor:null,amountUSDT:null,amountDisplay:null,belowMinimum:null,editingFromReview:false,connectionPreviewed:false,completed:false}};
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const stages = {
     buy: {title:'A little at<br>a time.', kicker:'A planned beginning', description:'Purchases follow planned price levels. Buying lower can reduce this cycle’s average cost.', caption:'“Let’s follow one coin. I buy in stages, at planned price levels. Buying lower can bring down this cycle’s average purchase cost.”', cycle:'Building a position', average:'moves lower ↓', cash:'Ready when rules allow'},
@@ -60,6 +60,16 @@
     history.replaceState({view:state.view,step:state.journey.step},'',url);
   }
   function stopTimer(){if(state.timer)clearInterval(state.timer);state.timer=null;}
+  function syncEntrance(){
+    const element=$('[data-robot-layer=entrance]');const r=element.getBoundingClientRect();
+    const visible=element.getClientRects().length&&r.height>0&&Math.min(r.bottom,innerHeight)-Math.max(r.top,0)>Math.min(r.height,innerHeight)*.08;
+    state.entranceMotion=state.view==='entrance'&&!state.entrancePaused&&!reducedMotion.matches&&!document.hidden&&!siteMenuDialog.open&&!learningDialog.open&&!dialog.open&&Boolean(visible);
+    window.NoGuruRobots?.entrance(state.entranceMotion);window.NoGuruOrbit?.setPaused(!state.entranceMotion);
+    const button=$('#entrance-motion-toggle');button.disabled=reducedMotion.matches;
+    button.setAttribute('aria-pressed',String(state.entranceMotion));
+    button.setAttribute('aria-label',reducedMotion.matches?'Animation is off because reduced motion is enabled':state.entranceMotion?'Pause animation':'Resume animation');
+    button.textContent=reducedMotion.matches?'Animation off':state.entranceMotion?'Pause animation':'Resume animation';
+  }
   function sceneInView(){const r=$('#scene-panel').getBoundingClientRect();return r.height>0&&Math.min(r.bottom,innerHeight)-Math.max(r.top,0)>Math.min(r.height,innerHeight)*.08;}
   function setMotion(play){
     state.motion=play&&!reducedMotion.matches&&state.view==='story'&&!document.hidden&&sceneInView();
@@ -69,7 +79,7 @@
     $('#motion-toggle').setAttribute('aria-label',reducedMotion.matches?'Motion is off because reduced motion is enabled':state.motion?'Pause illustrative motion':'Play illustrative motion');
     $('#motion-text').textContent=state.motion?'Pause motion':'Play motion';
     stopTimer();
-    if(!state.motion)window.NoGuruRobots?.pause();
+    if(!state.motion){window.NoGuruRobots?.pause();window.NoGuruOrbit?.setPaused(true);}
     window.NoGuruRobots?.story(state.stage,state.motion);
     if(state.motion)state.timer=setInterval(()=>setStage(stageOrder[(stageOrder.indexOf(state.stage)+1)%stageOrder.length]),9000);
   }
@@ -157,6 +167,7 @@
     if(options.url!==false)syncURL();
     if(options.scroll!==false)window.scrollTo({top:0,behavior:'instant'});
     if(options.focus){const heading=$(`[data-page="${view}"] h1`);heading.setAttribute('tabindex','-1');heading.focus({preventScroll:true});}
+    syncEntrance();
   }
   function goJourney(step,{editing=false,focus=true}={}){
     state.journey.step=normalizeStep(step);state.journey.editingFromReview=editing;
@@ -199,11 +210,12 @@
     menuReturn.overflow.forEach(record=>record.element.style.setProperty('overflow','hidden'));
     menuState.open=true;menuState.openedFrom=state.view;
     $('#site-menu-toggle').setAttribute('aria-expanded','true');
-    siteMenuDialog.showModal();
+    siteMenuDialog.showModal();syncEntrance();
   }
   function closeSiteMenu({restore=true}={}){
     if(siteMenuDialog.open)siteMenuDialog.close();
     finishMenuClose({restore});
+    syncEntrance();
   }
   $('#site-menu-toggle').addEventListener('click',openSiteMenu);
   $('#close-site-menu').addEventListener('click',()=>closeSiteMenu());
@@ -216,7 +228,7 @@
   $$('.stage-tabs button').forEach(button=>button.addEventListener('click',()=>{setStage(button.dataset.stage);if(state.motion)setMotion(true);}));
   $('.stage-tabs').addEventListener('keydown',event=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;event.preventDefault();let i=stageOrder.indexOf(state.stage);i=event.key==='Home'?0:event.key==='End'?stageOrder.length-1:(i+(event.key==='ArrowRight'?1:-1)+stageOrder.length)%stageOrder.length;setStage(stageOrder[i]);$(`#tab-${state.stage}`).focus();});
   $('#motion-toggle').addEventListener('click',()=>setMotion(!state.motion));
-  $('#hello-guide').addEventListener('click',()=>window.NoGuruRobots?.welcome());
+  $('#entrance-motion-toggle').addEventListener('click',()=>{state.entrancePaused=state.entranceMotion;syncEntrance();});
   $('#sound-toggle').addEventListener('click',async()=>{state.sound=await window.NoGuruRobots.enableSound(!state.sound);$('#sound-toggle').setAttribute('aria-pressed',String(state.sound));$('#sound-toggle').setAttribute('aria-label',state.sound?'Turn off sound effects':'Turn on gentle sound effects');$('#sound-toggle').textContent=state.sound?'Sound on':'Sound off';});
   $('#skip-stage').addEventListener('click',()=>{setStage(stageOrder[(stageOrder.indexOf(state.stage)+1)%stageOrder.length]);if(state.motion)setMotion(true);});
   $('#captions-toggle').addEventListener('click',()=>{state.captions=!state.captions;$('#caption').classList.toggle('is-hidden',!state.captions);$('#caption').setAttribute('aria-hidden',String(!state.captions));$('#captions-toggle').setAttribute('aria-pressed',String(state.captions));$('#captions-toggle').setAttribute('aria-label',state.captions?'Hide captions':'Show captions');});
@@ -263,7 +275,7 @@
     $('#academy-all').href='https://noguru.io/academy/';
     $('#learning-secondary').hidden=!content.secondary;
     if(content.secondary){$('#learning-secondary').textContent=content.secondary.title+' ↗';$('#learning-secondary').href=content.secondary.url;}else $('#learning-secondary').removeAttribute('href');
-    learningDialog.showModal();
+    learningDialog.showModal();syncEntrance();
   }
   function closeLearning(){learningDialog.close();}
   learningDialog.addEventListener('close',()=>{learningState.open=false;const back=learningReturn;learningReturn=null;if(back){if(back.element&&back.element.isConnected&&back.element.getClientRects().length)back.element.focus({preventScroll:true});window.scrollTo({left:back.x,top:back.y,behavior:'instant'});}});
@@ -273,8 +285,10 @@
   $('#journey-explain').addEventListener('click',()=>openLearning(state.journey.step));
   $('#account-update-explain').addEventListener('click',()=>openLearning('account_update'));
   $('#story-explain').addEventListener('click',()=>openLearning(state.stage==='buy'?'imagine':state.stage==='wait'?'expectations':'account_update'));
-  reducedMotion.addEventListener('change',()=>setMotion(false));
-  document.addEventListener('visibilitychange',()=>{if(document.hidden)setMotion(false);});
+  reducedMotion.addEventListener('change',()=>{setMotion(false);syncEntrance();});
+  document.addEventListener('visibilitychange',()=>{if(document.hidden)setMotion(false);syncEntrance();});
+  const entranceVisibility=new IntersectionObserver(()=>syncEntrance(),{threshold:[0,.08]});entranceVisibility.observe($('[data-robot-layer=entrance]'));
+  [siteMenuDialog,learningDialog,dialog].forEach(modal=>modal.addEventListener('close',()=>syncEntrance()));
   const storyVisibility=new IntersectionObserver(entries=>{if(state.motion&&(!entries[0].isIntersecting||entries[0].intersectionRatio<.08))setMotion(false);},{threshold:[0,.08]});
   storyVisibility.observe($('#scene-panel'));
   const controlVisibility=new IntersectionObserver(entries=>{if(state.motion&&!entries[0].isIntersecting)setMotion(false);},{threshold:0});
@@ -285,7 +299,7 @@
   state.journey.step=normalizeStep(legacyPersonalize?'meet':params.get('step'));
   showView(legacyPersonalize?'onboarding':params.get('view')||'entrance',{url:legacyPersonalize,scroll:false});
   window.NoGuruPreview={
-    getState:()=>({view:state.view,stage:state.stage,motion:state.motion,captions:state.captions,sound:state.sound,robot:window.NoGuruRobots?.getState(),reducedMotion:reducedMotion.matches,preferences:{...state.preferences},accountConnected:false,updateExampleVisible:!$('#account-update').hidden,onboarding:{...state.journey,stepNumber:journeyOrder.indexOf(state.journey.step)+1,stepCount:journeyOrder.length},actualAccount:{value:null,cash:null,openPositions:null,completedTrades:null},learning:{...learningState},menu:{...menuState,scrollLocked:menuReturn!==null}}),
+    getState:()=>({view:state.view,stage:state.stage,motion:state.motion,captions:state.captions,sound:state.sound,entrancePaused:state.entrancePaused,entranceMotion:state.entranceMotion,orbit:window.NoGuruOrbit?.getState(),robot:window.NoGuruRobots?.getState(),reducedMotion:reducedMotion.matches,preferences:{...state.preferences},accountConnected:false,updateExampleVisible:!$('#account-update').hidden,onboarding:{...state.journey,stepNumber:journeyOrder.indexOf(state.journey.step)+1,stepCount:journeyOrder.length},actualAccount:{value:null,cash:null,openPositions:null,completedTrades:null},learning:{...learningState},menu:{...menuState,scrollLocked:menuReturn!==null}}),
     validatePlanningAmount,
     config:Object.freeze({joinDestination:null,audioProduced:false,optionalNativeSFX:true,robotIsRigged:false,liveData:false,storage:false,updatesSent:false,minimum:{supplierStatedUSDT:3000,recordedDate:'2026-11-09',verifyBeforeSetup:true},technicalMaximumMinor:MAX_MINOR.toString(),academy:{index:'https://noguru.io/academy/',checkedDate:'2026-11-11',contexts:Object.keys(academyContexts)},permissions:{read:false,trade:false,transfer:false,payment:false}})
   };

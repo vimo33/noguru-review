@@ -5,13 +5,13 @@ const vm = require('node:vm');
 const path = require('node:path');
 
 // In-memory media mocks verify scheduling and memory behavior, not asset fidelity.
-function setup() {
+function setup(name='story') {
   const requests = new Map(), frames = new Map(), listeners = {}, observers = [];
   const draws = []; let nextFrame=1, clock=0, nextTimer=1; const timers=new Map();
   const media = {matches:false, handlers:[], addEventListener(_,fn){this.handlers.push(fn);}};
   const canvas = {width:0,height:0,getContext(){return {clearRect(){},drawImage(image){draws.push(image.url);}};}};
   const poster = {};
-  const element = {dataset:{robotLayer:'story'},style:{setProperty(){}},querySelector(selector){return selector==='canvas'?canvas:poster;}};
+  const element = {dataset:{robotLayer:name},style:{setProperty(){}},querySelector(selector){return selector==='canvas'?canvas:poster;}};
   const actions = Object.fromEntries(['welcome','explain','wait','nod'].map(action=>[action,{fps:12,loop:action==='wait',frames:Array.from({length:12},(_,i)=>({src:`${action}.webp`,x:i%4*128,y:Math.floor(i/4)*128,w:128,h:128}))}]));
   const manifest = {width:128,height:128,poster:'poster.webp',actions};
   const context = {URL,Map,Set,Image:function(){},console,Date:{now:()=>clock},setTimeout(fn,delay){const id=nextTimer++;timers.set(id,{fn,at:clock+delay});return id;},clearTimeout(id){timers.delete(id);},document:{baseURI:'https://example.test/experience/',hidden:false,body:{dataset:{}},querySelectorAll:()=>[element],addEventListener(event,fn){(listeners[event]||=[]).push(fn);}},matchMedia:()=>media,requestAnimationFrame(fn){const id=nextFrame++;frames.set(id,fn);return id;},cancelAnimationFrame(id){frames.delete(id);},IntersectionObserver:class{constructor(fn){this.fn=fn;observers.push(this);}observe(){}},fetch(url){url=String(url);if(url.endsWith('manifest.json'))return Promise.resolve({ok:true,json:async()=>manifest});return new Promise(resolve=>requests.set(url,()=>resolve({ok:true,blob:async()=>({url})})));},createImageBitmap:async blob=>({width:2048,height:2048,url:blob.url,close(){this.closed=true;}})};
@@ -19,7 +19,7 @@ function setup() {
   vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../site/experience/robot-layer.js'),'utf8'),context);
   const api=context.NoGuruRobots;
   const flush=async()=>{await new Promise(setImmediate);};
-  return {api,context,element,media,draws,frames,requests,flush,advance(ms){clock+=ms;for(const [id,timer]of[...timers]){if(timer.at<=clock){timers.delete(id);timer.fn();}}},visible(value){observers[0].fn([{isIntersecting:value,intersectionRatio:value?1:0}]);},resolve(action){const key=[...requests.keys()].find(x=>x.endsWith(`${action}.webp`));assert.ok(key,`pending ${action}`);requests.get(key)();requests.delete(key);},tick(time){const callbacks=[...frames.values()];frames.clear();callbacks.forEach(fn=>fn(time));}};
+  return {api,context,element,canvas,media,draws,frames,requests,flush,advance(ms){clock+=ms;for(const [id,timer]of[...timers]){if(timer.at<=clock){timers.delete(id);timer.fn();}}},visible(value){observers[0].fn([{isIntersecting:value,intersectionRatio:value?1:0}]);},resolve(action){const key=[...requests.keys()].find(x=>x.endsWith(`${action}.webp`));assert.ok(key,`pending ${action}`);requests.get(key)();requests.delete(key);},tick(time){const callbacks=[...frames.values()];frames.clear();callbacks.forEach(fn=>fn(time));}};
 }
 
 test('latest paused stage is repainted after an older asynchronous atlas resolves',async()=>{
@@ -83,4 +83,41 @@ test('explicit resume refreshes geometry after a stale observer notification',as
   assert.equal(s.api.getState().instances.story.visible,true);
   assert.ok(s.frames.size>0,'actual onscreen geometry permits explicit playback');
   s.api.pause();
+});
+
+
+test('retina backing follows displayed size with high smoothing and a bounded surface',async()=>{
+  const s=setup();s.context.devicePixelRatio=3;
+  s.canvas.getBoundingClientRect=()=>({width:900,height:900});
+  s.api.setView('story');s.visible(true);await s.flush();s.resolve('explain');await s.flush();
+  let d=s.api.getState().instances.story;
+  assert.ok(d.backing.width>128);assert.ok(d.backing.width*d.backing.height<=2*1024*1024);
+  assert.ok(d.backing.width<=2048&&d.backing.height<=2048);assert.equal(d.smoothing,'high');
+  s.canvas.getBoundingClientRect=()=>({width:100,height:100});s.api.story('buy',false,{restart:true});await s.flush();
+  d=s.api.getState().instances.story;assert.equal(d.backing.width,300);assert.equal(d.backing.height,300);
+  assert.equal(s.frames.size,0,'resizing a paused frame does not start animation');
+});
+
+test('entrance follows contiguous welcome and explain before quiet idle',async()=>{
+  const s=setup('entrance');s.api.setView('entrance');s.visible(true);await s.flush();s.resolve('welcome');await s.flush();
+  s.api.entrance(true);await s.flush();
+  for(let t=0;t<=1200;t+=100){s.tick(t);await s.flush();}
+  assert.equal(s.api.getState().instances.entrance.action,'welcome','welcome holds a short rest');
+  s.tick(1300);await s.flush();s.resolve('explain');await s.flush();
+  assert.equal(s.api.getState().instances.entrance.action,'explain');
+  for(let t=1400;t<=2600;t+=100){s.tick(t);await s.flush();}
+  s.resolve('wait');await s.flush();
+  assert.equal(s.api.getState().instances.entrance.action,'wait');
+  assert.equal(s.api.getState().soundEnabled,false);
+  s.api.entrance(false);assert.equal(s.frames.size,0);
+});
+
+
+test('an animated paint pending at pause cannot advance the frozen frame',async()=>{
+  const s=setup();s.api.setView('story');s.visible(true);await s.flush();s.resolve('explain');await s.flush();
+  s.api.story('buy',true);await s.flush();s.tick(0);s.tick(100);
+  const frame=s.api.getState().instances.story.frame;const draws=s.draws.length;
+  s.api.pause();await s.flush();
+  assert.equal(s.api.getState().instances.story.frame,frame);
+  assert.equal(s.draws.length,draws);
 });

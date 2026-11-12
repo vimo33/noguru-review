@@ -1,12 +1,12 @@
 {
-  "version": 1,
+  "version": 2,
   "title": "NoGuru transparent character actions",
-  "frameWidth": 416,
-  "frameHeight": 432,
+  "frameWidth": 600,
+  "frameHeight": 620,
   "fps": 12,
   "alpha": true,
   "format": "image/webp",
-  "poster": "poster.png",
+  "poster": "poster-v2.png",
   "anchor": {
     "x": 0.5,
     "y": 0.9468
@@ -20,179 +20,179 @@
       "description": "Open screen-left hand and a gentle head tilt.",
       "frames": [
         {
-          "src": "atlas-01.webp",
+          "src": "atlas-v2-01.webp",
           "x": 0,
           "y": 0,
-          "w": 416,
-          "h": 432
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-01.webp",
-          "x": 416,
+          "src": "atlas-v2-01.webp",
+          "x": 600,
           "y": 0,
-          "w": 416,
-          "h": 432
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-01.webp",
-          "x": 832,
+          "src": "atlas-v2-01.webp",
+          "x": 1200,
           "y": 0,
-          "w": 416,
-          "h": 432
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-01.webp",
-          "x": 1248,
-          "y": 0,
-          "w": 416,
-          "h": 432
-        },
-        {
-          "src": "atlas-01.webp",
+          "src": "atlas-v2-01.webp",
           "x": 0,
-          "y": 432,
-          "w": 416,
-          "h": 432
+          "y": 620,
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-01.webp",
-          "x": 416,
-          "y": 432,
-          "w": 416,
-          "h": 432
+          "src": "atlas-v2-01.webp",
+          "x": 600,
+          "y": 620,
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-01.webp",
-          "x": 832,
-          "y": 432,
-          "w": 416,
-          "h": 432
+          "src": "atlas-v2-01.webp",
+          "x": 1200,
+          "y": 620,
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-01.webp",
-          "x": 1248,
-          "y": 432,
-          "w": 416,
-          "h": 432
-        },
-        {
-          "src": "atlas-01.webp",
+          "src": "atlas-v2-01.webp",
           "x": 0,
-          "y": 864,
-          "w": 416,
-          "h": 432
+          "y": 1240,
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-01.webp",
-          "x": 416,
-          "y": 864,
-          "w": 416,
-          "h": 432
+          "src": "atlas-v2-01.webp",
+          "x": 600,
+          "y": 1240,
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-01.webp",
-          "x": 832,
-          "y": 864,
-          "w": 416,
-          "h": 432
+          "src": "atlas-v2-01.webp",
+          "x": 1200,
+          "y": 1240,
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-01.webp",
-          "x": 1248,
-          "y": 864,
-          "w": 416,
-          "h": 432
-        },
-        {
-          "src": "atlas-01.webp",
-          "x": 0,
-          "y": 1296,
-          "w": 416,
-          "h": 432
-        },
-        {
-          "src": "atlas-01.webp",
-          "x": 416,
-          "y": 1296,
-          "w": 416,
-          "h": 432
-        },
-        {
-          "src": "atlas-01.webp",
-          "x": 832,
-          "y": 1296,
-          "w": 416,
-          "h": 432
-        },
-        {
-          "src": "atlas-01.webp",
-          "x": 1248,
-          "y": 1296,
-          "w": 416,
-          "h": 432
-        },
-        {
-          "src": "atlas-02.webp",
+          "src": "atlas-v2-02.webp",
           "x": 0,
           "y": 0,
-          "w": 416,
-          "h": 432
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-02.webp",
-          "x": 416,
+          "src": "atlas-v2-02.webp",
+          "x": 600,
           "y": 0,
-          "w": 416,
-          "h": 432
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-02.webp",
-          "x": 832,
+          "src": "atlas-v2-02.webp",
+          "x": 1200,
           "y": 0,
-          "w": 416,
-          "h": 432
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-02.webp",
-          "x": 1248,
-          "y": 0,
-          "w": 416,
-          "h": 432
-        },
-        {
-          "src": "atlas-02.webp",
+          "src": "atlas-v2-02.webp",
           "x": 0,
-          "y": 432,
-          "w": 416,
-          "h": 432
+          "y": 620,
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-02.webp",
-          "x": 416,
-          "y": 432,
-          "w": 416,
-          "h": 432
+          "src": "atlas-v2-02.webp",
+          "x": 600,
+          "y": 620,
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-02.webp",
-          "x": 832,
-          "y": 432,
-          "w": 416,
-          "h": 432
+          "src": "atlas-v2-02.webp",
+          "x": 1200,
+          "y": 620,
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-02.webp",
-          "x": 1248,
-          "y": 432,
-          "w": 416,
-          "h": 432
-        },
-        {
-          "src": "atlas-02.webp",
+          "src": "atlas-v2-02.webp",
           "x": 0,
-          "y": 864,
-          "w": 416,
-          "h": 432
+          "y": 1240,
+          "w": 600,
+          "h": 620
+        },
+        {
+          "src": "atlas-v2-02.webp",
+          "x": 600,
+          "y": 1240,
+          "w": 600,
+          "h": 620
+        },
+        {
+          "src": "atlas-v2-02.webp",
+          "x": 1200,
+          "y": 1240,
+          "w": 600,
+          "h": 620
+        },
+        {
+          "src": "atlas-v2-03.webp",
+          "x": 0,
+          "y": 0,
+          "w": 600,
+          "h": 620
+        },
+        {
+          "src": "atlas-v2-03.webp",
+          "x": 600,
+          "y": 0,
+          "w": 600,
+          "h": 620
+        },
+        {
+          "src": "atlas-v2-03.webp",
+          "x": 1200,
+          "y": 0,
+          "w": 600,
+          "h": 620
+        },
+        {
+          "src": "atlas-v2-03.webp",
+          "x": 0,
+          "y": 620,
+          "w": 600,
+          "h": 620
+        },
+        {
+          "src": "atlas-v2-03.webp",
+          "x": 600,
+          "y": 620,
+          "w": 600,
+          "h": 620
+        },
+        {
+          "src": "atlas-v2-03.webp",
+          "x": 1200,
+          "y": 620,
+          "w": 600,
+          "h": 620
+        },
+        {
+          "src": "atlas-v2-03.webp",
+          "x": 0,
+          "y": 1240,
+          "w": 600,
+          "h": 620
         }
       ]
     },
@@ -204,228 +204,228 @@
       "description": "Screen-right open-palm gesture, returning toward rest.",
       "frames": [
         {
-          "src": "atlas-02.webp",
-          "x": 416,
-          "y": 864,
-          "w": 416,
-          "h": 432
+          "src": "atlas-v2-03.webp",
+          "x": 600,
+          "y": 1240,
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-02.webp",
-          "x": 832,
-          "y": 864,
-          "w": 416,
-          "h": 432
+          "src": "atlas-v2-03.webp",
+          "x": 1200,
+          "y": 1240,
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-02.webp",
-          "x": 1248,
-          "y": 864,
-          "w": 416,
-          "h": 432
-        },
-        {
-          "src": "atlas-02.webp",
-          "x": 0,
-          "y": 1296,
-          "w": 416,
-          "h": 432
-        },
-        {
-          "src": "atlas-02.webp",
-          "x": 416,
-          "y": 1296,
-          "w": 416,
-          "h": 432
-        },
-        {
-          "src": "atlas-02.webp",
-          "x": 832,
-          "y": 1296,
-          "w": 416,
-          "h": 432
-        },
-        {
-          "src": "atlas-02.webp",
-          "x": 1248,
-          "y": 1296,
-          "w": 416,
-          "h": 432
-        },
-        {
-          "src": "atlas-03.webp",
+          "src": "atlas-v2-04.webp",
           "x": 0,
           "y": 0,
-          "w": 416,
-          "h": 432
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-03.webp",
-          "x": 416,
+          "src": "atlas-v2-04.webp",
+          "x": 600,
           "y": 0,
-          "w": 416,
-          "h": 432
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-03.webp",
-          "x": 832,
+          "src": "atlas-v2-04.webp",
+          "x": 1200,
           "y": 0,
-          "w": 416,
-          "h": 432
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-03.webp",
-          "x": 1248,
-          "y": 0,
-          "w": 416,
-          "h": 432
-        },
-        {
-          "src": "atlas-03.webp",
+          "src": "atlas-v2-04.webp",
           "x": 0,
-          "y": 432,
-          "w": 416,
-          "h": 432
+          "y": 620,
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-03.webp",
-          "x": 416,
-          "y": 432,
-          "w": 416,
-          "h": 432
+          "src": "atlas-v2-04.webp",
+          "x": 600,
+          "y": 620,
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-03.webp",
-          "x": 832,
-          "y": 432,
-          "w": 416,
-          "h": 432
+          "src": "atlas-v2-04.webp",
+          "x": 1200,
+          "y": 620,
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-03.webp",
-          "x": 1248,
-          "y": 432,
-          "w": 416,
-          "h": 432
-        },
-        {
-          "src": "atlas-03.webp",
+          "src": "atlas-v2-04.webp",
           "x": 0,
-          "y": 864,
-          "w": 416,
-          "h": 432
+          "y": 1240,
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-03.webp",
-          "x": 416,
-          "y": 864,
-          "w": 416,
-          "h": 432
+          "src": "atlas-v2-04.webp",
+          "x": 600,
+          "y": 1240,
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-03.webp",
-          "x": 832,
-          "y": 864,
-          "w": 416,
-          "h": 432
+          "src": "atlas-v2-04.webp",
+          "x": 1200,
+          "y": 1240,
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-03.webp",
-          "x": 1248,
-          "y": 864,
-          "w": 416,
-          "h": 432
-        },
-        {
-          "src": "atlas-03.webp",
-          "x": 0,
-          "y": 1296,
-          "w": 416,
-          "h": 432
-        },
-        {
-          "src": "atlas-03.webp",
-          "x": 416,
-          "y": 1296,
-          "w": 416,
-          "h": 432
-        },
-        {
-          "src": "atlas-03.webp",
-          "x": 832,
-          "y": 1296,
-          "w": 416,
-          "h": 432
-        },
-        {
-          "src": "atlas-03.webp",
-          "x": 1248,
-          "y": 1296,
-          "w": 416,
-          "h": 432
-        },
-        {
-          "src": "atlas-04.webp",
+          "src": "atlas-v2-05.webp",
           "x": 0,
           "y": 0,
-          "w": 416,
-          "h": 432
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-04.webp",
-          "x": 416,
+          "src": "atlas-v2-05.webp",
+          "x": 600,
           "y": 0,
-          "w": 416,
-          "h": 432
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-04.webp",
-          "x": 832,
+          "src": "atlas-v2-05.webp",
+          "x": 1200,
           "y": 0,
-          "w": 416,
-          "h": 432
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-04.webp",
-          "x": 1248,
-          "y": 0,
-          "w": 416,
-          "h": 432
-        },
-        {
-          "src": "atlas-04.webp",
+          "src": "atlas-v2-05.webp",
           "x": 0,
-          "y": 432,
-          "w": 416,
-          "h": 432
+          "y": 620,
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-04.webp",
-          "x": 416,
-          "y": 432,
-          "w": 416,
-          "h": 432
+          "src": "atlas-v2-05.webp",
+          "x": 600,
+          "y": 620,
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-04.webp",
-          "x": 832,
-          "y": 432,
-          "w": 416,
-          "h": 432
+          "src": "atlas-v2-05.webp",
+          "x": 1200,
+          "y": 620,
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-04.webp",
-          "x": 1248,
-          "y": 432,
-          "w": 416,
-          "h": 432
-        },
-        {
-          "src": "atlas-04.webp",
+          "src": "atlas-v2-05.webp",
           "x": 0,
-          "y": 864,
-          "w": 416,
-          "h": 432
+          "y": 1240,
+          "w": 600,
+          "h": 620
+        },
+        {
+          "src": "atlas-v2-05.webp",
+          "x": 600,
+          "y": 1240,
+          "w": 600,
+          "h": 620
+        },
+        {
+          "src": "atlas-v2-05.webp",
+          "x": 1200,
+          "y": 1240,
+          "w": 600,
+          "h": 620
+        },
+        {
+          "src": "atlas-v2-06.webp",
+          "x": 0,
+          "y": 0,
+          "w": 600,
+          "h": 620
+        },
+        {
+          "src": "atlas-v2-06.webp",
+          "x": 600,
+          "y": 0,
+          "w": 600,
+          "h": 620
+        },
+        {
+          "src": "atlas-v2-06.webp",
+          "x": 1200,
+          "y": 0,
+          "w": 600,
+          "h": 620
+        },
+        {
+          "src": "atlas-v2-06.webp",
+          "x": 0,
+          "y": 620,
+          "w": 600,
+          "h": 620
+        },
+        {
+          "src": "atlas-v2-06.webp",
+          "x": 600,
+          "y": 620,
+          "w": 600,
+          "h": 620
+        },
+        {
+          "src": "atlas-v2-06.webp",
+          "x": 1200,
+          "y": 620,
+          "w": 600,
+          "h": 620
+        },
+        {
+          "src": "atlas-v2-06.webp",
+          "x": 0,
+          "y": 1240,
+          "w": 600,
+          "h": 620
+        },
+        {
+          "src": "atlas-v2-06.webp",
+          "x": 600,
+          "y": 1240,
+          "w": 600,
+          "h": 620
+        },
+        {
+          "src": "atlas-v2-06.webp",
+          "x": 1200,
+          "y": 1240,
+          "w": 600,
+          "h": 620
+        },
+        {
+          "src": "atlas-v2-07.webp",
+          "x": 0,
+          "y": 0,
+          "w": 600,
+          "h": 620
+        },
+        {
+          "src": "atlas-v2-07.webp",
+          "x": 600,
+          "y": 0,
+          "w": 600,
+          "h": 620
+        },
+        {
+          "src": "atlas-v2-07.webp",
+          "x": 1200,
+          "y": 0,
+          "w": 600,
+          "h": 620
         }
       ]
     },
@@ -437,340 +437,340 @@
       "description": "Quiet rest with small natural shifts; forward/reverse loop.",
       "frames": [
         {
-          "src": "atlas-04.webp",
+          "src": "atlas-v2-07.webp",
           "x": 0,
-          "y": 1296,
-          "w": 416,
-          "h": 432
+          "y": 1240,
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-04.webp",
-          "x": 416,
-          "y": 1296,
-          "w": 416,
-          "h": 432
+          "src": "atlas-v2-07.webp",
+          "x": 600,
+          "y": 1240,
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-04.webp",
-          "x": 832,
-          "y": 1296,
-          "w": 416,
-          "h": 432
+          "src": "atlas-v2-07.webp",
+          "x": 1200,
+          "y": 1240,
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-04.webp",
-          "x": 1248,
-          "y": 1296,
-          "w": 416,
-          "h": 432
-        },
-        {
-          "src": "atlas-05.webp",
+          "src": "atlas-v2-08.webp",
           "x": 0,
           "y": 0,
-          "w": 416,
-          "h": 432
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-05.webp",
-          "x": 416,
+          "src": "atlas-v2-08.webp",
+          "x": 600,
           "y": 0,
-          "w": 416,
-          "h": 432
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-05.webp",
-          "x": 832,
+          "src": "atlas-v2-08.webp",
+          "x": 1200,
           "y": 0,
-          "w": 416,
-          "h": 432
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-05.webp",
-          "x": 1248,
-          "y": 0,
-          "w": 416,
-          "h": 432
-        },
-        {
-          "src": "atlas-05.webp",
+          "src": "atlas-v2-08.webp",
           "x": 0,
-          "y": 432,
-          "w": 416,
-          "h": 432
+          "y": 620,
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-05.webp",
-          "x": 416,
-          "y": 432,
-          "w": 416,
-          "h": 432
+          "src": "atlas-v2-08.webp",
+          "x": 600,
+          "y": 620,
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-05.webp",
-          "x": 832,
-          "y": 432,
-          "w": 416,
-          "h": 432
+          "src": "atlas-v2-08.webp",
+          "x": 1200,
+          "y": 620,
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-05.webp",
-          "x": 1248,
-          "y": 432,
-          "w": 416,
-          "h": 432
-        },
-        {
-          "src": "atlas-05.webp",
+          "src": "atlas-v2-08.webp",
           "x": 0,
-          "y": 864,
-          "w": 416,
-          "h": 432
+          "y": 1240,
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-05.webp",
-          "x": 416,
-          "y": 864,
-          "w": 416,
-          "h": 432
+          "src": "atlas-v2-08.webp",
+          "x": 600,
+          "y": 1240,
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-05.webp",
-          "x": 832,
-          "y": 864,
-          "w": 416,
-          "h": 432
+          "src": "atlas-v2-08.webp",
+          "x": 1200,
+          "y": 1240,
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-05.webp",
-          "x": 1248,
-          "y": 864,
-          "w": 416,
-          "h": 432
-        },
-        {
-          "src": "atlas-05.webp",
-          "x": 0,
-          "y": 1296,
-          "w": 416,
-          "h": 432
-        },
-        {
-          "src": "atlas-05.webp",
-          "x": 416,
-          "y": 1296,
-          "w": 416,
-          "h": 432
-        },
-        {
-          "src": "atlas-05.webp",
-          "x": 832,
-          "y": 1296,
-          "w": 416,
-          "h": 432
-        },
-        {
-          "src": "atlas-05.webp",
-          "x": 1248,
-          "y": 1296,
-          "w": 416,
-          "h": 432
-        },
-        {
-          "src": "atlas-06.webp",
+          "src": "atlas-v2-09.webp",
           "x": 0,
           "y": 0,
-          "w": 416,
-          "h": 432
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-06.webp",
-          "x": 416,
+          "src": "atlas-v2-09.webp",
+          "x": 600,
           "y": 0,
-          "w": 416,
-          "h": 432
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-06.webp",
-          "x": 832,
+          "src": "atlas-v2-09.webp",
+          "x": 1200,
           "y": 0,
-          "w": 416,
-          "h": 432
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-06.webp",
-          "x": 1248,
-          "y": 0,
-          "w": 416,
-          "h": 432
-        },
-        {
-          "src": "atlas-06.webp",
+          "src": "atlas-v2-09.webp",
           "x": 0,
-          "y": 432,
-          "w": 416,
-          "h": 432
+          "y": 620,
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-06.webp",
-          "x": 1248,
-          "y": 0,
-          "w": 416,
-          "h": 432
+          "src": "atlas-v2-09.webp",
+          "x": 600,
+          "y": 620,
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-06.webp",
-          "x": 832,
-          "y": 0,
-          "w": 416,
-          "h": 432
+          "src": "atlas-v2-09.webp",
+          "x": 1200,
+          "y": 620,
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-06.webp",
-          "x": 416,
-          "y": 0,
-          "w": 416,
-          "h": 432
-        },
-        {
-          "src": "atlas-06.webp",
+          "src": "atlas-v2-09.webp",
           "x": 0,
-          "y": 0,
-          "w": 416,
-          "h": 432
+          "y": 1240,
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-05.webp",
-          "x": 1248,
-          "y": 1296,
-          "w": 416,
-          "h": 432
+          "src": "atlas-v2-09.webp",
+          "x": 600,
+          "y": 1240,
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-05.webp",
-          "x": 832,
-          "y": 1296,
-          "w": 416,
-          "h": 432
+          "src": "atlas-v2-09.webp",
+          "x": 1200,
+          "y": 1240,
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-05.webp",
-          "x": 416,
-          "y": 1296,
-          "w": 416,
-          "h": 432
-        },
-        {
-          "src": "atlas-05.webp",
-          "x": 0,
-          "y": 1296,
-          "w": 416,
-          "h": 432
-        },
-        {
-          "src": "atlas-05.webp",
-          "x": 1248,
-          "y": 864,
-          "w": 416,
-          "h": 432
-        },
-        {
-          "src": "atlas-05.webp",
-          "x": 832,
-          "y": 864,
-          "w": 416,
-          "h": 432
-        },
-        {
-          "src": "atlas-05.webp",
-          "x": 416,
-          "y": 864,
-          "w": 416,
-          "h": 432
-        },
-        {
-          "src": "atlas-05.webp",
-          "x": 0,
-          "y": 864,
-          "w": 416,
-          "h": 432
-        },
-        {
-          "src": "atlas-05.webp",
-          "x": 1248,
-          "y": 432,
-          "w": 416,
-          "h": 432
-        },
-        {
-          "src": "atlas-05.webp",
-          "x": 832,
-          "y": 432,
-          "w": 416,
-          "h": 432
-        },
-        {
-          "src": "atlas-05.webp",
-          "x": 416,
-          "y": 432,
-          "w": 416,
-          "h": 432
-        },
-        {
-          "src": "atlas-05.webp",
-          "x": 0,
-          "y": 432,
-          "w": 416,
-          "h": 432
-        },
-        {
-          "src": "atlas-05.webp",
-          "x": 1248,
-          "y": 0,
-          "w": 416,
-          "h": 432
-        },
-        {
-          "src": "atlas-05.webp",
-          "x": 832,
-          "y": 0,
-          "w": 416,
-          "h": 432
-        },
-        {
-          "src": "atlas-05.webp",
-          "x": 416,
-          "y": 0,
-          "w": 416,
-          "h": 432
-        },
-        {
-          "src": "atlas-05.webp",
+          "src": "atlas-v2-10.webp",
           "x": 0,
           "y": 0,
-          "w": 416,
-          "h": 432
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-04.webp",
-          "x": 1248,
-          "y": 1296,
-          "w": 416,
-          "h": 432
+          "src": "atlas-v2-10.webp",
+          "x": 600,
+          "y": 0,
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-04.webp",
-          "x": 832,
-          "y": 1296,
-          "w": 416,
-          "h": 432
+          "src": "atlas-v2-10.webp",
+          "x": 1200,
+          "y": 0,
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-04.webp",
-          "x": 416,
-          "y": 1296,
-          "w": 416,
-          "h": 432
+          "src": "atlas-v2-10.webp",
+          "x": 0,
+          "y": 620,
+          "w": 600,
+          "h": 620
+        },
+        {
+          "src": "atlas-v2-10.webp",
+          "x": 1200,
+          "y": 0,
+          "w": 600,
+          "h": 620
+        },
+        {
+          "src": "atlas-v2-10.webp",
+          "x": 600,
+          "y": 0,
+          "w": 600,
+          "h": 620
+        },
+        {
+          "src": "atlas-v2-10.webp",
+          "x": 0,
+          "y": 0,
+          "w": 600,
+          "h": 620
+        },
+        {
+          "src": "atlas-v2-09.webp",
+          "x": 1200,
+          "y": 1240,
+          "w": 600,
+          "h": 620
+        },
+        {
+          "src": "atlas-v2-09.webp",
+          "x": 600,
+          "y": 1240,
+          "w": 600,
+          "h": 620
+        },
+        {
+          "src": "atlas-v2-09.webp",
+          "x": 0,
+          "y": 1240,
+          "w": 600,
+          "h": 620
+        },
+        {
+          "src": "atlas-v2-09.webp",
+          "x": 1200,
+          "y": 620,
+          "w": 600,
+          "h": 620
+        },
+        {
+          "src": "atlas-v2-09.webp",
+          "x": 600,
+          "y": 620,
+          "w": 600,
+          "h": 620
+        },
+        {
+          "src": "atlas-v2-09.webp",
+          "x": 0,
+          "y": 620,
+          "w": 600,
+          "h": 620
+        },
+        {
+          "src": "atlas-v2-09.webp",
+          "x": 1200,
+          "y": 0,
+          "w": 600,
+          "h": 620
+        },
+        {
+          "src": "atlas-v2-09.webp",
+          "x": 600,
+          "y": 0,
+          "w": 600,
+          "h": 620
+        },
+        {
+          "src": "atlas-v2-09.webp",
+          "x": 0,
+          "y": 0,
+          "w": 600,
+          "h": 620
+        },
+        {
+          "src": "atlas-v2-08.webp",
+          "x": 1200,
+          "y": 1240,
+          "w": 600,
+          "h": 620
+        },
+        {
+          "src": "atlas-v2-08.webp",
+          "x": 600,
+          "y": 1240,
+          "w": 600,
+          "h": 620
+        },
+        {
+          "src": "atlas-v2-08.webp",
+          "x": 0,
+          "y": 1240,
+          "w": 600,
+          "h": 620
+        },
+        {
+          "src": "atlas-v2-08.webp",
+          "x": 1200,
+          "y": 620,
+          "w": 600,
+          "h": 620
+        },
+        {
+          "src": "atlas-v2-08.webp",
+          "x": 600,
+          "y": 620,
+          "w": 600,
+          "h": 620
+        },
+        {
+          "src": "atlas-v2-08.webp",
+          "x": 0,
+          "y": 620,
+          "w": 600,
+          "h": 620
+        },
+        {
+          "src": "atlas-v2-08.webp",
+          "x": 1200,
+          "y": 0,
+          "w": 600,
+          "h": 620
+        },
+        {
+          "src": "atlas-v2-08.webp",
+          "x": 600,
+          "y": 0,
+          "w": 600,
+          "h": 620
+        },
+        {
+          "src": "atlas-v2-08.webp",
+          "x": 0,
+          "y": 0,
+          "w": 600,
+          "h": 620
+        },
+        {
+          "src": "atlas-v2-07.webp",
+          "x": 1200,
+          "y": 1240,
+          "w": 600,
+          "h": 620
+        },
+        {
+          "src": "atlas-v2-07.webp",
+          "x": 600,
+          "y": 1240,
+          "w": 600,
+          "h": 620
         }
       ]
     },
@@ -782,210 +782,260 @@
       "description": "Restrained acknowledgement: a small head dip and return.",
       "frames": [
         {
-          "src": "atlas-06.webp",
-          "x": 416,
-          "y": 432,
-          "w": 416,
-          "h": 432
+          "src": "atlas-v2-10.webp",
+          "x": 600,
+          "y": 620,
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-06.webp",
-          "x": 832,
-          "y": 432,
-          "w": 416,
-          "h": 432
+          "src": "atlas-v2-10.webp",
+          "x": 1200,
+          "y": 620,
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-06.webp",
-          "x": 1248,
-          "y": 432,
-          "w": 416,
-          "h": 432
-        },
-        {
-          "src": "atlas-06.webp",
+          "src": "atlas-v2-10.webp",
           "x": 0,
-          "y": 864,
-          "w": 416,
-          "h": 432
+          "y": 1240,
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-06.webp",
-          "x": 416,
-          "y": 864,
-          "w": 416,
-          "h": 432
+          "src": "atlas-v2-10.webp",
+          "x": 600,
+          "y": 1240,
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-06.webp",
-          "x": 832,
-          "y": 864,
-          "w": 416,
-          "h": 432
+          "src": "atlas-v2-10.webp",
+          "x": 1200,
+          "y": 1240,
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-06.webp",
-          "x": 1248,
-          "y": 864,
-          "w": 416,
-          "h": 432
-        },
-        {
-          "src": "atlas-06.webp",
-          "x": 0,
-          "y": 1296,
-          "w": 416,
-          "h": 432
-        },
-        {
-          "src": "atlas-06.webp",
-          "x": 416,
-          "y": 1296,
-          "w": 416,
-          "h": 432
-        },
-        {
-          "src": "atlas-06.webp",
-          "x": 832,
-          "y": 1296,
-          "w": 416,
-          "h": 432
-        },
-        {
-          "src": "atlas-06.webp",
-          "x": 1248,
-          "y": 1296,
-          "w": 416,
-          "h": 432
-        },
-        {
-          "src": "atlas-07.webp",
+          "src": "atlas-v2-11.webp",
           "x": 0,
           "y": 0,
-          "w": 416,
-          "h": 432
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-07.webp",
-          "x": 416,
+          "src": "atlas-v2-11.webp",
+          "x": 600,
           "y": 0,
-          "w": 416,
-          "h": 432
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-07.webp",
-          "x": 832,
+          "src": "atlas-v2-11.webp",
+          "x": 1200,
           "y": 0,
-          "w": 416,
-          "h": 432
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-07.webp",
-          "x": 1248,
-          "y": 0,
-          "w": 416,
-          "h": 432
-        },
-        {
-          "src": "atlas-07.webp",
+          "src": "atlas-v2-11.webp",
           "x": 0,
-          "y": 432,
-          "w": 416,
-          "h": 432
+          "y": 620,
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-07.webp",
-          "x": 416,
-          "y": 432,
-          "w": 416,
-          "h": 432
+          "src": "atlas-v2-11.webp",
+          "x": 600,
+          "y": 620,
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-07.webp",
-          "x": 832,
-          "y": 432,
-          "w": 416,
-          "h": 432
+          "src": "atlas-v2-11.webp",
+          "x": 1200,
+          "y": 620,
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-07.webp",
-          "x": 1248,
-          "y": 432,
-          "w": 416,
-          "h": 432
-        },
-        {
-          "src": "atlas-07.webp",
+          "src": "atlas-v2-11.webp",
           "x": 0,
-          "y": 864,
-          "w": 416,
-          "h": 432
+          "y": 1240,
+          "w": 600,
+          "h": 620
         },
         {
-          "src": "atlas-07.webp",
-          "x": 416,
-          "y": 864,
-          "w": 416,
-          "h": 432
+          "src": "atlas-v2-11.webp",
+          "x": 600,
+          "y": 1240,
+          "w": 600,
+          "h": 620
+        },
+        {
+          "src": "atlas-v2-11.webp",
+          "x": 1200,
+          "y": 1240,
+          "w": 600,
+          "h": 620
+        },
+        {
+          "src": "atlas-v2-12.webp",
+          "x": 0,
+          "y": 0,
+          "w": 600,
+          "h": 620
+        },
+        {
+          "src": "atlas-v2-12.webp",
+          "x": 600,
+          "y": 0,
+          "w": 600,
+          "h": 620
+        },
+        {
+          "src": "atlas-v2-12.webp",
+          "x": 1200,
+          "y": 0,
+          "w": 600,
+          "h": 620
+        },
+        {
+          "src": "atlas-v2-12.webp",
+          "x": 0,
+          "y": 620,
+          "w": 600,
+          "h": 620
+        },
+        {
+          "src": "atlas-v2-12.webp",
+          "x": 600,
+          "y": 620,
+          "w": 600,
+          "h": 620
+        },
+        {
+          "src": "atlas-v2-12.webp",
+          "x": 1200,
+          "y": 620,
+          "w": 600,
+          "h": 620
+        },
+        {
+          "src": "atlas-v2-12.webp",
+          "x": 0,
+          "y": 1240,
+          "w": 600,
+          "h": 620
         }
       ]
     }
   },
   "atlases": [
     {
-      "src": "atlas-01.webp",
-      "width": 1664,
-      "height": 1728,
-      "bytes": 384220,
-      "alphaLossless": true
+      "src": "atlas-v2-01.webp",
+      "width": 1800,
+      "height": 1860,
+      "bytes": 289174,
+      "alphaLossless": true,
+      "opaqueRgbPsnr": 41.765
     },
     {
-      "src": "atlas-02.webp",
-      "width": 1664,
-      "height": 1728,
-      "bytes": 381130,
-      "alphaLossless": true
+      "src": "atlas-v2-02.webp",
+      "width": 1800,
+      "height": 1860,
+      "bytes": 302790,
+      "alphaLossless": true,
+      "opaqueRgbPsnr": 41.414
     },
     {
-      "src": "atlas-03.webp",
-      "width": 1664,
-      "height": 1728,
-      "bytes": 379508,
-      "alphaLossless": true
+      "src": "atlas-v2-03.webp",
+      "width": 1800,
+      "height": 1860,
+      "bytes": 300018,
+      "alphaLossless": true,
+      "opaqueRgbPsnr": 41.553
     },
     {
-      "src": "atlas-04.webp",
-      "width": 1664,
-      "height": 1728,
-      "bytes": 374390,
-      "alphaLossless": true
+      "src": "atlas-v2-04.webp",
+      "width": 1800,
+      "height": 1860,
+      "bytes": 290406,
+      "alphaLossless": true,
+      "opaqueRgbPsnr": 41.499
     },
     {
-      "src": "atlas-05.webp",
-      "width": 1664,
-      "height": 1728,
-      "bytes": 370780,
-      "alphaLossless": true
+      "src": "atlas-v2-05.webp",
+      "width": 1800,
+      "height": 1860,
+      "bytes": 296770,
+      "alphaLossless": true,
+      "opaqueRgbPsnr": 41.626
     },
     {
-      "src": "atlas-06.webp",
-      "width": 1664,
-      "height": 1728,
-      "bytes": 374620,
-      "alphaLossless": true
+      "src": "atlas-v2-06.webp",
+      "width": 1800,
+      "height": 1860,
+      "bytes": 312862,
+      "alphaLossless": true,
+      "opaqueRgbPsnr": 41.779
     },
     {
-      "src": "atlas-07.webp",
-      "width": 1664,
-      "height": 1728,
-      "bytes": 236078,
-      "alphaLossless": true
+      "src": "atlas-v2-07.webp",
+      "width": 1800,
+      "height": 1860,
+      "bytes": 287522,
+      "alphaLossless": true,
+      "opaqueRgbPsnr": 41.534
+    },
+    {
+      "src": "atlas-v2-08.webp",
+      "width": 1800,
+      "height": 1860,
+      "bytes": 294208,
+      "alphaLossless": true,
+      "opaqueRgbPsnr": 41.575
+    },
+    {
+      "src": "atlas-v2-09.webp",
+      "width": 1800,
+      "height": 1860,
+      "bytes": 290334,
+      "alphaLossless": true,
+      "opaqueRgbPsnr": 41.556
+    },
+    {
+      "src": "atlas-v2-10.webp",
+      "width": 1800,
+      "height": 1860,
+      "bytes": 291148,
+      "alphaLossless": true,
+      "opaqueRgbPsnr": 41.568
+    },
+    {
+      "src": "atlas-v2-11.webp",
+      "width": 1800,
+      "height": 1860,
+      "bytes": 291344,
+      "alphaLossless": true,
+      "opaqueRgbPsnr": 41.659
+    },
+    {
+      "src": "atlas-v2-12.webp",
+      "width": 1800,
+      "height": 1860,
+      "bytes": 227210,
+      "alphaLossless": true,
+      "opaqueRgbPsnr": 41.58
     }
   ],
   "notes": [
     "A 2D transparent rendered character layer; not a 3D model or rig.",
+    "Native source resolution: approximately 550 px character height inside 600\u00d7620 frames.",
+    "Boundary coverage and despill refined in a narrow band; opaque interior source pixels unchanged.",
     "Non-looping actions hold their last frame. Wait uses an explicit forward/reverse sequence.",
-    "No audio, environment, floor or baked ground shadow. Source motion contains minor generative variation.",
+    "No audio, environment, floor or baked ground shadow. Minor source-render variation remains.",
     "Respect reduced-motion preferences and provide pause."
-  ]
+  ],
+  "build": "native-edge-v2-2026-11-12"
 }

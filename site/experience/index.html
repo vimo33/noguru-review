@@ -9,7 +9,8 @@
   <link rel="icon" href="assets/companion-mark.svg" type="image/svg+xml">
   <link rel="stylesheet" href="styles.css?v=ae4124f99b4b">
   <link rel="stylesheet" href="fit-screen.css?v=52892e0220e6">
-  <link rel="stylesheet" href="robot-layer.css?v=20261112-1">
+  <link rel="stylesheet" href="robot-layer.css?v=outline-20261112-2">
+  <link rel="stylesheet" href="entrance-orbit.css?v=20261112-1">
 </head>
 <body data-view="entrance" data-stage="buy" data-motion="paused">
   <a class="skip-link" href="#main">Skip to content</a>
@@ -36,7 +37,7 @@
         <div class="entrance-art" aria-label="A friendly sculptural robot making room beside a small portfolio">
           <div class="art-halo"></div><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
           <div class="floating-label human-label"><span class="tiny-spark">✳</span> A little human, by design.</div>
-          <div class="hero-guide robot-layer" data-robot-layer="entrance" role="img" aria-label="NoGuru, a warm ceramic robot with a relaxed welcome"><img src="assets/robot-layer/poster.png" alt="" fetchpriority="high"><canvas aria-hidden="true"></canvas></div><button class="hello-control" id="hello-guide" type="button">Say hello <span aria-hidden="true">↗</span></button>
+          <div class="hero-guide robot-layer" data-robot-layer="entrance" role="img" aria-label="NoGuru, a warm ceramic robot with a relaxed welcome"><img src="assets/robot-layer/poster-v2.png" alt="" fetchpriority="high"><canvas aria-hidden="true"></canvas></div><button class="hello-control" id="entrance-motion-toggle" type="button" aria-pressed="true" aria-label="Pause animation">Pause animation</button>
           <div class="coin coin-apricot coin-one" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="m16 6 8 10-8 10-8-10zM8 16h16"/></svg></div>
           <div class="coin coin-pine coin-two" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M9 11h14M9 16h14M9 21h14M12 8v16M20 8v16"/></svg></div>
           <div class="reserve-tray" aria-hidden="true"><i></i><i></i><i></i></div>
@@ -65,12 +66,12 @@
             <div class="position waiting-position"><span class="position-label">Another cycle</span><div class="waiting-symbol" aria-hidden="true"><span></span><span></span><span></span></div><strong>Waiting</strong><p>Its own average.</p></div>
             <div class="cash-pool"><div class="cash-stack" aria-hidden="true"><i></i><i></i><i></i><i></i></div><div><span>Cash reserve</span><strong id="cash-label">Ready when rules allow</strong></div></div>
             <div class="cash-flow" aria-hidden="true"><svg class="cash-route" viewBox="0 0 130 120" preserveAspectRatio="none"><path d="M4 4C15 38 80 45 116 108"/><path class="cash-route-arrow" d="m106 104 10 4-1-11"/></svg><i></i><i></i><i></i></div>
-            <div class="scene-guide robot-layer" data-robot-layer="story" role="img" aria-label="NoGuru following this illustrative portfolio moment"><img src="assets/robot-layer/poster.png" alt=""><canvas aria-hidden="true"></canvas></div>
+            <div class="scene-guide robot-layer" data-robot-layer="story" role="img" aria-label="NoGuru following this illustrative portfolio moment"><img src="assets/robot-layer/poster-v2.png" alt=""><canvas aria-hidden="true"></canvas></div>
             <div class="scene-footnote"><span class="mini-dot"></span> Capital moves. Reserves change.</div>
           </div>
         </div>
         <div class="narration-dock">
-          <div class="narrator-label"><img class="narrator-portrait" src="assets/robot-layer/poster.png" alt=""><span class="voice-glyph" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span>NoGuru<span>Narration text preview</span></span></div>
+          <div class="narrator-label"><img class="narrator-portrait" src="assets/robot-layer/poster-v2.png" alt=""><span class="voice-glyph" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span>NoGuru<span>Narration text preview</span></span></div>
           <p class="caption" id="caption">“Let’s follow one coin. I buy in stages, at planned price levels. Buying lower can bring down this cycle’s average purchase cost.”</p>
           <div class="playback-controls"><button class="play-button" id="motion-toggle" aria-pressed="false" aria-label="Play illustrative motion"><svg viewBox="0 0 24 24" class="play-icon" aria-hidden="true"><path d="m8 5 11 7-11 7z"/></svg><svg viewBox="0 0 24 24" class="pause-icon" aria-hidden="true"><path d="M8 5v14M16 5v14"/></svg><span id="motion-text">Play motion</span></button><button class="icon-button" id="skip-stage" aria-label="Skip to next portfolio moment"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 6 9 6-9 6zM18 6v12"/></svg><span class="control-word">Skip</span></button><button class="sound-button" id="sound-toggle" type="button" aria-pressed="false" aria-label="Turn on gentle sound effects">Sound off</button><button class="icon-button captions-button" id="captions-toggle" aria-pressed="true" aria-label="Hide captions"><span>CC</span></button></div>
         </div>
@@ -160,7 +161,8 @@
     <div class="menu-website"><h3>The current NoGuru website</h3><p id="menu-external-note">These links open in a new tab. Your place and choices here stay intact.</p><nav class="menu-external-links" aria-label="Current NoGuru website"><a href="https://noguru.io/how-it-works.html" target="_blank" rel="noopener noreferrer" aria-describedby="menu-external-note">How it works <span aria-hidden="true">↗</span></a><a href="https://noguru.io/pricing.html" target="_blank" rel="noopener noreferrer" aria-describedby="menu-external-note">Pricing <span aria-hidden="true">↗</span></a><a href="https://noguru.io/academy/" target="_blank" rel="noopener noreferrer" aria-describedby="menu-external-note">Academy <span aria-hidden="true">↗</span></a><a href="https://noguru.io/glossary.html" target="_blank" rel="noopener noreferrer" aria-describedby="menu-external-note">Glossary <span aria-hidden="true">↗</span></a><a href="https://noguru.io/track-record.html" target="_blank" rel="noopener noreferrer" aria-describedby="menu-external-note">Track record <span aria-hidden="true">↗</span></a><a href="https://noguru.io/dashboard.html" target="_blank" rel="noopener noreferrer" aria-describedby="menu-external-note">Live dashboard <span aria-hidden="true">↗</span></a><a href="https://noguru.io/digest/" target="_blank" rel="noopener noreferrer" aria-describedby="menu-external-note">Digest <span aria-hidden="true">↗</span></a><a href="https://noguru.io/" target="_blank" rel="noopener noreferrer" aria-describedby="menu-external-note">Home <span aria-hidden="true">↗</span></a></nav></div>
     <button class="button primary" id="return-from-menu" type="button">Back to where I was <span aria-hidden="true">↶</span></button>
   </dialog>
-  <script src="robot-layer.js?v=20261112-1"></script>
-  <script src="app.js?v=robot-layer-20261112-1"></script>
+  <script src="robot-layer.js?v=outline-20261112-2"></script>
+  <script src="entrance-orbit.js?v=20261112-1"></script>
+  <script src="app.js?v=outline-20261112-2"></script>
 </body>
 </html>

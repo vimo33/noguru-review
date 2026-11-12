@@ -5,6 +5,8 @@
   const manifestURL = new URL('assets/robot-layer/manifest.json', document.baseURI);
   const cache = new Map();
   const MAX_BYTES = 32 * 1024 * 1024;
+  const MAX_SURFACE_PIXELS = 2 * 1024 * 1024;
+  const MAX_SURFACE_SIDE = 2048;
   let manifestPromise, cachedBytes = 0, currentView = 'entrance';
   let saleTimer = null, tapTimer = null, cueSerial = 0, lastStage = null;
   let soundEnabled = false, audioContext = null;
@@ -65,6 +67,7 @@
         this.sync();
       }, {threshold:[0,.08,.25]});
       this.observer.observe(element);
+      if(typeof ResizeObserver==='function'){this.resizeObserver=new ResizeObserver(()=>{if(this.ready)this.sync(true);});this.resizeObserver.observe(element);}
     }
     measureVisible() {
       if(!this.element.getBoundingClientRect)return this.visible;
@@ -84,6 +87,18 @@
         if (this.data.poster) {const poster=new Image();poster.onload=()=>{this.element.querySelector('img').src=poster.src;};poster.src=new URL(this.data.poster,manifestURL).href;}
       } catch (_) { this.fail(); }
     }
+    updateSurface() {
+      const r=this.canvas.getBoundingClientRect?.() || this.element.getBoundingClientRect?.();
+      const density=Math.max(1,Number(window.devicePixelRatio)||1);
+      let scale=r&&r.width>0&&r.height>0?Math.min(r.width/this.data.width,r.height/this.data.height)*density:1;
+      scale=Math.min(scale,MAX_SURFACE_SIDE/this.data.width,MAX_SURFACE_SIDE/this.data.height,Math.sqrt(MAX_SURFACE_PIXELS/(this.data.width*this.data.height)));
+      // Keep the frame aspect ratio; CSS object-fit continues to own the exact placement.
+      const width=Math.max(1,Math.floor(this.data.width*scale));
+      const height=Math.max(1,Math.floor(this.data.height*scale));
+      if(this.canvas.width!==width||this.canvas.height!==height){this.canvas.width=width;this.canvas.height=height;}
+      this.context.imageSmoothingEnabled=true;
+      this.context.imageSmoothingQuality='high';
+    }
     fail() { this.failed = true; this.requested = false; this.stop(); this.element.dataset.ready = 'false'; this.element.dataset.unavailable='true';
       let status=this.element.querySelector('.robot-motion-status');if(!status){status=document.createElement('span');status.className='robot-motion-status';status.setAttribute('role','status');status.textContent='Motion is unavailable. Your guide is still here.';this.element.append(status);}
       if(this.name==='entrance'){const button=document.querySelector('#hello-guide');if(button){button.disabled=true;button.textContent='Your guide is here';}}
@@ -97,9 +112,9 @@
       this.sync(changed || restart);
     }
     stop() { if (this.raf !== null) cancelAnimationFrame(this.raf); this.raf = null; this.lastTime = null; }
-    async paint(index) {
+    async paint(index, animated=false) {
       if (!this.data || this.failed) return false;
-      if (this.drawing) { this.pendingIndex = index; return false; }
+      if (this.drawing) { this.pendingIndex = {index,animated}; return false; }
       const action = this.data.actions[this.action];
       if (!action?.frames?.length) { this.fail(); return false; }
       const frame = action.frames[Math.min(index, action.frames.length - 1)];
@@ -109,15 +124,16 @@
         const source = frame.src || this.data.atlases?.[frame.atlas]?.src;
         if (!source) throw new Error('Missing robot atlas');
         const image = await atlas(source);
-        if (version !== this.version) return false;
+        if (version !== this.version || (animated&&(!this.requested||!this.active||!this.visible||document.hidden||reduced.matches))) return false;
         const x=frame.x||0, y=frame.y||0, w=frame.w||this.data.width, h=frame.h||this.data.height;
         if (x < 0 || y < 0 || x+w > image.width || y+h > image.height) throw new Error('Invalid frame crop');
+        this.updateSurface();
         this.context.clearRect(0,0,this.canvas.width,this.canvas.height);
         this.context.drawImage(image,x,y,w,h,0,0,this.canvas.width,this.canvas.height);
         this.index = index; this.ready = true; this.element.dataset.ready = 'true';
         return true;
       } catch (_) { this.fail(); return false; }
-      finally { this.drawing = false; if (this.pendingIndex !== null) {const pending=this.pendingIndex; this.pendingIndex=null; this.paint(pending);} }
+      finally { this.drawing = false; if (this.pendingIndex !== null) {const pending=this.pendingIndex; this.pendingIndex=null; this.paint(pending.index,pending.animated);} }
     }
     async sync(repaint=false) {
       this.stop();
@@ -131,19 +147,25 @@
     tick(time) {
       this.raf = null;
       if (!this.canPlay()) { this.lastTime = null; return; }
-      const action = this.data.actions[this.action];
+      let action = this.data.actions[this.action];
       if (this.lastTime !== null && !this.drawing) this.elapsed += Math.min(time-this.lastTime,100);
       this.lastTime = time;
-      const total = action.frames.length;
+      let total = action.frames.length;
       let index = Math.floor(this.elapsed * (action.fps || 8) / 1000);
       if (index >= total) {
-        if (action.loop) { index %= total; this.elapsed %= total * 1000 / (action.fps || 8); }
+        if(this.name==='entrance'&&['welcome','explain'].includes(this.action)&&this.data.actions.wait){
+          const next=this.action==='welcome'&&this.data.actions.explain?'explain':'wait';
+          const rest=this.action==='welcome'?250:200;
+          if(this.elapsed<total*1000/(action.fps||8)+rest)index=total-1;
+          else{this.action=next;this.elapsed=0;this.index=-1;this.version++;action=this.data.actions[next];total=action.frames.length;index=0;}
+        }
+        else if (action.loop) { index %= total; this.elapsed %= total * 1000 / (action.fps || 8); }
         else { index = total-1; this.finished = true; }
       }
-      if (index !== this.index) this.paint(index);
+      if (index !== this.index) this.paint(index,true);
       if (!this.finished) this.raf = requestAnimationFrame(next => this.tick(next));
     }
-    diagnostics() { return {action:this.action,frame:this.index,playing:this.raf!==null,requested:this.requested,visible:this.visible,active:this.active,ready:this.ready,failed:this.failed,finished:this.finished}; }
+    diagnostics() { return {action:this.action,frame:this.index,playing:this.raf!==null,requested:this.requested,visible:this.visible,active:this.active,ready:this.ready,failed:this.failed,finished:this.finished,backing:{width:this.canvas.width,height:this.canvas.height},smoothing:this.context.imageSmoothingQuality}; }
   }
   document.querySelectorAll('[data-robot-layer]').forEach(element => instances.set(element.dataset.robotLayer,new RobotLayer(element)));
   function cancelCues() { clearTimeout(saleTimer); clearTimeout(tapTimer); saleTimer=tapTimer=null; cueSerial++; for(const voice of voices){try{voice.stop();}catch(_){}} }
@@ -194,7 +216,8 @@
     } else { for (const voice of voices) {try{voice.stop();}catch(_){}} }
     return soundEnabled;
   }
+  window.addEventListener?.('resize',()=>{for(const instance of instances.values())instance.sync(true);});
   document.addEventListener('visibilitychange',()=>{if(document.hidden){cancelCues();audioContext?.suspend().catch(()=>{});}for(const instance of instances.values())instance.sync();});
   reduced.addEventListener('change',()=>{cancelCues();for(const instance of instances.values()){if(reduced.matches)instance.requested=false;instance.sync(true);}});
-  window.NoGuruRobots={setView,story,enableSound,welcome:()=>instances.get('entrance')?.set('welcome',true,{restart:true}),pause:()=>{cancelCues();for(const instance of instances.values()){instance.requested=false;instance.sync();}},getState:()=>({view:currentView,reducedMotion:reduced.matches,soundEnabled,sale:{elapsedMs:sale.elapsed+(sale.startedAt===null?0:Date.now()-sale.startedAt),completed:sale.completed,started:sale.started},decodedAtlasBytes:cachedBytes,cachedAtlases:cache.size,instances:Object.fromEntries([...instances].map(([name,instance])=>[name,instance.diagnostics()]))})};
+  window.NoGuruRobots={setView,story,enableSound,entrance:play=>{const instance=instances.get('entrance');if(instance)instance.set(instance.action,play);},welcome:()=>instances.get('entrance')?.set('welcome',true,{restart:true}),pause:()=>{cancelCues();for(const instance of instances.values()){instance.requested=false;instance.sync();}},getState:()=>({view:currentView,reducedMotion:reduced.matches,soundEnabled,sale:{elapsedMs:sale.elapsed+(sale.startedAt===null?0:Date.now()-sale.startedAt),completed:sale.completed,started:sale.started},decodedAtlasBytes:cachedBytes,cachedAtlases:cache.size,instances:Object.fromEntries([...instances].map(([name,instance])=>[name,instance.diagnostics()]))})};
 })();
