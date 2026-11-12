@@ -6,6 +6,7 @@
 .robot-layer[data-ready=true]>img{opacity:0}
 .hello-control{white-space:nowrap;min-width:112px;position:absolute;bottom:1%;left:50%;transform:translateX(-50%);z-index:12;min-height:44px;padding:9px 17px;border:1px solid #263e3a38;border-radius:30px;background:#f7f3eae8;color:var(--pine);font:600 12px var(--body);cursor:pointer}
 .hello-control:hover{background:var(--paper)}
+.entrance-art .art-note{left:5%}
 .sound-button{min-height:44px;min-width:76px;border:1px solid var(--line);border-radius:24px;background:transparent;padding:10px 12px;color:var(--pine);font:600 11px var(--body);cursor:pointer}
 .sound-button[aria-pressed=true]{background:#e4ebdf;border-color:#617d71}
 body[data-view=story] .site-shell{height:auto;min-height:100svh;min-height:100dvh;display:block}
