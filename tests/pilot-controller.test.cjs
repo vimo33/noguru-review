@@ -1,7 +1,7 @@
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
 const source=fs.readFileSync(require('node:path').join(__dirname,'../site/pilot/app.js'),'utf8').replace(/^import .*;$/gm,'').replace(/^export /gm,'');
-const context={costs:{supplierCapitalGuidance:3000},URL};vm.createContext(context);vm.runInContext(source+'\nthis.exports={createCueClock,parseCapital,safeExternalURL,cycleExample,captionChunk};',context);
-const {createCueClock,parseCapital,safeExternalURL,cycleExample,captionChunk}=context.exports;
+const context={costs:{supplierCapitalGuidance:3000},URL};vm.createContext(context);vm.runInContext(source+'\nthis.exports={createCueClock,parseCapital,safeExternalURL,cycleExample,captionChunk,resolveInternalRoute};',context);
+const {createCueClock,parseCapital,safeExternalURL,cycleExample,captionChunk,resolveInternalRoute}=context.exports;
 test('cue clock preserves exact fractional position across a long pause',()=>{const c=createCueClock();c.set(10);c.play(1000);assert.equal(c.pause(2234),1.234);assert.equal(c.current(90000),1.234);c.play(90000);assert.equal(c.current(90766),2);});
 test('repeated Play never resets the running origin; duration clamps completion',()=>{const c=createCueClock();c.set(2);c.play(0);c.play(1000);assert.equal(c.current(1500),1.5);assert.equal(c.current(9000),2);});
 test('new cue resets the old timeline; seeking a paused detail snapshot cannot autoplay',()=>{const c=createCueClock();c.set(20);c.play(0);c.pause(3222);c.seek(3.222,99000);assert.equal(c.running,false);assert.equal(c.current(99000),3.222);c.set(5);assert.equal(c.current(99999),0);assert.equal(c.running,false);});
@@ -11,3 +11,5 @@ test('world illustration uses quantity weighting, not the mean of prices',()=>{c
 test('external source/offer links require HTTPS and cannot execute script',()=>{for(const url of ['javascript:alert(1)','data:text/html,test','http://example.com','/local'])assert.equal(safeExternalURL(url),null);assert.equal(safeExternalURL('https://noguru.io/pricing.html'),'https://noguru.io/pricing.html');});
 
 test('short captions are deterministic at a paused clip time and reach the final words',()=>{const text=Array.from({length:35},(_,i)=>'word'+i).join(' ');assert.equal(captionChunk(text,0,20).split(' ').length,11);assert.equal(captionChunk(text,9.5,20),captionChunk(text,9.5,20));assert.equal(captionChunk(text,20,20),'word33 word34');});
+
+test('internal routes preserve named chapters/anchors and reject other origins or paths',()=>{const base='https://vimo33.github.io/noguru-review/pilot/?v=proof';const r=resolveInternalRoute('?page=learn#weighted-average',base);assert.equal(r.page,'learn');assert.equal(r.anchor,'weighted-average');assert.equal(resolveInternalRoute('?page=story&chapter=cycle&step=cycle-02',base).step,'cycle-02');for(const url of ['https://noguru.io/learn','../experience/','javascript:alert(1)','?page=unknown'])assert.equal(resolveInternalRoute(url,base),null);assert.equal(resolveInternalRoute('?page=pricing#capital',base).anchor,'capital');});

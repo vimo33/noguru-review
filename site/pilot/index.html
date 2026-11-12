@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f7f4ea">
   <meta name="robots" content="noindex, nofollow">
-  <title>NoGuru — meet your trading companion</title>
+  <title>NoGuru — a strategy worth understanding</title>
   <meta name="description" content="Meet NoGuru: a maintained crypto spot-trading strategy, a guide to the evidence, and a little more understanding before you begin.">
   <link rel="icon" href="../experience/assets/companion-mark.svg" type="image/svg+xml">
   <link rel="preload" href="./fonts/Manrope.woff" as="font" type="font/woff" crossorigin>
@@ -13,39 +13,32 @@
   <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
-  <a class="skip-link" href="#main">Skip to the experience</a>
-  <div class="page-shell">
-    <header class="site-header">
-      <a href="./" class="wordmark" aria-label="NoGuru pilot home"><svg viewBox="0 0 44 44" aria-hidden="true"><path d="M35 12a16 16 0 1 1-7-5" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M15 21h2m9 0h2" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><circle cx="34" cy="8" r="3" fill="#dda47d"/></svg><span>NoGuru</span></a>
-      <nav class="header-nav" aria-label="Main navigation"><button type="button" data-chapter="3">Evidence</button><button type="button" data-chapter="5">Setup</button></nav>
-      <div class="header-actions"><button type="button" class="trial-open button small primary" id="trial-open">Start free trial <span aria-hidden="true">↗</span></button><details class="menu"><summary aria-label="More destinations"><span></span><span></span></summary><div class="menu-links"><a href="https://noguru.io/pricing.html" target="_blank" rel="noopener">Pricing ↗</a><a href="https://noguru.io/how-it-works.html" target="_blank" rel="noopener">Setup guide ↗</a><a href="https://noguru.io/dashboard.html" target="_blank" rel="noopener">Market dashboard ↗</a><a href="https://noguru.io/track-record.html" target="_blank" rel="noopener">Full track record ↗</a><a href="https://noguru.io/digest/" target="_blank" rel="noopener">Digest ↗</a><a href="https://noguru.io/academy/" target="_blank" rel="noopener">Academy ↗</a><a href="https://noguru.io/glossary.html" target="_blank" rel="noopener">Glossary ↗</a></div></details></div>
-    </header>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+ <a href="?page=story" class="wordmark" data-route aria-label="NoGuru home"><img src="../experience/assets/companion-mark.svg" alt=""><span>NoGuru<span class="brand-dot">.</span></span></a>
+ <nav class="header-nav" aria-label="Main navigation"><a href="?page=how-it-works" data-route>How it works</a><a href="?page=evidence" data-route>Evidence</a><a href="?page=pricing" data-route>Pricing</a><a href="?page=learn" data-route>Learn</a><a href="?page=glossary" data-route>Glossary</a><a href="?page=digest" data-route>Digest</a><a href="?page=setup" data-route>Setup</a></nav>
+ <div class="header-actions"><button type="button" class="trial-open button primary" id="trial-open">Start free trial <span aria-hidden="true">↗</span></button><details class="menu"><summary>Menu <span aria-hidden="true">☰</span></summary><nav aria-label="All destinations"><a href="?page=story" data-route>Meet your guide</a><a href="?page=how-it-works" data-route>How it works</a><a href="?page=evidence" data-route>Evidence</a><a href="?page=pricing" data-route>Pricing</a><a href="?page=learn" data-route>Learn</a><a href="?page=glossary" data-route>Glossary</a><a href="?page=digest" data-route>Digest</a><a href="?page=setup" data-route>Setup</a></nav></details></div>
+</header>
+<main id="main">
+ <div id="journey-view">
+  <nav id="chapter-nav" class="chapter-nav" aria-label="Experience chapters">
+   <button type="button" data-chapter="0"><span>01</span> Meet</button><button type="button" data-chapter="1"><span>02</span> Capital</button><button type="button" data-chapter="2"><span>03</span> A cycle</button><button type="button" data-chapter="3"><span>04</span> Evidence</button><button type="button" data-chapter="4"><span>05</span> Yours</button><button type="button" data-chapter="5"><span>06</span> Setup</button>
+  </nav>
+  <section id="scene-explainer" class="scene-explainer" aria-label="Read or listen to this chapter">
+   <nav id="cue-nav" class="cue-nav" aria-label="Steps in this chapter"></nav>
+   <section id="player" class="player" aria-label="Optional narration">
+    <p id="voice-note" class="voice-note"></p>
+    <div class="caption-row"><p class="eyebrow">Listening</p><p id="caption" aria-live="off"></p></div>
+    <div class="player-track" aria-hidden="true"><div id="progress-bar"></div></div>
+    <div class="player-controls"><div class="transport"><button type="button" id="play" class="button secondary"><span aria-hidden="true">▷</span><span id="play-label">Listen</span></button><button type="button" id="replay" class="icon-button" aria-label="Replay this chapter">↺</button><button type="button" id="leave-story" class="text-link">Stop listening</button></div><div class="step-controls"><button type="button" id="previous" class="icon-button" aria-label="Previous chapter">←</button><button type="button" id="next" class="button primary">Next chapter <span aria-hidden="true">→</span></button></div></div>
 
-    <main id="main">
-      <nav id="chapter-nav" class="chapter-nav" aria-label="Experience chapters">
-        <button type="button" data-chapter="0" aria-current="step"><span>01</span> Meet</button><button type="button" data-chapter="1"><span>02</span> Choose</button><button type="button" data-chapter="2"><span>03</span> A cycle</button><button type="button" data-chapter="3"><span>04</span> Evidence</button><button type="button" data-chapter="4"><span>05</span> Yours</button><button type="button" data-chapter="5"><span>06</span> Begin</button>
-      </nav>
-      <button type="button" id="leave-story" class="leave-story">← Back to overview</button>
-      <section class="main-layout" aria-labelledby="scene-title">
-        <div class="story-copy">
-          <p class="eyebrow" id="eyebrow">A little understanding. A clearer start.</p>
-          <h1 id="scene-title">Crypto trading, with the thinking built in.</h1>
-          <p id="scene-summary" class="summary">NoGuru is an automated spot-trading bot that selects and reviews coins, buys in stages as prices fall, and targets sales above their average purchase price. Cornix executes its instructions in your exchange account.</p>
-          <p class="control-line">You choose the capital. You stay in control.</p>
-          <div class="copy-actions"><button type="button" class="trial-open button primary">Start free trial <span aria-hidden="true">↗</span></button><button type="button" data-start-story class="text-link">See how it works <span aria-hidden="true">↓</span></button></div>
-          <p class="quiet-note">Explore first. No account needed here.</p>
-        </div>
-        <div class="visual-stage" id="visual-stage">
-          <div class="world-halo" aria-hidden="true"></div>
-          <p class="world-kicker">A world of possibilities</p>
-          <button type="button" class="make-yours" data-chapter="4">Make it yours <span aria-hidden="true">✧</span></button>
-          <div id="character" role="img" aria-label="A rounded ceramic guide whose gestures follow the story"></div>
-          <div id="world-overlay" aria-live="off"></div>
-          <span class="guide-label" id="name-preview">Your guide</span>
-        </div>
-      </section>
-
-      <section id="evidence-panel" class="detail-panel evidence-panel" hidden aria-labelledby="evidence-heading">
+   </section>
+  </section>
+  <section class="main-layout" aria-labelledby="scene-title">
+   <div class="story-copy"><p class="eyebrow" id="eyebrow">A little understanding. A clearer start.</p><h1 id="scene-title">An automated strategy,<br>kept under review.</h1><p id="scene-summary" class="summary"></p><p id="current-reading" class="current-reading"></p><div class="copy-actions"><button type="button" class="trial-open button primary">Start free trial ↗</button><a href="?page=how-it-works" data-route class="text-link">How it works →</a></div><p class="quiet-note">Your capital. Your exchange. Your decision.</p></div>
+   <div class="visual-stage" id="visual-stage"><div class="world-halo" aria-hidden="true"></div><div id="character" role="img" aria-label="Your NoGuru guide"></div><div id="world-overlay" aria-live="off"></div><div class="guide-note"><span id="name-preview">Your guide</span><button type="button" class="make-yours text-link" data-chapter="4">Make it yours ✧</button></div></div>
+  </section>
+  <div id="chapter-modules"><section id="evidence-panel" class="detail-panel evidence-panel" hidden aria-labelledby="evidence-heading">
         <div class="section-heading"><div><p class="eyebrow">Look for yourself</p><h2 id="evidence-heading">The evidence, in the open.</h2></div><div class="evidence-actions"><button type="button" id="inspect-evidence" class="button secondary">Inspect record ↗</button><button type="button" id="explain-evidence" class="button secondary">Explain this <span aria-hidden="true">✧</span></button></div></div>
         <p id="evidence-status" class="source-status" role="status">Loading the published record…</p>
         <div class="evidence-grid">
@@ -56,42 +49,24 @@
         <div class="evidence-foot"><p id="evidence-fetched">Source observation time will appear here.</p><a href="https://noguru.io/track-record.html" target="_blank" rel="noopener">Original track record ↗</a></div>
         <div class="market-panel" data-highlight="market"><div><span class="metric-label">Market context · a separate source</span><p id="market-summary">Loading current market context…</p><p id="market-asof" class="basis-note"></p></div><a href="https://noguru.io/dashboard.html" target="_blank" rel="noopener">Open market dashboard ↗</a></div>
         <p class="section-note">These public sources do not provide a complete current cash, holdings and account-value reconciliation. <button type="button" data-help="account-value">What’s the difference?</button></p>
-      </section>
-
-      <section id="personalize-panel" class="detail-panel personalize-panel" hidden aria-labelledby="personalize-heading">
+      </section><section id="personalize-panel" class="detail-panel personalize-panel" hidden aria-labelledby="personalize-heading">
         <div class="section-heading"><div><p class="eyebrow">A guide that feels like yours</p><h2 id="personalize-heading">Make yourself at home.</h2></div><span class="local-label">Saved on this device only</span></div>
-        <div class="personalize-grid"><label class="field-label" for="guide-name">What would you call your guide?<input id="guide-name" type="text" maxlength="20" placeholder="Leave it as Your guide" autocomplete="off"><span class="input-note">Optional. A nickname, not a financial account.</span></label><fieldset class="accent-field"><legend>A little colour</legend><div id="accent-options"><button type="button" data-accent="#789184" aria-label="Sage accent" aria-pressed="true" style="--swatch:#789184"></button><button type="button" data-accent="#d4a17c" aria-label="Apricot accent" aria-pressed="false" style="--swatch:#d4a17c"></button><button type="button" data-accent="#aaa5be" aria-label="Lilac accent" aria-pressed="false" style="--swatch:#aaa5be"></button></div></fieldset></div>
+        <div class="personalize-grid"><label class="field-label" for="guide-name">What would you call your guide?<input id="guide-name" type="text" maxlength="20" placeholder="Leave it as Your guide" autocomplete="off"><span class="input-note">Optional. A nickname, not a financial account.</span></label><fieldset class="accent-field"><legend>A surrounding accent</legend><div id="accent-options"><button type="button" data-accent="#789184" aria-label="Sage surrounding accent" aria-pressed="true" style="--swatch:#789184"></button><button type="button" data-accent="#d4a17c" aria-label="Apricot surrounding accent" aria-pressed="false" style="--swatch:#d4a17c"></button><button type="button" data-accent="#aaa5be" aria-label="Lilac surrounding accent" aria-pressed="false" style="--swatch:#aaa5be"></button></div></fieldset></div>
         <div class="risk-moment"><h3>Keep your judgment in the loop.</h3><p>Held coins can fall or never recover. There is no strategy stop-loss. Pausing new trades does not sell existing holdings.</p><button type="button" data-help="risks" class="text-link">Understand the risks ↗</button></div><div class="personalize-bottom"><p>We’ll carry the name and colour into your setup preview. Your capital stays private.</p><button id="reset-personalization" type="button" class="text-link">Reset my choices</button></div>
-      </section>
-
-      <section id="setup-panel" class="detail-panel setup-panel" hidden aria-labelledby="setup-heading">
+      <a class="button primary" href="?page=setup" data-route>Continue to capital and setup <span aria-hidden="true">→</span></a></section><section id="setup-panel" class="detail-panel setup-panel" hidden aria-labelledby="setup-heading">
         <div class="section-heading"><div><p class="eyebrow">Before the first connection</p><h2 id="setup-heading">Your pace. Your decisions.</h2></div><span class="local-label">Planning only · not saved</span></div>
         <div class="setup-grid"><div class="capital-area"><label class="field-label" for="capital">Capital you’re considering <span class="currency">USDT</span><input id="capital" autocomplete="off" type="number" min="1" max="100000000" step="any" placeholder="For example, 3000" inputmode="decimal"></label><p id="capital-feedback" class="input-note" aria-live="polite">Supplier guidance is 3,000 USDT. The current website’s minimum and enforcement still need confirmation.</p><button type="button" data-help="capital" class="text-link">Why capital and fees are different <span aria-hidden="true">↗</span></button></div><div class="cost-card"><span class="metric-label">Separate monthly subscriptions</span><div><span>NoGuru founding price</span><b>$49</b></div><div><span>Cornix Advanced, monthly</span><b>$49.90</b></div><div class="cost-total"><span>Subscription total</span><b id="cost-total">$98.90</b></div><p>Founding eligibility applies; NoGuru’s standard price is $99. Exchange trading and other costs are additional.</p><button type="button" data-help="costs" class="text-link">Plans and the two trial clocks ↗</button></div></div>
         <label class="risk-check"><input id="risk-ack" type="checkbox"><span>I understand coins can keep falling, capital can remain tied up, and a target does not guarantee a sale or recovery.</span></label>
         <button id="setup-next" type="button" class="button primary">Preview my account guide <span aria-hidden="true">→</span></button>
-        <div id="account-preview" class="account-preview" hidden><div class="account-top"><span class="status-pill">Not connected</span><h3>Your account guide will begin with real data.</h3><p>No keys, exchange or account have been connected in this preview.</p></div><div class="account-stats"><div><span>Account value</span><strong>—</strong></div><div><span>Available cash</span><strong>—</strong></div><div><span>Held positions</span><strong>—</strong></div></div><p>After a verified connection, this space can explain your balances and activity, with dates and sources. It has no account access yet.</p><div class="account-actions"><button type="button" class="trial-open button primary">Start free trial ↗</button><a href="https://noguru.io/how-it-works.html" target="_blank" rel="noopener" class="button secondary">Read the official setup guide ↗</a></div></div>
-      </section>
-
-      <section id="setup-launch" class="setup-launch" aria-label="Review your setup">
-        <p class="eyebrow">A clear start</p><h2>Capital, costs, then connection.</h2>
-        <div class="launch-costs"><span>NoGuru founding <b>$49 / month</b></span><span>Cornix Advanced <b>$49.90 / month</b></span></div>
-        <p class="launch-note">Separate subscriptions and separate 14-day trials. Your trading capital is your own.</p>
-        <button type="button" id="open-setup-review" class="button primary">Review my setup <span aria-hidden="true">→</span></button>
-        <p class="basis-note">No account connected · current terms checked 12 November 2026</p>
-      </section>
-
-      <section id="player" class="player" aria-label="Narrated story controls">
-        <div class="caption-row"><span class="caption-mark" aria-hidden="true">“</span><p id="caption" aria-live="polite">Press play when you’re ready. We’ll take it one step at a time.</p></div>
-        <div class="player-track" aria-hidden="true"><div id="progress-bar"></div></div>
-        <div class="player-controls"><div class="transport"><button type="button" id="play" class="button play"><svg viewBox="0 0 18 18" aria-hidden="true"><path d="m6 3 9 6-9 6Z" fill="currentColor"/></svg><span id="play-label">Play the story</span></button><button type="button" id="replay" class="icon-button" aria-label="Replay this chapter" title="Replay this chapter">↺</button><span id="chapter-counter" class="chapter-counter">01 / 06</span></div><div class="player-options"><button type="button" id="audio-toggle" class="option-button" aria-pressed="false"><span class="option-dot"></span><span id="audio-label">Voice off</span></button><button type="button" id="motion-toggle" class="option-button" aria-pressed="false">Motion on</button><button type="button" class="trial-open focused-trial">Start free trial ↗</button></div><div class="step-controls"><button type="button" id="previous" class="icon-button" aria-label="Previous chapter">←</button><button type="button" id="next" class="button next">Continue <span aria-hidden="true">→</span></button></div></div>
-        <div class="voice-row"><p id="voice-note" class="voice-note">Temporary narration: Daniel, a system voice. Grady recording pending. Captions always available.</p><button type="button" id="read-chapter" class="text-link">Read this chapter</button></div>
-      </section>
-
-    </main>
-    <footer class="site-footer"><p>Made to be understood. <span>Experience pilot · no account connected.</span></p><div><a href="../experience/">Earlier experience</a><a href="https://noguru.io/legal/disclaimer.html" target="_blank" rel="noopener">Risks ↗</a><button type="button" data-help="privacy">Privacy here</button></div></footer>
-  </div>
-  <dialog id="detail-dialog" aria-labelledby="detail-title"><div class="dialog-header"><p class="eyebrow">A little more understanding</p><button type="button" id="detail-close" class="icon-button" aria-label="Close and return to the story">×</button></div><h2 id="detail-title"></h2><div id="detail-body"></div></dialog>
-  <noscript><p class="noscript">This guided pilot needs JavaScript. You can still inspect <a href="https://noguru.io/track-record.html">the original evidence</a> or <a href="https://noguru.io/pricing.html">start with the trial and pricing information</a>.</p></noscript>
-  <script type="module" src="./app.js"></script>
-</body>
-</html>
+        <div id="account-preview" class="account-preview" hidden><div class="account-top"><span class="status-pill">Not connected</span><h3>Your account guide will begin with real data.</h3><p>No keys, exchange or account have been connected in this preview.</p></div><div class="account-stats"><div><span>Account value</span><strong>—</strong></div><div><span>Available cash</span><strong>—</strong></div><div><span>Held positions</span><strong>—</strong></div></div><p>After a verified connection, this space can explain your balances and activity, with dates and sources. It has no account access yet.</p><div class="account-actions"><button type="button" class="trial-open button primary">Start free trial ↗</button><a href="?page=how-it-works#roles" class="button secondary" data-route>Understand the connection →</a></div></div>
+      </section></div>
+    <div class="player-meta"><span id="chapter-counter"></span><button type="button" id="read-chapter" class="text-link">Read the full chapter</button><details class="listen-options"><summary>Listening options</summary><div><button type="button" id="audio-toggle" class="option-button"><span id="audio-label">Voice on</span></button><button type="button" id="motion-toggle" class="option-button">Motion on</button></div></details></div>
+  <section class="deeper-links"><p>Stay curious. Go a little deeper.</p><a href="?page=learn" data-route>Learn the mechanics →</a><a href="?page=pricing" data-route>Understand the costs →</a></section>
+ </div>
+ <article id="learning-page" class="learning-page" hidden aria-labelledby="learning-title"><a href="?page=story" data-route class="text-link return-to-guide">← Back to your guide</a><header class="learning-header"><p id="learning-eyebrow" class="eyebrow"></p><h1 id="learning-title"></h1><p id="learning-intro" class="summary"></p></header><nav id="learning-toc" aria-label="On this page"></nav><div id="learning-sections"></div><div class="learning-footer"><a href="?page=setup" data-route class="button secondary">Review your setup →</a><button type="button" class="trial-open button primary">Start free trial ↗</button></div></article>
+</main>
+<footer class="site-footer"><div><a href="?page=story" data-route class="footer-brand">NoGuru.</a><p>Expertise without ego.<br>Made to be understood.</p></div><nav aria-label="Footer navigation"><a href="?page=how-it-works" data-route>How it works</a><a href="?page=evidence" data-route>Evidence</a><a href="?page=pricing" data-route>Pricing</a><a href="?page=learn" data-route>Learn</a><a href="?page=glossary" data-route>Glossary</a><a href="?page=digest" data-route>Digest</a><a href="?page=setup" data-route>Setup</a><button type="button" data-help="privacy">Privacy here</button></nav><p class="footer-note">Website preview · no account connected.</p></footer>
+<dialog id="detail-dialog" aria-labelledby="detail-title"><div class="dialog-header"><p class="eyebrow">A little more understanding</p><button type="button" id="detail-close" class="icon-button" aria-label="Close and return">×</button></div><h2 id="detail-title"></h2><div id="detail-body"></div></dialog>
+<noscript><p class="noscript">This preview needs JavaScript for its content. Visit <a href="https://noguru.io/how-it-works.html">the current NoGuru explanation</a>.</p></noscript>
+<script type="module" src="./app.js"></script>
+</body></html>
