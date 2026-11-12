@@ -1,6 +1,6 @@
 (() => {
   'use strict';
-  const state = {view:'entrance',previousView:'entrance',stage:'buy',motion:false,captions:true,timer:null,preferences:{name:'NoGuru',accent:'apricot',narration:'text',cadence:'request'},journey:{step:'meet',allocationDraft:'',amountMinor:null,amountUSDT:null,amountDisplay:null,belowMinimum:null,editingFromReview:false,connectionPreviewed:false,completed:false}};
+  const state = {view:'entrance',previousView:'entrance',stage:'buy',motion:false,captions:true,sound:false,timer:null,preferences:{name:'NoGuru',accent:'apricot',narration:'text',cadence:'request'},journey:{step:'meet',allocationDraft:'',amountMinor:null,amountUSDT:null,amountDisplay:null,belowMinimum:null,editingFromReview:false,connectionPreviewed:false,completed:false}};
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const stages = {
     buy: {title:'A little at<br>a time.', kicker:'A planned beginning', description:'Purchases follow planned price levels. Buying lower can reduce this cycle’s average cost.', caption:'“Let’s follow one coin. I buy in stages, at planned price levels. Buying lower can bring down this cycle’s average purchase cost.”', cycle:'Building a position', average:'moves lower ↓', cash:'Ready when rules allow'},
@@ -60,14 +60,17 @@
     history.replaceState({view:state.view,step:state.journey.step},'',url);
   }
   function stopTimer(){if(state.timer)clearInterval(state.timer);state.timer=null;}
+  function sceneInView(){const r=$('#scene-panel').getBoundingClientRect();return r.height>0&&Math.min(r.bottom,innerHeight)-Math.max(r.top,0)>Math.min(r.height,innerHeight)*.08;}
   function setMotion(play){
-    state.motion=play&&!reducedMotion.matches&&state.view==='story';
+    state.motion=play&&!reducedMotion.matches&&state.view==='story'&&!document.hidden&&sceneInView();
     body.dataset.motion=state.motion?'playing':'paused';
     $('#motion-toggle').classList.toggle('playing',state.motion);
     $('#motion-toggle').setAttribute('aria-pressed',String(state.motion));
     $('#motion-toggle').setAttribute('aria-label',reducedMotion.matches?'Motion is off because reduced motion is enabled':state.motion?'Pause illustrative motion':'Play illustrative motion');
     $('#motion-text').textContent=state.motion?'Pause motion':'Play motion';
     stopTimer();
+    if(!state.motion)window.NoGuruRobots?.pause();
+    window.NoGuruRobots?.story(state.stage,state.motion);
     if(state.motion)state.timer=setInterval(()=>setStage(stageOrder[(stageOrder.indexOf(state.stage)+1)%stageOrder.length]),9000);
   }
   function setStage(stage){
@@ -84,6 +87,7 @@
     $$('.stage-tabs button').forEach(button=>{const active=button.dataset.stage===stage;button.setAttribute('aria-selected',String(active));button.tabIndex=active?0:-1;});
     $('#scene-panel').setAttribute('aria-labelledby',`tab-${stage}`);
     $('.price-chart').setAttribute('aria-label',stage==='sell'?'Illustrative price movement toward a sell target above average purchase cost; this is not actual market data':stage==='wait'?'Illustrative open position with its own average purchase cost while another cycle waits':'Illustrative staged buys at lower price levels, lowering this cycle’s average purchase cost');
+    window.NoGuruRobots?.story(stage,state.motion,{restart:true});
     if(state.view==='story')syncURL();
   }
   function updatePlanDisplay(){
@@ -147,6 +151,7 @@
     state.view=view;body.dataset.view=view;
     refreshNavigation();
     $$('[data-page]').forEach(page=>page.hidden=page.dataset.page!==view);
+    window.NoGuruRobots?.setView(view);
     setMotion(false);
     if(view==='onboarding')renderJourney();
     if(options.url!==false)syncURL();
@@ -211,6 +216,8 @@
   $$('.stage-tabs button').forEach(button=>button.addEventListener('click',()=>{setStage(button.dataset.stage);if(state.motion)setMotion(true);}));
   $('.stage-tabs').addEventListener('keydown',event=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;event.preventDefault();let i=stageOrder.indexOf(state.stage);i=event.key==='Home'?0:event.key==='End'?stageOrder.length-1:(i+(event.key==='ArrowRight'?1:-1)+stageOrder.length)%stageOrder.length;setStage(stageOrder[i]);$(`#tab-${state.stage}`).focus();});
   $('#motion-toggle').addEventListener('click',()=>setMotion(!state.motion));
+  $('#hello-guide').addEventListener('click',()=>window.NoGuruRobots?.welcome());
+  $('#sound-toggle').addEventListener('click',async()=>{state.sound=await window.NoGuruRobots.enableSound(!state.sound);$('#sound-toggle').setAttribute('aria-pressed',String(state.sound));$('#sound-toggle').setAttribute('aria-label',state.sound?'Turn off sound effects':'Turn on gentle sound effects');$('#sound-toggle').textContent=state.sound?'Sound on':'Sound off';});
   $('#skip-stage').addEventListener('click',()=>{setStage(stageOrder[(stageOrder.indexOf(state.stage)+1)%stageOrder.length]);if(state.motion)setMotion(true);});
   $('#captions-toggle').addEventListener('click',()=>{state.captions=!state.captions;$('#caption').classList.toggle('is-hidden',!state.captions);$('#caption').setAttribute('aria-hidden',String(!state.captions));$('#captions-toggle').setAttribute('aria-pressed',String(state.captions));$('#captions-toggle').setAttribute('aria-label',state.captions?'Hide captions':'Show captions');});
   $$('[data-join]').forEach(button=>button.addEventListener('click',()=>{setMotion(false);dialog.showModal();}));
@@ -268,14 +275,18 @@
   $('#story-explain').addEventListener('click',()=>openLearning(state.stage==='buy'?'imagine':state.stage==='wait'?'expectations':'account_update'));
   reducedMotion.addEventListener('change',()=>setMotion(false));
   document.addEventListener('visibilitychange',()=>{if(document.hidden)setMotion(false);});
+  const storyVisibility=new IntersectionObserver(entries=>{if(state.motion&&(!entries[0].isIntersecting||entries[0].intersectionRatio<.08))setMotion(false);},{threshold:[0,.08]});
+  storyVisibility.observe($('#scene-panel'));
+  const controlVisibility=new IntersectionObserver(entries=>{if(state.motion&&!entries[0].isIntersecting)setMotion(false);},{threshold:0});
+  controlVisibility.observe($('.playback-controls'));
   const params=new URLSearchParams(location.search);
   setStage(params.get('stage')||'buy');applyPreferences();updatePlanDisplay();
   const legacyPersonalize=params.get('view')==='account'&&params.get('personalize')==='1';
   state.journey.step=normalizeStep(legacyPersonalize?'meet':params.get('step'));
   showView(legacyPersonalize?'onboarding':params.get('view')||'entrance',{url:legacyPersonalize,scroll:false});
   window.NoGuruPreview={
-    getState:()=>({view:state.view,stage:state.stage,motion:state.motion,captions:state.captions,reducedMotion:reducedMotion.matches,preferences:{...state.preferences},accountConnected:false,updateExampleVisible:!$('#account-update').hidden,onboarding:{...state.journey,stepNumber:journeyOrder.indexOf(state.journey.step)+1,stepCount:journeyOrder.length},actualAccount:{value:null,cash:null,openPositions:null,completedTrades:null},learning:{...learningState},menu:{...menuState,scrollLocked:menuReturn!==null}}),
+    getState:()=>({view:state.view,stage:state.stage,motion:state.motion,captions:state.captions,sound:state.sound,robot:window.NoGuruRobots?.getState(),reducedMotion:reducedMotion.matches,preferences:{...state.preferences},accountConnected:false,updateExampleVisible:!$('#account-update').hidden,onboarding:{...state.journey,stepNumber:journeyOrder.indexOf(state.journey.step)+1,stepCount:journeyOrder.length},actualAccount:{value:null,cash:null,openPositions:null,completedTrades:null},learning:{...learningState},menu:{...menuState,scrollLocked:menuReturn!==null}}),
     validatePlanningAmount,
-    config:Object.freeze({joinDestination:null,audioProduced:false,liveData:false,storage:false,updatesSent:false,minimum:{supplierStatedUSDT:3000,recordedDate:'2026-11-09',verifyBeforeSetup:true},technicalMaximumMinor:MAX_MINOR.toString(),academy:{index:'https://noguru.io/academy/',checkedDate:'2026-11-11',contexts:Object.keys(academyContexts)},permissions:{read:false,trade:false,transfer:false,payment:false}})
+    config:Object.freeze({joinDestination:null,audioProduced:false,optionalNativeSFX:true,robotIsRigged:false,liveData:false,storage:false,updatesSent:false,minimum:{supplierStatedUSDT:3000,recordedDate:'2026-11-09',verifyBeforeSetup:true},technicalMaximumMinor:MAX_MINOR.toString(),academy:{index:'https://noguru.io/academy/',checkedDate:'2026-11-11',contexts:Object.keys(academyContexts)},permissions:{read:false,trade:false,transfer:false,payment:false}})
   };
 })();

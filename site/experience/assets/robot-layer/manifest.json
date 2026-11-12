@@ -1,0 +1,991 @@
+{
+  "version": 1,
+  "title": "NoGuru transparent character actions",
+  "frameWidth": 416,
+  "frameHeight": 432,
+  "fps": 12,
+  "alpha": true,
+  "format": "image/webp",
+  "poster": "poster.png",
+  "anchor": {
+    "x": 0.5,
+    "y": 0.9468
+  },
+  "actions": {
+    "welcome": {
+      "fps": 12,
+      "loop": false,
+      "duration": 2.0833,
+      "posterFrame": 12,
+      "description": "Open screen-left hand and a gentle head tilt.",
+      "frames": [
+        {
+          "src": "atlas-01.webp",
+          "x": 0,
+          "y": 0,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-01.webp",
+          "x": 416,
+          "y": 0,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-01.webp",
+          "x": 832,
+          "y": 0,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-01.webp",
+          "x": 1248,
+          "y": 0,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-01.webp",
+          "x": 0,
+          "y": 432,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-01.webp",
+          "x": 416,
+          "y": 432,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-01.webp",
+          "x": 832,
+          "y": 432,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-01.webp",
+          "x": 1248,
+          "y": 432,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-01.webp",
+          "x": 0,
+          "y": 864,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-01.webp",
+          "x": 416,
+          "y": 864,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-01.webp",
+          "x": 832,
+          "y": 864,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-01.webp",
+          "x": 1248,
+          "y": 864,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-01.webp",
+          "x": 0,
+          "y": 1296,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-01.webp",
+          "x": 416,
+          "y": 1296,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-01.webp",
+          "x": 832,
+          "y": 1296,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-01.webp",
+          "x": 1248,
+          "y": 1296,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-02.webp",
+          "x": 0,
+          "y": 0,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-02.webp",
+          "x": 416,
+          "y": 0,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-02.webp",
+          "x": 832,
+          "y": 0,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-02.webp",
+          "x": 1248,
+          "y": 0,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-02.webp",
+          "x": 0,
+          "y": 432,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-02.webp",
+          "x": 416,
+          "y": 432,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-02.webp",
+          "x": 832,
+          "y": 432,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-02.webp",
+          "x": 1248,
+          "y": 432,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-02.webp",
+          "x": 0,
+          "y": 864,
+          "w": 416,
+          "h": 432
+        }
+      ]
+    },
+    "explain": {
+      "fps": 12,
+      "loop": false,
+      "duration": 2.6667,
+      "posterFrame": 15,
+      "description": "Screen-right open-palm gesture, returning toward rest.",
+      "frames": [
+        {
+          "src": "atlas-02.webp",
+          "x": 416,
+          "y": 864,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-02.webp",
+          "x": 832,
+          "y": 864,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-02.webp",
+          "x": 1248,
+          "y": 864,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-02.webp",
+          "x": 0,
+          "y": 1296,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-02.webp",
+          "x": 416,
+          "y": 1296,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-02.webp",
+          "x": 832,
+          "y": 1296,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-02.webp",
+          "x": 1248,
+          "y": 1296,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-03.webp",
+          "x": 0,
+          "y": 0,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-03.webp",
+          "x": 416,
+          "y": 0,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-03.webp",
+          "x": 832,
+          "y": 0,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-03.webp",
+          "x": 1248,
+          "y": 0,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-03.webp",
+          "x": 0,
+          "y": 432,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-03.webp",
+          "x": 416,
+          "y": 432,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-03.webp",
+          "x": 832,
+          "y": 432,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-03.webp",
+          "x": 1248,
+          "y": 432,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-03.webp",
+          "x": 0,
+          "y": 864,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-03.webp",
+          "x": 416,
+          "y": 864,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-03.webp",
+          "x": 832,
+          "y": 864,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-03.webp",
+          "x": 1248,
+          "y": 864,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-03.webp",
+          "x": 0,
+          "y": 1296,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-03.webp",
+          "x": 416,
+          "y": 1296,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-03.webp",
+          "x": 832,
+          "y": 1296,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-03.webp",
+          "x": 1248,
+          "y": 1296,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-04.webp",
+          "x": 0,
+          "y": 0,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-04.webp",
+          "x": 416,
+          "y": 0,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-04.webp",
+          "x": 832,
+          "y": 0,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-04.webp",
+          "x": 1248,
+          "y": 0,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-04.webp",
+          "x": 0,
+          "y": 432,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-04.webp",
+          "x": 416,
+          "y": 432,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-04.webp",
+          "x": 832,
+          "y": 432,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-04.webp",
+          "x": 1248,
+          "y": 432,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-04.webp",
+          "x": 0,
+          "y": 864,
+          "w": 416,
+          "h": 432
+        }
+      ]
+    },
+    "wait": {
+      "fps": 12,
+      "loop": true,
+      "duration": 4.0,
+      "posterFrame": 12,
+      "description": "Quiet rest with small natural shifts; forward/reverse loop.",
+      "frames": [
+        {
+          "src": "atlas-04.webp",
+          "x": 0,
+          "y": 1296,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-04.webp",
+          "x": 416,
+          "y": 1296,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-04.webp",
+          "x": 832,
+          "y": 1296,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-04.webp",
+          "x": 1248,
+          "y": 1296,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-05.webp",
+          "x": 0,
+          "y": 0,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-05.webp",
+          "x": 416,
+          "y": 0,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-05.webp",
+          "x": 832,
+          "y": 0,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-05.webp",
+          "x": 1248,
+          "y": 0,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-05.webp",
+          "x": 0,
+          "y": 432,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-05.webp",
+          "x": 416,
+          "y": 432,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-05.webp",
+          "x": 832,
+          "y": 432,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-05.webp",
+          "x": 1248,
+          "y": 432,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-05.webp",
+          "x": 0,
+          "y": 864,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-05.webp",
+          "x": 416,
+          "y": 864,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-05.webp",
+          "x": 832,
+          "y": 864,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-05.webp",
+          "x": 1248,
+          "y": 864,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-05.webp",
+          "x": 0,
+          "y": 1296,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-05.webp",
+          "x": 416,
+          "y": 1296,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-05.webp",
+          "x": 832,
+          "y": 1296,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-05.webp",
+          "x": 1248,
+          "y": 1296,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-06.webp",
+          "x": 0,
+          "y": 0,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-06.webp",
+          "x": 416,
+          "y": 0,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-06.webp",
+          "x": 832,
+          "y": 0,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-06.webp",
+          "x": 1248,
+          "y": 0,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-06.webp",
+          "x": 0,
+          "y": 432,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-06.webp",
+          "x": 1248,
+          "y": 0,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-06.webp",
+          "x": 832,
+          "y": 0,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-06.webp",
+          "x": 416,
+          "y": 0,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-06.webp",
+          "x": 0,
+          "y": 0,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-05.webp",
+          "x": 1248,
+          "y": 1296,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-05.webp",
+          "x": 832,
+          "y": 1296,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-05.webp",
+          "x": 416,
+          "y": 1296,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-05.webp",
+          "x": 0,
+          "y": 1296,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-05.webp",
+          "x": 1248,
+          "y": 864,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-05.webp",
+          "x": 832,
+          "y": 864,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-05.webp",
+          "x": 416,
+          "y": 864,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-05.webp",
+          "x": 0,
+          "y": 864,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-05.webp",
+          "x": 1248,
+          "y": 432,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-05.webp",
+          "x": 832,
+          "y": 432,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-05.webp",
+          "x": 416,
+          "y": 432,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-05.webp",
+          "x": 0,
+          "y": 432,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-05.webp",
+          "x": 1248,
+          "y": 0,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-05.webp",
+          "x": 832,
+          "y": 0,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-05.webp",
+          "x": 416,
+          "y": 0,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-05.webp",
+          "x": 0,
+          "y": 0,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-04.webp",
+          "x": 1248,
+          "y": 1296,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-04.webp",
+          "x": 832,
+          "y": 1296,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-04.webp",
+          "x": 416,
+          "y": 1296,
+          "w": 416,
+          "h": 432
+        }
+      ]
+    },
+    "nod": {
+      "fps": 12,
+      "loop": false,
+      "duration": 1.75,
+      "posterFrame": 12,
+      "description": "Restrained acknowledgement: a small head dip and return.",
+      "frames": [
+        {
+          "src": "atlas-06.webp",
+          "x": 416,
+          "y": 432,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-06.webp",
+          "x": 832,
+          "y": 432,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-06.webp",
+          "x": 1248,
+          "y": 432,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-06.webp",
+          "x": 0,
+          "y": 864,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-06.webp",
+          "x": 416,
+          "y": 864,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-06.webp",
+          "x": 832,
+          "y": 864,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-06.webp",
+          "x": 1248,
+          "y": 864,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-06.webp",
+          "x": 0,
+          "y": 1296,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-06.webp",
+          "x": 416,
+          "y": 1296,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-06.webp",
+          "x": 832,
+          "y": 1296,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-06.webp",
+          "x": 1248,
+          "y": 1296,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-07.webp",
+          "x": 0,
+          "y": 0,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-07.webp",
+          "x": 416,
+          "y": 0,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-07.webp",
+          "x": 832,
+          "y": 0,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-07.webp",
+          "x": 1248,
+          "y": 0,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-07.webp",
+          "x": 0,
+          "y": 432,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-07.webp",
+          "x": 416,
+          "y": 432,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-07.webp",
+          "x": 832,
+          "y": 432,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-07.webp",
+          "x": 1248,
+          "y": 432,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-07.webp",
+          "x": 0,
+          "y": 864,
+          "w": 416,
+          "h": 432
+        },
+        {
+          "src": "atlas-07.webp",
+          "x": 416,
+          "y": 864,
+          "w": 416,
+          "h": 432
+        }
+      ]
+    }
+  },
+  "atlases": [
+    {
+      "src": "atlas-01.webp",
+      "width": 1664,
+      "height": 1728,
+      "bytes": 384220,
+      "alphaLossless": true
+    },
+    {
+      "src": "atlas-02.webp",
+      "width": 1664,
+      "height": 1728,
+      "bytes": 381130,
+      "alphaLossless": true
+    },
+    {
+      "src": "atlas-03.webp",
+      "width": 1664,
+      "height": 1728,
+      "bytes": 379508,
+      "alphaLossless": true
+    },
+    {
+      "src": "atlas-04.webp",
+      "width": 1664,
+      "height": 1728,
+      "bytes": 374390,
+      "alphaLossless": true
+    },
+    {
+      "src": "atlas-05.webp",
+      "width": 1664,
+      "height": 1728,
+      "bytes": 370780,
+      "alphaLossless": true
+    },
+    {
+      "src": "atlas-06.webp",
+      "width": 1664,
+      "height": 1728,
+      "bytes": 374620,
+      "alphaLossless": true
+    },
+    {
+      "src": "atlas-07.webp",
+      "width": 1664,
+      "height": 1728,
+      "bytes": 236078,
+      "alphaLossless": true
+    }
+  ],
+  "notes": [
+    "A 2D transparent rendered character layer; not a 3D model or rig.",
+    "Non-looping actions hold their last frame. Wait uses an explicit forward/reverse sequence.",
+    "No audio, environment, floor or baked ground shadow. Source motion contains minor generative variation.",
+    "Respect reduced-motion preferences and provide pause."
+  ]
+}

@@ -9,6 +9,7 @@
   <link rel="icon" href="assets/companion-mark.svg" type="image/svg+xml">
   <link rel="stylesheet" href="styles.css?v=ae4124f99b4b">
   <link rel="stylesheet" href="fit-screen.css?v=52892e0220e6">
+  <link rel="stylesheet" href="robot-layer.css?v=20261112-1">
 </head>
 <body data-view="entrance" data-stage="buy" data-motion="paused">
   <a class="skip-link" href="#main">Skip to content</a>
@@ -35,7 +36,7 @@
         <div class="entrance-art" aria-label="A friendly sculptural robot making room beside a small portfolio">
           <div class="art-halo"></div><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
           <div class="floating-label human-label"><span class="tiny-spark">✳</span> A little human, by design.</div>
-          <img class="hero-guide" src="assets/noguru-guide.png" alt="NoGuru, a warm ceramic robot with a soft expression and an open hand" fetchpriority="high">
+          <div class="hero-guide robot-layer" data-robot-layer="entrance" role="img" aria-label="NoGuru, a warm ceramic robot with a relaxed welcome"><img src="assets/robot-layer/poster.png" alt="" fetchpriority="high"><canvas aria-hidden="true"></canvas></div><button class="hello-control" id="hello-guide" type="button">Say hello <span aria-hidden="true">↗</span></button>
           <div class="coin coin-apricot coin-one" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="m16 6 8 10-8 10-8-10zM8 16h16"/></svg></div>
           <div class="coin coin-pine coin-two" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M9 11h14M9 16h14M9 21h14M12 8v16M20 8v16"/></svg></div>
           <div class="reserve-tray" aria-hidden="true"><i></i><i></i><i></i></div>
@@ -54,7 +55,7 @@
           </div>
           <div class="portfolio-scene portfolio-world" id="scene-panel" role="tabpanel" aria-labelledby="tab-buy">
             <div class="world-atmosphere" aria-hidden="true"></div>
-            <img class="world-floor" src="assets/portfolio-world.png" alt="" aria-hidden="true">
+            <div class="code-world-floor" aria-hidden="true"></div><div class="code-world-plinth" aria-hidden="true"></div><div class="code-world-reserve" aria-hidden="true"></div><div class="code-world-waiting" aria-hidden="true"><i></i><i></i><i></i></div>
             <div class="scene-orbit" aria-hidden="true"></div>
             <span class="account-label">Inside your exchange account</span>
             <div class="position active-position"><div class="position-top"><span class="small-coin"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="m16 6 8 10-8 10-8-10zM8 16h16"/></svg></span><div><p>One coin</p><span id="cycle-state">Building a position</span></div><i class="live-dot" aria-hidden="true"></i></div>
@@ -64,14 +65,14 @@
             <div class="position waiting-position"><span class="position-label">Another cycle</span><div class="waiting-symbol" aria-hidden="true"><span></span><span></span><span></span></div><strong>Waiting</strong><p>Its own average.</p></div>
             <div class="cash-pool"><div class="cash-stack" aria-hidden="true"><i></i><i></i><i></i><i></i></div><div><span>Cash reserve</span><strong id="cash-label">Ready when rules allow</strong></div></div>
             <div class="cash-flow" aria-hidden="true"><svg class="cash-route" viewBox="0 0 130 120" preserveAspectRatio="none"><path d="M4 4C15 38 80 45 116 108"/><path class="cash-route-arrow" d="m106 104 10 4-1-11"/></svg><i></i><i></i><i></i></div>
-            <img class="scene-guide" src="assets/noguru-guide-attentive.png" alt="NoGuru watching the portfolio beside you" loading="eager">
+            <div class="scene-guide robot-layer" data-robot-layer="story" role="img" aria-label="NoGuru following this illustrative portfolio moment"><img src="assets/robot-layer/poster.png" alt=""><canvas aria-hidden="true"></canvas></div>
             <div class="scene-footnote"><span class="mini-dot"></span> Capital moves. Reserves change.</div>
           </div>
         </div>
         <div class="narration-dock">
-          <div class="narrator-label"><img class="narrator-portrait" src="assets/noguru-guide-attentive.png" alt=""><span class="voice-glyph" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span>NoGuru<span>Narration text preview</span></span></div>
+          <div class="narrator-label"><img class="narrator-portrait" src="assets/robot-layer/poster.png" alt=""><span class="voice-glyph" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span>NoGuru<span>Narration text preview</span></span></div>
           <p class="caption" id="caption">“Let’s follow one coin. I buy in stages, at planned price levels. Buying lower can bring down this cycle’s average purchase cost.”</p>
-          <div class="playback-controls"><button class="play-button" id="motion-toggle" aria-pressed="false" aria-label="Play illustrative motion"><svg viewBox="0 0 24 24" class="play-icon" aria-hidden="true"><path d="m8 5 11 7-11 7z"/></svg><svg viewBox="0 0 24 24" class="pause-icon" aria-hidden="true"><path d="M8 5v14M16 5v14"/></svg><span id="motion-text">Play motion</span></button><button class="icon-button" id="skip-stage" aria-label="Skip to next portfolio moment"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 6 9 6-9 6zM18 6v12"/></svg><span class="control-word">Skip</span></button><button class="icon-button captions-button" id="captions-toggle" aria-pressed="true" aria-label="Hide captions"><span>CC</span></button></div>
+          <div class="playback-controls"><button class="play-button" id="motion-toggle" aria-pressed="false" aria-label="Play illustrative motion"><svg viewBox="0 0 24 24" class="play-icon" aria-hidden="true"><path d="m8 5 11 7-11 7z"/></svg><svg viewBox="0 0 24 24" class="pause-icon" aria-hidden="true"><path d="M8 5v14M16 5v14"/></svg><span id="motion-text">Play motion</span></button><button class="icon-button" id="skip-stage" aria-label="Skip to next portfolio moment"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 6 9 6-9 6zM18 6v12"/></svg><span class="control-word">Skip</span></button><button class="sound-button" id="sound-toggle" type="button" aria-pressed="false" aria-label="Turn on gentle sound effects">Sound off</button><button class="icon-button captions-button" id="captions-toggle" aria-pressed="true" aria-label="Hide captions"><span>CC</span></button></div>
         </div>
         <div class="story-bottom"><button class="learning-link" id="story-explain"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5C8 2 4 4 3 5v14c4-2 6-1 9 1 3-2 5-3 9-1V5c-1-1-5-3-9 0v15"/></svg> Explain this moment</button><p>Price movement shown is illustrative. Targets and recovery are not guaranteed.</p><button class="text-link" data-go="evidence">See the whole picture <span aria-hidden="true">↗</span></button></div>
       </section>
@@ -92,7 +93,7 @@
         <div class="journey-progress"><span id="journey-progress-text">1 of 7 · Meet your guide</span><ol aria-label="Journey progress" id="journey-progress-bars"><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ol></div>
         <h1 id="journey-title">Let’s make this<br><em>feel like you.</em></h1>
         <div class="journey-layout">
-          <aside class="journey-companion"><p id="journey-narration">“You can give me a familiar name and choose the atmosphere around us. The same NoGuru strategy stays behind it.”</p><div class="journey-world"><img class="journey-floor" src="assets/portfolio-world.png" alt=""><img class="journey-guide" src="assets/noguru-guide.png" alt="NoGuru guiding you through one considered step at a time"></div><span class="journey-voice-note">NoGuru · Prepared narration text</span></aside>
+          <aside class="journey-companion"><p id="journey-narration">“You can give me a familiar name and choose the atmosphere around us. The same NoGuru strategy stays behind it.”</p><div class="journey-world"><img class="journey-floor" src="assets/portfolio-world.png" alt="" loading="lazy"><img class="journey-guide" src="assets/noguru-guide.png" alt="NoGuru guiding you through one considered step at a time" loading="lazy"></div><span class="journey-voice-note">NoGuru · Prepared narration text</span></aside>
           <div class="journey-workspace">
             <form id="journey-form" novalidate>
               <section class="journey-step" data-journey-panel="meet" aria-labelledby="meet-title"><h2 id="meet-title">A familiar guide.</h2><div class="name-field"><label for="guide-name">Call your guide</label><div class="name-input-wrap"><input id="guide-name" name="guide-name" type="text" value="NoGuru" maxlength="20" autocomplete="off" spellcheck="false" aria-describedby="name-help"><span id="name-count">6 / 20</span></div><p id="name-help">A familiar name. The same NoGuru strategy.</p></div><fieldset class="accent-field"><legend>A little color</legend><div class="accent-options"><label><input type="radio" name="accent" value="apricot" checked><span class="accent-chip"><i style="--swatch:#E5A07C"></i>Apricot</span></label><label><input type="radio" name="accent" value="sage"><span class="accent-chip"><i style="--swatch:#8BA995"></i>Sage</span></label><label><input type="radio" name="accent" value="lilac"><span class="accent-chip"><i style="--swatch:#BBB9D5"></i>Lilac</span></label></div><p class="field-note">Your atmosphere changes. Your companion stays familiar.</p></fieldset></section>
@@ -114,7 +115,7 @@
         <div class="account-layout">
           <div class="personal-guide-panel">
             <div class="personal-guide-copy"><span class="guide-name-label">A little company</span><h2>Hello.<br>I’m <span data-guide-name>NoGuru</span>.</h2><p>I’ll help you follow what your capital is doing, at your pace.</p><button class="personalize-trigger" data-personalize>Make this yours <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 4 5 5M4 20l4-1L20 7l-3-3L5 16z"/></svg></button></div>
-            <div class="personal-guide-art"><div class="personal-orbit"></div><img src="assets/noguru-guide.png" alt="Your NoGuru companion, with a welcoming open hand"></div>
+            <div class="personal-guide-art"><div class="personal-orbit"></div><img src="assets/noguru-guide.png" alt="Your NoGuru companion, with a welcoming open hand" loading="lazy"></div>
             <div class="preference-summary"><span class="preference-dot"></span><span id="preference-summary">Text only · Updates on request</span></div>
           </div>
           <div class="account-overview">
@@ -138,7 +139,7 @@
   <dialog id="join-dialog" aria-labelledby="join-title"><button class="icon-button modal-close" data-close aria-label="Close join preview"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button><p class="eyebrow"><span></span> Your next step</p><h2 id="join-title">A place in<br>your portfolio.</h2><p>The next step will help you review costs and setup requirements, choose an allocation, and connect a supported exchange when you’re ready.</p><div class="join-preview-note"><strong>Concept preview</strong><p>The signup destination is still to be selected. Nothing is submitted or connected here.</p></div><button class="button primary" id="preview-personal-guide">Preview your personal guide <span aria-hidden="true">→</span></button><button class="text-link modal-back" data-close>Back to the experience <span aria-hidden="true">↶</span></button></dialog>
   <dialog id="learning-dialog" aria-labelledby="learning-title">
     <button class="icon-button modal-close" id="close-learning" aria-label="Close learning drawer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
-    <div class="learning-heading"><div><p class="eyebrow"><span></span> <b id="learning-source-kind">Academy lesson</b></p><h2 id="learning-title">A little more<br><em>context.</em></h2></div><img src="assets/noguru-guide-attentive.png" alt="NoGuru, beside the explanation"></div>
+    <div class="learning-heading"><div><p class="eyebrow"><span></span> <b id="learning-source-kind">Academy lesson</b></p><h2 id="learning-title">A little more<br><em>context.</em></h2></div><img src="assets/noguru-guide-attentive.png" alt="NoGuru, beside the explanation" loading="lazy"></div>
     <p class="learning-intro" id="learning-intro"></p>
     <div class="learning-summary"><span id="learning-topic"></span><p id="learning-summary"></p></div>
     <a class="learning-lesson" id="learning-lesson" target="_blank" rel="noopener noreferrer" aria-describedby="academy-link-note"><span id="learning-link-action">Continue with this lesson</span><strong id="learning-lesson-title"></strong><span aria-hidden="true">↗</span></a>
@@ -159,6 +160,7 @@
     <div class="menu-website"><h3>The current NoGuru website</h3><p id="menu-external-note">These links open in a new tab. Your place and choices here stay intact.</p><nav class="menu-external-links" aria-label="Current NoGuru website"><a href="https://noguru.io/how-it-works.html" target="_blank" rel="noopener noreferrer" aria-describedby="menu-external-note">How it works <span aria-hidden="true">↗</span></a><a href="https://noguru.io/pricing.html" target="_blank" rel="noopener noreferrer" aria-describedby="menu-external-note">Pricing <span aria-hidden="true">↗</span></a><a href="https://noguru.io/academy/" target="_blank" rel="noopener noreferrer" aria-describedby="menu-external-note">Academy <span aria-hidden="true">↗</span></a><a href="https://noguru.io/glossary.html" target="_blank" rel="noopener noreferrer" aria-describedby="menu-external-note">Glossary <span aria-hidden="true">↗</span></a><a href="https://noguru.io/track-record.html" target="_blank" rel="noopener noreferrer" aria-describedby="menu-external-note">Track record <span aria-hidden="true">↗</span></a><a href="https://noguru.io/dashboard.html" target="_blank" rel="noopener noreferrer" aria-describedby="menu-external-note">Live dashboard <span aria-hidden="true">↗</span></a><a href="https://noguru.io/digest/" target="_blank" rel="noopener noreferrer" aria-describedby="menu-external-note">Digest <span aria-hidden="true">↗</span></a><a href="https://noguru.io/" target="_blank" rel="noopener noreferrer" aria-describedby="menu-external-note">Home <span aria-hidden="true">↗</span></a></nav></div>
     <button class="button primary" id="return-from-menu" type="button">Back to where I was <span aria-hidden="true">↶</span></button>
   </dialog>
-  <script src="app.js?v=500a5347db7d"></script>
+  <script src="robot-layer.js?v=20261112-1"></script>
+  <script src="app.js?v=robot-layer-20261112-1"></script>
 </body>
 </html>
