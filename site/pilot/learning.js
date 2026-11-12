@@ -1,5 +1,6 @@
 // Editorial preview, checked 12 November 2026. Plain data; no HTML or account data.
 // Core explanations live here. HTTPS links identify supporting primary sources.
+import {migratedPages} from './migration.js';
 const link = (label, url) => ({label, url});
 const learn = id => `?page=learn#${id}`;
 const glossary = id => `?page=glossary#${id}`;
@@ -179,3 +180,135 @@ export const learningPages = {
     ],
   },
 };
+
+// Complete public collections sit alongside the concise current-product reading.
+const currentGlossary = learningPages.glossary;
+const digestOrientation = learningPages.digest.sections;
+Object.assign(learningPages, migratedPages);
+
+const correctedDefinitions = {
+  cycle: ['A set of purchases managed toward a sale. A cycle may contain several buys and remains open until sold. A completed cycle is not a guarantee of a gain after costs.', 'The unit counted is the completed cycle, not every planned level, filled purchase or exchange order.'],
+  'ladder-rung': ['A ladder is a planned set of buying levels; a rung is one planned purchase level. Planned levels, filled purchases and completed cycles are different counts.', 'Later lower purchases happen only if the strategy conditions and available cash allow. No fixed current purchase count is established by this definition.'],
+  'dca-grid': ['Calendar dollar-cost averaging buys on a schedule. Price-staged buying plans entries around price movement. NoGuru’s later purchases depend on planned levels and strategy conditions, rather than a fixed calendar.', 'A lower purchase can reduce that same cycle’s weighted average cost and increase exposure. It does not guarantee recovery.'],
+  signal: ['A signal communicates strategy instructions, such as the coin, purchase sizes and levels, and an exit target. Cornix manages configured execution through your exchange account. A signal is not proof that every subscriber received the same fill.'],
+  cornix: ['A separate service that manages configured trading instructions through a connection to your exchange account. Its subscription, setup and trial are separate from NoGuru’s.'],
+  'api-key': ['Exchange-issued credentials allowing specified actions by another program. Real setup should permit the required spot trading and disable withdrawals. This guide does not need your credentials.'],
+  'stop-loss': ['A planned instruction to exit a losing position at specified conditions. Gaps, liquidity and execution can make the actual result differ from the intended limit.', 'NoGuru’s current spot strategy has no strategy stop-loss. Generic stop-based lessons do not establish a maximum loss for it.'],
+  'take-profit': ['An intended profit-taking condition. A target does not guarantee that the exchange fills an order or that the final result is profitable after costs.'],
+  'market-neutral-basket': ['A general strategy concept that combines opposing exposures to reduce a shared directional bet. It is not a description of NoGuru’s current public spot strategy.'],
+  'funding-rate': ['A periodic payment between long and short holders of a perpetual futures contract. Payment schedules and rates depend on the venue and contract. This is a futures concept, not a charge for holding a spot coin in this strategy.'],
+};
+const completeTerms = migratedPages['source-glossary'].sections.map(section => ({
+  ...section,
+  body: correctedDefinitions[section.id] || section.body,
+}));
+for (const section of currentGlossary.sections) {
+  if (!completeTerms.some(term => term.id === section.id)) completeTerms.push(section);
+}
+learningPages.glossary = {
+  title: 'The full glossary, with current strategy context.',
+  eyebrow: '42 public source terms, plus current-product definitions',
+  intro: 'The complete captured term collection is available here. Generic futures and stop-based concepts are distinguished from the current spot strategy. Known outcome assurances have been corrected.',
+  kind: 'glossary',
+  sections: completeTerms,
+  source: {...migratedPages['source-glossary'].source, scope: 'Complete public term collection; specific current-product corrections are applied. The original source wording is preserved separately.'},
+};
+learningPages.glossary.sections.push({
+  id: 'source-edition', title: 'Source wording and corrections',
+  body: ['Cycle gains are not assured; buying levels are not a verified order count; stop-loss execution is not a guaranteed cap. The current product is spot only. These distinctions take precedence over older source wording.'],
+  links: [link('Read the original captured glossary wording', '?page=source-glossary')],
+});
+
+for (const section of digestOrientation) {
+  if (!learningPages.digest.sections.some(current => current.id === section.id)) learningPages.digest.sections.unshift(section);
+}
+
+learningPages.learn.sections.push({
+  id: 'full-collection', title: 'Explore the full public collection',
+  body: ['The short explanations above focus on this strategy. The complete available public Academy, including its original tables and figures, is also local. Member-only remainders remain clearly marked as unavailable.'],
+  links: [link('Browse all 22 public lesson portions', '?page=academy'), link('Open the full glossary', '?page=glossary'), link('Browse the dated digest archive', '?page=digest')],
+});
+
+learningPages.pricing.kind = 'pricing';
+learningPages.pricing.cards = [
+  {eyebrow: 'Maintained strategy', title: 'NoGuru founding offer', price: '$49', unit: '/ month', body: ['Current checked founding rate while the offer is open. The alternative standard rate is $99 per month.'], note: 'First 100 subscribers; retained while the subscription stays active.', links: [link('Understand the two services', '?page=how-it-works#roles')]},
+  {eyebrow: 'Separate execution service', title: 'Cornix Advanced', price: '$49.90', unit: '/ month', body: ['Monthly billing. An annual option is displayed as $32.99 per month equivalent, billed annually. Confirm plan and exchange fit.'], links: [link('Understand the separate trial clock', '?page=trial')]},
+  {eyebrow: 'Readable cost example', title: 'Combined monthly services', price: '$98.90', unit: '/ month', body: ['$49 NoGuru founding rate + $49.90 Cornix Advanced monthly billing. At NoGuru’s $99 standard rate, the combined bill would be $148.90.'], note: 'Exchange trading fees and other applicable costs are additional. This is a bill, not a return or fee-payback prediction.', links: [link('Open setup preview', '?page=setup')]},
+];
+learningPages.pricing.sections = learningPages.pricing.sections.map(section => section.id === 'trials' ? {
+  id: 'trials', title: 'Understand the two trials after setup',
+  body: ['NoGuru and Cornix have separate 14-day offers and different clocks. Read the setup first, then inspect the dedicated trial page before choosing a provider link. Nothing activates merely by exploring this preview.'],
+  links: [link('Open setup preview', '?page=setup'), link('Read the full trial explanation', '?page=trial')],
+} : section);
+
+learningPages.trial = {
+  title: 'Two services. Two separate trial clocks.',
+  eyebrow: 'After you understand the setup · checked 12 November 2026',
+  intro: 'Take a moment to get comfortable with the two services and their timing. When you’re ready, the provider links are below.',
+  notice: 'This preview starts neither service and leaves your exchange unconnected.',
+  kind: 'trial',
+  cards: [
+    {eyebrow: 'Strategy access', title: 'NoGuru', price: '14 days', unit: 'free', body: ['No card or payment details. Public terms say once per Telegram account; access ends unless you pay.'], note: 'The exact activation trigger and cutoff were not tested in this preview.'},
+    {eyebrow: 'Execution platform', title: 'Cornix Premium', price: '14 days', unit: 'free for new users', body: ['No payment details. The clock starts at the first created trade, including manual, smart-bot, signal, demo or backtesting trades.'], note: 'The trial is Premium; the paid plan you later choose may differ.'},
+  ],
+  sections: [
+    {id: 'prepare', title: 'Know what you are about to connect', body: ['Review the operating capital, separate subscriptions, compatible exchange and dedicated allocation. Confirm spot-trading permissions with withdrawals disabled. Your account in this guide is still unconnected.'], links: [link('Return to setup preview', '?page=setup'), link('Read setup and control', '?page=how-it-works#setup'), link('Review the full cost example', '?page=pricing')]},
+    {id: 'clocks', title: 'The clocks need not begin together', body: ['NoGuru access and Cornix’s first-trade-triggered trial are separate. A demo or backtest can start the Cornix clock before you place a real exchange trade. Confirm your actual dates with each service.', 'Use a trial to check setup and observed execution. It does not establish future returns. The public NoGuru offer excludes UK residents; other eligibility still needs confirmation.'], links: [link('Read the captured provider terms here', '?page=terms'), link('Primary source: Cornix’s official trial clock', 'https://help.cornix.io/en/articles/5814827-cornix-free-trial')]},
+    {id: 'provider-links', title: 'Provider links, when you are ready', body: ['These intentional external links leave the local preview. NoGuru’s bot requires your own action in Telegram; Cornix registration is a separate service step. Viewing the guide starts neither.'], links: [link('Open the NoGuru provider bot — external', 'https://t.me/NoGuruMembers_bot?start=trial_cornixpage'), link('Open Cornix registration — external', 'https://dashboard.cornix.io/register')]},
+  ],
+  source: {label: 'Checked primary offer and trial sources', url: 'https://noguru.io/pricing.html', capturedAt: '2026-11-12', scope: 'NoGuru pricing and terms; official Cornix pricing and trial article. No activation, purchase or authenticated setup tested.'},
+};
+
+learningPages.support = {
+  title: 'Find the detail you need.', eyebrow: 'Support and information',
+  intro: 'Current core explanations and dated source readings share the same local journey. Original source editions keep their dates and limits visible.',
+  sections: [
+    {id: 'current', title: 'Current setup and service reading', body: ['Start with the roles, costs, risks and connection preview.'], links: [link('How it works', '?page=how-it-works'), link('Pricing and the combined bill', '?page=pricing'), link('Setup preview', '?page=setup'), link('Trial clocks and later provider links', '?page=trial')]},
+    {id: 'questions', title: 'The available support collection', body: ['These pages preserve the available prior review reading, with current-context notes where the source is older.'], links: [link('Questions and answers', '?page=faq'), link('Exchange directory', '?page=exchanges'), link('Risks and control', '?page=risks'), link('About the service', '?page=about'), link('Setup source reading', '?page=setup-guide'), link('Worked examples source reading', '?page=examples'), link('Sharp-market-fall source reading', '?page=market-stress'), link('Resource source reading', '?page=resources')]},
+    {id: 'provider', title: 'Original public provider information', body: ['The provider pages are captured source texts, not a new legal clearance or a trial activation.'], links: [link('Provider identity', '?page=impressum'), link('Terms', '?page=terms'), link('Privacy', '?page=privacy'), link('Risk disclaimer', '?page=disclaimer'), link('Historical methodology and its source conflict', '?page=methodology')]},
+  ],
+};
+
+const catalogGroups = [
+  {id: 'journey', title: 'The current journey', keys: ['how-it-works', 'pricing', 'trial', 'learn', 'glossary', 'academy', 'digest', 'support']},
+  {id: 'academy', title: 'Every public Academy lesson and calculator', keys: Object.keys(learningPages).filter(key => key.startsWith('academy-'))},
+  {id: 'digest', title: 'Every captured public digest', keys: Object.keys(learningPages).filter(key => key.startsWith('digest-'))},
+  {id: 'support', title: 'Support, legal and information reading', keys: ['about', 'faq', 'exchanges', 'resources', 'risks', 'setup-guide', 'examples', 'market-stress', 'impressum', 'terms', 'privacy', 'disclaimer', 'methodology']},
+  {id: 'source-editions', title: 'Traceable original source editions', keys: ['source-home', 'source-how-it-works', 'source-pricing', 'source-glossary', ...Object.keys(learningPages).filter(key => key.startsWith('review-'))]},
+];
+learningPages.library = {
+  title: 'All the available reading, in one place.', eyebrow: 'Complete local reading catalog',
+  intro: 'The public lesson portions, dated digest archive, full glossary and available supporting pages are local. Member-only material stays unavailable. Current live evidence and market context are separate routes.',
+  sections: [
+    {id: 'live', title: 'Current public data', body: ['These views request public sources rather than pretending a historical snapshot is current.'], links: [link('Evidence', '?page=evidence'), link('Market context and recent episodes', '?page=market'), link('Return to the story', '?page=story'), link('Setup preview', '?page=setup')]},
+    ...catalogGroups.map(group => ({id: group.id, title: group.title, body: [], links: group.keys.map(key => link(learningPages[key].title, '?page=' + key))})),
+  ],
+};
+learningPages['all-pages'] = learningPages.library;
+
+// Route old anchors to the matching current explanation or preserved source,
+// rather than leaving a visitor at an absent section.
+const migratedAnchorTargets = {
+  '?page=pricing#checkout-card': '?page=setup',
+  '?page=pricing#crash': '?page=source-pricing#crash',
+  '?page=pricing#founding': '?page=pricing#noguru',
+  '?page=how-it-works#responsibilities': '?page=how-it-works#control',
+  '?page=how-it-works#strategy': '?page=how-it-works#roles',
+  '?page=pricing#renewals': '?page=terms#4-subscription-and-payment',
+  '?page=pricing#entitlements': '?page=trial#clocks',
+  '?page=faq#faq-setup': '?page=faq#which-setup-settings-do-i-use',
+  '?page=faq#all-questions': '?page=faq',
+  '?page=setup-guide#setup': '?page=setup-guide#a-practical-order-for-getting-ready',
+  '?page=setup-guide#next-step': '?page=setup',
+  '?page=setup-guide#before-live': '?page=how-it-works#setup',
+  '?page=exchanges#eligibility': '?page=exchanges#check-cornix-service-eligibility-first',
+  '?page=resources#support': '?page=resources#ask-the-service-that-handles-it',
+  '?page=setup-guide#expiry': '?page=setup-guide#noguru-free-access-expiry',
+  '?page=how-it-works#subscription-covers': '?page=how-it-works#roles',
+  '?page=methodology#record-scope': '?page=evidence',
+};
+for (const page of Object.values(learningPages)) {
+  for (const section of page.sections) {
+    section.links = section.links.map(item => ({...item, url: migratedAnchorTargets[item.url] || item.url}));
+  }
+}

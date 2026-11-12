@@ -1,0 +1,177 @@
+<svg aria-label="Stepgrid against holding Bitcoin and against the typical altcoin, per month on allocated funds, across 17 market stretches from November 2023 to November 2026 (a replay of today's rules, then the published signals). Stepgrid positive in 17 of 17; Bitcoin negative in 5; the typical altcoin negative in 13. Hover a stretch for its figures." class="regime-chart" role="img" viewbox="0 0 760 362" xmlns="http://www.w3.org/2000/svg"><style>:root{--ink:#263E3A;--ink-dim:#617D71;--line:#D9D4C9;--green:#617D71;--red:#A55B4D;--bg:#F7F3EA;--card:#F7F3EA;}text{font-family:Arial,sans-serif}</style>
+<line stroke="var(--line)" stroke-width="1" x1="44" x2="748" y1="272.0" y2="272.0"/>
+<text fill="var(--ink-faint)" font-size="11" text-anchor="end" x="38" y="276.0">-25%</text>
+<line stroke="var(--line)" stroke-width="1" x1="44" x2="748" y1="250.8" y2="250.8"/>
+<text fill="var(--ink-faint)" font-size="11" text-anchor="end" x="38" y="254.8">-20%</text>
+<line stroke="var(--line)" stroke-width="1" x1="44" x2="748" y1="229.7" y2="229.7"/>
+<text fill="var(--ink-faint)" font-size="11" text-anchor="end" x="38" y="233.7">-15%</text>
+<line stroke="var(--line)" stroke-width="1" x1="44" x2="748" y1="208.5" y2="208.5"/>
+<text fill="var(--ink-faint)" font-size="11" text-anchor="end" x="38" y="212.5">-10%</text>
+<line stroke="var(--line)" stroke-width="1" x1="44" x2="748" y1="187.3" y2="187.3"/>
+<text fill="var(--ink-faint)" font-size="11" text-anchor="end" x="38" y="191.3">-5%</text>
+<line stroke="var(--line)" stroke-width="1" x1="44" x2="748" y1="166.2" y2="166.2"/>
+<text fill="var(--ink-faint)" font-size="11" text-anchor="end" x="38" y="170.2">0%</text>
+<line stroke="var(--line)" stroke-width="1" x1="44" x2="748" y1="145.0" y2="145.0"/>
+<text fill="var(--ink-faint)" font-size="11" text-anchor="end" x="38" y="149.0">5%</text>
+<line stroke="var(--line)" stroke-width="1" x1="44" x2="748" y1="123.8" y2="123.8"/>
+<text fill="var(--ink-faint)" font-size="11" text-anchor="end" x="38" y="127.8">10%</text>
+<line stroke="var(--line)" stroke-width="1" x1="44" x2="748" y1="102.7" y2="102.7"/>
+<text fill="var(--ink-faint)" font-size="11" text-anchor="end" x="38" y="106.7">15%</text>
+<line stroke="var(--line)" stroke-width="1" x1="44" x2="748" y1="81.5" y2="81.5"/>
+<text fill="var(--ink-faint)" font-size="11" text-anchor="end" x="38" y="85.5">20%</text>
+<line stroke="var(--line)" stroke-width="1" x1="44" x2="748" y1="60.3" y2="60.3"/>
+<text fill="var(--ink-faint)" font-size="11" text-anchor="end" x="38" y="64.3">25%</text>
+<line stroke="var(--line)" stroke-width="1" x1="44" x2="748" y1="39.2" y2="39.2"/>
+<text fill="var(--ink-faint)" font-size="11" text-anchor="end" x="38" y="43.2">30%</text>
+<line stroke="var(--line)" stroke-width="1" x1="44" x2="748" y1="18.0" y2="18.0"/>
+<text fill="var(--ink-faint)" font-size="11" text-anchor="end" x="38" y="22.0">35%</text>
+<line stroke="var(--ink-faint)" stroke-width="1" x1="44" x2="748" y1="166.2" y2="166.2"/>
+<g aria-label="Bull, 15 Nov 2023 – 21 Jan 2024 Stepgrid, replay of today's rules: +11.0% per month on allocated funds Holding Bitcoin: +4.7% per month The typical altcoin: -5.5% per month 73% of 182 altcoins fell over this stretch Open bags at the end: -2.9% of the allocation (not sold, not in the bar) 10 of 17 of today's coins had prices for the whole stretch" class="stretch" data-tip="Bull, 15 Nov 2023 – 21 Jan 2024 Stepgrid, replay of today's rules: +11.0% per month on allocated funds Holding Bitcoin: +4.7% per month The typical altcoin: -5.5% per month 73% of 182 altcoins fell over this stretch Open bags at the end: -2.9% of the allocation (not sold, not in the bar) 10 of 17 of today's coins had prices for the whole stretch" tabindex="0">
+<rect fill="transparent" height="254" width="41.4" x="44.0" y="18"/>
+<rect fill="var(--positive)" height="46.7" rx="2" width="9.9" x="47.8" y="119.5"/>
+<rect fill="var(--ink-dim)" height="19.8" rx="2" width="9.9" x="59.7" y="146.4"/>
+<rect fill="var(--series-alts)" height="23.3" rx="2" width="9.9" x="71.7" y="166.2"/>
+<text fill="var(--ink-dim)" font-size="10.5" text-anchor="middle" x="64.7" y="287">Nov 23</text>
+<text fill="var(--ink-faint)" font-size="10" text-anchor="middle" x="64.7" y="299">bull</text>
+</g>
+<g aria-label="Bull, 11 Feb 2024 – 26 May 2024 Stepgrid, replay of today's rules: +10.5% per month on allocated funds Holding Bitcoin: +12.7% per month The typical altcoin: +2.3% per month 41% of 207 altcoins fell over this stretch Open bags at the end: -20.3% of the allocation (not sold, not in the bar) 11 of 17 of today's coins had prices for the whole stretch" class="stretch" data-tip="Bull, 11 Feb 2024 – 26 May 2024 Stepgrid, replay of today's rules: +10.5% per month on allocated funds Holding Bitcoin: +12.7% per month The typical altcoin: +2.3% per month 41% of 207 altcoins fell over this stretch Open bags at the end: -20.3% of the allocation (not sold, not in the bar) 11 of 17 of today's coins had prices for the whole stretch" tabindex="0">
+<rect fill="transparent" height="254" width="41.4" x="85.4" y="18"/>
+<rect fill="var(--positive)" height="44.5" rx="2" width="9.9" x="89.2" y="121.7"/>
+<rect fill="var(--ink-dim)" height="53.8" rx="2" width="9.9" x="101.1" y="112.3"/>
+<rect fill="var(--series-alts)" height="9.7" rx="2" width="9.9" x="113.1" y="156.4"/>
+<text fill="var(--ink-dim)" font-size="10.5" text-anchor="middle" x="106.1" y="313">Feb 24</text>
+<text fill="var(--ink-faint)" font-size="10" text-anchor="middle" x="106.1" y="325">bull</text>
+<line stroke="var(--line)" stroke-width="1" x1="106.1" x2="106.1" y1="274" y2="303"/>
+</g>
+<g aria-label="Alt season, 3 Mar 2024 – 12 Apr 2024 Stepgrid, replay of today's rules: +20.4% per month on allocated funds Holding Bitcoin: +8.5% per month The typical altcoin: -4.5% per month 59% of 204 altcoins fell over this stretch Open bags at the end: -5.6% of the allocation (not sold, not in the bar) 12 of 17 of today's coins had prices for the whole stretch" class="stretch" data-tip="Alt season, 3 Mar 2024 – 12 Apr 2024 Stepgrid, replay of today's rules: +20.4% per month on allocated funds Holding Bitcoin: +8.5% per month The typical altcoin: -4.5% per month 59% of 204 altcoins fell over this stretch Open bags at the end: -5.6% of the allocation (not sold, not in the bar) 12 of 17 of today's coins had prices for the whole stretch" tabindex="0">
+<rect fill="transparent" height="254" width="41.4" x="126.8" y="18"/>
+<rect fill="var(--positive)" height="86.6" rx="2" width="9.9" x="130.6" y="79.6"/>
+<rect fill="var(--ink-dim)" height="36.1" rx="2" width="9.9" x="142.6" y="130.1"/>
+<rect fill="var(--series-alts)" height="19.2" rx="2" width="9.9" x="154.5" y="166.2"/>
+<text fill="var(--ink-dim)" font-size="10.5" text-anchor="middle" x="147.5" y="287">Mar 24</text>
+<text fill="var(--ink-faint)" font-size="10" text-anchor="middle" x="147.5" y="299">alt season</text>
+</g>
+<g aria-label="Sideways, 26 May 2024 – 5 Aug 2024 Stepgrid, replay of today's rules: +6.0% per month on allocated funds Holding Bitcoin: -6.6% per month The typical altcoin: -20.2% per month 97% of 214 altcoins fell over this stretch Open bags at the end: -19.7% of the allocation (not sold, not in the bar) 15 of 17 of today's coins had prices for the whole stretch" class="stretch" data-tip="Sideways, 26 May 2024 – 5 Aug 2024 Stepgrid, replay of today's rules: +6.0% per month on allocated funds Holding Bitcoin: -6.6% per month The typical altcoin: -20.2% per month 97% of 214 altcoins fell over this stretch Open bags at the end: -19.7% of the allocation (not sold, not in the bar) 15 of 17 of today's coins had prices for the whole stretch" tabindex="0">
+<rect fill="transparent" height="254" width="41.4" x="168.2" y="18"/>
+<rect fill="var(--positive)" height="25.3" rx="2" width="9.9" x="172.0" y="140.9"/>
+<rect fill="var(--ink-dim)" height="27.8" rx="2" width="9.9" x="184.0" y="166.2"/>
+<rect fill="var(--series-alts)" height="85.5" rx="2" width="9.9" x="195.9" y="166.2"/>
+<text fill="var(--ink-dim)" font-size="10.5" text-anchor="middle" x="188.9" y="313">May 24</text>
+<text fill="var(--ink-faint)" font-size="10" text-anchor="middle" x="188.9" y="325">sideways</text>
+<line stroke="var(--line)" stroke-width="1" x1="188.9" x2="188.9" y1="274" y2="303"/>
+</g>
+<g aria-label="Bear, 5 Aug 2024 – 17 Sep 2024 Stepgrid, replay of today's rules: +6.0% per month on allocated funds Holding Bitcoin: +5.6% per month The typical altcoin: +6.7% per month 22% of 229 altcoins fell over this stretch Open bags at the end: -8.1% of the allocation (not sold, not in the bar) 15 of 17 of today's coins had prices for the whole stretch" class="stretch" data-tip="Bear, 5 Aug 2024 – 17 Sep 2024 Stepgrid, replay of today's rules: +6.0% per month on allocated funds Holding Bitcoin: +5.6% per month The typical altcoin: +6.7% per month 22% of 229 altcoins fell over this stretch Open bags at the end: -8.1% of the allocation (not sold, not in the bar) 15 of 17 of today's coins had prices for the whole stretch" tabindex="0">
+<rect fill="transparent" height="254" width="41.4" x="209.6" y="18"/>
+<rect fill="var(--positive)" height="25.4" rx="2" width="9.9" x="213.4" y="140.8"/>
+<rect fill="var(--ink-dim)" height="23.8" rx="2" width="9.9" x="225.4" y="142.3"/>
+<rect fill="var(--series-alts)" height="28.5" rx="2" width="9.9" x="237.3" y="137.7"/>
+<text fill="var(--ink-dim)" font-size="10.5" text-anchor="middle" x="230.4" y="287">Aug 24</text>
+<text fill="var(--ink-faint)" font-size="10" text-anchor="middle" x="230.4" y="299">bear</text>
+</g>
+<g aria-label="Sideways, 17 Sep 2024 – 6 Nov 2024 Stepgrid, replay of today's rules: +9.4% per month on allocated funds Holding Bitcoin: +9.3% per month The typical altcoin: -1.8% per month 62% of 241 altcoins fell over this stretch Open bags at the end: -15.6% of the allocation (not sold, not in the bar) 15 of 17 of today's coins had prices for the whole stretch" class="stretch" data-tip="Sideways, 17 Sep 2024 – 6 Nov 2024 Stepgrid, replay of today's rules: +9.4% per month on allocated funds Holding Bitcoin: +9.3% per month The typical altcoin: -1.8% per month 62% of 241 altcoins fell over this stretch Open bags at the end: -15.6% of the allocation (not sold, not in the bar) 15 of 17 of today's coins had prices for the whole stretch" tabindex="0">
+<rect fill="transparent" height="254" width="41.4" x="251.1" y="18"/>
+<rect fill="var(--positive)" height="39.6" rx="2" width="9.9" x="254.9" y="126.5"/>
+<rect fill="var(--ink-dim)" height="39.5" rx="2" width="9.9" x="266.8" y="126.7"/>
+<rect fill="var(--series-alts)" height="7.7" rx="2" width="9.9" x="278.7" y="166.2"/>
+<text fill="var(--ink-dim)" font-size="10.5" text-anchor="middle" x="271.8" y="313">Sep 24</text>
+<text fill="var(--ink-faint)" font-size="10" text-anchor="middle" x="271.8" y="325">sideways</text>
+<line stroke="var(--line)" stroke-width="1" x1="271.8" x2="271.8" y1="274" y2="303"/>
+</g>
+<g aria-label="Alt season, 6 Nov 2024 – 9 Jan 2025 Stepgrid, replay of today's rules: +35.0% per month on allocated funds Holding Bitcoin: +12.5% per month The typical altcoin: +6.8% per month 32% of 286 altcoins fell over this stretch Open bags at the end: -20.0% of the allocation (not sold, not in the bar) 15 of 17 of today's coins had prices for the whole stretch" class="stretch" data-tip="Alt season, 6 Nov 2024 – 9 Jan 2025 Stepgrid, replay of today's rules: +35.0% per month on allocated funds Holding Bitcoin: +12.5% per month The typical altcoin: +6.8% per month 32% of 286 altcoins fell over this stretch Open bags at the end: -20.0% of the allocation (not sold, not in the bar) 15 of 17 of today's coins had prices for the whole stretch" tabindex="0">
+<rect fill="transparent" height="254" width="41.4" x="292.5" y="18"/>
+<rect fill="var(--positive)" height="148.0" rx="2" width="9.9" x="296.3" y="18.2"/>
+<rect fill="var(--ink-dim)" height="52.7" rx="2" width="9.9" x="308.2" y="113.4"/>
+<rect fill="var(--series-alts)" height="28.8" rx="2" width="9.9" x="320.1" y="137.4"/>
+<text fill="var(--ink-dim)" font-size="10.5" text-anchor="middle" x="313.2" y="287">Nov 24</text>
+<text fill="var(--ink-faint)" font-size="10" text-anchor="middle" x="313.2" y="299">alt season</text>
+</g>
+<g aria-label="Bull, 9 Nov 2024 – 4 Feb 2025 Stepgrid, replay of today's rules: +25.1% per month on allocated funds Holding Bitcoin: +11.4% per month The typical altcoin: -9.8% per month 79% of 298 altcoins fell over this stretch Open bags at the end: -41.9% of the allocation (not sold, not in the bar) 15 of 17 of today's coins had prices for the whole stretch" class="stretch" data-tip="Bull, 9 Nov 2024 – 4 Feb 2025 Stepgrid, replay of today's rules: +25.1% per month on allocated funds Holding Bitcoin: +11.4% per month The typical altcoin: -9.8% per month 79% of 298 altcoins fell over this stretch Open bags at the end: -41.9% of the allocation (not sold, not in the bar) 15 of 17 of today's coins had prices for the whole stretch" tabindex="0">
+<rect fill="transparent" height="254" width="41.4" x="333.9" y="18"/>
+<rect fill="var(--positive)" height="106.1" rx="2" width="9.9" x="337.7" y="60.1"/>
+<rect fill="var(--ink-dim)" height="48.2" rx="2" width="9.9" x="349.6" y="118.0"/>
+<rect fill="var(--series-alts)" height="41.4" rx="2" width="9.9" x="361.6" y="166.2"/>
+<text fill="var(--ink-dim)" font-size="10.5" text-anchor="middle" x="354.6" y="313">Nov 24</text>
+<text fill="var(--ink-faint)" font-size="10" text-anchor="middle" x="354.6" y="325">bull</text>
+<line stroke="var(--line)" stroke-width="1" x1="354.6" x2="354.6" y1="274" y2="303"/>
+</g>
+<g aria-label="Sideways, 4 Feb 2025 – 9 Mar 2025 Stepgrid, replay of today's rules: +8.2% per month on allocated funds Holding Bitcoin: -11.2% per month The typical altcoin: -18.8% per month 90% of 307 altcoins fell over this stretch Open bags at the end: -8.5% of the allocation (not sold, not in the bar) 15 of 17 of today's coins had prices for the whole stretch" class="stretch" data-tip="Sideways, 4 Feb 2025 – 9 Mar 2025 Stepgrid, replay of today's rules: +8.2% per month on allocated funds Holding Bitcoin: -11.2% per month The typical altcoin: -18.8% per month 90% of 307 altcoins fell over this stretch Open bags at the end: -8.5% of the allocation (not sold, not in the bar) 15 of 17 of today's coins had prices for the whole stretch" tabindex="0">
+<rect fill="transparent" height="254" width="41.4" x="375.3" y="18"/>
+<rect fill="var(--positive)" height="34.6" rx="2" width="9.9" x="379.1" y="131.6"/>
+<rect fill="var(--ink-dim)" height="47.5" rx="2" width="9.9" x="391.0" y="166.2"/>
+<rect fill="var(--series-alts)" height="79.8" rx="2" width="9.9" x="403.0" y="166.2"/>
+<text fill="var(--ink-dim)" font-size="10.5" text-anchor="middle" x="396.0" y="287">Feb 25</text>
+<text fill="var(--ink-faint)" font-size="10" text-anchor="middle" x="396.0" y="299">sideways</text>
+</g>
+<g aria-label="Bear, 9 Mar 2025 – 22 Apr 2025 Stepgrid, replay of today's rules: +2.1% per month on allocated funds Holding Bitcoin: +5.9% per month The typical altcoin: -4.5% per month 65% of 337 altcoins fell over this stretch Open bags at the end: -4.6% of the allocation (not sold, not in the bar) 15 of 17 of today's coins had prices for the whole stretch" class="stretch" data-tip="Bear, 9 Mar 2025 – 22 Apr 2025 Stepgrid, replay of today's rules: +2.1% per month on allocated funds Holding Bitcoin: +5.9% per month The typical altcoin: -4.5% per month 65% of 337 altcoins fell over this stretch Open bags at the end: -4.6% of the allocation (not sold, not in the bar) 15 of 17 of today's coins had prices for the whole stretch" tabindex="0">
+<rect fill="transparent" height="254" width="41.4" x="416.7" y="18"/>
+<rect fill="var(--positive)" height="9.0" rx="2" width="9.9" x="420.5" y="157.1"/>
+<rect fill="var(--ink-dim)" height="25.2" rx="2" width="9.9" x="432.4" y="141.0"/>
+<rect fill="var(--series-alts)" height="18.9" rx="2" width="9.9" x="444.4" y="166.2"/>
+<text fill="var(--ink-dim)" font-size="10.5" text-anchor="middle" x="437.4" y="313">Mar 25</text>
+<text fill="var(--ink-faint)" font-size="10" text-anchor="middle" x="437.4" y="325">bear</text>
+<line stroke="var(--line)" stroke-width="1" x1="437.4" x2="437.4" y1="274" y2="303"/>
+</g>
+<g aria-label="Alt season, 10 May 2025 – 11 Jun 2025 Stepgrid, replay of today's rules: +19.4% per month on allocated funds Holding Bitcoin: +5.1% per month The typical altcoin: -17.2% per month 83% of 369 altcoins fell over this stretch Open bags at the end: -5.3% of the allocation (not sold, not in the bar) 16 of 17 of today's coins had prices for the whole stretch" class="stretch" data-tip="Alt season, 10 May 2025 – 11 Jun 2025 Stepgrid, replay of today's rules: +19.4% per month on allocated funds Holding Bitcoin: +5.1% per month The typical altcoin: -17.2% per month 83% of 369 altcoins fell over this stretch Open bags at the end: -5.3% of the allocation (not sold, not in the bar) 16 of 17 of today's coins had prices for the whole stretch" tabindex="0">
+<rect fill="transparent" height="254" width="41.4" x="458.1" y="18"/>
+<rect fill="var(--positive)" height="82.2" rx="2" width="9.9" x="461.9" y="84.0"/>
+<rect fill="var(--ink-dim)" height="21.7" rx="2" width="9.9" x="473.9" y="144.5"/>
+<rect fill="var(--series-alts)" height="72.9" rx="2" width="9.9" x="485.8" y="166.2"/>
+<text fill="var(--ink-dim)" font-size="10.5" text-anchor="middle" x="478.8" y="287">May 25</text>
+<text fill="var(--ink-faint)" font-size="10" text-anchor="middle" x="478.8" y="299">alt season</text>
+</g>
+<g aria-label="Sideways, 11 Jun 2025 – 4 Nov 2025 Stepgrid, replay of today's rules: +9.3% per month on allocated funds Holding Bitcoin: -0.4% per month The typical altcoin: -9.1% per month 84% of 470 altcoins fell over this stretch Open bags at the end: -32.8% of the allocation (not sold, not in the bar) 16 of 17 of today's coins had prices for the whole stretch" class="stretch" data-tip="Sideways, 11 Jun 2025 – 4 Nov 2025 Stepgrid, replay of today's rules: +9.3% per month on allocated funds Holding Bitcoin: -0.4% per month The typical altcoin: -9.1% per month 84% of 470 altcoins fell over this stretch Open bags at the end: -32.8% of the allocation (not sold, not in the bar) 16 of 17 of today's coins had prices for the whole stretch" tabindex="0">
+<rect fill="transparent" height="254" width="41.4" x="499.5" y="18"/>
+<rect fill="var(--positive)" height="39.3" rx="2" width="9.9" x="503.3" y="126.9"/>
+<rect fill="var(--ink-dim)" height="1.7" rx="2" width="9.9" x="515.3" y="166.2"/>
+<rect fill="var(--series-alts)" height="38.6" rx="2" width="9.9" x="527.2" y="166.2"/>
+<text fill="var(--ink-dim)" font-size="10.5" text-anchor="middle" x="520.2" y="313">Jun 25</text>
+<text fill="var(--ink-faint)" font-size="10" text-anchor="middle" x="520.2" y="325">sideways</text>
+<line stroke="var(--line)" stroke-width="1" x1="520.2" x2="520.2" y1="274" y2="303"/>
+</g>
+<g aria-label="Bear, 4 Nov 2025 – 30 Apr 2026 Stepgrid, replay of today's rules: +1.5% per month on allocated funds Holding Bitcoin: -4.4% per month The typical altcoin: -7.7% per month 85% of 527 altcoins fell over this stretch Open bags at the end: -7.2% of the allocation (not sold, not in the bar) 17 of 17 of today's coins had prices for the whole stretch" class="stretch" data-tip="Bear, 4 Nov 2025 – 30 Apr 2026 Stepgrid, replay of today's rules: +1.5% per month on allocated funds Holding Bitcoin: -4.4% per month The typical altcoin: -7.7% per month 85% of 527 altcoins fell over this stretch Open bags at the end: -7.2% of the allocation (not sold, not in the bar) 17 of 17 of today's coins had prices for the whole stretch" tabindex="0">
+<rect fill="transparent" height="254" width="41.4" x="540.9" y="18"/>
+<rect fill="var(--positive)" height="6.2" rx="2" width="9.9" x="544.7" y="160.0"/>
+<rect fill="var(--ink-dim)" height="18.6" rx="2" width="9.9" x="556.7" y="166.2"/>
+<rect fill="var(--series-alts)" height="32.6" rx="2" width="9.9" x="568.6" y="166.2"/>
+<text fill="var(--ink-dim)" font-size="10.5" text-anchor="middle" x="561.6" y="287">Nov 25</text>
+<text fill="var(--ink-faint)" font-size="10" text-anchor="middle" x="561.6" y="299">bear</text>
+</g>
+<g aria-label="Sideways, 30 Apr 2026 – 9 Jun 2026 Stepgrid, replay of today's rules: +4.9% per month on allocated funds Holding Bitcoin: -13.6% per month The typical altcoin: -17.5% per month 82% of 534 altcoins fell over this stretch Open bags at the end: -4.9% of the allocation (not sold, not in the bar) 14 of 17 of today's coins had prices for the whole stretch" class="stretch" data-tip="Sideways, 30 Apr 2026 – 9 Jun 2026 Stepgrid, replay of today's rules: +4.9% per month on allocated funds Holding Bitcoin: -13.6% per month The typical altcoin: -17.5% per month 82% of 534 altcoins fell over this stretch Open bags at the end: -4.9% of the allocation (not sold, not in the bar) 14 of 17 of today's coins had prices for the whole stretch" tabindex="0">
+<rect fill="transparent" height="254" width="41.4" x="582.4" y="18"/>
+<rect fill="var(--positive)" height="20.9" rx="2" width="9.9" x="586.2" y="145.3"/>
+<rect fill="var(--ink-dim)" height="57.4" rx="2" width="9.9" x="598.1" y="166.2"/>
+<rect fill="var(--series-alts)" height="74.2" rx="2" width="9.9" x="610.0" y="166.2"/>
+<text fill="var(--ink-dim)" font-size="10.5" text-anchor="middle" x="603.1" y="313">Apr 26</text>
+<text fill="var(--ink-faint)" font-size="10" text-anchor="middle" x="603.1" y="325">sideways</text>
+<line stroke="var(--line)" stroke-width="1" x1="603.1" x2="603.1" y1="274" y2="303"/>
+</g>
+<g aria-label="Bear, 9 Jun 2026 – 1 Aug 2026 Stepgrid, replay of today's rules: +2.5% per month on allocated funds Holding Bitcoin: +1.1% per month The typical altcoin: -5.7% per month 70% of 541 altcoins fell over this stretch Open bags at the end: -3.6% of the allocation (not sold, not in the bar) 16 of 17 of today's coins had prices for the whole stretch" class="stretch" data-tip="Bear, 9 Jun 2026 – 1 Aug 2026 Stepgrid, replay of today's rules: +2.5% per month on allocated funds Holding Bitcoin: +1.1% per month The typical altcoin: -5.7% per month 70% of 541 altcoins fell over this stretch Open bags at the end: -3.6% of the allocation (not sold, not in the bar) 16 of 17 of today's coins had prices for the whole stretch" tabindex="0">
+<rect fill="transparent" height="254" width="41.4" x="623.8" y="18"/>
+<rect fill="var(--positive)" height="10.4" rx="2" width="9.9" x="627.6" y="155.8"/>
+<rect fill="var(--ink-dim)" height="4.6" rx="2" width="9.9" x="639.5" y="161.5"/>
+<rect fill="var(--series-alts)" height="24.2" rx="2" width="9.9" x="651.4" y="166.2"/>
+<text fill="var(--ink-dim)" font-size="10.5" text-anchor="middle" x="644.5" y="287">Jun 26</text>
+<text fill="var(--ink-faint)" font-size="10" text-anchor="middle" x="644.5" y="299">bear</text>
+</g>
+<g aria-label="Bear, 1 Aug 2026 – 19 Aug 2026 Stepgrid, published signals: +2.0% per month on allocated funds Holding Bitcoin: +5.1% per month The typical altcoin: -0.1% per month 50% of 541 altcoins fell over this stretch Open ladders at the end: -0.7% of the allocation (not sold, not in the bar) 46 published cycles on 10 coins, sized at today's buy sizes on $38,600" class="stretch" data-tip="Bear, 1 Aug 2026 – 19 Aug 2026 Stepgrid, published signals: +2.0% per month on allocated funds Holding Bitcoin: +5.1% per month The typical altcoin: -0.1% per month 50% of 541 altcoins fell over this stretch Open ladders at the end: -0.7% of the allocation (not sold, not in the bar) 46 published cycles on 10 coins, sized at today's buy sizes on $38,600" tabindex="0">
+<rect fill="transparent" height="254" width="41.4" x="665.2" y="18"/>
+<rect fill="var(--positive)" height="8.4" rx="2" stroke="var(--ink)" stroke-width="1.5" width="9.9" x="669.0" y="157.8"/>
+<rect fill="var(--ink-dim)" height="21.7" rx="2" width="9.9" x="680.9" y="144.5"/>
+<rect fill="var(--series-alts)" height="1.0" rx="2" width="9.9" x="692.9" y="166.2"/>
+<text fill="var(--ink-dim)" font-size="10.5" text-anchor="middle" x="685.9" y="313">Aug 26</text>
+<text fill="var(--ink-faint)" font-size="10" text-anchor="middle" x="685.9" y="325">bear</text>
+<line stroke="var(--line)" stroke-width="1" x1="685.9" x2="685.9" y1="274" y2="303"/>
+</g>
+<g aria-label="Alt season, 22 Aug 2026 – 18 Oct 2026 Stepgrid, published signals: +13.6% per month on allocated funds Holding Bitcoin: +3.1% per month The typical altcoin: +0.0% per month 48% of 546 altcoins fell over this stretch Open ladders at the end: -11.4% of the allocation (not sold, not in the bar) 766 published cycles on 17 coins, sized at today's buy sizes on $38,600" class="stretch" data-tip="Alt season, 22 Aug 2026 – 18 Oct 2026 Stepgrid, published signals: +13.6% per month on allocated funds Holding Bitcoin: +3.1% per month The typical altcoin: +0.0% per month 48% of 546 altcoins fell over this stretch Open ladders at the end: -11.4% of the allocation (not sold, not in the bar) 766 published cycles on 17 coins, sized at today's buy sizes on $38,600" tabindex="0">
+<rect fill="transparent" height="254" width="41.4" x="706.6" y="18"/>
+<rect fill="var(--positive)" height="57.4" rx="2" stroke="var(--ink)" stroke-width="1.5" width="9.9" x="710.4" y="108.8"/>
+<rect fill="var(--ink-dim)" height="13.0" rx="2" width="9.9" x="722.3" y="153.2"/>
+<rect fill="var(--series-alts)" height="1.0" rx="2" width="9.9" x="734.3" y="166.2"/>
+<text fill="var(--ink-dim)" font-size="10.5" text-anchor="middle" x="727.3" y="287">Aug 26</text>
+<text fill="var(--ink-faint)" font-size="10" text-anchor="middle" x="727.3" y="299">alt season</text>
+</g>
+<rect fill="var(--positive)" height="10" rx="2" width="10" x="44" y="348"/><text fill="var(--ink-dim)" font-size="11" x="59" y="357">Stepgrid, replay</text>
+<rect fill="var(--positive)" height="10" rx="2" stroke="var(--ink)" stroke-width="1.5" width="10" x="174.6" y="348"/><text fill="var(--ink-dim)" font-size="11" x="189.6" y="357">Stepgrid, published signals</text>
+<rect fill="var(--ink-dim)" height="10" rx="2" width="10" x="372.29999999999995" y="348"/><text fill="var(--ink-dim)" font-size="11" x="387.29999999999995" y="357">Holding Bitcoin</text>
+<rect fill="var(--series-alts)" height="10" rx="2" width="10" x="496.79999999999995" y="348"/><text fill="var(--ink-dim)" font-size="11" x="511.79999999999995" y="357">The typical altcoin</text>
+</svg>

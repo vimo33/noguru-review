@@ -1,7 +1,8 @@
 import {chapters,help,externalLinks,costs} from './content.js';
-import {loadEvidence,loadMarket} from './data.js';
+import * as publicData from './data.js';
 import {createCharacter} from './character.js';
 import {learningPages} from './learning.js';
+import {renderReadingPage} from './reading-ui.js';
 
 // The same clock drives captions-only playback, pause snapshots and code-owned world cues.
 export function createCueClock(){
@@ -28,7 +29,7 @@ export function safeExternalURL(value){
 }
 
 export function resolveInternalRoute(value,base){
-  try{const current=new URL(base),url=new URL(value,current);if(url.origin!==current.origin||url.pathname!==current.pathname)return null;const page=url.searchParams.get('page')||'story';if(!['story','evidence','setup','how-it-works','pricing','learn','glossary','digest'].includes(page))return null;let anchor='';try{anchor=decodeURIComponent(url.hash.slice(1));}catch{}return {page,chapter:url.searchParams.get('chapter'),step:url.searchParams.get('step'),anchor};}catch{return null;}
+  try{const current=new URL(base),url=new URL(value,current);if(url.origin!==current.origin||url.pathname!==current.pathname)return null;const page=url.searchParams.get('page')||'story';const pages=['story','evidence','setup','market','how-it-works','pricing','learn','glossary','digest',...(typeof learningPages==='undefined'?[]:Object.keys(learningPages))];if(!pages.includes(page))return null;let anchor='';try{anchor=decodeURIComponent(url.hash.slice(1));}catch{}return {page,chapter:url.searchParams.get('chapter'),step:url.searchParams.get('step'),welcome:url.searchParams.get('welcome')==='1',anchor};}catch{return null;}
 }
 
 export function captionChunk(text,elapsed,duration,wordsPerChunk=11){
@@ -48,7 +49,7 @@ async function boot(){
   const pct=value=>Number.isFinite(value)?`${value>=0?'+':''}${value.toFixed(2)}%`:'Unavailable';
   const stamp=value=>{const d=new Date(value);return Number.isFinite(d.getTime())?d.toLocaleString('en-GB',{dateStyle:'medium',timeStyle:'short',timeZone:'UTC'})+' UTC':'Not supplied';};
   const media=matchMedia('(prefers-reduced-motion: reduce)'),audio=new Audio(),clock=createCueClock();
-  const state={page:'story',chapter:0,cue:0,playing:false,complete:false,audioEnabled:true,audioUnavailable:false,motionEnabled:true,worldVisible:true,waiting:false,mode:'audio',elapsed:0,epoch:0,playAttempt:0,dialog:null,evidence:null,market:null,name:'Your guide',hasStarted:false,accent:'#d4a17c'};
+  const state={page:'story',welcome:true,setupPreview:false,chapter:0,cue:0,playing:false,complete:false,audioEnabled:true,audioUnavailable:false,motionEnabled:true,worldVisible:true,waiting:false,mode:'audio',elapsed:0,epoch:0,playAttempt:0,dialog:null,evidence:null,market:null,episodes:null,name:'Your guide',hasStarted:false,accent:'#d4a17c'};
   let character=null,raf=0,worldToken=null,expectedAudio='',disposed=false,restoredProgress=null,resumeNotice=false,routeReady=false,applyingRoute=false;
   const dialog=$('#detail-dialog'),aborter=new AbortController(),storageKey='noguru:pilot:preferences:v1';
   audio.preload='metadata';audio.autoplay=false;
@@ -56,24 +57,31 @@ async function boot(){
   const now=()=>performance.now();
   const hasAudio=()=>state.audioEnabled&&!state.audioUnavailable&&Boolean(cue().audio);
   const currentTime=()=>state.playing&&state.mode==='audio'&&Number.isFinite(audio.currentTime)?Math.min(clock.duration,audio.currentTime):clock.current(now());
-  function routeSnapshot(){return {page:state.page,chapter:state.chapter,cue:state.cue,elapsed:currentTime(),scrollY};}
-  function routeURL(route){const url=new URL(location.href);url.searchParams.set('page',route.page);if(route.page==='story')url.searchParams.set('chapter',chapters[state.chapter].id);else url.searchParams.delete('chapter');if(!learningPages[route.page])url.searchParams.set('step',cue().id);else url.searchParams.delete('step');url.hash=route.anchor||'';return url;}
+  function routeSnapshot(){return {page:state.page,chapter:state.chapter,cue:state.cue,welcome:state.welcome,elapsed:currentTime(),scrollY};}
+  function routeURL(route){const url=new URL(location.href);url.searchParams.set('page',route.page);if(route.page==='story')url.searchParams.set('chapter',chapters[state.chapter].id);else url.searchParams.delete('chapter');const journey=['story','evidence','setup'].includes(route.page);if(journey&&!state.welcome)url.searchParams.set('step',cue().id);else url.searchParams.delete('step');if(journey&&state.welcome)url.searchParams.set('welcome','1');else url.searchParams.delete('welcome');url.hash=route.anchor||'';return url;}
   function contentLink(label,value){const internal=resolveInternalRoute(value,location.href);if(internal){const a=document.createElement('a');a.href=value;a.dataset.route='';a.textContent=label;return a;}return externalLink(label,value);}
-  function renderLearning(page){const data=learningPages[page];text('#learning-eyebrow',data.eyebrow);text('#learning-title',data.title);text('#learning-intro',data.intro);const toc=$('#learning-toc'),sections=$('#learning-sections');toc.replaceChildren();sections.replaceChildren();
-    for(const [index,item] of data.sections.entries()){const section=document.createElement('section'),heading=document.createElement('h2'),copy=document.createElement('div');section.className='learning-section';const anchor=/^[a-z][a-z0-9-]*$/.test(item.id)?item.id:`section-${index+1}`;section.id=`learning-${anchor}`;heading.textContent=item.title;for(const body of item.body||[])copy.append(paragraph(body));if(item.example){const example=paragraph(item.example);example.className='learning-example';copy.append(example);}const links=document.createElement('div');links.className='learning-source-links';for(const link of item.links||[]){const a=contentLink(link.label,link.url);if(a)links.append(a);}copy.append(links);section.append(heading,copy);sections.append(section);const a=document.createElement('a');a.href=`?page=${page}#${anchor}`;a.dataset.route='';a.textContent=item.title;toc.append(a);}
-  }
+  function renderLearning(page){const data=learningPages[page];text('#learning-eyebrow',data.eyebrow);text('#learning-title',data.title);text('#learning-intro',data.intro);$('#learning-search').value='';$('#learning-page .reading-tools').open=false;text('#search-status','');renderReadingPage(data,{page,sections:$('#learning-sections'),toc:$('#learning-toc'),cards:$('#learning-cards'),source:$('#learning-source'),link:contentLink});$('#learning-page .learning-footer').hidden=page==='trial';}
   function applyRoute(route,{restore=null,scroll=false}={}){
-    pause();if(state.dialog){state.dialog.resume=false;state.dialog.navigating=true;dialog.close();}document.body.classList.remove('story-focused','is-listening');state.page=route.page;document.body.dataset.page=route.page;const isReading=Boolean(learningPages[route.page]);$('#journey-view').hidden=isReading;$('#learning-page').hidden=!isReading;$$('.menu').forEach(menu=>menu.open=false);
-    if(isReading)renderLearning(route.page);else{let index=route.page==='evidence'?3:route.page==='setup'?5:chapters.findIndex(c=>c.id===route.chapter);if(index<0)index=Number.isInteger(restore?.chapter)?restore.chapter:state.chapter;index=Math.max(0,Math.min(chapters.length-1,index));if(index!==state.chapter)enterChapter(index);const cueIndex=route.step?chapter().cues.findIndex(c=>c.id===route.step):Number.isInteger(restore?.cue)?restore.cue:state.cue;if(cueIndex>=0&&cueIndex<chapter().cues.length&&cueIndex!==state.cue)enterCue(cueIndex);if(restore&&restore.chapter===state.chapter&&restore.cue===state.cue){state.elapsed=Math.max(0,Math.min(clock.duration,restore.elapsed||0));clock.seek(state.elapsed,now());}syncControls();}
-    $$('a[data-route]').forEach(a=>{const linked=resolveInternalRoute(a.getAttribute('href'),location.href);if(linked?.page===route.page)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});document.title=`${isReading?learningPages[route.page].title:chapter().title} — NoGuru`;
-    if(scroll)requestAnimationFrame(()=>{const anchor=route.anchor&&document.getElementById(isReading?`learning-${route.anchor}`:route.anchor);if(anchor)anchor.scrollIntoView({block:'start',behavior:media.matches?'instant':'smooth'});else if(isReading)scrollTo({top:0,behavior:'instant'});else{const title=$('#scene-title'),rect=title.getBoundingClientRect();if(rect.top<0||rect.top>innerHeight*.5)title.scrollIntoView({block:'start',behavior:'instant'});}});
+    pause();if(state.dialog){state.dialog.resume=false;state.dialog.navigating=true;dialog.close();}document.body.classList.remove('story-focused','is-listening');$('#listen-panel').open=false;state.page=route.page;document.body.dataset.page=route.page;const isReading=Boolean(learningPages[route.page]),isMarket=route.page==='market',journey=!isReading&&!isMarket;$('#journey-view').hidden=!journey;$('#learning-page').hidden=!isReading;$('#market-page').hidden=!isMarket;$$('.menu').forEach(menu=>menu.open=false);
+    if(isReading)renderLearning(route.page);else if(isMarket)renderMarket();else{let index=route.welcome?0:route.page==='evidence'?3:route.page==='setup'?5:chapters.findIndex(c=>c.id===route.chapter);if(index<0)index=Number.isInteger(restore?.chapter)?restore.chapter:state.chapter;index=Math.max(0,Math.min(chapters.length-1,index));state.welcome=route.welcome||Boolean(restore?.welcome)||(state.welcome&&index===0&&!route.step&&!route.chapter&&route.page==='story');if(index!==state.chapter)enterChapter(index);const cueIndex=route.step?chapter().cues.findIndex(c=>c.id===route.step):Number.isInteger(restore?.cue)?restore.cue:state.cue;if(cueIndex>=0&&cueIndex<chapter().cues.length&&cueIndex!==state.cue)enterCue(cueIndex);if(restore&&restore.chapter===state.chapter&&restore.cue===state.cue){state.elapsed=Math.max(0,Math.min(clock.duration,restore.elapsed||0));clock.seek(state.elapsed,now());}renderSteps();syncControls();}
+    $$('a[data-route]').forEach(a=>{const linked=resolveInternalRoute(a.getAttribute('href'),location.href);if(linked?.page===route.page)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});document.title=`${isReading?learningPages[route.page].title:isMarket?'Market context':state.welcome?'A little knowledge. A little more room.':chapter().title} — NoGuru`;
+    if(scroll)requestAnimationFrame(()=>{const anchor=route.anchor&&document.getElementById(isReading?`learning-${route.anchor}`:route.anchor);if(anchor)anchor.scrollIntoView({block:'start',behavior:media.matches?'instant':'smooth'});else scrollTo({top:0,behavior:'instant'});});
   }
   function navigateRoute(route,{replace=false,scroll=true}={}){if(routeReady&&!replace)history.replaceState(routeSnapshot(),'',location.href);applyingRoute=true;applyRoute(route,{scroll});applyingRoute=false;history[replace?'replaceState':'pushState'](routeSnapshot(),'',routeURL(route));}
   function navigateChapter(index){if(!Number.isInteger(index)||index<0||index>=chapters.length)return;navigateRoute({page:index===3?'evidence':index===5?'setup':'story',chapter:chapters[index].id});}
-  function saveCueRoute(){if(routeReady&&!applyingRoute&&!learningPages[state.page])history.replaceState(routeSnapshot(),'',routeURL({page:state.page}));}
+  function saveCueRoute(){if(routeReady&&!applyingRoute&&['story','evidence','setup'].includes(state.page))history.replaceState(routeSnapshot(),'',routeURL({page:state.page}));}
   const stepLabels={'buy-one':'First purchase','buy-two':'Buying lower',target:'The intended exit',proceeds:'Sale proceeds',wait:'Positions still held',select:'The maintained plan',orbit:'The idea',personalize:'Your guide',setup:'Before you connect',evidence:'Read the evidence'};
   function stepTitle(item,index){const specific={'meet-01':'What it does','meet-02':'Capital returns','meet-03':'Room for waiting','choose-01':'Your allocation','choose-02':'Ongoing review','choose-03':'A planning choice','evidence-01':'Completed cycles','evidence-02':'Still held','evidence-03':'Market context','yours-01':'Name and accent','yours-02':'Learn along the way','yours-03':'Understand the risks','begin-01':'Capital and costs','begin-02':'Separate trial clocks','begin-03':'Your next step'};return specific[item.id]||stepLabels[item.world]||`Step ${index+1}`;}
-  function renderSteps(){const nav=$('#cue-nav');nav.replaceChildren();chapter().cues.forEach((item,index)=>{const b=document.createElement('button');b.type='button';b.dataset.cueIndex=String(index);b.textContent=`${index+1}. ${stepTitle(item,index)}`;if(index===state.cue)b.setAttribute('aria-current','step');nav.append(b);});text('#current-reading',cue().text);$('#current-reading').hidden=state.chapter===0&&state.cue===0;}
+  function renderSteps(){
+    document.body.dataset.welcome=String(state.welcome);const headings={'meet-01':'A useful plan. Kept under review.','meet-02':'Make room for the next opportunity.','meet-03':'Human knowledge, shared with care.','choose-01':'Your capital. A considered plan.','choose-02':'A little thought behind every level.','choose-03':'Keep some room for what comes next.','cycle-01':'Let’s follow one coin.','cycle-02':'A lower price. A different average.','cycle-03':'An aim, never a promise.','cycle-04':'A sale makes room again.','evidence-01':'Look at the part that is complete.','evidence-02':'And the part that is still waiting.','evidence-03':'Keep the wider picture in view.','yours-01':'Let’s make this feel like you.','yours-02':'A question is a good place to start.','yours-03':'Keep your judgment close.','begin-01':'Try the setup at your own pace.','begin-02':'Two services. Separate clocks.','begin-03':'Understand the next step.'};
+    if(state.welcome){$('#scene-title').innerHTML='A little knowledge.<br>A little more <em>room.</em>';text('#eyebrow','Expertise without ego');$('#scene-summary').innerHTML='An intelligent crypto trading bot.<br>Your capital, in your own exchange.';$('#scene-summary').hidden=false;$('#current-reading').hidden=true;character?.setState('greet');renderWorld('orbit');}
+    else{text('#eyebrow',chapter().eyebrow);text('#scene-title',headings[cue().id]||chapter().title);$('#scene-summary').hidden=true;text('#current-reading',cue().text);$('#current-reading').hidden=false;}
+    $('#listen-panel').hidden=state.welcome;$('#journey-back').hidden=state.welcome;text('#journey-progress',state.welcome?'Your pace. Your judgment.':`${String(state.chapter+1).padStart(2,'0')} / 06 · ${chapter().id==='begin'?'Setup preview':chapter().id==='yours'?'Yours':chapter().id==='choose'?'Capital':chapter().id==='cycle'?'A cycle':chapter().id==='evidence'?'Evidence':'Meet NoGuru'}`);
+    const dots=$('.progress-dots');dots.replaceChildren();for(let i=0;i<6;i++){const dot=document.createElement('i');if(i===state.chapter)dot.className='active';dots.append(dot);}
+    let label=state.welcome?'Meet NoGuru':state.chapter===5?(state.setupPreview?'Review the next steps':'Preview my account guide'):state.cue<chapter().cues.length-1?'Continue':state.chapter===0?'Start with your capital':state.chapter===1?'Follow one coin':state.chapter===2?'Look at the evidence':state.chapter===3?'Make it yours':'Try it for yourself';$('#journey-next').replaceChildren(document.createTextNode(label+' '));const arrow=document.createElement('span');arrow.setAttribute('aria-hidden','true');arrow.textContent='→';$('#journey-next').append(arrow);text('#action-note',state.welcome?'':state.chapter===5?'Take your time. Nothing is submitted or connected.':state.chapter===4?'Your guide, your pace. No account connected.':'');
+  }
+  function advanceJourney(){pause();document.body.classList.remove('is-listening');$('#listen-panel').open=false;if(state.welcome){state.welcome=false;enterCue(0);}else if(state.chapter===5){if(state.setupPreview){navigateRoute({page:'trial'});return;}const capital=checkSetup();if(!capital||!$('#risk-ack').checked){text('#action-note','Add a planning amount and read the risks, then continue when you’re ready.');(!capital?$('#capital'):$('#risk-ack')).focus();return;}state.setupPreview=true;$('#account-preview').hidden=false;document.body.dataset.setupPreview='true';renderSteps();$('#account-preview').scrollIntoView({block:'start',behavior:media.matches?'instant':'smooth'});return;}else if(state.cue+1<chapter().cues.length)enterCue(state.cue+1);else navigateChapter(state.chapter+1);requestAnimationFrame(()=>{if(innerWidth<760)scrollTo({top:0,behavior:'instant'});});}
+  function backJourney(){pause();document.body.classList.remove('is-listening');if(state.chapter===5&&state.setupPreview){state.setupPreview=false;document.body.dataset.setupPreview='false';$('#account-preview').hidden=true;renderSteps();return;}if(state.cue>0)enterCue(state.cue-1);else if(state.chapter>0){navigateChapter(state.chapter-1);enterCue(chapter().cues.length-1);}else{state.welcome=true;enterCue(0);}if(innerWidth<760)scrollTo({top:0,behavior:'instant'});}
   function voiceStatus(){
     text('#audio-label',state.audioUnavailable?'Captions mode':state.audioEnabled?'Voice on':'Voice off');
     $('#audio-toggle')?.setAttribute('aria-pressed',String(state.audioEnabled&&!state.audioUnavailable));
@@ -91,8 +99,8 @@ async function boot(){
   }
   function syncControls(){
     const last=state.chapter===chapters.length-1;
-    text('#play-label',state.playing?'Pause':state.complete?(last?'Replay':'Continue'):'Listen');
-    $('#play').setAttribute('aria-label',state.playing?'Pause narration':state.complete?(last?'Replay this chapter':'Continue to the next chapter'):'Listen to this chapter');
+    text('#play-label',state.playing?'Pause':state.complete?'Replay':'Listen');
+    $('#play').setAttribute('aria-label',state.playing?'Pause narration':state.complete?'Replay this chapter':'Listen to this chapter');
     $('#play').setAttribute('aria-pressed',String(state.playing));
     if($('#previous'))$('#previous').disabled=state.chapter===0;
     if($('#next'))$('#next').disabled=last;
@@ -125,7 +133,7 @@ async function boot(){
   }
   async function play(){
     if(state.playing||state.dialog||document.hidden||disposed)return;
-    if(state.complete){if(state.chapter<chapters.length-1){navigateChapter(state.chapter+1);document.body.classList.add('is-listening');}else enterCue(0);}
+    if(state.complete)enterCue(0);
     const epoch=state.epoch,attempt=++state.playAttempt;state.hasStarted=true;text('#caption',cue().text);resumeNotice=false;state.playing=true;state.mode=hasAudio()?'audio':'captions';state.waiting=state.mode==='audio';
     if(!cue().audio&&state.audioEnabled)state.audioUnavailable=true;
     syncControls();
@@ -162,7 +170,7 @@ async function boot(){
     if(!Number.isInteger(index)||index<0||index>=chapters.length)return;
     pause();state.chapter=index;const item=chapter();document.body.dataset.chapter=item.id;for(const entry of chapters)document.body.classList.toggle(`chapter-${entry.id}`,entry.id===item.id);text('#eyebrow',item.eyebrow);text('#scene-title',item.title);text('#scene-summary',item.summary);
     const visible={evidence:item.id==='evidence',personalize:item.id==='yours',setup:item.id==='begin'};
-    for(const [key,value] of Object.entries(visible)){const panel=$(`#${key}-panel`);if(panel)panel.hidden=!value;}
+    for(const [key,value] of Object.entries(visible)){const panel=$(`#${key}-panel`);if(panel){panel.hidden=!value;(value?$('#context-slot'):$('#chapter-modules')).append(panel);}}
     enterCue(0);
     if(scroll&&innerWidth<760){const heading=$('#scene-title'),rect=heading?.getBoundingClientRect();if(rect&&(rect.top<0||rect.top>innerHeight*.6))heading.scrollIntoView({behavior:media.matches?'instant':'smooth',block:'start'});}
   }
@@ -225,11 +233,7 @@ async function boot(){
   $('#detail-close')?.addEventListener('click',closeDetail);
   $('#open-setup-review')?.addEventListener('click',openSetupReview);
   function showHelp(key){const item=help[key];if(!item)return;if(key!=='privacy'){const link=(item.links||[]).find(link=>resolveInternalRoute(link.url,location.href));if(link){navigateRoute(resolveInternalRoute(link.url,location.href));return;}}openDetail(item.title,body=>{for(const part of Array.isArray(item.body)?item.body:[item.body])body.append(paragraph(part));for(const link of item.links||[]){const node=contentLink(link.label,link.url);if(node)body.append(node);}});}
-  function showTrial(){openDetail('Review the two trial clocks',body=>{
-    body.append(paragraph('NoGuru advertises 14 days free. New Cornix users receive a separate 14-day Premium trial. Their clocks need not start together. Review the current terms and eligibility; nothing is activated here.'),paragraph('The Cornix trial can start with the first created trade, including a demo or backtest. Open positions may outlast a trial; a trial cannot establish future returns.'));
-    for(const [label,url] of [['Start NoGuru free trial',externalLinks.trial||externalLinks.pricing],['Register with Cornix',externalLinks.cornix],['Read Cornix’s official trial terms','https://help.cornix.io/en/articles/5814827-cornix-free-trial'],['Review NoGuru’s offer and eligibility',externalLinks.pricing]]){const a=contentLink(label,url);if(a)body.append(a);}
-    body.append(paragraph('Provider links open in a new tab; pricing stays here.'));
-  });}
+  function showTrial(){navigateRoute({page:'trial'});}
   function inspectEvidence(){const data=state.evidence;openDetail('Inspect the published cycles',body=>{
     if(!data||data.status==='unavailable'){body.append(paragraph('The published record is unavailable. No saved or invented figures are substituted.'));return;}
     body.append(paragraph(`${data.closed} completed signal cycles · ${data.windowStart} to ${data.windowEnd}. Before fees; not actual customer executions. Reported buys are not independently verified exchange order counts.`));
@@ -242,16 +246,33 @@ async function boot(){
     filter.addEventListener('change',renderRows);renderRows();table.append(tbody);body.append(table);
     const a=externalLink('Open the source record',data.sourceUrl);if(a)body.append(a);
   });}
-  function savePreferences(){try{localStorage.setItem(storageKey,JSON.stringify({name:state.name,accent:state.accent,chapter:state.chapter,cue:state.cue}));}catch{}}
+  function savePreferences(){try{localStorage.setItem(storageKey,JSON.stringify({name:state.name,accent:state.accent,chapter:state.chapter,cue:state.cue,started:!state.welcome}));}catch{}}
   function applyPreferences(){text('#name-preview',state.name);if($('#guide-name'))$('#guide-name').value=state.name;document.documentElement.style.setProperty('--guide-accent',state.accent);character?.setAccent(state.accent);$$('[data-accent]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.accent.toLowerCase()===state.accent.toLowerCase())));}
-  try{const saved=JSON.parse(localStorage.getItem(storageKey)||'null');if(saved){if(typeof saved.name==='string'&&saved.name.trim())state.name=saved.name.trim().slice(0,20);if(/^#[0-9a-f]{6}$/i.test(saved.accent))state.accent=saved.accent;if(Number.isInteger(saved.chapter)&&chapters[saved.chapter]&&Number.isInteger(saved.cue)&&chapters[saved.chapter].cues[saved.cue])restoredProgress={chapter:saved.chapter,cue:saved.cue};}}catch{}
+  try{const saved=JSON.parse(localStorage.getItem(storageKey)||'null');if(saved){state.welcome=saved.started===false;if(typeof saved.name==='string'&&saved.name.trim())state.name=saved.name.trim().slice(0,20);if(/^#[0-9a-f]{6}$/i.test(saved.accent))state.accent=saved.accent;if(Number.isInteger(saved.chapter)&&chapters[saved.chapter]&&Number.isInteger(saved.cue)&&chapters[saved.chapter].cues[saved.cue])restoredProgress={chapter:saved.chapter,cue:saved.cue};}}catch{}
   function checkSetup(){const value=parseCapital($('#capital')?.value||''),ack=Boolean($('#risk-ack')?.checked);if($('#setup-next'))$('#setup-next').disabled=!value||!ack;
     text('#capital-feedback',!value?'Enter a positive USDT amount with at most two decimal places.':value.belowMinimum?`Planning only: below the supplier-stated ${money(costs.supplierCapitalGuidance)} USDT operating minimum. This does not establish setup eligibility.`:'A plan only. No money is reserved, moved or trading. Confirm current setup requirements.');return value;
   }
+  function renderMarket(){
+    const m=state.market,e=state.episodes,frame=$('#market-timeframe').value||'1d',matrix=$('#market-matrix'),episodeTable=$('#episodes-table');matrix.replaceChildren();episodeTable.replaceChildren();$('#market-source-links').replaceChildren();$('#episodes-links').replaceChildren();
+    if(!m){text('#market-page-status','Loading the public market source…');return;}
+    if(m.status==='unavailable'){text('#market-page-status','Market source unavailable. No saved readings substituted.');text('#market-page-date','');}else{
+      const summary=m.summaryByTimeframe?.[frame];text('#market-page-status',`${m.status==='stale'?'Stale observation. ':''}${summary?`${summary.above} readings above and ${summary.below} below their recent average${summary.flat?`; ${summary.flat} level`:''}. `:''}Public market snapshot, fetched on request.`);text('#market-page-date',`Market observation: ${stamp(m.asOf)} · fetched ${stamp(m.checkedAt)}.`);
+      matrix.className='market-matrix';for(const row of m.rows||[]){const value=row.values[frame],cell=document.createElement('div'),symbol=document.createElement('span'),score=document.createElement('b');cell.className='market-cell';cell.dataset.direction=value>0?'above':value<0?'below':'flat';symbol.textContent=row.symbol;score.textContent=Number.isFinite(value)?`${value>0?'+':''}${value.toFixed(2)}`:'Unavailable';score.setAttribute('aria-label',`${row.symbol}: ${score.textContent} average-distance units`);cell.append(symbol,score);matrix.append(cell);}
+    }
+    text('#market-definition',m.definition||'Market scores describe distance from an average in typical bar-movement units. They are not percentage returns.');const marketLink=externalLink('Inspect the market source',m.sourceUrl);if(marketLink)$('#market-source-links').append(marketLink);
+    if(!e){text('#episodes-status','Loading the separate episode source…');return;}
+    if(e.status==='unavailable'){text('#episodes-status','Episode source unavailable. No saved events substituted.');text('#episodes-date','');}else{
+      text('#episodes-status',`${e.rows.length} provider-identified episodes · ${e.history.length} historical events. Current source freshness is unknown.`);text('#episodes-date',`Fetched ${stamp(e.checkedAt)}. Source-generation and latest-quote times are not supplied.${e.latestEventAt?' Latest event low: '+stamp(e.latestEventAt)+'.':''}`);
+      const makeTable=(rows,history)=>{const table=document.createElement('table');table.className='data-table';const thead=document.createElement('thead'),head=document.createElement('tr');for(const label of ['Coin',history?'Drop':'Depth',history?'Prior high reclaimed':'Provider state','Triggered']){const th=document.createElement('th');th.scope='col';th.textContent=label;head.append(th);}thead.append(head);table.append(thead);const body=document.createElement('tbody');for(const item of rows){const tr=document.createElement('tr');for(const value of [item.symbol,`${(history?item.dropPct:item.depthPct).toFixed(2)}%`,history?(item.reclaimed?'Yes':'Not recorded'):item.state,stamp(item.triggeredAt)]){const td=document.createElement('td');td.textContent=value;tr.append(td);}body.append(tr);}table.append(body);return table;};
+      if(e.rows.length)episodeTable.append(makeTable(e.rows,false));else episodeTable.append(paragraph('No episodes are listed in this response.'));
+      if(e.history.length){const details=document.createElement('details'),summary=document.createElement('summary');details.className='episode-history';summary.textContent=`Read ${e.history.length} historical events`;details.append(summary,makeTable(e.history,true));episodeTable.append(details);}
+    }
+    text('#episodes-definition',`${e.definition||'Provider-defined episode price declines, not strategy returns.'} Exact price baseline and full measurement window are not supplied by this feed.`);
+    const episodeLink=externalLink('Inspect the episode source',e.sourceUrl);if(episodeLink)$('#episodes-links').append(episodeLink);
+  }
   async function refreshData(){
-    text('#evidence-status','Loading the public signal record…');text('#market-summary','Loading separate market context…');
-    const results=await Promise.allSettled([loadEvidence({signal:aborter.signal}),loadMarket({signal:aborter.signal})]);if(disposed)return;
-    state.evidence=results[0].status==='fulfilled'?results[0].value:{status:'unavailable'};state.market=results[1].status==='fulfilled'?results[1].value:{status:'unavailable'};
+    if(state.refreshing)return;state.refreshing=true;$$('[data-refresh-sources]').forEach(b=>b.disabled=true);text('#evidence-status','Loading the public signal record…');text('#market-summary','Loading separate market context…');
+    const sources=await publicData.loadLiveSources({signal:aborter.signal});if(disposed)return;state.evidence=sources.evidence;state.market=sources.market;state.episodes=sources.episodes;state.refreshing=false;$$('[data-refresh-sources]').forEach(b=>b.disabled=false);
     const e=state.evidence,m=state.market;
     if($('#evidence-panel'))$('#evidence-panel').dataset.status=e.status;
     const marketParent=$('#market-summary')?.parentElement;if(marketParent)marketParent.dataset.status=m.status;if($('#market-summary')?.closest('.market-panel'))$('#market-summary').closest('.market-panel').dataset.status=m.status;
@@ -264,13 +285,15 @@ async function boot(){
     }
     if(m.status==='unavailable'){text('#market-summary','Market context unavailable. It is separate from the trading record.');text('#market-asof','');}
     else{text('#market-summary',`${m.status==='stale'||m.stale?'Stale market context. ':''}${m.summary}`);text('#market-asof',`Market observation: ${stamp(m.asOf)} · fetched ${stamp(m.checkedAt)}. Context, not account performance.`);}
+    renderMarket();
   }
-  function userStart(){document.body.classList.add('is-listening');void play();if(innerWidth<760){const scene=$('#scene-explainer');if(scene.getBoundingClientRect().top>1)scene.scrollIntoView({behavior:media.matches?'instant':'smooth',block:'start'});}}
+  function userStart(){if(state.welcome){state.welcome=false;enterCue(0);}$('#listen-panel').open=true;document.body.classList.add('is-listening');void play();}
   $('#play').addEventListener('click',()=>state.playing?pause():userStart());
   $('#replay')?.addEventListener('click',()=>{state.audioUnavailable=false;character?.setState('idle');enterCue(0);userStart();});
   $('#leave-story')?.addEventListener('click',()=>{pause();document.body.classList.remove('story-focused','is-listening');});
   $('#read-chapter')?.addEventListener('click',()=>openDetail(chapter().title,body=>{for(const item of chapter().cues)body.append(paragraph(item.text));}));
   window.addEventListener('resize',renderCaption);
+  $('#journey-next').addEventListener('click',advanceJourney);$('#journey-back').addEventListener('click',backJourney);
   $('#previous')?.addEventListener('click',()=>navigateChapter(state.chapter-1));
   $('#next')?.addEventListener('click',()=>navigateChapter(state.chapter+1));
   document.addEventListener('click',event=>{const anchor=event.target.closest('a[href]');if(anchor&&!anchor.classList.contains('skip-link')&&!event.metaKey&&!event.ctrlKey&&!event.shiftKey&&!event.altKey){const route=resolveInternalRoute(anchor.getAttribute('href'),location.href);if(route){event.preventDefault();navigateRoute(route);return;}}
@@ -286,16 +309,22 @@ async function boot(){
   $('#guide-name')?.addEventListener('input',event=>{state.name=event.target.value.trim().slice(0,20)||'Your guide';text('#name-preview',state.name);savePreferences();});
   $('#guide-name')?.addEventListener('blur',()=>{if(!$('#guide-name').value.trim()){state.name='Your guide';applyPreferences();savePreferences();}});
   $$('[data-accent]').forEach(button=>button.addEventListener('click',()=>{if(/^#[0-9a-f]{6}$/i.test(button.dataset.accent)){state.accent=button.dataset.accent;applyPreferences();savePreferences();}}));
-  $('#reset-personalization')?.addEventListener('click',()=>{try{localStorage.removeItem(storageKey);}catch{}state.name='Your guide';state.hasStarted=false;state.accent='#d4a17c';resumeNotice=false;applyPreferences();navigateChapter(0);try{localStorage.removeItem(storageKey);}catch{}});
+  $('#reset-personalization')?.addEventListener('click',()=>{try{localStorage.removeItem(storageKey);}catch{}state.name='Your guide';state.welcome=true;state.hasStarted=false;state.accent='#d4a17c';resumeNotice=false;applyPreferences();navigateRoute({page:'story',welcome:true});try{localStorage.removeItem(storageKey);}catch{}});
   $('#capital')?.addEventListener('input',checkSetup);$('#risk-ack')?.addEventListener('change',checkSetup);
   $('#setup-next')?.addEventListener('click',()=>{if(!checkSetup()||!$('#risk-ack')?.checked)return;const account=$('#account-preview');if(account){account.hidden=false;account.scrollIntoView({behavior:media.matches?'instant':'smooth',block:'nearest'});}});
+  $('#market-timeframe').addEventListener('change',renderMarket);$$('[data-refresh-sources]').forEach(button=>button.addEventListener('click',()=>void refreshData()));
+  $('#listen-panel').addEventListener('toggle',()=>{if(!$('#listen-panel').open){pause();document.body.classList.remove('is-listening');}});
+  $('#site-menu').addEventListener('toggle',()=>{if($('#site-menu').open)pause();});
+  document.addEventListener('keydown',event=>{if(event.key==='Escape'&&$('#site-menu').open){$('#site-menu').open=false;$('#site-menu summary').focus();}});
+  document.addEventListener('click',event=>{if($('#site-menu').open&&!event.target.closest('#site-menu'))$('#site-menu').open=false;});
+  $('#learning-search').addEventListener('input',event=>{const query=event.target.value.trim().toLowerCase();let shown=0;$$('#learning-sections .learning-section').forEach(section=>{section.hidden=Boolean(query)&&!section.dataset.search.includes(query);if(!section.hidden)shown++;});$$('#learning-toc a').forEach(a=>a.hidden=Boolean(document.getElementById(a.dataset.section)?.hidden));text('#search-status',query?`${shown} matching sections. Clear the search to see everything.`:'');});
   document.addEventListener('visibilitychange',()=>{if(document.hidden)pause({hidden:true});});
   media.addEventListener('change',()=>{syncMotion();animateWorld(state.elapsed/Math.max(.1,clock.duration));});
   if('IntersectionObserver' in window&&$('#world-overlay'))new IntersectionObserver(entries=>{state.worldVisible=entries[0].isIntersecting;syncMotion();},{threshold:.02}).observe($('#world-overlay'));
   window.addEventListener('pagehide',event=>{pause({hidden:true});if(!event.persisted){disposed=true;aborter.abort();character?.dispose();}});
   text('#cost-total',`$${(costs.noGuruFounding+costs.cornixMonthly).toFixed(2)}`);$('#cost-total')?.setAttribute('title',`Founding combined monthly subscriptions. Standard combined: $${(costs.noGuruStandard+costs.cornixMonthly).toFixed(2)}. Before trading fees; checked ${costs.checkedDate}.`);
   applyPreferences();enterChapter(restoredProgress?.chapter||0);if(restoredProgress){enterCue(restoredProgress.cue);resumeNotice=true;voiceStatus();}checkSetup();routeReady=true;navigateRoute(resolveInternalRoute(location.href,location.href)||{page:'story'},{replace:true,scroll:Boolean(location.hash)});void refreshData();
-  window.NoGuruPilot={getState:()=>({page:state.page,chapter:state.chapter,chapterId:chapter().id,cue:state.cue,cueId:cue().id,playing:state.playing,elapsed:currentTime(),duration:clock.duration,complete:state.complete,mode:state.mode,audioEnabled:state.audioEnabled,audioUnavailable:state.audioUnavailable,motionEnabled:state.motionEnabled,reducedMotion:media.matches,focused:document.body.classList.contains('is-listening'),dialog:state.dialog?{chapter:state.dialog.chapter,cue:state.dialog.cue,elapsed:state.dialog.elapsed,resume:state.dialog.resume}:null,preferences:{name:state.name,accent:state.accent},evidenceStatus:state.evidence?.status,marketStatus:state.market?.status,character:character?.getState?.()}),pause};
+  window.NoGuruPilot={getState:()=>({page:state.page,welcome:state.welcome,setupPreview:state.setupPreview,chapter:state.chapter,chapterId:chapter().id,cue:state.cue,cueId:cue().id,playing:state.playing,elapsed:currentTime(),duration:clock.duration,complete:state.complete,mode:state.mode,audioEnabled:state.audioEnabled,audioUnavailable:state.audioUnavailable,motionEnabled:state.motionEnabled,reducedMotion:media.matches,focused:document.body.classList.contains('is-listening'),dialog:state.dialog?{chapter:state.dialog.chapter,cue:state.dialog.cue,elapsed:state.dialog.elapsed,resume:state.dialog.resume}:null,preferences:{name:state.name,accent:state.accent},evidenceStatus:state.evidence?.status,marketStatus:state.market?.status,episodesStatus:state.episodes?.status,character:character?.getState?.()}),pause};
   try{character=await createCharacter($('#character'),{reducedMotion:media.matches});if(disposed){character.dispose();return;}character.setAccent(state.accent);character.setState(cue().gesture||'idle');syncMotion();}
   catch{const host=$('#character');if(host){const notice=paragraph('The guide’s motion is unavailable. The explanation and controls still work.');notice.className='character-unavailable';host.append(notice);}}
 }

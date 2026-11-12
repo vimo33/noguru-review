@@ -1,11 +1,12 @@
 // Editorial preview; supplier review is pending. Temporary macOS Daniel audio.
 export const externalLinks = {
-  trial: 'https://t.me/NoGuruMembers_bot?start=trial_cornixpage',
+  trial: '?page=trial',
+  providerTrial: 'https://t.me/NoGuruMembers_bot?start=trial_cornixpage',
   cornix: 'https://dashboard.cornix.io/register',
   setup: '?page=how-it-works',
   pricing: '?page=pricing',
   evidence: '?page=evidence',
-  academy: '?page=learn',
+  academy: '?page=academy',
   glossary: '?page=glossary',
 };
 
@@ -17,7 +18,7 @@ export const costs = {
 const audioDurations = {
   "meet-01": 12.658,
   "meet-02": 10.197,
-  "meet-03": 7.861,
+  "meet-03": 7.753,
   "choose-01": 9.454,
   "choose-02": 9.706,
   "choose-03": 8.29,
@@ -28,18 +29,18 @@ const audioDurations = {
   "evidence-01": 9.286,
   "evidence-02": 10.788,
   "evidence-03": 9.848,
-  "yours-01": 9.616,
+  "yours-01": 8.64,
   "yours-02": 9.673,
   "yours-03": 9.603,
   "begin-01": 9.999,
   "begin-02": 10.983,
-  "begin-03": 7.965
+  "begin-03": 8.59
 };
 
 const audioVersions = {
   "meet-01": "30558aa3ce40",
   "meet-02": "fb0433105771",
-  "meet-03": "7677bef010f8",
+  "meet-03": "750c2a60cd25",
   "choose-01": "a817cf22a7d3",
   "choose-02": "4766db3a380a",
   "choose-03": "d864db0678f3",
@@ -50,12 +51,12 @@ const audioVersions = {
   "evidence-01": "1e4961d452e8",
   "evidence-02": "d3033a9e5558",
   "evidence-03": "d6a1c0bf38a3",
-  "yours-01": "fd0c829c2180",
+  "yours-01": "4b225708f291",
   "yours-02": "baa74061f38c",
   "yours-03": "406e1222d303",
   "begin-01": "8041a42374c4",
   "begin-02": "f2eaa70b272d",
-  "begin-03": "f7e06622fd61"
+  "begin-03": "3e430c770a3f"
 };
 
 const cue = (id, text, gesture, world, highlight) => ({
@@ -69,7 +70,7 @@ export const chapters = [
     cues: [
       cue('meet-01', 'NoGuru is an automated spot-trading bot that selects and reviews coins, plans purchase sizes and staged entries, and sets sale targets. Cornix executes those instructions in your exchange account.', 'greet', 'orbit', 'product'),
       cue('meet-02', 'A completed sale can release capital for another cycle. NoGuru keeps reviewing the coins and the next purchases, so the process can continue without you planning every order.', 'explain', 'orbit', 'product'),
-      cue('meet-03', 'Some positions wait while others move. There is a limit to how much capital can be committed. I’ll help you see both the activity and the waiting.', 'acknowledge', 'select', 'product'),
+      cue('meet-03', 'The strategy began with human knowledge and experience. I’m here to help you understand it, including the positions that are still waiting.', 'acknowledge', 'select', 'product'),
     ],
   },
   {
@@ -104,7 +105,7 @@ export const chapters = [
     id: 'yours', eyebrow: 'A familiar companion', title: 'Make the guide feel yours.',
     summary: 'A guide name and a page accent. The robot, strategy and evidence stay the same.',
     cues: [
-      cue('yours-01', 'Give your guide a name and choose an accent for this space. Next time you return, pick up the story. A familiar companion, with the same clear evidence underneath.', 'acknowledge', 'personalize', 'privacy'),
+      cue('yours-01', 'Give your guide a name and choose a page accent. Make this a familiar place to ask questions, revisit an example, and pick up where you left off.', 'acknowledge', 'personalize', 'privacy'),
       cue('yours-02', 'When something catches your interest, open its explanation here. You can work through a purchase example, understand the costs, then return to where you were.', 'explain', 'personalize', 'product'),
       cue('yours-03', 'Keep your judgment in the loop. Open positions can fall or never recover. There is no strategy stop loss, and pausing new trades does not sell what you already hold.', 'wait', 'personalize', 'risks'),
     ],
@@ -115,7 +116,7 @@ export const chapters = [
     cues: [
       cue('begin-01', 'Your account is still unconnected. We’ll review capital, the separate NoGuru and Cornix subscriptions, and a dedicated exchange setup with withdrawals disabled.', 'select', 'setup', 'setup'),
       cue('begin-02', 'The services have separate trial clocks. Cornix starts with the first created trade, including demo or backtesting. Trying the setup is different from proving future returns.', 'explain', 'setup', 'trial'),
-      cue('begin-03', 'Start your free trial when you’re ready. I’ll show the steps, what each service includes, and where you can follow the strategy in action.', 'acknowledge', 'setup', 'trial'),
+      cue('begin-03', 'Take the next step at your pace. Open the setup preview to put capital, costs and connection steps together. Nothing is activated here.', 'acknowledge', 'setup', 'setup'),
     ],
   },
 ];
@@ -170,12 +171,12 @@ export const help = {
   setup: {
     title: 'Before a real connection',
     body: 'The guide remains unconnected. Review a dedicated exchange subaccount holding only the intended allocation, exchange compatibility, the Cornix plan and spot-trading API permissions with withdrawals disabled. Never paste credentials here. Read the setup steps here before moving to a real service connection.',
-    links: [link('Read the setup explanation', `${externalLinks.setup}#setup`), link('API key', `${externalLinks.glossary}#api-key`)],
+    links: [link('Read the setup explanation', `${externalLinks.setup}#setup`), link('Open setup preview', '?page=setup'), link('API key', `${externalLinks.glossary}#api-key`)],
   },
   trial: {
     title: 'Two separate trials',
     body: 'NoGuru advertises 14 days free with no card; its exact entitlement start and cutoff were not tested. New Cornix users receive a separate 14-day Premium trial with no payment details. Cornix starts its clock at the first created trade, including a manual trade, smart bot, signal, demo or backtesting. These clocks need not start together. A trial checks setup and observed execution, not future returns. Viewing this guide does not activate anything. External links open a new tab. The public NoGuru offer excludes UK residents; broader eligibility has not been assessed.',
-    links: [link('Review NoGuru trial and costs', externalLinks.pricing), link('Cornix’s official trial clock', 'https://help.cornix.io/en/articles/5814827-cornix-free-trial')],
+    links: [link('Understand the two trials here', '?page=trial'), link('Review the separate costs', externalLinks.pricing)],
   },
   privacy: {
     title: 'Personalise the guide, not the evidence',

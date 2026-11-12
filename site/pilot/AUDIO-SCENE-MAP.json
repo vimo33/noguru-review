@@ -13,8 +13,8 @@
     "preloadPolicy": "One current cue only; controller owns loading. No automatic sound."
   },
   "durationUnit": "seconds",
-  "totalDuration": 179.658,
-  "totalBytes": 1351397,
+  "totalDuration": 179.199,
+  "totalBytes": 1348239,
   "cueCount": 19,
   "cues": [
     {
@@ -43,15 +43,15 @@
     },
     {
       "id": "meet-03",
-      "text": "Some positions wait while others move. There is a limit to how much capital can be committed. I’ll help you see both the activity and the waiting.",
+      "text": "The strategy began with human knowledge and experience. I’m here to help you understand it, including the positions that are still waiting.",
       "gesture": "acknowledge",
       "world": "select",
       "highlight": "product",
-      "audio": "audio/meet-03.m4a?v=7677bef010f8",
-      "duration": 7.861,
+      "audio": "audio/meet-03.m4a?v=750c2a60cd25",
+      "duration": 7.753,
       "chapter": "meet",
-      "bytes": 59445,
-      "sha256": "7677bef010f8d4831a714c425a6e6e5a9114641abd02130bd21a60c184bc7d92"
+      "bytes": 58862,
+      "sha256": "750c2a60cd252406422e43fa46e9dcb1aab8bf2c0741ded9e1892af4c8bbe0a2"
     },
     {
       "id": "choose-01",
@@ -175,15 +175,15 @@
     },
     {
       "id": "yours-01",
-      "text": "Give your guide a name and choose an accent for this space. Next time you return, pick up the story. A familiar companion, with the same clear evidence underneath.",
+      "text": "Give your guide a name and choose a page accent. Make this a familiar place to ask questions, revisit an example, and pick up where you left off.",
       "gesture": "acknowledge",
       "world": "personalize",
       "highlight": "privacy",
-      "audio": "audio/yours-01.m4a?v=fd0c829c2180",
-      "duration": 9.616,
+      "audio": "audio/yours-01.m4a?v=4b225708f291",
+      "duration": 8.64,
       "chapter": "yours",
-      "bytes": 71214,
-      "sha256": "fd0c829c2180a9ee7ae2baf315c4cc4a0fae5303afa3393c1dea807a4fba6bc3"
+      "bytes": 63888,
+      "sha256": "4b225708f291f6c6a2e9c1d65319225a86fc7323d51e5980fe20aa41fef960d0"
     },
     {
       "id": "yours-02",
@@ -235,15 +235,15 @@
     },
     {
       "id": "begin-03",
-      "text": "Start your free trial when you’re ready. I’ll show the steps, what each service includes, and where you can follow the strategy in action.",
+      "text": "Take the next step at your pace. Open the setup preview to put capital, costs and connection steps together. Nothing is activated here.",
       "gesture": "acknowledge",
       "world": "setup",
-      "highlight": "trial",
-      "audio": "audio/begin-03.m4a?v=f7e06622fd61",
-      "duration": 7.965,
+      "highlight": "setup",
+      "audio": "audio/begin-03.m4a?v=3e430c770a3f",
+      "duration": 8.59,
       "chapter": "begin",
-      "bytes": 59845,
-      "sha256": "f7e06622fd61c4db320b8efdcfdb9e70bc0f0e281922bbdd45eefb8150a1b1e3"
+      "bytes": 64596,
+      "sha256": "3e430c770a3ffc569e760c24e54c7b154d268654c86643932ed813c408948812"
     }
   ],
   "notes": [
@@ -252,6 +252,6 @@
     "Captions match the generated clip scripts.",
     "All clips fully decoded successfully with ffmpeg."
   ],
-  "editorialStatus": "Editorial preview; supplier review pending. Optional audio follows the same readable content.",
+  "editorialStatus": "Local editorial preview; supplier review pending. Original robot preserved; setup preview is the main journey action.",
   "audioCacheVersioning": "Each audio URL contains a short file hash to keep revised captions and clips synchronized."
 }
