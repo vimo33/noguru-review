@@ -1,5 +1,5 @@
-@font-face{font-family:Manrope;src:url('../pilot/fonts/Manrope.woff') format('woff');font-weight:100 900;font-display:swap}
-@font-face{font-family:Fraunces;src:url('../pilot/fonts/Fraunces.woff') format('woff');font-weight:100 900;font-display:swap}
+@font-face{font-family:Manrope;src:url('./pilot/fonts/Manrope.woff') format('woff');font-weight:100 900;font-display:swap}
+@font-face{font-family:Fraunces;src:url('./pilot/fonts/Fraunces.woff') format('woff');font-weight:100 900;font-display:swap}
 
 :root{
   --space:#0e1c18; --space-mid:#1c3530; --cream:#f7f3ea; --soft:#c9d3c6; --dim:#8fa398;
@@ -134,6 +134,7 @@ h1 em,.caption em,.landing h2 em{font-style:italic;font-weight:420;color:var(--a
 .ev-grid span{display:block;margin-top:7px;font-size:12.5px;line-height:1.4;color:var(--muted)}
 .ev-grid .quiet b{color:var(--muted)}
 .evidence h3{margin-top:38px}
+.ev-avg{margin-top:8px;font-size:13.5px;line-height:1.5;color:var(--muted)}
 .ev-list{margin-top:10px}
 .ev-list li{display:grid;grid-template-columns:5.2em 1fr auto;align-items:baseline;gap:10px;padding:12px 0;border-bottom:1px solid var(--line);font-size:13px;color:var(--muted)}
 .ev-list b{font-family:var(--display);font-weight:450;font-size:20px;letter-spacing:-.03em;color:#3f7357}
@@ -200,6 +201,10 @@ h1 em,.caption em,.landing h2 em{font-style:italic;font-weight:420;color:var(--a
 .pinned.show{transform:none}
 .pinned span{font-size:19px;font-weight:400}
 
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+.path.reveal.in:hover{transform:translateY(-2px)}
+
 /* Short phones */
 @media (max-height: 720px) and (max-aspect-ratio: 9/10){
   .intro{bottom:5svh}
@@ -239,7 +244,8 @@ h1 em,.caption em,.landing h2 em{font-style:italic;font-weight:420;color:var(--a
   .evidence .ev-body{display:grid;grid-template-columns:1.15fr .85fr;gap:0 70px;align-items:start}
   .evidence .ev-hero,.evidence .ev-grid,.evidence .ev-note{grid-column:1}
   .evidence h3{grid-column:2;grid-row:1;margin-top:34px}
-  .evidence .ev-list{grid-column:2;grid-row:2 / span 3}
+  .evidence .ev-avg{grid-column:2;grid-row:2}
+  .evidence .ev-list{grid-column:2;grid-row:3 / span 3}
   .q-head img{width:130px;height:130px}
   .q-list summary b{font-size:27px}
   .start-inner{padding:100px 24px 120px}

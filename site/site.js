@@ -1,5 +1,5 @@
 // The site the film settles into: live record, five questions, guided start.
-import {loadEvidence} from '../pilot/data.js';
+import {loadEvidence} from './pilot/data.js';
 
 const $ = (s) => document.querySelector(s);
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -60,6 +60,8 @@ async function showRecord() {
   const fast = ev.durationSummary?.under24hPct;
   $('#ev-fast').textContent = Number.isFinite(fast) ? `${Math.round(fast)}%` : '—';
 
+  const mean = ev.rows.reduce((sum, r) => sum + r.pct, 0) / ev.rows.length;
+  $('#ev-avg').textContent = `Across all ${ev.closed.toLocaleString('en-US')} finished trades, the average result was ${pct(mean, 1)} on the money in that trade.`;
   const list = $('#ev-list'); list.textContent = '';
   [...ev.rows].sort((a, b) => (a.closedAt < b.closedAt ? 1 : -1)).slice(0, 6).forEach((row) => {
     const li = document.createElement('li');
@@ -201,3 +203,25 @@ ui.next.addEventListener('click', () => {
 ui.back.addEventListener('click', () => { state.step -= 1; render(true); });
 ui.reset.addEventListener('click', () => { state = null; store.write(null); render(); });
 render();
+
+/* ---------- sections reveal piece by piece as they come into view ---------- */
+if (!reduced && 'IntersectionObserver' in window) {
+  const groups = [
+    ['#evidence', '.eyebrow, h2, .sec-lede, .ev-status, .ev-hero, .ev-grid > div, h3, .ev-avg, .ev-list, .ev-note'],
+    ['#questions', '.q-head, .q-list details'],
+    ['#start', '.start-robot, .eyebrow, h2, .choose > *, .walk'],
+  ];
+  const io = new IntersectionObserver((entries) => {
+    for (const en of entries) if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+  }, {rootMargin: '0px 0px -12% 0px', threshold: 0.08});
+  for (const [root, sel] of groups) {
+    let i = 0, lastTop = -1;
+    for (const node of document.querySelectorAll(`${root} :is(${sel})`)) {
+      // pieces on the same row follow each other; a new row starts the rhythm again
+      const top = Math.round(node.getBoundingClientRect().top);
+      i = Math.abs(top - lastTop) < 4 ? i + 1 : 0; lastTop = top;
+      node.classList.add('reveal'); node.style.transitionDelay = `${Math.min(i, 5) * 90}ms`;
+      io.observe(node);
+    }
+  }
+}

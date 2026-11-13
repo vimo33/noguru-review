@@ -1,6 +1,6 @@
 // Spike: a five-beat film (arrival, one coin, zoom out, proof, yours) that settles into the site home.
 // One progress value (0..1) drives everything; scrolling and Play both move it.
-import * as THREE from '../pilot/vendor/three.module.min.js';
+import * as THREE from './pilot/vendor/three.module.min.js';
 
 const $ = (s) => document.querySelector(s);
 const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
@@ -66,7 +66,7 @@ scene.add(glow);
 // the approved artwork, unchanged, on two planes that cross-fade
 const loader = new THREE.TextureLoader();
 function robotPlane(file) {
-  const tex = loader.load(new URL(`../pilot/assets/${file}`, import.meta.url).href, () => { dirty = true; });
+  const tex = loader.load(new URL(`./pilot/assets/${file}`, import.meta.url).href, () => { dirty = true; });
   tex.colorSpace = THREE.SRGBColorSpace; tex.premultiplyAlpha = true;
   tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
   const mat = new THREE.MeshBasicMaterial({map: tex, transparent: true, premultipliedAlpha: true, depthWrite: false, fog: false, toneMapped: false});
@@ -137,8 +137,8 @@ function layout() {
 const X0 = 10, X1 = 310, P_MIN = 72, P_MAX = 106, Y_TOP = 16, Y_BOT = 132;
 const px = (u) => lerp(X0, X1, u);
 const py = (price) => lerp(Y_BOT, Y_TOP, (price - P_MIN) / (P_MAX - P_MIN));
-// price over the cycle: buy at 100, falls to 80, dips, recovers past 92
-const KEYS = [[0, 101.5], [0.06, 100], [0.16, 95], [0.27, 88], [0.38, 80], [0.47, 76.5], [0.56, 79], [0.66, 85.5], [0.74, 89], [0.80, 92], [0.9, 94.5], [1, 96]];
+// price over the cycle: buy at 100, falls to 80, dips, recovers to about 2% above the 88.89 average
+const KEYS = [[0, 101.5], [0.06, 100], [0.16, 95], [0.27, 88], [0.38, 80], [0.47, 76.5], [0.56, 79], [0.66, 85.5], [0.74, 88.6], [0.80, 90.67], [0.9, 93], [1, 94.5]];
 const U_BUY1 = 0.06, U_BUY2 = 0.38, U_SELL = 0.80;
 function priceAt(u) {
   for (let i = 1; i < KEYS.length; i++) if (u <= KEYS[i][0]) {
@@ -154,9 +154,9 @@ const pricePath = $('#price'); pricePath.setAttribute('d', d); $('#price-ghost')
 const pathLen = pricePath.getTotalLength();
 pricePath.style.strokeDasharray = pathLen;
 const place = (id, u, price) => $(id).setAttribute('transform', `translate(${px(u).toFixed(1)} ${py(price).toFixed(1)})`);
-place('#mark-buy1', U_BUY1, 100); place('#mark-buy2', U_BUY2, 80); place('#mark-sell', U_SELL, 92);
+place('#mark-buy1', U_BUY1, 100); place('#mark-buy2', U_BUY2, 80); place('#mark-sell', U_SELL, 90.67);
 const avgLine = $('#avg-line'), avgLabel = $('#avg-label'), targetLine = $('#target-line'), head = $('#head');
-targetLine.setAttribute('y1', py(92)); targetLine.setAttribute('y2', py(92));
+targetLine.setAttribute('y1', py(90.67)); targetLine.setAttribute('y2', py(90.67));
 
 /* ---------- the record, as dots ---------- */
 const CLOSED = 1048, BELOW = 2, OPEN = 20;
@@ -231,8 +231,8 @@ function applyDom(p) {
   targetLine.style.opacity = span(u, 0.5, 0.56) * 0.8;
   el.in.textContent = money(Math.round(lerp(0, 100, b1) + lerp(0, 100, b2)));
   el.avg.textContent = b1 > 0.5 ? avg.toFixed(2) : '—';
-  el.out.textContent = sold > 0.02 ? money(lerp(200, 207, sold)) : '—';
-  el.foot.textContent = sold > 0.6 ? '+7 USDT on 200. About 3.5% on this one cycle. An illustration with round numbers.' : 'An illustration with round numbers.';
+  el.out.textContent = sold > 0.02 ? money(lerp(200, 204, sold)) : '—';
+  el.foot.textContent = sold > 0.6 ? '+4 USDT on 200: about 2%, a typical sale. An illustration with round numbers.' : 'An illustration with round numbers.';
 
   // the record
   fade(el.record, Math.min(span(q, 0.035, 0.075), 1 - span(q, 0.575, 0.6)), 18);
@@ -322,8 +322,8 @@ const playBtn = $('#play'), playLabel = $('#play-label');
 function setPlaying(on) {
   playing = on; playBtn.setAttribute('aria-pressed', String(on)); playLabel.textContent = on ? 'Pause' : 'Play';
 }
-playBtn.addEventListener('click', () => setPlaying(!playing));
-$('#skip').addEventListener('click', () => { setPlaying(false); scrollTo({top: maxScroll(), behavior: reduced ? 'auto' : 'smooth'}); });
+playBtn.addEventListener('click', () => { stopGlide(); setPlaying(!playing); if (!playing) { travel = 1; setTimeout(settle, 60); } });
+$('#skip').addEventListener('click', () => { setPlaying(false); stopGlide(); clearTimeout(idleTimer); scrollTo(0, maxScroll()); });
 $('#replay').addEventListener('click', () => { scrollTo(0, 0); p = 0; setPlaying(true); });
 for (const ev of ['wheel', 'touchstart', 'keydown']) addEventListener(ev, (e) => { if (ev === 'keydown' && e.target === playBtn) return; if (playing) setPlaying(false); }, {passive: true});
 
@@ -333,6 +333,41 @@ let seen = false;
 try { seen = localStorage.getItem(SEEN) === '1'; } catch { /* private mode */ }
 if (seen && scrollY < 4 && !location.hash && !new URLSearchParams(location.search).has('film')) { scrollTo(0, maxScroll()); p = 1; }
 
+/* ---------- land on complete moments ----------
+   A gesture rarely stops exactly where a moment is complete, so once scrolling goes quiet the film
+   carries on by itself to the next resting point in the direction of travel. */
+const RESTS = [
+  0, 0.0925, 0.195, 0.285, 0.345, 0.42,                                   // arrival, pick, buy, dip, wait, sold
+  ...[0.09, 0.245, 0.45, 0.78, 1].map((q) => ACT2 + (1 - ACT2) * q),      // many, hold, proof, yours, landing
+];
+let glide = null, idleTimer = 0, lastY = scrollY, travel = 0;
+function stopGlide() { glide = null; }
+function glideTo(pTarget) {
+  const from = scrollY, to = pTarget * maxScroll(), dist = Math.abs(to - from);
+  if (dist < 2) return;
+  if (reduced) { scrollTo(0, to); return; }
+  const span01 = dist / Math.max(1, maxScroll());
+  glide = {from, to, t0: performance.now(), ms: Math.min(1900, Math.max(650, 800 + span01 * 9000))};
+}
+function settle() {
+  if (playing || glide) return;
+  const max = maxScroll();
+  if (scrollY >= max - 1 || scrollY <= 0) return;      // on the first frame, or already in the site below
+  const here = scrollY / max;
+  const ahead = RESTS.find((r) => r >= here - 0.004), behind = [...RESTS].reverse().find((r) => r <= here + 0.004);
+  const target = travel >= 0 ? ahead : behind;
+  if (target !== undefined) glideTo(target);
+}
+addEventListener('scroll', () => {
+  const dy = scrollY - lastY; lastY = scrollY;
+  if (glide || playing) return;
+  if (dy) travel = dy;
+  clearTimeout(idleTimer); idleTimer = setTimeout(settle, 130);
+}, {passive: true});
+// Any new gesture takes control back at once.
+for (const ev of ['wheel', 'touchstart', 'keydown', 'mousedown']) addEventListener(ev, () => { stopGlide(); clearTimeout(idleTimer); }, {passive: true});
+addEventListener('touchend', () => { clearTimeout(idleTimer); idleTimer = setTimeout(settle, 180); }, {passive: true});
+
 const start = performance.now();
 function frame(now) {
   const t = (now - start) / 1000, dt = Math.min(0.05, t - lastT); lastT = t;
@@ -341,6 +376,10 @@ function frame(now) {
     const next = playY += (maxScroll() / PLAY_SECONDS) * dt;
     scrollTo(0, next);
     if (next >= maxScroll()) setPlaying(false);
+  } else if (glide) {
+    const k = Math.min(1, (now - glide.t0) / glide.ms), e = k < 0.5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+    scrollTo(0, glide.from + (glide.to - glide.from) * e);
+    if (k >= 1) glide = null;
   }
   const goal = target();
   if (!seen && goal > 0.97) { seen = true; try { localStorage.setItem(SEEN, '1'); } catch { /* private mode */ } }

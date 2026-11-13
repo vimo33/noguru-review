@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f7f3ea">
+  <meta name="robots" content="noindex, nofollow">
+  <title>NoGuru — library</title>
+  <link rel="icon" href="../experience/assets/companion-mark.svg" type="image/svg+xml">
+  <link rel="preload" href="../pilot/fonts/Manrope.woff" as="font" type="font/woff" crossorigin>
+  <link rel="preload" href="../pilot/fonts/Fraunces.woff" as="font" type="font/woff" crossorigin>
+  <link rel="stylesheet" href="../pilot/styles.css">
+  <link rel="stylesheet" href="./read.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="bar">
+  <a class="bar-mark" href="../" aria-label="NoGuru home">NoGuru<i>.</i></a>
+  <nav aria-label="Site">
+    <a href="../#evidence" class="wide">Evidence</a>
+    <a href="../#questions" class="wide">Questions</a>
+    <a href="?page=how-it-works" data-route class="wide">How it works</a>
+    <a href="?page=pricing" data-route class="wide">Pricing</a>
+    <a href="?page=library" data-route>Library</a>
+    <a class="bar-pill" href="../#start">Try it free</a>
+  </nav>
+</header>
+<main id="main">
+  <article id="learning-page" class="learning-page" hidden aria-labelledby="learning-title">
+    <a href="?page=library" data-route class="text-link return-to-guide" id="crumb">← Library</a>
+    <header class="learning-header"><p id="learning-eyebrow" class="eyebrow"></p><h1 id="learning-title" tabindex="-1"></h1><p id="learning-intro" class="summary"></p></header>
+    <div id="learning-cards" class="plan-cards" hidden></div>
+    <details class="reading-tools"><summary>Find something on this page</summary><label class="search-field">Search this page<input id="learning-search" type="search" placeholder="A word or topic" autocomplete="off"></label><p id="search-status" role="status"></p><nav id="learning-toc" aria-label="On this page"></nav></details>
+    <div id="learning-sections"></div>
+    <aside id="learning-source"></aside>
+  </article>
+  <article id="market-page" class="learning-page" hidden aria-labelledby="market-title">
+    <a href="../#evidence" class="text-link return-to-guide">← The record</a>
+    <header class="learning-header"><p class="eyebrow">A separate source</p><h1 id="market-title" tabindex="-1">A little market context.</h1><p class="summary">Recent price context is useful. It is not your account’s performance, a forecast or a trading instruction.</p></header>
+    <section class="market-source"><div class="market-source-heading"><h2>Across timeframes</h2><button type="button" id="market-refresh" class="text-link">Refresh sources</button></div><p id="market-page-status" class="source-status" role="status">Loading the public market source…</p><label class="timeframe-field">Look across<select id="market-timeframe"><option value="1h">1 hour</option><option value="4h">4 hours</option><option value="1d" selected>1 day</option><option value="1w">1 week</option></select></label><p id="market-definition" class="basis-note"></p><div id="market-matrix"></div><p id="market-page-date" class="basis-note"></p><div id="market-source-links"></div></section>
+    <section class="market-source"><h2>Published drawdown episodes.</h2><p id="episodes-status" class="source-status" role="status">Loading the episode source…</p><p id="episodes-definition" class="section-note">A separate event history. These are not your holdings, current quotes or recovery odds.</p><div id="episodes-table"></div><p id="episodes-date" class="basis-note"></p><div id="episodes-links"></div></section>
+  </article>
+  <section class="read-cta" id="read-cta">
+    <img src="../pilot/assets/noguru-guide-attentive-original.png" alt="" width="120" height="120" loading="lazy">
+    <div><h2>Rather see it than read about it?</h2><p>Watch it work with pretend money first. No deposit, no card.</p></div>
+    <a class="button primary" href="../#start">Try it free for 14 days <span aria-hidden="true">→</span></a>
+  </section>
+</main>
+<footer class="read-foot">
+  <nav aria-label="Library and legal"><a href="../">Home</a><a href="?page=how-it-works" data-route>How it works</a><a href="?page=pricing" data-route>Pricing</a><a href="?page=library" data-route>Library</a><a href="?page=academy" data-route>Academy</a><a href="?page=glossary" data-route>Glossary</a><a href="?page=digest" data-route>Digest</a><a href="?page=terms" data-route>Terms</a><a href="?page=privacy" data-route>Privacy</a><a href="?page=impressum" data-route>Provider</a></nav>
+  <p>Review preview. Trading crypto can lose money. Coins the bot holds can fall in value and may not recover.</p>
+</footer>
+<noscript><p class="noscript">These pages need JavaScript.</p></noscript>
+<script type="module" src="./read.js"></script>
+</body>
+</html>

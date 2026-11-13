@@ -1,0 +1,44 @@
+/* Frame for the reading pages. Content styles come from the shared stylesheet. */
+:root{--apricot:#d4a17c}
+body{background:var(--cream)}
+.bar{position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:max(12px,env(safe-area-inset-top)) 22px 12px;background:#f7f3eae6;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.bar-mark{font-size:25px;font-weight:650;letter-spacing:-.055em;text-decoration:none}
+.bar-mark i{font-style:normal;color:var(--apricot)}
+.bar nav{display:flex;align-items:center;gap:18px;font-size:14px}
+.bar nav a{text-decoration:none;min-height:44px;display:inline-flex;align-items:center}
+.bar nav a[aria-current=page]{text-decoration:underline;text-underline-offset:6px}
+.bar nav .wide{display:none}
+.bar-pill{padding:0 18px;border-radius:99px;background:var(--ink);color:var(--cream);font-weight:650;font-size:13px}
+
+main{max-width:1180px;padding:0 24px}
+.learning-page{margin:34px auto 60px}
+.learning-header h1{outline:none}
+#market-title{outline:none}
+
+.read-cta{display:grid;grid-template-columns:auto 1fr;align-items:center;gap:8px 16px;margin:0 0 60px;padding:26px 22px;border-radius:24px;color:var(--cream);
+  background:radial-gradient(1px 1px at 14% 22%,#f7f3eaaa 50%,transparent 51%),radial-gradient(1px 1px at 82% 14%,#f7f3ea88 50%,transparent 51%),
+    radial-gradient(1.5px 1.5px at 66% 70%,#f7f3ea77 50%,transparent 51%),radial-gradient(120% 120% at 30% 0%,#1c3530,#0e1c18 70%)}
+.read-cta img{width:84px;height:84px;margin-left:-8px}
+.read-cta h2{font-size:25px;line-height:1.15;color:var(--cream)}
+.read-cta p{margin-top:6px;font-size:14px;line-height:1.5;color:#c9d3c6}
+.read-cta .button{grid-column:1/-1;margin-top:10px;background:var(--cream);color:var(--ink);gap:16px}
+
+.read-foot{max-width:1180px;margin:0 auto;padding:26px 24px 50px;border-top:1px solid var(--line);font-size:11.5px;line-height:1.6;color:var(--muted)}
+.read-foot nav{display:flex;flex-wrap:wrap;gap:2px 20px;margin-bottom:14px;font-size:13px;color:var(--ink)}
+.read-foot nav a{min-height:40px;display:inline-flex;align-items:center;text-decoration:none}
+.read-foot nav a[aria-current=page]{text-decoration:underline;text-underline-offset:5px}
+
+@media (min-width:900px){
+  .bar{padding:16px 5vw}
+  .bar-mark{font-size:30px}
+  .bar nav{gap:26px}
+  .bar nav .wide{display:inline-flex}
+  main{padding:0 6vw}
+  .learning-page{margin-top:56px}
+  .read-cta{grid-template-columns:auto 1fr auto;padding:30px 36px;gap:24px}
+  .read-cta img{width:110px;height:110px}
+  .read-cta h2{font-size:32px}
+  .read-cta .button{grid-column:auto;margin-top:0}
+  .read-foot{padding:30px 6vw 60px}
+}
