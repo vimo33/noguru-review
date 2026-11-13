@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0e1c18">
+  <meta name="robots" content="noindex, nofollow">
+  <title>NoGuru — full film run (local test)</title>
+  <link rel="icon" href="../experience/assets/companion-mark.svg" type="image/svg+xml">
+  <link rel="preload" href="../pilot/fonts/Manrope.woff" as="font" type="font/woff" crossorigin>
+  <link rel="preload" href="../pilot/fonts/Fraunces.woff" as="font" type="font/woff" crossorigin>
+  <link rel="stylesheet" href="./film.css">
+</head>
+<body>
+<!-- Five-beat film that settles into the site: evidence, questions, guided start. Local review only. -->
+<div class="film" id="film">
+  <div class="stage" id="stage">
+    <div class="dawn" id="dawn" aria-hidden="true"></div>
+    <canvas id="space" aria-hidden="true"></canvas>
+
+    <header class="hud">
+      <span class="wordmark">NoGuru<i>.</i></span>
+      <div class="hud-film" id="hud-film">
+        <button type="button" id="skip" class="skip">Skip</button>
+        <button type="button" id="play" class="play" aria-pressed="false"><span class="play-icon" aria-hidden="true"></span><span id="play-label">Play</span></button>
+      </div>
+      <nav class="hud-site" id="hud-site" aria-label="Site">
+        <a href="#evidence" data-jump>Evidence</a>
+        <a href="#questions" data-jump>Questions</a>
+        <a class="pill" href="#start" data-jump>Try it free</a>
+      </nav>
+    </header>
+
+    <section class="panel intro" id="intro" aria-labelledby="intro-title">
+      <p class="eyebrow">An automated crypto trading bot</p>
+      <h1 id="intro-title">Your crypto, working<br>around the <em>clock.</em></h1>
+      <p class="lede">It buys in steps as prices fall, and sells above its average. Automatically, in your own exchange account.</p>
+      <p class="stat"><b>+34.9%</b><span>completed profit on allocated funds<br>1 Aug – 12 Nov 2026 · before fees</span></p>
+    </section>
+
+    <section class="panel story" id="story" aria-live="off">
+      <div class="captions" id="captions">
+        <p class="caption" data-cap="pick">It watches the market and picks a handful of coins worth trading.</p>
+        <p class="caption" data-cap="buy">Let’s follow one. The bot buys <em>a little.</em></p>
+        <p class="caption" data-cap="dip">The price drops. No panic. It buys more, <em>cheaper.</em></p>
+        <p class="caption" data-cap="wait">Now it doesn’t need the old price back. Just a little above its <em>average.</em></p>
+        <p class="caption" data-cap="sell">Sold. The cash comes back with profit, ready for the <em>next coin.</em></p>
+        <p class="caption" data-cap="many">Now zoom out. It runs many of these at once, <em>day and night.</em></p>
+        <p class="caption" data-cap="hold">Some take longer. The bot holds them and waits for <em>its price.</em><small>Their value can fall while they wait.</small></p>
+        <p class="caption" data-cap="proof">Every dot is a finished trade. <em>1,046 of 1,048</em> closed in profit.</p>
+        <p class="caption" data-cap="yours">Your money never leaves your own exchange. The bot can trade it. It <em>can’t withdraw it.</em></p>
+      </div>
+
+      <div class="block chart" id="chart" aria-hidden="true">
+        <svg viewBox="0 0 320 150" preserveAspectRatio="xMidYMid meet">
+          <line class="avg" id="avg-line" x1="0" x2="320" y1="0" y2="0"/>
+          <line class="target" id="target-line" x1="0" x2="320" y1="0" y2="0"/>
+          <path class="price-ghost" id="price-ghost" d=""/>
+          <path class="price" id="price" d=""/>
+          <g class="mark" id="mark-buy1"><circle r="5"/><text y="-11">Buy at 100</text></g>
+          <g class="mark" id="mark-buy2"><circle r="5"/><text x="-9" y="15" style="text-anchor:end">Buy more at 80</text></g>
+          <g class="mark sell" id="mark-sell"><circle r="6"/><text y="-12">Sell at 92</text></g>
+          <text class="line-label" id="avg-label" x="318" text-anchor="end">average 100</text>
+          <circle class="head" id="head" r="3.5"/>
+        </svg>
+        <div class="ledger">
+          <div><span>Put in</span><b id="ledger-in">0</b></div>
+          <div><span>Average cost</span><b id="ledger-avg">—</b></div>
+          <div class="profit"><span>Back in cash</span><b id="ledger-out">—</b></div>
+        </div>
+        <p class="foot" id="chart-foot">An illustration with round numbers.</p>
+      </div>
+
+      <div class="block record" id="record" aria-hidden="true">
+        <p class="counter"><b id="count">0</b><span>finished trades since 1 August</span></p>
+        <canvas id="dots"></canvas>
+        <p class="legend"><span><i class="d win"></i>closed in profit</span><span><i class="d loss"></i>2 closed below cost</span><span><i class="d open"></i>20 still open</span></p>
+        <p class="stat proof-stat" id="proof-stat"><b>+34.9%</b><span>completed profit on allocated funds<br>1 Aug – 12 Nov 2026 · before fees</span></p>
+      </div>
+
+      <div class="block control" id="control" aria-hidden="true">
+        <ol class="roles">
+          <li><b>NoGuru</b><span>decides what to buy and when to sell</span></li>
+          <li><b>Cornix</b><span>places the orders for you</span></li>
+          <li><b>Your exchange</b><span>holds your coins and your cash</span></li>
+        </ol>
+        <p class="terms"><b>14 days free.</b> Then $49 a month while founding places last. Stop whenever you like.</p>
+      </div>
+    </section>
+
+    <section class="panel intro landing" id="landing" aria-labelledby="landing-title">
+      <p class="eyebrow">NoGuru · a guide, never a guru</p>
+      <h2 id="landing-title">Your crypto, working<br>around the <em>clock.</em></h2>
+      <p class="lede">An automated bot that buys in steps, sells above its average and starts again. In your own exchange account.</p>
+      <div class="cta-row"><a class="button" href="#start" data-jump>Try it free for 14 days <span aria-hidden="true">→</span></a><a class="text" href="#evidence" data-jump>See the record ↓</a></div>
+    </section>
+
+    <p class="hint" id="hint"><span class="hint-line" aria-hidden="true"></span>Scroll, or press play</p>
+    <div class="progress" aria-hidden="true"><i id="progress"></i></div>
+  </div>
+</div>
+
+<a class="pinned" id="pinned" href="#start" data-jump>Try it free for 14 days <span aria-hidden="true">→</span></a>
+
+<main class="site" id="site">
+  <section class="sec evidence" id="evidence" aria-labelledby="ev-title">
+    <p class="eyebrow">See it for yourself</p>
+    <h2 id="ev-title">The record, <em>as it stands.</em></h2>
+    <p class="sec-lede">Read straight from NoGuru’s published record each time this page opens. Nothing here is typed in by hand.</p>
+    <p class="ev-status" id="ev-status" role="status">Reading the record…</p>
+    <div class="ev-body" id="ev-body" hidden>
+      <div class="ev-hero">
+        <b id="ev-pct">—</b>
+        <span>completed profit on allocated funds<br><span id="ev-period"></span> · before fees</span>
+      </div>
+      <div class="ev-grid">
+        <div><b id="ev-closed">—</b><span>finished trades</span></div>
+        <div><b id="ev-up">—</b><span>of them closed in profit</span></div>
+        <div><b id="ev-fast">—</b><span>finished within a day</span></div>
+        <div class="quiet"><b id="ev-open">—</b><span id="ev-open-note">still open, waiting for their price</span></div>
+      </div>
+      <h3>The latest finished trades</h3>
+      <ol class="ev-list" id="ev-list"></ol>
+      <p class="ev-note">This is the record of NoGuru’s published signals, before fees. It is not a customer account, and past results do not promise future ones. <a href="../pilot/?page=evidence">Inspect the full record →</a></p>
+    </div>
+  </section>
+
+  <section class="sec questions" id="questions" aria-labelledby="q-title">
+    <div class="q-head">
+      <img src="../pilot/assets/noguru-guide-original.png" alt="" width="160" height="160" loading="lazy">
+      <div><p class="eyebrow">Ask me anything</p><h2 id="q-title">The five questions <em>everyone asks.</em></h2></div>
+    </div>
+    <div class="q-list">
+      <details><summary><span>Is my money safe?</span><b>It stays in your own exchange account. The bot can trade it. It can’t withdraw it.</b></summary>
+        <p>You connect Cornix to your exchange with a key that allows trading only; withdrawals stay switched off. Use a separate sub-account that holds just the money you want the bot to trade. You never paste a key into this site.</p>
+        <p>What that doesn’t protect you from: the market itself, and the exchange that holds your account.</p></details>
+      <details><summary><span>What happens in a crash?</span><b>It buys in steps on the way down, then holds and waits. It doesn’t sell in a panic.</b></summary>
+        <p>There is no stop loss. Coins it holds can lose value for a long time, and some may never come back. If the cash set aside runs out, buying pauses until a sale frees some up.</p>
+        <p id="q-open-now"></p>
+        <p>NoGuru’s own replay of a market top like October 2025 shows the account worth 48% less at market prices at its lowest point.</p></details>
+      <details><summary><span>What does it cost?</span><b>$49 a month for NoGuru at the founding price, plus Cornix at about $49.90. Both start with 14 days free.</b></summary>
+        <p>NoGuru’s standard price is $99 a month once founding places are gone. Cornix is a separate service with its own plans. Your exchange charges its normal trading fees. Neither trial asks for a card.</p>
+        <p><a href="../pilot/?page=pricing">See the full pricing →</a></p></details>
+      <details><summary><span>How much do I need?</span><b>Nothing to watch it with pretend money. To go live, NoGuru suggests about 3,000 USDT.</b></summary>
+        <p>That amount gives the bot room to buy in several steps across several coins. Less still trades, with fewer steps. Only put in money you can leave alone for months, and keep the subscriptions separate from it.</p></details>
+      <details><summary><span>Who is behind it?</span><b>People who built it for their own money first, then decided to share it. No gurus, no faces.</b></summary>
+        <p>That is on purpose. Judge it by the public record and by watching it work on a free trial, not by a personality. The operating company is named on the <a href="../pilot/?page=impressum">provider page</a>.</p></details>
+    </div>
+  </section>
+
+  <section class="sec start" id="start" aria-labelledby="start-title">
+    <div class="start-inner">
+      <img class="start-robot" src="../pilot/assets/noguru-guide-attentive-original.png" alt="" width="220" height="220" loading="lazy">
+      <p class="eyebrow">Start</p>
+      <h2 id="start-title">Let’s get you <em>watching it work.</em></h2>
+      <div class="choose" id="choose">
+        <p class="sec-lede">I’ll walk you through it, one step at a time. How would you like to begin?</p>
+        <button type="button" class="path lead" data-path="demo"><b>With pretend money</b><span>No deposit, no exchange account. Five short steps.</span><i>Start here</i></button>
+        <button type="button" class="path" data-path="live"><b>Go live</b><span>Your own money in your own exchange. Seven steps.</span></button>
+      </div>
+      <div class="walk" id="walk" hidden>
+        <p class="walk-pos" id="walk-pos"></p>
+        <div class="walk-dots" id="walk-dots" aria-hidden="true"></div>
+        <h3 id="walk-title" tabindex="-1"></h3>
+        <p class="walk-say" id="walk-say"></p>
+        <p class="walk-note" id="walk-note"></p>
+        <div class="walk-actions">
+          <a class="button light" id="walk-open" target="_blank" rel="noopener noreferrer"></a>
+          <button type="button" class="button outline" id="walk-next">Done, next <span aria-hidden="true">→</span></button>
+        </div>
+        <div class="walk-foot"><button type="button" id="walk-back">← Back</button><button type="button" id="walk-reset">Start over</button></div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-foot">
+    <nav aria-label="Library and legal"><a href="../pilot/?page=library">Library</a><a href="../pilot/?page=academy">Academy</a><a href="../pilot/?page=glossary">Glossary</a><a href="../pilot/?page=digest">Digest</a><a href="../pilot/?page=terms">Terms</a><a href="../pilot/?page=privacy">Privacy</a></nav>
+    <button type="button" id="replay" class="ghost">Watch the film again</button>
+    <p>Local test. Trading crypto can lose money. Coins the bot holds can fall in value and may not recover.</p>
+  </footer>
+</main>
+<noscript><p style="color:#f7f3ea;padding:24px">This test needs JavaScript.</p></noscript>
+<script type="module" src="./film.js"></script>
+<script type="module" src="./site.js"></script>
+</body>
+</html>
