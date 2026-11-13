@@ -1,6 +1,7 @@
 // Spike: a five-beat film (arrival, one coin, zoom out, proof, yours) that settles into the site home.
 // One progress value (0..1) drives everything; scrolling and Play both move it.
 import * as THREE from './pilot/vendor/three.module.min.js';
+import {record} from './record.js';
 
 const $ = (s) => document.querySelector(s);
 const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
@@ -130,6 +131,11 @@ function layout() {
     L.size3 = L.size; L.x3 = L.x; L.y3 = L.y;
   }
   L.orbitMax = portrait ? visW * 0.5 - 0.16 : visW * 0.19;
+  // where the picked coins line up: just under the "picks a handful of coins" caption
+  const capBox = $('#captions').getBoundingClientRect(), capH = document.querySelector('[data-cap=pick]').offsetHeight;
+  const gapPx = portrait ? Math.min(82, (w - 40) / 4) : Math.min(130, capBox.width / 4.4);
+  const rowX = portrait ? w / 2 : capBox.left + gapPx * 2, rowY = capBox.top + capH + gapPx * (portrait ? 0.95 : 0.9);
+  L.row = {x: (rowX / w - 0.5) * visW, y: (0.5 - rowY / h) * visH, gap: (gapPx / h) * visH, r: ((gapPx * 0.4) / h) * visH};
   dirty = true;
 }
 
@@ -159,7 +165,7 @@ const avgLine = $('#avg-line'), avgLabel = $('#avg-label'), targetLine = $('#tar
 targetLine.setAttribute('y1', py(90.67)); targetLine.setAttribute('y2', py(90.67));
 
 /* ---------- the record, as dots ---------- */
-const CLOSED = 1048, BELOW = 2, OPEN = 20;
+let CLOSED = 1048, BELOW = 2, OPEN = 20, TOTAL_PCT = 34.9; // replaced by the live record when it arrives
 const dots = $('#dots'), dctx = dots.getContext('2d');
 let dotGrid = null, dotShown = -1;
 function layoutDots() {
@@ -189,8 +195,8 @@ function drawDots(count, openO) {
 const stage = $('#stage');
 const el = {
   intro: $('#intro'), landing: $('#landing'), story: $('#story'), chart: $('#chart'), record: $('#record'), control: $('#control'),
-  hint: $('#hint'), bar: $('#progress'), dawn: $('#dawn'), hudFilm: $('#hud-film'), hudSite: $('#hud-site'),
-  in: $('#ledger-in'), avg: $('#ledger-avg'), out: $('#ledger-out'), foot: $('#chart-foot'), count: $('#count'), proofStat: $('#proof-stat'),
+  hint: $('#hint'), bar: $('#progress'), dawn: $('#dawn'), hudFilm: $('#hud-film'),
+  in: $('#ledger-in'), avg: $('#ledger-avg'), out: $('#ledger-out'), foot: $('#chart-foot'), count: $('#count'), proofPct: $('#proof-pct'),
   caps: Object.fromEntries([...document.querySelectorAll('.caption')].map((n) => [n.dataset.cap, n])),
   buy1: $('#mark-buy1'), buy2: $('#mark-buy2'), sell: $('#mark-sell'),
   roles: [...document.querySelectorAll('.roles li')], terms: document.querySelector('.terms'),
@@ -239,7 +245,8 @@ function applyDom(p) {
   const count = Math.round(CLOSED * ease(clamp((q - 0.05) / 0.3)));
   el.count.textContent = count.toLocaleString('en-US');
   drawDots(count, span(q, 0.2, 0.26));
-  fade(el.proofStat, span(q, 0.36, 0.41), 10);
+  // the profit figure climbs with the dots and settles on the record's total
+  el.proofPct.textContent = `+${(TOTAL_PCT * count / CLOSED).toFixed(1)}%`;
 
   // yours
   fade(el.control, windowed(q, 0.625, 0.805, 0.02), 18);
@@ -250,7 +257,6 @@ function applyDom(p) {
   stage.style.setProperty('--settle', s.toFixed(3));
   el.dawn.style.opacity = s.toFixed(3);
   el.hudFilm.style.opacity = (1 - span(q, 0.84, 0.88)).toFixed(3); el.hudFilm.style.pointerEvents = q > 0.86 ? 'none' : 'auto';
-  el.hudSite.style.opacity = span(q, 0.93, 0.99).toFixed(3); el.hudSite.style.pointerEvents = q > 0.95 ? 'auto' : 'none';
   el.bar.style.transform = `scaleX(${p.toFixed(4)})`; el.bar.parentNode.style.opacity = (1 - s).toFixed(2);
 }
 
@@ -260,20 +266,23 @@ function applyScene(p, t) {
   const a = p / ACT, q = (p - ACT2) / (1 - ACT2), s = settleOf(q);
   const back = span(q, 0, 0.08);                               // robot stands up again, orbit returns
   const cyc = span(a, 0.27, 0.34) * (1 - back);                // following one coin
-  const compact = Math.max(cyc, Math.min(span(q, 0.02, 0.08), 1 - span(q, 0.82, 0.88))); // smaller robot while a block is on screen
+  const compact = Math.max(cyc, windowed(a, 0.11, 0.3, 0.03), Math.min(span(q, 0.02, 0.08), 1 - span(q, 0.82, 0.88))); // smaller robot while words or a block sit below it
   const float = reduced ? 0 : Math.sin(t * 0.9) * 0.045;
   const size = lerp(lerp(L.size, L.size2, compact), L.size3, s);
   const rx = lerp(lerp(L.x, L.x2, compact), L.x3, s), ry = lerp(lerp(L.y, L.y2, compact), L.y3, s) + float;
-  const enter = reduced ? 1 : ease(clamp((t - 0.15) / 1.6));
-  robot.position.set(rx, ry - (1 - enter) * 1.1, 0);
-  robot.scale.setScalar(size * lerp(0.86, 1, enter));
+  const bloom = reduced ? 1 : ease(clamp(t / 1.1));
+  const enter = reduced ? 1 : ease(clamp((t - 0.55) / 1.5));
+  robot.position.set(rx, ry, 0);
+  robot.scale.setScalar(size * lerp(0.965, 1, enter));
   robot.rotation.z = reduced ? 0 : Math.sin(t * 0.6) * 0.018;
   const sit = span(a, 0.285, 0.325) * (1 - span(q, 0, 0.05));
   standing.material.opacity = enter * (1 - span(a, 0.275, 0.315) * (1 - span(q, 0.01, 0.06)));
   sitting.material.opacity = sit;
-  glow.position.set(rx, ry, -0.6); glow.scale.setScalar(size * 2.1); glow.material.opacity = enter * 0.9 * (1 - s);
+  glow.position.set(rx, ry, -0.6); glow.scale.setScalar(size * lerp(0.9, 2.1, bloom) * (1 + (1 - enter) * bloom * 0.35));
+  glow.material.opacity = Math.min(1, bloom * (0.9 + (1 - enter) * 0.9)) * (1 - s);
 
-  const pickGlow = windowed(a, 0.13, 0.25, 0.03);
+  const pickGlow = windowed(a, 0.13, 0.255, 0.035);
+  let seat = 0;
   const busy = windowed(q, 0.03, 0.31, 0.03);
   const R = Math.min(size * 0.72, L.orbitMax);
   const sale = span(a, 0.775, 0.84);
@@ -286,7 +295,12 @@ function applyScene(p, t) {
     const inT = reduced ? 1 : ease(clamp((t - 0.5 - i * 0.12) / 1.4));
     let sc = size * c.size * inT;
     c.mesh.position.set(x * lerp(2.6, 1, inT), y, z - cyc * 6.5);
-    sc *= c.picked ? 1 + pickGlow * 0.35 : 1 - pickGlow * 0.3;
+    let face = 0;
+    if (c.picked) {
+      // the handful it picked leaves the orbit and lines up under the words
+      tmp.set(L.row.x + (seat - 1.5) * L.row.gap - rx, L.row.y - ry, 0); seat += 1;
+      c.mesh.position.lerp(tmp, pickGlow); sc = lerp(sc, L.row.r, pickGlow); face = pickGlow;
+    } else { sc *= 1 - pickGlow * 0.55; c.mesh.position.z -= pickGlow * 4; }
     // while it runs many cycles, coins take turns "selling": a quick swell and a warm flash
     const pulse = busy * Math.pow(Math.max(0, Math.sin(q * 150 + i * 2.3)), 10);
     sc *= 1 + pulse * 0.45;
@@ -298,7 +312,7 @@ function applyScene(p, t) {
       sc = lerp(sc, size * 0.085, follow) * (1 - span(a, 0.335, 0.37) * (1 - sale));
     }
     c.mesh.scale.setScalar(Math.max(sc, 0.0001));
-    c.mesh.rotation.set(Math.PI / 2 + Math.sin(t * 0.7 + i) * 0.12, reduced ? 0.35 : t * c.spin + i, 0);
+    c.mesh.rotation.set(Math.PI / 2 + Math.sin(t * 0.7 + i) * 0.12 * (1 - face), (reduced ? 0.35 : t * c.spin + i) * (1 - face), 0);
   });
 
   scene.fog.color.copy(FOG_DARK).lerp(FOG_LIGHT, s);
@@ -315,23 +329,38 @@ const pointer = {x: 0, y: 0};
 addEventListener('pointermove', (e) => { if (e.pointerType === 'mouse') { pointer.x = (e.clientX / innerWidth - 0.5) * 2; pointer.y = -(e.clientY / innerHeight - 0.5) * 2; } }, {passive: true});
 
 const maxScroll = () => film.offsetHeight - innerHeight;
-const target = () => clamp(scrollY / Math.max(1, maxScroll()));
+let finished = false;
+const target = () => (finished ? 1 : clamp(scrollY / Math.max(1, maxScroll())));
 let p = target(), dirty = true, playing = false, lastT = 0, playY = 0;
 const PLAY_SECONDS = 80;
 const playBtn = $('#play'), playLabel = $('#play-label');
 function setPlaying(on) {
   playing = on; playBtn.setAttribute('aria-pressed', String(on)); playLabel.textContent = on ? 'Pause' : 'Play';
 }
+$('#play-big').addEventListener('click', () => { stopGlide(); setPlaying(true); });
 playBtn.addEventListener('click', () => { stopGlide(); setPlaying(!playing); if (!playing) { travel = 1; setTimeout(settle, 60); } });
-$('#skip').addEventListener('click', () => { setPlaying(false); stopGlide(); clearTimeout(idleTimer); scrollTo(0, maxScroll()); });
-$('#replay').addEventListener('click', () => { scrollTo(0, 0); p = 0; setPlaying(true); });
-for (const ev of ['wheel', 'touchstart', 'keydown']) addEventListener(ev, (e) => { if (ev === 'keydown' && e.target === playBtn) return; if (playing) setPlaying(false); }, {passive: true});
+$('#skip').addEventListener('click', () => { clearTimeout(idleTimer); scrollTo(0, maxScroll()); finishFilm(); });
+$('#replay').addEventListener('click', () => { reopenFilm(); setPlaying(true); });
+for (const ev of ['wheel', 'touchstart', 'keydown']) addEventListener(ev, (e) => { if (ev === 'keydown' && e.target.closest?.('button')) return; if (playing) setPlaying(false); }, {passive: true});
 
 // Someone who has already seen the film lands on the site it settles into.
 const SEEN = 'noguru-film-seen';
 let seen = false;
 try { seen = localStorage.getItem(SEEN) === '1'; } catch { /* private mode */ }
-if (seen && scrollY < 4 && !location.hash && !new URLSearchParams(location.search).has('film')) { scrollTo(0, maxScroll()); p = 1; }
+function finishFilm() {
+  if (finished) return;
+  const max = maxScroll();
+  finished = true; glide = null; setPlaying(false); clearTimeout(idleTimer);
+  if (!seen) { seen = true; try { localStorage.setItem(SEEN, '1'); } catch { /* private mode */ } }
+  film.style.height = '100svh';
+  document.documentElement.classList.add('film-done');
+  scrollTo(0, Math.max(0, scrollY - max)); lastY = scrollY; p = 1;
+}
+function reopenFilm() {
+  finished = false; film.style.height = '';
+  document.documentElement.classList.remove('film-done');
+  scrollTo(0, 0); lastY = 0; p = 0;
+}
 
 /* ---------- land on complete moments ----------
    A gesture rarely stops exactly where a moment is complete, so once scrolling goes quiet the film
@@ -341,6 +370,10 @@ const RESTS = [
   ...[0.09, 0.245, 0.45, 0.78, 1].map((q) => ACT2 + (1 - ACT2) * q),      // many, hold, proof, yours, landing
 ];
 let glide = null, idleTimer = 0, lastY = scrollY, travel = 0;
+if (seen && !new URLSearchParams(location.search).has('film')) {
+  finishFilm();
+  if (location.hash) requestAnimationFrame(() => document.querySelector(location.hash)?.scrollIntoView());
+}
 function stopGlide() { glide = null; }
 function glideTo(pTarget) {
   const from = scrollY, to = pTarget * maxScroll(), dist = Math.abs(to - from);
@@ -350,9 +383,10 @@ function glideTo(pTarget) {
   glide = {from, to, t0: performance.now(), ms: Math.min(1900, Math.max(650, 800 + span01 * 9000))};
 }
 function settle() {
-  if (playing || glide) return;
+  if (playing || glide || finished) return;
   const max = maxScroll();
-  if (scrollY >= max - 1 || scrollY <= 0) return;      // on the first frame, or already in the site below
+  if (scrollY >= max - 1) { finishFilm(); return; }     // reached the landing, or went past it into the site
+  if (scrollY <= 0) return;                             // still on the first frame
   const here = scrollY / max;
   const ahead = RESTS.find((r) => r >= here - 0.004), behind = [...RESTS].reverse().find((r) => r <= here + 0.004);
   const target = travel >= 0 ? ahead : behind;
@@ -360,7 +394,7 @@ function settle() {
 }
 addEventListener('scroll', () => {
   const dy = scrollY - lastY; lastY = scrollY;
-  if (glide || playing) return;
+  if (glide || playing || finished) return;
   if (dy) travel = dy;
   clearTimeout(idleTimer); idleTimer = setTimeout(settle, 130);
 }, {passive: true});
@@ -375,14 +409,13 @@ function frame(now) {
     if (Math.abs(playY - scrollY) > 2) playY = scrollY;
     const next = playY += (maxScroll() / PLAY_SECONDS) * dt;
     scrollTo(0, next);
-    if (next >= maxScroll()) setPlaying(false);
+    if (next >= maxScroll()) finishFilm();
   } else if (glide) {
     const k = Math.min(1, (now - glide.t0) / glide.ms), e = k < 0.5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
     scrollTo(0, glide.from + (glide.to - glide.from) * e);
-    if (k >= 1) glide = null;
+    if (k >= 1) { glide = null; if (scrollY >= maxScroll() - 1) finishFilm(); }
   }
   const goal = target();
-  if (!seen && goal > 0.97) { seen = true; try { localStorage.setItem(SEEN, '1'); } catch { /* private mode */ } }
   p = Math.abs(goal - p) < 0.0004 ? goal : lerp(p, goal, reduced ? 1 : 0.14);
   applyDom(p); applyScene(p, t);
   renderer.render(scene, camera);
@@ -396,3 +429,16 @@ addEventListener('resize', relayout);
 document.fonts?.ready.then(relayout);
 relayout();
 requestAnimationFrame(frame);
+
+/* ---------- the film's numbers come from the live record ---------- */
+record.then((ev) => {
+  if (ev.status === 'unavailable' || !ev.closed) return; // keep the last checked figures rather than show nothing
+  CLOSED = ev.closed; BELOW = ev.down; OPEN = ev.open; TOTAL_PCT = ev.grossSinceStart;
+  const day = (iso) => new Intl.DateTimeFormat('en-GB', {day: 'numeric', month: 'short', timeZone: 'UTC'}).format(new Date(iso));
+  const year = new Date(ev.windowEnd).getUTCFullYear();
+  const set = (key, value) => document.querySelectorAll(`[data-rec="${key}"]`).forEach((n) => { n.textContent = value; });
+  set('pct', `+${ev.grossSinceStart.toFixed(1)}%`); set('period', `${day(ev.windowStart)} – ${day(ev.windowEnd)} ${year}`);
+  set('closed', ev.closed.toLocaleString('en-US')); set('up', ev.up.toLocaleString('en-US')); set('down', ev.down); set('open', ev.open);
+  document.querySelector('#legend-loss').hidden = ev.down === 0;
+  layoutDots();
+});

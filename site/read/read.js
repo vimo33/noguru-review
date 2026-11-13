@@ -140,3 +140,9 @@ document.addEventListener('click', (e) => {
 });
 addEventListener('popstate', () => show(parse(location.href) || {page: DEFAULT, anchor: ''}));
 show(parse(location.href) || {page: DEFAULT, anchor: ''});
+
+/* ---------- menu: closes after a choice or a tap elsewhere ---------- */
+const menu = $('#menu');
+menu.addEventListener('click', (e) => { if (e.target.closest('a')) menu.open = false; });
+document.addEventListener('click', (e) => { if (menu.open && !menu.contains(e.target)) menu.open = false; });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') menu.open = false; });

@@ -13,6 +13,24 @@
 </head>
 <body>
 <!-- Five-beat film that settles into the site: evidence, questions, guided start. Local review only. -->
+<header class="topbar" id="topbar">
+  <a class="wordmark" href="#film" data-jump aria-label="NoGuru home">NoGuru<i>.</i></a>
+  <nav aria-label="Site">
+    <a href="#evidence" data-jump class="wide">Evidence</a><a href="#questions" data-jump class="wide">Questions</a><a href="./read/?page=how-it-works" class="wide">How it works</a><a href="./read/?page=pricing" class="wide">Pricing</a>
+    <details class="menu" id="menu"><summary>Menu</summary>
+        <div class="menu-panel">
+          <p>On this page</p>
+          <a href="#evidence" data-jump>The record</a><a href="#questions" data-jump>Questions</a><a href="#start" data-jump>Start your free trial</a><a href="#expect" data-jump>What to expect</a>
+          <p>Read more</p>
+          <a href="./read/?page=how-it-works">How it works</a><a href="./read/?page=pricing">Pricing</a><a href="./read/?page=faq">FAQ</a><a href="./read/?page=risks">Risks</a><a href="./read/?page=market">Market context</a>
+          <p>Library</p>
+          <a href="./read/?page=library">Everything</a><a href="./read/?page=academy">Academy</a><a href="./read/?page=glossary">Glossary</a><a href="./read/?page=digest">Digest</a>
+          <p>Legal</p>
+          <a href="./read/?page=terms">Terms</a><a href="./read/?page=privacy">Privacy</a><a href="./read/?page=impressum">Provider</a>
+        </div></details>
+    <a class="pill wide" href="#start" data-jump>Try it free</a>
+  </nav>
+</header>
 <div class="film" id="film">
   <div class="stage" id="stage">
     <div class="dawn" id="dawn" aria-hidden="true"></div>
@@ -24,18 +42,15 @@
         <button type="button" id="skip" class="skip">Skip</button>
         <button type="button" id="play" class="play" aria-pressed="false"><span class="play-icon" aria-hidden="true"></span><span id="play-label">Play</span></button>
       </div>
-      <nav class="hud-site" id="hud-site" aria-label="Site">
-        <a href="#evidence" data-jump>Evidence</a>
-        <a href="#questions" data-jump>Questions</a>
-        <a class="pill" href="#start" data-jump>Try it free</a>
-      </nav>
+
     </header>
 
     <section class="panel intro" id="intro" aria-labelledby="intro-title">
       <p class="eyebrow">An automated crypto trading bot</p>
       <h1 id="intro-title">Your crypto, working<br>around the <em>clock.</em></h1>
       <p class="lede">It buys in steps as prices fall, and sells above its average. Automatically, in your own exchange account.</p>
-      <p class="stat"><b>+34.9%</b><span>completed profit on allocated funds<br>1 Aug – 12 Nov 2026 · before fees</span></p>
+      <p class="stat"><b data-rec="pct">+34.9%</b><span>completed profit on allocated funds<br><span data-rec="period">1 Aug – 12 Nov 2026</span> · before fees</span></p>
+      <button type="button" id="play-big" class="play-big"><span class="play-icon" aria-hidden="true"></span>Play the film <small>80 seconds</small></button>
     </section>
 
     <section class="panel story" id="story" aria-live="off">
@@ -47,7 +62,7 @@
         <p class="caption" data-cap="sell">Sold. The cash comes back with profit, ready for the <em>next coin.</em></p>
         <p class="caption" data-cap="many">Now zoom out. It runs many of these at once, <em>day and night.</em></p>
         <p class="caption" data-cap="hold">Some take longer. The bot holds them and waits for <em>its price.</em><small>Their value can fall while they wait.</small></p>
-        <p class="caption" data-cap="proof">Every dot is a finished trade. <em>1,046 of 1,048</em> closed in profit.</p>
+        <p class="caption" data-cap="proof">Every dot is a finished trade. <em><span data-rec="up">1,046</span> of <span data-rec="closed">1,048</span></em> closed in profit.</p>
         <p class="caption" data-cap="yours">Your money never leaves your own exchange. The bot can trade it. It <em>can’t withdraw it.</em></p>
       </div>
 
@@ -74,8 +89,8 @@
       <div class="block record" id="record" aria-hidden="true">
         <p class="counter"><b id="count">0</b><span>finished trades since 1 August</span></p>
         <canvas id="dots"></canvas>
-        <p class="legend"><span><i class="d win"></i>closed in profit</span><span><i class="d loss"></i>2 closed below cost</span><span><i class="d open"></i>20 still open</span></p>
-        <p class="stat proof-stat" id="proof-stat"><b>+34.9%</b><span>completed profit on allocated funds<br>1 Aug – 12 Nov 2026 · before fees</span></p>
+        <p class="legend"><span><i class="d win"></i>closed in profit</span><span id="legend-loss"><i class="d loss"></i><span data-rec="down">2</span> closed below cost</span><span><i class="d open"></i><span data-rec="open">20</span> still open</span></p>
+        <p class="stat proof-stat" id="proof-stat"><b id="proof-pct">+0.0%</b><span>completed profit on allocated funds<br><span data-rec="period">1 Aug – 12 Nov 2026</span> · before fees</span></p>
       </div>
 
       <div class="block control" id="control" aria-hidden="true">
@@ -95,7 +110,7 @@
       <div class="cta-row"><a class="button" href="#start" data-jump>Try it free for 14 days <span aria-hidden="true">→</span></a><a class="text" href="#evidence" data-jump>See the record ↓</a></div>
     </section>
 
-    <p class="hint" id="hint"><span class="hint-line" aria-hidden="true"></span>Scroll, or press play</p>
+    <p class="hint" id="hint"><span class="hint-line" aria-hidden="true"></span>or scroll at your own pace</p>
     <div class="progress" aria-hidden="true"><i id="progress"></i></div>
   </div>
 </div>
@@ -103,7 +118,7 @@
 <a class="pinned" id="pinned" href="#start" data-jump>Try it free for 14 days <span aria-hidden="true">→</span></a>
 
 <main class="site" id="site">
-  <section class="sec evidence" id="evidence" aria-labelledby="ev-title">
+  <section class="sec slice evidence" id="evidence" aria-labelledby="ev-title">
     <p class="eyebrow">See it for yourself</p>
     <h2 id="ev-title">The record, <em>as it stands.</em></h2>
     <p class="sec-lede">Read straight from NoGuru’s published record each time this page opens. Nothing here is typed in by hand.</p>
@@ -119,14 +134,18 @@
         <div><b id="ev-fast">—</b><span>finished within a day</span></div>
         <div class="quiet"><b id="ev-open">—</b><span id="ev-open-note">still open, waiting for their price</span></div>
       </div>
-      <h3>The latest finished trades</h3>
-      <p class="ev-avg" id="ev-avg"></p>
-      <ol class="ev-list" id="ev-list"></ol>
-      <p class="ev-note">This is the record of NoGuru’s published signals, before fees. It is not a customer account, and past results do not promise future ones. <a href="https://noguru.io/track-record.html" target="_blank" rel="noopener noreferrer">Open the trade-by-trade record ↗</a> · <a href="./read/?page=market">The market around it →</a></p>
     </div>
   </section>
 
-  <section class="sec questions" id="questions" aria-labelledby="q-title">
+  <section class="sec slice trades" id="trades" aria-labelledby="tr-title" hidden>
+    <p class="eyebrow">Trade by trade</p>
+    <h2 id="tr-title">Small wins, <em>again and again.</em></h2>
+    <p class="sec-lede" id="ev-avg"></p>
+    <ol class="ev-list" id="ev-list"></ol>
+    <p class="ev-note">This is the record of NoGuru’s published signals, before fees. It is not a customer account, and past results do not promise future ones. <a href="https://noguru.io/track-record.html" target="_blank" rel="noopener noreferrer">Open the trade-by-trade record ↗</a> · <a href="./read/?page=market">The market around it →</a></p>
+  </section>
+
+  <section class="sec slice questions" id="questions" aria-labelledby="q-title">
     <div class="q-head">
       <img src="./pilot/assets/noguru-guide-original.png" alt="" width="160" height="160" loading="lazy">
       <div><p class="eyebrow">Ask me anything</p><h2 id="q-title">The five questions <em>everyone asks.</em></h2></div>
@@ -134,30 +153,35 @@
     <div class="q-list">
       <details><summary><span>Is my money safe?</span><b>It stays in your own exchange account. The bot can trade it. It can’t withdraw it.</b></summary>
         <p>You connect Cornix to your exchange with a key that allows trading only; withdrawals stay switched off. Use a separate sub-account that holds just the money you want the bot to trade. You never paste a key into this site.</p>
-        <p>What that doesn’t protect you from: the market itself, and the exchange that holds your account.</p></details>
+        <p>What that doesn’t protect you from: the market itself, and the exchange that holds your account.</p>
+        <p class="more">Go deeper: <a href="./read/?page=how-it-works">How it works</a><a href="./read/?page=exchanges">Exchanges</a><a href="./read/?page=glossary#api-key">What an API key is</a></p></details>
       <details><summary><span>What happens in a crash?</span><b>It buys in steps on the way down, then holds and waits. It doesn’t sell in a panic.</b></summary>
         <p>There is no stop loss. Coins it holds can lose value for a long time, and some may never come back. If the cash set aside runs out, buying pauses until a sale frees some up.</p>
         <p id="q-open-now"></p>
-        <p>NoGuru’s own replay of a market top like October 2025 shows the account worth 48% less at market prices at its lowest point.</p></details>
+        <p>NoGuru’s own replay of a market top like October 2025 shows the account worth 48% less at market prices at its lowest point.</p>
+        <p class="more">Go deeper: <a href="./read/?page=risks">The risks</a><a href="./read/?page=market-stress">Under market stress</a><a href="./read/?page=academy-arithmetic-of-losses">The arithmetic of losses</a></p></details>
       <details><summary><span>What does it cost?</span><b>$49 a month for NoGuru at the founding price, plus Cornix at about $49.90. Both start with 14 days free.</b></summary>
         <p>NoGuru’s standard price is $99 a month once founding places are gone. Cornix is a separate service with its own plans. Your exchange charges its normal trading fees. Neither trial asks for a card.</p>
-        <p><a href="./read/?page=pricing">See the full pricing →</a></p></details>
+        <p class="more">Go deeper: <a href="./read/?page=pricing">Pricing</a><a href="./read/?page=trial">The two free trials</a></p></details>
       <details><summary><span>How much do I need?</span><b>Nothing to watch it with pretend money. To go live, NoGuru suggests about 3,000 USDT.</b></summary>
-        <p>That amount gives the bot room to buy in several steps across several coins. Less still trades, with fewer steps. Only put in money you can leave alone for months, and keep the subscriptions separate from it.</p></details>
+        <p>That amount gives the bot room to buy in several steps across several coins. Less still trades, with fewer steps. Only put in money you can leave alone for months, and keep the subscriptions separate from it.</p>
+        <p class="more">Go deeper: <a href="./read/?page=pricing">Capital and costs</a><a href="./read/?page=learn#reserves">Cash reserves</a></p></details>
       <details><summary><span>Who is behind it?</span><b>People who built it for their own money first, then decided to share it. No gurus, no faces.</b></summary>
-        <p>That is on purpose. Judge it by the public record and by watching it work on a free trial, not by a personality. The operating company is named on the <a href="./read/?page=impressum">provider page</a>.</p></details>
+        <p>That is on purpose. Judge it by the public record and by watching it work on a free trial, not by a personality.</p>
+        <p class="more">Go deeper: <a href="./read/?page=about">About NoGuru</a><a href="./read/?page=impressum">The operating company</a></p></details>
     </div>
+    <p class="q-more">Still curious? <a href="./read/?page=faq">More questions</a> · <a href="./read/?page=library">Browse the whole library →</a></p>
   </section>
 
-  <section class="sec start" id="start" aria-labelledby="start-title">
+  <section class="sec slice start" id="start" aria-labelledby="start-title">
     <div class="start-inner">
-      <img class="start-robot" src="./pilot/assets/noguru-guide-attentive-original.png" alt="" width="220" height="220" loading="lazy">
-      <p class="eyebrow">Start</p>
-      <h2 id="start-title">Let’s get you <em>watching it work.</em></h2>
+      <p class="eyebrow">Nothing to pay today</p>
+      <h2 id="start-title">Try it free for <em>14 days.</em></h2>
       <div class="choose" id="choose">
-        <p class="sec-lede">I’ll walk you through it, one step at a time. How would you like to begin?</p>
-        <button type="button" class="path lead" data-path="demo"><b>With pretend money</b><span>No deposit, no exchange account. Five short steps.</span><i>Start here</i></button>
-        <button type="button" class="path" data-path="live"><b>Go live</b><span>Your own money in your own exchange. Seven steps.</span></button>
+        <p class="sec-lede">No card needed. NoGuru is free for 14 days, and so is Cornix, the service that places the orders. I’ll walk you through the setup, one step at a time.</p>
+        <button type="button" class="path lead" data-path="demo"><b>Start with pretend money</b><span>No deposit, no exchange account. Five short steps.</span><i>Easiest way in</i></button>
+        <button type="button" class="path" data-path="live"><b>Start with your own money</b><span>In your own exchange account. Seven steps.</span></button>
+        <a class="expect-link" href="#expect" data-jump>What will I see in 14 days? ↓</a>
       </div>
       <div class="walk" id="walk" hidden>
         <p class="walk-pos" id="walk-pos"></p>
@@ -171,6 +195,21 @@
         </div>
         <div class="walk-foot"><button type="button" id="walk-back">← Back</button><button type="button" id="walk-reset">Start over</button></div>
       </div>
+    </div>
+  </section>
+
+  <section class="sec slice expect" id="expect" aria-labelledby="ex-title">
+    <div class="start-inner">
+      <p class="eyebrow">What to expect</p>
+      <h2 id="ex-title">What 14 days <em>will show you.</em></h2>
+      <ol class="expect-list">
+        <li><b>The first hours</b><span>The first small buys appear, spread across a few coins. Nothing dramatic.</span></li>
+        <li><b>The first days</b><span>Trades start closing. Each one is small, usually around 2%. In the record, <span id="x-fast">most</span> finish within a day.</span></li>
+        <li><b>Some coins go red</b><span>A coin dips, the bot buys more of it cheaper, and it sits below cost for a while. That is the method at work, not a fault.</span></li>
+        <li><b>By day 14</b><span>You’ll have a list of finished trades and a few still open. It won’t double your money: in the record, completed profit has averaged about <span id="x-month">10%</span> a month before fees, built from many small sales.</span></li>
+      </ol>
+      <p class="expect-take">What to take from it: whether this rhythm suits you. Buying dips, waiting, small profits, repeated. It’s built for months and years, not two weeks.</p>
+      <a class="button light" href="#start" data-jump>Start my 14 days <span aria-hidden="true">→</span></a>
     </div>
   </section>
 

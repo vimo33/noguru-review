@@ -1,5 +1,5 @@
 // The site the film settles into: live record, five questions, guided start.
-import {loadEvidence} from './pilot/data.js';
+import {record, reloadRecord} from './record.js';
 
 const $ = (s) => document.querySelector(s);
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -19,6 +19,7 @@ const pinned = $('#pinned'), film = $('#film'), start = $('#start');
 function updatePinned() {
   const pastFilm = scrollY > film.offsetHeight - innerHeight * 0.35;
   const atStart = start.getBoundingClientRect().top < innerHeight * 0.75;
+  $('#topbar').classList.toggle('solid', scrollY > innerHeight * 0.6);
   pinned.classList.toggle('show', pastFilm && !atStart);
 }
 addEventListener('scroll', updatePinned, {passive: true});
@@ -35,15 +36,15 @@ function took(hours) {
   if (hours < 48) return `${Math.round(hours)} h`;
   return `${Math.round(hours / 24)} days`;
 }
-async function showRecord() {
+async function showRecord(source = record) {
   const status = $('#ev-status'), body = $('#ev-body');
-  const ev = await loadEvidence();
+  const ev = await source;
   if (ev.status === 'unavailable' || !ev.closed) {
     status.textContent = 'I can’t reach the published record right now, so I’m not showing any numbers. Try again in a moment.';
     status.classList.add('warn');
     const retry = document.createElement('button');
     retry.type = 'button'; retry.textContent = 'Try again'; retry.className = 'retry';
-    retry.addEventListener('click', () => { status.textContent = 'Reading the record…'; status.classList.remove('warn'); showRecord(); });
+    retry.addEventListener('click', () => { status.textContent = 'Reading the record…'; status.classList.remove('warn'); showRecord(reloadRecord()); });
     status.append(' ', retry);
     return;
   }
@@ -59,9 +60,11 @@ async function showRecord() {
   }
   const fast = ev.durationSummary?.under24hPct;
   $('#ev-fast').textContent = Number.isFinite(fast) ? `${Math.round(fast)}%` : '—';
+  if (Number.isFinite(fast)) $('#x-fast').textContent = `${Math.round(fast)}%`;
+  if (Number.isFinite(ev.grossMonthly)) $('#x-month').textContent = `${Math.round(ev.grossMonthly)}%`;
 
   const mean = ev.rows.reduce((sum, r) => sum + r.pct, 0) / ev.rows.length;
-  $('#ev-avg').textContent = `Across all ${ev.closed.toLocaleString('en-US')} finished trades, the average result was ${pct(mean, 1)} on the money in that trade.`;
+  $('#ev-avg').textContent = `Across all ${ev.closed.toLocaleString('en-US')} finished trades, the average result was ${pct(mean, 1)} on the money in that trade. These are the latest six.`;
   const list = $('#ev-list'); list.textContent = '';
   [...ev.rows].sort((a, b) => (a.closedAt < b.closedAt ? 1 : -1)).slice(0, 6).forEach((row) => {
     const li = document.createElement('li');
@@ -77,7 +80,7 @@ async function showRecord() {
     ? `The published record stops at ${fmtDate(ev.windowEnd)}, so these numbers may be out of date.`
     : `Read just now. Record covers up to ${fmtDate(ev.windowEnd)}; latest finished trade ${fmtDate(ev.latestClose, true)} UTC.`;
   status.classList.toggle('warn', stale);
-  body.hidden = false;
+  body.hidden = false; $('#trades').hidden = false;
 }
 showRecord();
 
@@ -103,7 +106,7 @@ const check = {
 };
 const cornix = {
   title: 'Open a Cornix account',
-  say: 'Cornix is the service that carries out my instructions. Signing up is free and asks for no card.',
+  say: 'Cornix is the service that carries out my instructions. Signing up is free, and its own 14-day trial asks for no card either.',
   open: ['Open Cornix', LINKS.register],
 };
 const trial = {
@@ -207,9 +210,11 @@ render();
 /* ---------- sections reveal piece by piece as they come into view ---------- */
 if (!reduced && 'IntersectionObserver' in window) {
   const groups = [
-    ['#evidence', '.eyebrow, h2, .sec-lede, .ev-status, .ev-hero, .ev-grid > div, h3, .ev-avg, .ev-list, .ev-note'],
-    ['#questions', '.q-head, .q-list details'],
-    ['#start', '.start-robot, .eyebrow, h2, .choose > *, .walk'],
+    ['#evidence', '.eyebrow, h2, .sec-lede, .ev-status, .ev-hero, .ev-grid > div'],
+    ['#trades', '.eyebrow, h2, .sec-lede, .ev-list, .ev-note'],
+    ['#questions', '.q-head, .q-list details, .q-more'],
+    ['#start', '.eyebrow, h2, .choose > *, .walk'],
+    ['#expect', '.eyebrow, h2, .expect-list li, .expect-take, .button'],
   ];
   const io = new IntersectionObserver((entries) => {
     for (const en of entries) if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
@@ -225,3 +230,9 @@ if (!reduced && 'IntersectionObserver' in window) {
     }
   }
 }
+
+/* ---------- menu: closes after a choice or a tap elsewhere ---------- */
+const menu = $('#menu');
+menu.addEventListener('click', (e) => { if (e.target.closest('a')) menu.open = false; });
+document.addEventListener('click', (e) => { if (menu.open && !menu.contains(e.target)) menu.open = false; });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') menu.open = false; });

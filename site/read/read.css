@@ -11,6 +11,17 @@ body{background:var(--cream)}
 .bar nav .wide{display:none}
 .bar-pill{padding:0 18px;border-radius:99px;background:var(--ink);color:var(--cream);font-weight:650;font-size:13px}
 
+.menu{position:relative}
+.menu summary{list-style:none;cursor:pointer;min-height:44px;padding:0 18px;display:inline-flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:99px;font-size:13px;font-weight:600}
+.menu summary::-webkit-details-marker{display:none}
+.menu summary:after{content:'';width:14px;height:8px;border-top:1.5px solid currentColor;border-bottom:1.5px solid currentColor}
+.menu nav,.menu-panel{position:absolute;right:0;top:54px;width:min(300px,calc(100vw - 32px));max-height:calc(100svh - 90px);overflow:auto;background:var(--cream);
+  border:1px solid var(--line);border-radius:18px;padding:10px 22px 18px;box-shadow:0 24px 60px #263e3a26;display:block}
+.menu-panel p{margin-top:16px;font-size:10px;font-weight:650;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.bar nav .menu-panel a{display:flex;min-height:40px;font-size:15px}
+.bar-pill{flex:none}
+@media (max-width:420px){.bar-pill{display:none}}
+
 main{max-width:1180px;padding:0 24px}
 .learning-page{margin:34px auto 60px}
 .learning-header h1{outline:none}
