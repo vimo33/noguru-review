@@ -125,6 +125,17 @@ function crumbFor(page) {
   if (page === DEFAULT) return ['← Home', '../'];
   return ['← Library', '?page=library'];
 }
+// The link at the top goes back to wherever the reader actually came from. Only someone who landed
+// here directly gets the fixed parent page instead.
+const NAMES = {library: 'Library', academy: 'Academy', glossary: 'Glossary', digest: 'Digest', pricing: 'Pricing', 'how-it-works': 'How it works', faq: 'FAQ', risks: 'Risks', market: 'Market context', trial: 'The free trials', learn: 'Learn'};
+const cameFromSite = (() => { try { return !!document.referrer && new URL(document.referrer).origin === location.origin; } catch { return false; } })();
+function setCrumb(crumb, label, href) {
+  const from = history.state?.from, back = from !== undefined || (cameFromSite && history.length > 1);
+  crumb.textContent = back ? (from ? `← Back to ${from}` : '← Back') : label;
+  crumb.setAttribute('href', href);
+  if (back) { crumb.dataset.back = ''; delete crumb.dataset.route; }
+  else { delete crumb.dataset.back; if (href.startsWith('?')) crumb.dataset.route = ''; else delete crumb.dataset.route; }
+}
 function renderLearning(page) {
   const data = learningPages[page];
   text('#learning-eyebrow', data.eyebrow || ''); text('#learning-title', data.title); text('#learning-intro', data.intro || '');
@@ -132,9 +143,7 @@ function renderLearning(page) {
   renderReadingPage(data, {page, sections: $('#learning-sections'), toc: $('#learning-toc'), cards: $('#learning-cards'), source: $('#learning-source'), link: contentLink});
   // Content images are stored beside the content modules.
   for (const img of document.querySelectorAll('#learning-page img')) { const src = img.getAttribute('src') || ''; const at = src.indexOf('assets/migrated/'); if (at >= 0 && !src.includes('/pilot/')) img.setAttribute('src', `../pilot/${src.slice(at)}`); }
-  const [label, href] = crumbFor(page), crumb = $('#crumb');
-  crumb.textContent = label; crumb.setAttribute('href', href);
-  if (href.startsWith('?')) crumb.dataset.route = ''; else delete crumb.dataset.route;
+  setCrumb($('#crumb'), ...crumbFor(page));
   $('#learning-page .reading-tools').hidden = (data.sections || []).length < 4;
   if (page === 'pricing') fillPayback();
 }
@@ -148,21 +157,24 @@ function show(route, {push = false, focus = false} = {}) {
   if (HOME[route.page]) { location.replace(HOME[route.page]); return; }
   if (!known(route.page)) route = {page: DEFAULT, anchor: ''};
   const isMarket = route.page === 'market';
+  // the new history entry remembers the page it was opened from, so its back link can name it
+  if (push) history.pushState(route.page === document.body.dataset.page ? history.state : {from: NAMES[document.body.dataset.page] || ''}, '', `?page=${route.page}${route.anchor ? `#${route.anchor}` : ''}`);
   $('#learning-page').hidden = isMarket; $('#market-page').hidden = !isMarket;
   document.body.dataset.page = route.page;
-  if (isMarket) loadMarketPage(); else renderLearning(route.page);
+  if (isMarket) { loadMarketPage(); setCrumb($('#market-crumb'), '← The record', '../#evidence'); } else renderLearning(route.page);
   const title = isMarket ? 'Market context' : learningPages[route.page].title;
   document.title = `${title} — NoGuru`;
   for (const a of document.querySelectorAll('.bar a[data-route], .read-foot a[data-route]')) {
     if (parse(a.getAttribute('href'))?.page === route.page) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
   }
-  if (push) history.pushState(null, '', `?page=${route.page}${route.anchor ? `#${route.anchor}` : ''}`);
   const target = route.anchor && (document.getElementById(`learning-${route.anchor}`) || document.getElementById(route.anchor));
   if (target) target.scrollIntoView({behavior: reduced ? 'auto' : 'smooth', block: 'start'});
   else if (push || focus) scrollTo(0, 0);
   if (focus && !target) $(isMarket ? '#market-title' : '#learning-title').focus({preventScroll: true});
 }
 document.addEventListener('click', (e) => {
+  const back = e.target.closest('a[data-back]');
+  if (back && !(e.defaultPrevented || e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey)) { e.preventDefault(); history.back(); return; }
   const a = e.target.closest('a[data-route]');
   if (!a || e.defaultPrevented || e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
   const route = parse(a.getAttribute('href')); if (!route) return;

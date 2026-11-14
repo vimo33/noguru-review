@@ -362,45 +362,140 @@ function reopenFilm() {
   scrollTo(0, 0); lastY = 0; p = 0;
 }
 
-/* ---------- land on complete moments ----------
-   A gesture rarely stops exactly where a moment is complete, so once scrolling goes quiet the film
-   carries on by itself to the next resting point in the direction of travel. */
+/* ---------- one gesture, one step ----------
+   Scrolling never stops halfway. A swipe, a wheel turn or a key moves exactly one step: to the next
+   moment of the film, then to the next section of the site. Sections taller than the screen get extra
+   steps inside them, so nothing is skipped. */
 const RESTS = [
   0, 0.0925, 0.195, 0.285, 0.345, 0.42,                                   // arrival, pick, buy, dip, wait, sold
   ...[0.09, 0.245, 0.45, 0.78, 1].map((q) => ACT2 + (1 - ACT2) * q),      // many, hold, proof, yours, landing
 ];
 let glide = null, idleTimer = 0, lastY = scrollY, travel = 0;
+// Coming back to the home page (browser back, or a reload) returns to the section that was on screen.
+// The browser's own restore runs before the live sections have their final size, so it lands one off.
+const PLACE = 'noguru-place';
+try { history.scrollRestoration = 'manual'; } catch { /* older browsers */ }
+let returnTo = '';
+addEventListener('pagehide', () => {
+  if (!finished) return;
+  const cur = [...document.querySelectorAll('.slice')].reverse().find((sec) => sec.getBoundingClientRect().top <= innerHeight * 0.5);
+  try { sessionStorage.setItem(PLACE, cur ? cur.id : ''); } catch { /* private mode */ }
+});
 if (seen && !new URLSearchParams(location.search).has('film')) {
   finishFilm();
-  if (location.hash) requestAnimationFrame(() => document.querySelector(location.hash)?.scrollIntoView());
+  const kind = performance.getEntriesByType?.('navigation')[0]?.type;
+  if (kind === 'back_forward' || kind === 'reload') { try { returnTo = sessionStorage.getItem(PLACE) || ''; } catch { /* private mode */ } }
+  else if (location.hash.length > 1) returnTo = location.hash.slice(1);
+  if (returnTo) requestAnimationFrame(() => document.getElementById(returnTo)?.scrollIntoView());
 }
 function stopGlide() { glide = null; }
-function glideTo(pTarget) {
-  const from = scrollY, to = pTarget * maxScroll(), dist = Math.abs(to - from);
+// Every section fits the screen: one that is a little too tall is scaled down to fit (never below 80%).
+function fitSlices() {
+  const vh = innerHeight;
+  for (const sec of document.querySelectorAll('.slice')) {
+    sec.style.zoom = ''; sec.style.minHeight = '';
+    const h = sec.getBoundingClientRect().height;
+    if (h <= vh + 1) continue;
+    let z = Math.max(0.8, vh / h);
+    sec.style.zoom = z; sec.style.minHeight = `${vh / z}px`;
+    const after = sec.getBoundingClientRect().height;           // wider lines after scaling can leave room to spare
+    if (after < vh - 1) { z = Math.min(1, z * vh / after); sec.style.zoom = z; sec.style.minHeight = `${vh / z}px`; }
+  }
+  if (typeof idleTimer !== 'undefined') { clearTimeout(idleTimer); idleTimer = setTimeout(settle, 250); }
+}
+function stops() {
+  if (!finished) return RESTS.map((r) => Math.round(r * maxScroll()));
+  const vh = innerHeight, end = Math.max(0, document.documentElement.scrollHeight - vh), list = [0];
+  for (const sec of document.querySelectorAll('.slice')) {
+    const box = sec.getBoundingClientRect(), top = box.top + scrollY, extra = box.height - vh;
+    list.push(top);
+    if (extra > 24) { const n = Math.ceil(extra / (vh * 0.8)); for (let k = 1; k <= n; k++) list.push(top + extra * k / n); }
+  }
+  list.push(end);
+  const sorted = list.map((v) => Math.round(Math.min(end, Math.max(0, v)))).sort((a, b) => a - b);
+  return sorted.filter((v, k) => k === 0 || v - sorted[k - 1] > 24 || v === end).filter((v, k, a) => a.indexOf(v) === k);
+}
+function glideToY(to) {
+  const from = scrollY, dist = Math.abs(to - from);
   if (dist < 2) return;
-  if (reduced) { scrollTo(0, to); return; }
-  const span01 = dist / Math.max(1, maxScroll());
-  glide = {from, to, t0: performance.now(), ms: Math.min(1900, Math.max(650, 800 + span01 * 9000))};
+  if (reduced) { scrollTo(0, to); if (!finished && scrollY >= maxScroll() - 1) finishFilm(); return; }
+  const ms = finished ? Math.min(900, Math.max(520, 420 + dist * 0.45)) : Math.min(1900, Math.max(650, 800 + dist / Math.max(1, maxScroll()) * 9000));
+  glide = {from, to, t0: performance.now(), ms};
 }
+function step(dir) {
+  if (playing) setPlaying(false);
+  const y = glide ? glide.to : scrollY, list = stops();
+  const to = dir > 0 ? list.find((v) => v > y + 4) : [...list].reverse().find((v) => v < y - 4);
+  if (to !== undefined) glideToY(to);
+}
+// After anything that is not a step (a jump link, the scrollbar, a resize), rest on the nearest step.
 function settle() {
-  if (playing || glide || finished) return;
-  const max = maxScroll();
-  if (scrollY >= max - 1) { finishFilm(); return; }     // reached the landing, or went past it into the site
-  if (scrollY <= 0) return;                             // still on the first frame
-  const here = scrollY / max;
-  const ahead = RESTS.find((r) => r >= here - 0.004), behind = [...RESTS].reverse().find((r) => r <= here + 0.004);
-  const target = travel >= 0 ? ahead : behind;
-  if (target !== undefined) glideTo(target);
+  if (playing || glide || pointerDown) return;
+  const list = stops(), y = scrollY;
+  if (!finished && y >= maxScroll() - 1) { finishFilm(); return; }
+  const near = list.reduce((best, v) => (Math.abs(v - y) < Math.abs(best - y) ? v : best), list[0]);
+  if (Math.abs(near - y) > 3) {
+    const ahead = list.find((v) => v >= y), behind = [...list].reverse().find((v) => v <= y);
+    glideToY(finished ? near : (travel >= 0 ? ahead ?? near : behind ?? near));
+  }
 }
+let pointerDown = false;
+addEventListener('mousedown', () => { pointerDown = true; stopGlide(); clearTimeout(idleTimer); }, {passive: true});
+addEventListener('mouseup', () => { pointerDown = false; clearTimeout(idleTimer); idleTimer = setTimeout(settle, 200); }, {passive: true});
 addEventListener('scroll', () => {
   const dy = scrollY - lastY; lastY = scrollY;
-  if (glide || playing || finished) return;
+  if (glide || playing) return;
   if (dy) travel = dy;
-  clearTimeout(idleTimer); idleTimer = setTimeout(settle, 130);
+  clearTimeout(idleTimer); idleTimer = setTimeout(settle, 220);
 }, {passive: true});
-// Any new gesture takes control back at once.
-for (const ev of ['wheel', 'touchstart', 'keydown', 'mousedown']) addEventListener(ev, () => { stopGlide(); clearTimeout(idleTimer); }, {passive: true});
-addEventListener('touchend', () => { clearTimeout(idleTimer); idleTimer = setTimeout(settle, 180); }, {passive: true});
+addEventListener('resize', () => { fitSlices(); clearTimeout(idleTimer); idleTimer = setTimeout(settle, 250); });
+document.fonts?.ready.then(fitSlices);
+record.then(() => requestAnimationFrame(() => { fitSlices(); if (returnTo) document.getElementById(returnTo)?.scrollIntoView(); returnTo = ''; }));
+for (const ev of ['wheel', 'touchstart', 'keydown']) addEventListener(ev, () => { returnTo = ''; }, {passive: true});
+fitSlices();
+
+// Places that scroll by themselves (the open menu) keep their own scrolling.
+const ownScroll = (node) => !!node.closest?.('.menu-panel');
+
+// Wheel and touchpad: one step per gesture. A touchpad keeps sending fading events after the fingers
+// lift, so a new step needs either a pause or a clear rise in strength.
+let wheelT = 0, wheelAbs = 0;
+addEventListener('wheel', (e) => {
+  if (e.ctrlKey || ownScroll(e.target)) return;
+  e.preventDefault();
+  const now = e.timeStamp, abs = Math.abs(e.deltaY);   // the event's own time: a busy page delays delivery, not the gesture
+  const fresh = now - wheelT > 180 || (abs > wheelAbs * 2 && abs > 30);
+  wheelT = now; wheelAbs = abs;
+  if (abs < 3 || !fresh) return;
+  if (glide && performance.now() - glide.t0 < 320) return;
+  step(Math.sign(e.deltaY));
+}, {passive: false});
+
+// Touch: a swipe of a finger-width moves one step.
+let touchY = null, touchX = 0, touchDone = false;
+addEventListener('touchstart', (e) => {
+  if (e.touches.length !== 1 || ownScroll(e.target)) { touchY = null; return; }
+  touchY = e.touches[0].clientY; touchX = e.touches[0].clientX; touchDone = false;
+}, {passive: true});
+addEventListener('touchmove', (e) => {
+  if (touchY === null) return;
+  if (e.touches.length !== 1) { touchY = null; return; }
+  const dy = touchY - e.touches[0].clientY, dx = touchX - e.touches[0].clientX;
+  if (e.cancelable) e.preventDefault();
+  if (touchDone || Math.abs(dy) < 28 || Math.abs(dx) > Math.abs(dy)) return;
+  touchDone = true; step(Math.sign(dy));
+}, {passive: false});
+addEventListener('touchend', () => { touchY = null; }, {passive: true});
+
+addEventListener('keydown', (e) => {
+  if (e.metaKey || e.ctrlKey || e.altKey || e.target.closest?.('input, textarea, select, [contenteditable]')) return;
+  const onControl = e.target.closest?.('button, a, summary');
+  const dir = e.key === 'ArrowDown' || e.key === 'PageDown' || (e.key === ' ' && !e.shiftKey && !onControl) ? 1
+    : e.key === 'ArrowUp' || e.key === 'PageUp' || (e.key === ' ' && e.shiftKey && !onControl) ? -1 : 0;
+  if (dir) { e.preventDefault(); step(dir); return; }
+  if (e.key === 'Home' || e.key === 'End') { e.preventDefault(); const list = stops(); glideToY(e.key === 'Home' ? list[0] : list[list.length - 1]); }
+});
+document.documentElement.classList.add('paged');
 
 const start = performance.now();
 function frame(now) {
@@ -413,12 +508,12 @@ function frame(now) {
   } else if (glide) {
     const k = Math.min(1, (now - glide.t0) / glide.ms), e = k < 0.5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
     scrollTo(0, glide.from + (glide.to - glide.from) * e);
-    if (k >= 1) { glide = null; if (scrollY >= maxScroll() - 1) finishFilm(); }
+    if (k >= 1) { glide = null; lastY = scrollY; if (!finished && scrollY >= maxScroll() - 1) finishFilm(); }
   }
   const goal = target();
   p = Math.abs(goal - p) < 0.0004 ? goal : lerp(p, goal, reduced ? 1 : 0.14);
-  applyDom(p); applyScene(p, t);
-  renderer.render(scene, camera);
+  // once the film is over and scrolled out of sight there is nothing to draw: keep the page light
+  if (!(finished && scrollY > innerHeight + 4)) { applyDom(p); applyScene(p, t); renderer.render(scene, camera); }
   requestAnimationFrame(frame);
 }
 function relayout() {

@@ -74,7 +74,7 @@ async function showRecord(source = record) {
   const sorted = ev.rows.map((r) => r.pct).sort((a, b) => a - b), n = sorted.length;
   const median = n % 2 ? sorted[(n - 1) / 2] : (sorted[n / 2 - 1] + sorted[n / 2]) / 2;
   const over3 = Math.round(sorted.filter((v) => v > 3).length / n * 100);
-  $('#ev-avg').textContent = `Selling starts about 2% above a coin’s average, then the bot follows the price up. Across all ${ev.closed.toLocaleString('en-US')} finished trades, the typical one made ${pct(median, 1)} on the money in that trade, ${over3}% made more than 3%, and the best made ${pct(sorted[n - 1], 1)}. The average was ${pct(mean, 1)}. These are the latest six.`;
+  $('#ev-avg').textContent = `Selling starts about 2% above a coin’s average, then follows the price up. Of ${ev.closed.toLocaleString('en-US')} finished trades, the typical one made ${pct(median, 1)}, ${over3}% made more than 3%, and the best made ${pct(sorted[n - 1], 1)}. The latest six:`;
   const list = $('#ev-list'); list.textContent = '';
   [...ev.rows].sort((a, b) => (a.closedAt < b.closedAt ? 1 : -1)).slice(0, 6).forEach((row) => {
     const li = document.createElement('li');
