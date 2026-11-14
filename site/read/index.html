@@ -11,6 +11,7 @@
   <link rel="preload" href="../pilot/fonts/Fraunces.woff" as="font" type="font/woff" crossorigin>
   <link rel="stylesheet" href="../pilot/styles.css">
   <link rel="stylesheet" href="./read.css">
+  <link rel="stylesheet" href="../dashboard.css">
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -18,7 +19,6 @@
   <a class="bar-mark" href="../" aria-label="NoGuru home">NoGuru<i>.</i></a>
   <nav aria-label="Site">
     <a href="../#evidence" class="wide">Evidence</a>
-    <a href="../dashboard.html" class="wide">Live</a>
     <a href="../#questions" class="wide">Questions</a>
     <a href="?page=how-it-works" data-route class="wide">How it works</a>
     <a href="?page=pricing" data-route class="wide">Pricing</a>
@@ -27,7 +27,7 @@
         <p>Home</p>
         <a href="../#evidence">The record</a><a href="../#questions">Questions</a><a href="../#start">Start your free trial</a><a href="../#expect">What to expect</a>
         <p>Read more</p>
-        <a href="../dashboard.html">Live dashboard</a><a href="?page=how-it-works" data-route>How it works</a><a href="?page=pricing" data-route>Pricing</a><a href="?page=faq" data-route>FAQ</a><a href="?page=risks" data-route>Risks</a><a href="?page=market" data-route>Market context</a>
+        <a href="?page=how-it-works" data-route>How it works</a><a href="?page=pricing" data-route>Pricing</a><a href="?page=faq" data-route>FAQ</a><a href="?page=risks" data-route>Risks</a><a href="?page=market" data-route>Market context</a>
         <p>Library</p>
         <a href="?page=library" data-route>Everything</a><a href="?page=academy" data-route>Academy</a><a href="?page=glossary" data-route>Glossary</a><a href="?page=digest" data-route>Digest</a>
         <p>Legal</p>
@@ -48,9 +48,31 @@
   <article id="market-page" class="learning-page" hidden aria-labelledby="market-title">
     <a href="../#evidence" class="text-link return-to-guide" id="market-crumb">← The record</a>
     <header class="learning-header"><p class="eyebrow">A separate source</p><h1 id="market-title" tabindex="-1">A little market context.</h1><p class="summary">Recent price context is useful. It is not your account’s performance, a forecast or a trading instruction.</p></header>
-    <p class="section-note"><a href="../dashboard.html">Open the full Live dashboard →</a> Explore funding, open interest, sentiment and the market calendar alongside these readings.</p>
-    <section class="market-source"><div class="market-source-heading"><h2>Across timeframes</h2><button type="button" id="market-refresh" class="text-link">Refresh sources</button></div><p id="market-page-status" class="source-status" role="status">Loading the public market source…</p><label class="timeframe-field">Look across<select id="market-timeframe"><option value="1h">1 hour</option><option value="4h">4 hours</option><option value="1d" selected>1 day</option><option value="1w">1 week</option></select></label><p id="market-definition" class="basis-note"></p><div id="market-matrix"></div><p id="market-page-date" class="basis-note"></p><div id="market-source-links"></div></section>
-    <section class="market-source"><h2>Published drawdown episodes.</h2><p id="episodes-status" class="source-status" role="status">Loading the episode source…</p><p id="episodes-definition" class="section-note">A separate event history. These are not your holdings, current quotes or recovery odds.</p><div id="episodes-table"></div><p id="episodes-date" class="basis-note"></p><div id="episodes-links"></div></section>
+    <div id="market-dashboard" aria-label="Public market dashboard">
+    <div class="refresh-bar" aria-label="Data refresh controls">
+      <div><span class="refresh-indicator" aria-hidden="true"></span><span id="refresh-status" role="status">Loading public sources…</span><span id="refresh-clock">Checks every 60 seconds while this tab is visible</span></div>
+      <div class="refresh-actions"><label class="auto-label"><input type="checkbox" id="auto-refresh" checked>Auto-refresh</label><button type="button" id="refresh-button"><span aria-hidden="true">↻</span> Refresh now</button></div>
+    </div>
+    <nav class="jump-nav" aria-label="Dashboard sections"><a data-route href="?page=market#market-overview">The broad picture <span>01</span></a><a data-route href="?page=market#market-momentum">Momentum <span>02</span></a><a data-route href="?page=market#market-positioning">Positioning <span>03</span></a><a data-route href="?page=market#market-calendar">On the calendar <span>04</span></a></nav>
+    <section class="dashboard-section" id="market-overview" aria-labelledby="market-overview-title"><div class="section-heading"><span>01</span><h2 id="market-overview-title">The broad picture</h2><p>Scale and sentiment. Different measures, read together.</p></div><div class="widget-grid overview-grid">
+      <article class="widget global-widget" id="widget-global" data-key="global"><header><h3>Global market</h3><span class="status">Loading</span></header><div class="widget-body"><p class="loading">Looking at the wider market…</p></div><footer class="widget-source"></footer></article>
+      <article class="widget" id="widget-sentiment" data-key="sentiment"><header><h3>Fear &amp; Greed</h3><span class="status">Loading</span></header><div class="widget-body"><p class="loading">Checking the published index…</p></div><footer class="widget-source"></footer></article>
+    </div></section>
+    <section class="dashboard-section" id="market-momentum" aria-labelledby="market-momentum-title"><div class="section-heading"><span>02</span><h2 id="market-momentum-title">Momentum, in perspective</h2><p>A short move and a longer trend can tell different stories.</p></div><div class="widget-grid">
+      <article class="widget wide" id="widget-trend" data-key="trend"><header><h3>Trend matrix</h3><span class="status">Loading</span></header><div class="widget-body"><p class="loading">Comparing four timeframes…</p></div><footer class="widget-source"></footer></article>
+      <article class="widget" id="widget-episodes" data-key="episodes"><header><h3>Flush state</h3><span class="status">Loading</span></header><div class="widget-body"><p class="loading">Checking public episodes…</p></div><footer class="widget-source"></footer></article>
+      <article class="widget" id="widget-oiFlow" data-key="oiFlow"><header><h3>Open-interest flow</h3><span class="status">Loading</span></header><div class="widget-body"><p class="loading">Reading price and open interest…</p></div><footer class="widget-source"></footer></article>
+      <article class="widget wide" id="widget-sessions" data-key="sessions"><header><h3>Session levels</h3><span class="status">Loading</span></header><div class="widget-body"><p class="loading">Checking session ranges…</p></div><footer class="widget-source"></footer></article>
+    </div></section>
+    <section class="dashboard-section" id="market-positioning" aria-labelledby="market-positioning-title"><div class="section-heading"><span>03</span><h2 id="market-positioning-title">The leverage around price</h2><p>Funding, account positioning and reported liquidations.</p></div><div class="widget-grid">
+      <article class="widget" id="widget-funding" data-key="funding"><header><h3>Funding rates</h3><span class="status">Loading</span></header><div class="widget-body"><p class="loading">Checking reported settlements…</p></div><footer class="widget-source"></footer></article>
+      <article class="widget" id="widget-longShort" data-key="longShort"><header><h3>Long / short accounts</h3><span class="status">Loading</span></header><div class="widget-body"><p class="loading">Checking account shares…</p></div><footer class="widget-source"></footer></article>
+      <article class="widget wide" id="widget-liquidations" data-key="liquidations"><header><h3>Liquidations · 14 days</h3><span class="status">Loading</span></header><div class="widget-body"><p class="loading">Checking the reported history…</p></div><footer class="widget-source"></footer></article>
+    </div></section>
+    <section class="dashboard-section" id="market-calendar" aria-labelledby="market-calendar-title"><div class="section-heading"><span>04</span><h2 id="market-calendar-title">A little room for what’s next</h2><p>Scheduled events and market hours, without a prediction.</p></div><div class="widget-grid">
+      <article class="widget wide" id="widget-calendar" data-key="calendar"><header><h3>Macro &amp; CME calendar</h3><span class="status">Loading</span></header><div class="widget-body"><p class="loading">Checking the public calendar…</p></div><footer class="widget-source"></footer></article>
+    </div></section>
+    </div>
   </article>
   <section class="read-cta" id="read-cta">
     <img src="../pilot/assets/noguru-guide-attentive-original.png" alt="" width="120" height="120" loading="lazy">
@@ -59,7 +81,7 @@
   </section>
 </main>
 <footer class="read-foot">
-  <nav aria-label="Library and legal"><a href="../">Home</a><a href="../dashboard.html">Live dashboard</a><a href="?page=how-it-works" data-route>How it works</a><a href="?page=pricing" data-route>Pricing</a><a href="?page=library" data-route>Library</a><a href="?page=academy" data-route>Academy</a><a href="?page=glossary" data-route>Glossary</a><a href="?page=digest" data-route>Digest</a><a href="?page=terms" data-route>Terms</a><a href="?page=privacy" data-route>Privacy</a><a href="?page=impressum" data-route>Provider</a></nav>
+  <nav aria-label="Library and legal"><a href="../">Home</a><a href="?page=how-it-works" data-route>How it works</a><a href="?page=pricing" data-route>Pricing</a><a href="?page=library" data-route>Library</a><a href="?page=academy" data-route>Academy</a><a href="?page=glossary" data-route>Glossary</a><a href="?page=digest" data-route>Digest</a><a href="?page=terms" data-route>Terms</a><a href="?page=privacy" data-route>Privacy</a><a href="?page=impressum" data-route>Provider</a></nav>
   <p>Review preview. Trading crypto can lose money. Coins the bot holds can fall in value and may not recover.</p>
 </footer>
 <noscript><p class="noscript">These pages need JavaScript.</p></noscript>

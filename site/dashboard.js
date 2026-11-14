@@ -1,6 +1,10 @@
 import { DASHBOARD_SOURCES, loadDashboard } from './dashboard-data.js';
 
-const $ = selector => document.querySelector(selector);
+export function createDashboardController(root) {
+  if (!root || typeof root.querySelector !== 'function') throw new TypeError('A dashboard root element is required.');
+  const doc = root.ownerDocument;
+  const win = doc.defaultView;
+  const $ = selector => root.querySelector(selector);
 const escape = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const valid = value => typeof value === 'number' && Number.isFinite(value);
 const number = (value, digits=2) => valid(value) ? value.toLocaleString('en-US',{maximumFractionDigits:digits,minimumFractionDigits:digits}) : '—';
@@ -70,7 +74,7 @@ function calendarView(d) {
 }
 const renderers={global:globalView,sentiment:sentimentView,trend:trendView,episodes:episodesView,oiFlow:oiView,sessions:sessionsView,funding:fundingView,longShort:longShortView,liquidations:liquidationsView,calendar:calendarView};
 const statusLabels={ready:'Timestamped',stale:'Older reading',unknown:'Time unknown',unavailable:'Unavailable'};
-const state={results:{},completed:0,loading:false,version:0,lastFinished:0,nextRefresh:0,controller:null,renderErrors:[]};
+const state={results:{},completed:0,loading:false,version:0,lastFinished:0,nextRefresh:0,controller:null,renderErrors:[],active:false,timer:null,listening:false,needsInitialRefresh:false};
 function sourceView(r) {
   const s=r.source;
   const observation=s.asOf?(s.asOfKind==='latest supplied funding settlement'?`Latest settlement: ${stamp(s.asOf)}`:`Source time: ${stamp(s.asOf)}`):'Source observation time not supplied';
@@ -80,7 +84,7 @@ function renderWidget(key,r) {
   const article=$(`#widget-${key}`); if(!article)return;
   const opened=[...article.querySelectorAll('details[open]')].map(el=>el.dataset.preserve);
   const scrollPositions=[...article.querySelectorAll('.table-wrap')].map(el=>el.scrollLeft);
-  const active=document.activeElement?.dataset?.trend;
+  const active=root.contains(doc.activeElement)?doc.activeElement?.dataset?.trend:null;
   article.dataset.status=r.status;article.querySelector('.status').textContent=statusLabels[r.status]||'Unavailable';
   const signature=JSON.stringify([r.status==='unavailable',r.data,key==='trend'?selectedTrend:null]);
   if(article.dataset.signature!==signature) {
@@ -96,13 +100,37 @@ function summary() {
   const values=Object.values(state.results),available=values.filter(r=>r.status!=='unavailable').length;
   $('#refresh-status').textContent=state.loading?`Checking sources… ${state.completed} of ${Object.keys(DASHBOARD_SOURCES).length} returned`:`${available} sources available · ${values.length-available} unavailable`;
 }
+const canRun = () => state.active && root.isConnected && !root.closest('[hidden]') && !doc.hidden;
+function updateClock() {
+  const text=!state.active?'Checks paused while you read another page':doc.hidden?'Auto-refresh pauses while this tab is hidden':!$('#auto-refresh').checked?'Auto-refresh is off · refresh whenever you like':state.loading?'Public sources are checked independently':`Next check in ${Math.max(0,Math.ceil((state.nextRefresh-Date.now())/1000))}s · pauses when this tab is hidden`;
+  $('#refresh-clock').textContent=text;
+}
+function clearTimer() {
+  if(state.timer!==null)win.clearInterval(state.timer);
+  state.timer=null;
+}
+function armTimer() {
+  clearTimer();
+  if(!canRun() || !$('#auto-refresh').checked)return;
+  state.timer=win.setInterval(()=>{
+    if(!canRun())return;
+    updateClock();
+    if(!state.loading && Date.now()>=state.nextRefresh)refresh();
+  },1000);
+}
+function cancelPending() {
+  state.version++;
+  state.controller?.abort();state.controller=null;state.loading=false;
+  $('#refresh-button').disabled=false;$('#refresh-button').removeAttribute('aria-busy');
+}
 async function refresh() {
-  if(document.hidden || state.loading)return;
+  if(!canRun() || state.loading)return;
+  state.needsInitialRefresh=false;
   const version=++state.version;state.controller=new AbortController();state.loading=true;state.completed=0;
-  $('#refresh-button').disabled=true;$('#refresh-button').setAttribute('aria-busy','true');summary();
+  $('#refresh-button').disabled=true;$('#refresh-button').setAttribute('aria-busy','true');summary();updateClock();
   try {
     await loadDashboard({signal:state.controller.signal,onWidget:(key,result)=>{
-      if(version!==state.version || document.hidden)return;
+      if(version!==state.version || !canRun())return;
       state.results[key]=result;state.completed++;
       try {renderWidget(key,result);} catch(error) {
         state.renderErrors.push({key,message:String(error)});
@@ -110,34 +138,60 @@ async function refresh() {
       }
       summary();
     }});
+  } catch(error) {
+    if(version===state.version && state.active)state.renderErrors.push({key:'controller',message:String(error)});
   } finally {
-    if(version!==state.version)return;
-    state.loading=false;state.lastFinished=Date.now();state.nextRefresh=Date.now()+60000;
+    if(version!==state.version || !state.active)return;
+    state.controller=null;state.loading=false;state.lastFinished=Date.now();state.nextRefresh=Date.now()+60000;
     $('#refresh-button').disabled=false;$('#refresh-button').removeAttribute('aria-busy');summary();updateClock();
   }
 }
-function updateClock() {
-  const text=document.hidden?'Auto-refresh pauses while this tab is hidden':!$('#auto-refresh').checked?'Auto-refresh is off · refresh whenever you like':state.loading?'Public sources are checked independently':`Next check in ${Math.max(0,Math.ceil((state.nextRefresh-Date.now())/1000))}s · pauses when this tab is hidden`;
-  $('#refresh-clock').textContent=text;
+function resumeVisible() {
+  if(!canRun()){updateClock();return;}
+  armTimer();
+  if(state.needsInitialRefresh || !state.lastFinished || ($('#auto-refresh').checked && Date.now()>=state.nextRefresh))refresh();
+  else updateClock();
 }
-$('#refresh-button').addEventListener('click',refresh);
-$('#auto-refresh').addEventListener('change',()=>{state.nextRefresh=Date.now()+60000;updateClock();});
-const backLink=$('.back-link');
-let sameSiteReferrer=null;
-try { const ref=new URL(document.referrer); if(ref.origin===location.origin && ref.pathname!==location.pathname)sameSiteReferrer=ref; } catch {}
-if(sameSiteReferrer) {backLink.href=sameSiteReferrer.href;backLink.textContent='← Back';backLink.setAttribute('aria-label','Back to the previous NoGuru page');}
-backLink.addEventListener('click',event=>{if(sameSiteReferrer && history.length>1 && !event.defaultPrevented && event.button===0 && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey){event.preventDefault();history.back();}});
-document.addEventListener('click',event=>{
-  const button=event.target.closest('button[data-trend]');
-  if(button && state.results.trend?.data){selectedTrend=button.dataset.trend;renderWidget('trend',state.results.trend);}
-  const menu=$('.menu');if(menu.open && !menu.contains(event.target))menu.open=false;
-});
-document.addEventListener('keydown',event=>{if(event.key==='Escape' && $('.menu').open){$('.menu').open=false;$('.menu summary').focus();}});
-document.addEventListener('visibilitychange',()=>{
-  if(document.hidden){if(state.loading){state.version++;state.controller?.abort();state.loading=false;$('#refresh-button').disabled=false;$('#refresh-button').removeAttribute('aria-busy');summary();}updateClock();}
-  else {if(!state.lastFinished || ($('#auto-refresh').checked && Date.now()>=state.nextRefresh))refresh();else updateClock();}
-});
-window.addEventListener('pagehide',()=>{state.version++;state.controller?.abort();});
-setInterval(()=>{if(document.hidden)return;updateClock();if($('#auto-refresh').checked && !state.loading && Date.now()>=state.nextRefresh)refresh();},1000);
-window.NoGuruDashboard={refresh,getState:()=>({loading:state.loading,lastFinished:state.lastFinished,nextRefresh:state.nextRefresh,autoRefresh:$('#auto-refresh').checked,visible:!document.hidden,statuses:Object.fromEntries(Object.entries(state.results).map(([k,r])=>[k,r.status])),renderErrors:[...state.renderErrors]})};
-refresh();
+function onRootClick(event) {
+  const button=event.target?.closest?.('button');
+  if(!button || !root.contains(button))return;
+  if(button.id==='refresh-button'){refresh();return;}
+  if(button.hasAttribute('data-trend') && state.results.trend?.data) {
+    const requested=button.dataset.trend;
+    if(!state.results.trend.data.timeframes.includes(requested))return;
+    selectedTrend=requested;renderWidget('trend',state.results.trend);
+  }
+}
+function onRootChange(event) {
+  if(event.target!==$('#auto-refresh'))return;
+  state.nextRefresh=Date.now()+60000;armTimer();updateClock();
+}
+function onVisibility() {
+  if(doc.hidden){clearTimer();cancelPending();summary();updateClock();}
+  else resumeVisible();
+}
+function onPageHide() {stop();}
+function listen() {
+  if(state.listening)return;
+  root.addEventListener('click',onRootClick);root.addEventListener('change',onRootChange);
+  doc.addEventListener('visibilitychange',onVisibility);win.addEventListener('pagehide',onPageHide);
+  state.listening=true;
+}
+function unlisten() {
+  if(!state.listening)return;
+  root.removeEventListener('click',onRootClick);root.removeEventListener('change',onRootChange);
+  doc.removeEventListener('visibilitychange',onVisibility);win.removeEventListener('pagehide',onPageHide);
+  state.listening=false;
+}
+function start() {
+  if(state.active)return;
+  state.active=true;state.needsInitialRefresh=true;listen();resumeVisible();
+}
+function stop() {
+  state.active=false;state.needsInitialRefresh=false;clearTimer();cancelPending();unlisten();summary();updateClock();
+}
+function getState() {
+  return {active:state.active,loading:state.loading,timerActive:state.timer!==null,listenersActive:state.listening,listenerCount:state.listening?4:0,requestActive:!!state.controller,version:state.version,lastFinished:state.lastFinished,nextRefresh:state.nextRefresh,autoRefresh:$('#auto-refresh').checked,visible:!doc.hidden,rootVisible:root.isConnected&&!root.closest('[hidden]'),selectedTrend,statuses:Object.fromEntries(Object.entries(state.results).map(([key,result])=>[key,result.status])),renderErrors:[...state.renderErrors]};
+}
+return Object.freeze({start,stop,refresh,getState});
+}

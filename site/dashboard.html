@@ -1,60 +1,11 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#f7f3ea">
-  <title>Live market dashboard · NoGuru</title>
-  <meta name="description" content="A public view of crypto market conditions, with source times, clear definitions and independent market feeds.">
-  <link rel="icon" href="./experience/assets/companion-mark.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="./dashboard.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="refresh" content="0;url=./read/?page=market">
+  <title>NoGuru — market context</title>
+  <script>location.replace(new URL('./read/?page=market', location.href).href);</script>
 </head>
-<body>
-  <a class="skip-link" href="#dashboard">Skip to market data</a>
-  <header class="bar">
-    <a class="wordmark" href="./index.html#after-film" aria-label="NoGuru home">NoGuru<i>.</i></a>
-    <nav aria-label="Main navigation">
-      <a class="back-link" href="./index.html#after-film">Back to NoGuru</a>
-      <details class="menu"><summary>Menu</summary><div class="menu-panel">
-        <a href="./index.html#after-film">Home</a><a href="./read/?page=how-it-works">How it works</a>
-        <a href="./dashboard.html" aria-current="page">Live dashboard</a><a href="./index.html#evidence">Strategy evidence</a>
-        <a href="./read/?page=pricing">Pricing</a><a href="./read/?page=learn">Learn</a><a href="./read/?page=library">Library</a>
-      </div></details>
-    </nav>
-  </header>
-  <main id="dashboard">
-    <section class="intro" aria-labelledby="dashboard-title">
-      <div><p class="eyebrow">The public market view</p><h1 id="dashboard-title">A little context.<br><em>A clearer view.</em></h1>
-        <p class="lede">Prices tell one part of the story. Take a moment with the positioning, momentum and calendar around them.</p>
-        <p class="scope">Market context, separate from NoGuru’s strategy results or your account.</p></div>
-      <div class="intro-aside"><span class="orbit" aria-hidden="true"></span><img src="./pilot/assets/noguru-guide-original.png" width="1254" height="1254" alt="NoGuru’s ceramic guide" fetchpriority="low"><p>Room to look.<br>Time to understand.</p></div>
-    </section>
-    <div class="refresh-bar" aria-label="Data refresh controls">
-      <div><span class="refresh-indicator" aria-hidden="true"></span><span id="refresh-status" role="status">Loading public sources…</span><span id="refresh-clock">Checks every 60 seconds while this tab is visible</span></div>
-      <div class="refresh-actions"><label class="auto-label"><input type="checkbox" id="auto-refresh" checked>Auto-refresh</label><button type="button" id="refresh-button"><span aria-hidden="true">↻</span> Refresh now</button></div>
-    </div>
-    <nav class="jump-nav" aria-label="Dashboard sections"><a href="#overview">The broad picture <span>01</span></a><a href="#momentum">Momentum <span>02</span></a><a href="#positioning">Positioning <span>03</span></a><a href="#calendar-section">On the calendar <span>04</span></a></nav>
-    <noscript><p class="empty">JavaScript is needed to request these public feeds. <a href="https://noguru.io/dashboard.html">Open the source dashboard</a>.</p></noscript>
-    <section class="dashboard-section" id="overview" aria-labelledby="overview-title"><div class="section-heading"><span>01</span><h2 id="overview-title">The broad picture</h2><p>Scale and sentiment. Different measures, read together.</p></div><div class="widget-grid overview-grid">
-      <article class="widget global-widget" id="widget-global" data-key="global"><header><h3>Global market</h3><span class="status">Loading</span></header><div class="widget-body"><p class="loading">Looking at the wider market…</p></div><footer class="widget-source"></footer></article>
-      <article class="widget" id="widget-sentiment" data-key="sentiment"><header><h3>Fear &amp; Greed</h3><span class="status">Loading</span></header><div class="widget-body"><p class="loading">Checking the published index…</p></div><footer class="widget-source"></footer></article>
-    </div></section>
-    <section class="dashboard-section" id="momentum" aria-labelledby="momentum-title"><div class="section-heading"><span>02</span><h2 id="momentum-title">Momentum, in perspective</h2><p>A short move and a longer trend can tell different stories.</p></div><div class="widget-grid">
-      <article class="widget wide" id="widget-trend" data-key="trend"><header><h3>Trend matrix</h3><span class="status">Loading</span></header><div class="widget-body"><p class="loading">Comparing four timeframes…</p></div><footer class="widget-source"></footer></article>
-      <article class="widget" id="widget-episodes" data-key="episodes"><header><h3>Flush state</h3><span class="status">Loading</span></header><div class="widget-body"><p class="loading">Checking public episodes…</p></div><footer class="widget-source"></footer></article>
-      <article class="widget" id="widget-oiFlow" data-key="oiFlow"><header><h3>Open-interest flow</h3><span class="status">Loading</span></header><div class="widget-body"><p class="loading">Reading price and open interest…</p></div><footer class="widget-source"></footer></article>
-      <article class="widget wide" id="widget-sessions" data-key="sessions"><header><h3>Session levels</h3><span class="status">Loading</span></header><div class="widget-body"><p class="loading">Checking session ranges…</p></div><footer class="widget-source"></footer></article>
-    </div></section>
-    <section class="dashboard-section" id="positioning" aria-labelledby="positioning-title"><div class="section-heading"><span>03</span><h2 id="positioning-title">The leverage around price</h2><p>Funding, account positioning and reported liquidations.</p></div><div class="widget-grid">
-      <article class="widget" id="widget-funding" data-key="funding"><header><h3>Funding rates</h3><span class="status">Loading</span></header><div class="widget-body"><p class="loading">Checking reported settlements…</p></div><footer class="widget-source"></footer></article>
-      <article class="widget" id="widget-longShort" data-key="longShort"><header><h3>Long / short accounts</h3><span class="status">Loading</span></header><div class="widget-body"><p class="loading">Checking account shares…</p></div><footer class="widget-source"></footer></article>
-      <article class="widget wide" id="widget-liquidations" data-key="liquidations"><header><h3>Liquidations · 14 days</h3><span class="status">Loading</span></header><div class="widget-body"><p class="loading">Checking the reported history…</p></div><footer class="widget-source"></footer></article>
-    </div></section>
-    <section class="dashboard-section" id="calendar-section" aria-labelledby="calendar-title"><div class="section-heading"><span>04</span><h2 id="calendar-title">A little room for what’s next</h2><p>Scheduled events and market hours, without a prediction.</p></div><div class="widget-grid">
-      <article class="widget wide" id="widget-calendar" data-key="calendar"><header><h3>Macro &amp; CME calendar</h3><span class="status">Loading</span></header><div class="widget-body"><p class="loading">Checking the public calendar…</p></div><footer class="widget-source"></footer></article>
-    </div></section>
-    <aside class="public-note"><span class="eyebrow">A shared starting point</span><h2>One shared market view.</h2><p>This page follows the public source’s selection of symbols. It does not connect to your holdings or an exchange account.</p><a href="./read/?page=how-it-works">Get to know NoGuru <span aria-hidden="true">→</span></a></aside>
-  </main>
-  <footer class="page-footer"><a class="wordmark" href="./index.html#after-film">NoGuru<i>.</i></a><p>Expertise without ego.</p><nav aria-label="Footer"><a href="./index.html#evidence">Strategy evidence</a><a href="./read/?page=methodology">Methodology</a><a href="./read/?page=disclaimer">Disclaimer</a><a href="#dashboard">Back to top ↑</a></nav><p class="fine">Public source snapshots, not a streaming price terminal. Dates and times are shown in UTC unless a calendar specifies its own timezone. These measures describe markets; they are not trading instructions.</p></footer>
-  <script type="module" src="./dashboard.js"></script>
-</body>
+<body><p><a href="./read/?page=market">Continue to market context</a></p></body>
 </html>
