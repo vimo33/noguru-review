@@ -45,39 +45,57 @@ export const learningPages = {
   },
 
   pricing: {
-    title: 'Capital and subscriptions do different jobs.',
-    eyebrow: 'Pricing and setup · checked 12 November 2026',
-    intro: 'The trading capital stays in your exchange. NoGuru and Cornix are separate services, with separate subscriptions and trial clocks.',
+    title: 'One subscription. $49 a month, after 14 days free.',
+    eyebrow: 'Pricing · prices checked 12 November 2026',
+    intro: 'NoGuru is the one thing you subscribe to here. Your trading money stays in your own exchange account. Today the bot runs through Cornix; more ways to run it are planned.',
+    cards: [
+      {
+        eyebrow: 'NoGuru · founding price', title: 'The bot', price: '$49', unit: 'a month, after 14 days free',
+        body: ['The founding price is for the first 100 subscribers and stays for as long as the subscription runs. After that the price is $99 a month.', 'No card for the trial. Stop whenever you like.'],
+        links: [link('Start my 14 days', '?page=setup')],
+      },
+      {
+        eyebrow: 'When it covers its own cost', title: 'Pays for itself from about', price: '$500', unit: 'of trading money',
+        body: ['At the pace of the public record, roughly this much trading money earns what the subscription costs in a month. Anything above it is yours.'],
+        note: 'A pace from the past, before exchange fees. It is not a promise: months differ, and coins the bot holds can sit below cost.',
+        links: [link('How this is worked out', '?page=pricing#payback')],
+      },
+    ],
     sections: [
       {
-        id: 'noguru', title: 'NoGuru: the maintained strategy',
-        body: ['The current public founding price is $49 per month while the founding offer is open. The public standard price is $99 per month. These are alternative subscription rates, not two charges.', 'The published founding offer applies to the first 100 subscribers and continues while the subscription remains active. Confirm the current offer before paying.'],
-        links: [link('Source: current NoGuru offer', 'https://noguru.io/pricing.html'), link('Source: public new-buyer price table', 'https://noguru.io/gate/api/price')],
+        id: 'noguru', title: 'What the $49 pays for',
+        body: ['NoGuru picks the coins, plans each purchase and sets each sale, and keeps reviewing all of it as the market changes. You do not plan orders yourself.', 'The founding price is $49 a month while founding places last. The standard price is $99 a month. These are two alternative prices, never two charges. Confirm the current offer before paying.'],
+        links: [link('Source: current NoGuru offer', 'https://noguru.io/pricing.html'), link('How it works', '?page=how-it-works')],
       },
       {
-        id: 'cornix', title: 'Cornix: configured execution',
-        body: ['Cornix Advanced currently costs $49.90 per month, or $32.99 per month equivalent billed annually. Confirm that the plan and exchange support your intended setup. Annual billing is a different commitment from monthly billing.', 'With Advanced on monthly billing, combined subscription costs would be $98.90 per month at NoGuru’s founding rate, or $148.90 at its standard rate. Exchange trading fees and other applicable costs are additional.'],
-        links: [link('Source: official Cornix plans and billing', 'https://cornix.io/pricing/')],
+        id: 'payback', title: 'How much money makes the subscription pay for itself',
+        body: ['Take the monthly price and divide it by the monthly pace of the public record. The answer is the amount of trading money that would earn exactly the subscription in a month at that pace. It is rounded up to the next $10, so it never understates what you need.', 'Below that amount you would pay more than the bot earns for you. Above it, the difference is yours. The figure moves as the record moves, so it is read from the live record each time you open this page.'],
+        links: [link('See the record it comes from', '?page=evidence'), link('Completed gains and coins still held', learn('completed-and-held'))],
       },
       {
-        id: 'capital', title: 'Plan for the operating capital separately',
-        body: ['The supplier states an operating minimum of 3,000 USDT for the strategy. Subscription charges are separate from that trading capital. A smaller amount typed into this guide is only an intention; it does not establish eligibility or activate a trade.', 'Cash is working capacity for later purchases. It can become committed in holdings, and having more capital does not guarantee a higher percentage return or recovery.'],
-        links: [link('Why reserves change', learn('reserves')), link('Review your intended setup', '?page=setup')],
+        id: 'cornix', title: 'Where it runs today: Cornix',
+        body: ['NoGuru decides what to buy and sell. Cornix is the tool that places those orders in your exchange account. It is a separate company, so you set up and pay for its plan with Cornix directly, not here.', 'New Cornix users get 14 days free with no payment details. After that, Cornix Advanced costs $49.90 a month, or $32.99 a month when billed yearly. Check that the plan supports your exchange before you choose.', 'Cornix is the first place NoGuru runs. Other platforms are planned, and this page will list them when they are ready.', 'Cornix does not serve every country. Its terms prohibit use by citizens and residents of: United States, Canada, Colombia, Ecuador, Bolivia; United Kingdom, Russia, Turkey, North Macedonia; Israel, Iran, Lebanon, Syria, Egypt, Algeria, Morocco; China, Vietnam, Nepal, North Korea. They also exclude any country under country-wide sanctions and any place whose law prohibits the service. The terms say “among others”, so this list is a minimum. If you live in one of these places you cannot run NoGuru through Cornix today.', 'Cornix also does not support some regional exchange sites: Binance.US, okx.eu, okx.us and Bybit.eu.'],
+        links: [link('Source: official Cornix plans', 'https://cornix.io/pricing/'), link('Source: official Cornix trial terms', 'https://help.cornix.io/en/articles/5814827-cornix-free-trial'), link('Source: Cornix terms, restricted countries (last updated 4 September 2023, read 14 November 2026)', 'https://cornix.io/terms/'), link('Source: Cornix supported exchanges (16 September 2026)', 'https://help.cornix.io/en/articles/5814836-supported-exchanges')],
+      },
+      {
+        id: 'capital', title: 'Your trading money is not a fee',
+        body: ['It stays in your own exchange account the whole time. NoGuru suggests about 3,000 USDT to go live, so the bot has room to buy in several steps across several coins. Your exchange charges its normal trading fees on each order.', 'With pretend money you need nothing at all. A larger amount gives the bot more room; it does not guarantee a higher percentage or a recovery.'],
+        links: [link('Why cash reserves matter', learn('reserves')), link('Start with pretend money', '?page=setup')],
+      },
+      {
+        id: 'trials', title: 'What the 14 free days cover',
+        body: ['Both NoGuru and Cornix are free for 14 days, and neither asks for a card. The setup on the home page starts them in the right order.', 'Cornix starts counting when your first trade is created, and that includes a pretend-money trade. The exact start and end of the NoGuru trial have not been tested in this preview.', 'Two weeks show you how it works: purchases, sales, coins waiting. They cannot tell you what a year will bring.'],
+        links: [link('What 14 days will show you', '?page=setup'), link('The two free trials', '?page=trial')],
       },
       {
         id: 'economics', title: 'A fee is certain; a trading return is not',
-        body: ['Subscriptions are costs whether or not a cycle closes profitably. A fee-equivalence calculation based on a historical monthly rate is an illustration, not a promise that the service will pay for itself.', 'Keep the trading allocation, subscription budget and possible trading losses distinct. Completed trading profit is not the same as whole-account growth or money available to withdraw.'],
-        links: [link('Subscription economics', learn('subscription-economics')), link('Completed gains and current holdings', learn('completed-and-held'))],
-      },
-      {
-        id: 'trials', title: 'Two trials, two clocks',
-        body: ['NoGuru advertises 14 days free with no card. Its precise entitlement start and cutoff have not been tested in this preview.', 'New Cornix users receive a separate 14-day Premium trial with no payment details. Cornix starts its clock when the first trade is created, including a manual trade, smart bot, signal, demo or backtesting. The two clocks need not start together.', 'Use a trial to understand setup and observed execution. It cannot establish future returns. Viewing this guide starts neither service.'],
-        links: [link('Review the next step here', '?page=setup'), link('Source: official Cornix trial terms', 'https://help.cornix.io/en/articles/5814827-cornix-free-trial')],
+        body: ['The subscription is charged whether or not the month goes well. The pay-back figure uses a pace from the past and is an illustration, not a guarantee.', 'Completed trading profit is not the same as the whole account growing. Coins still held can be below what they cost.'],
+        links: [link('Subscription economics', learn('subscription-economics')), link('The risks', '?page=risks')],
       },
       {
         id: 'before-starting', title: 'Before you start',
-        body: ['Confirm the current offer, operating capital, service compatibility and risk before leaving the guide. The public NoGuru offer excludes UK residents. Other product and country eligibility has not been assessed here. Your account remains unconnected until you complete and verify a real setup.'],
-        links: [link('How the exchange setup works', '?page=how-it-works#setup'), link('Continue to setup', '?page=setup')],
+        body: ['Confirm the current offer, the trading money you intend to use, that your exchange works with Cornix, and the risks. Check that your country is not on Cornix’s restricted list. The public NoGuru offer excludes UK residents. Other country eligibility has not been assessed here.'],
+        links: [link('Countries Cornix does not serve', '?page=pricing#cornix'), link('How the exchange setup works', '?page=how-it-works#setup'), link('Continue to setup', '?page=setup')],
       },
     ],
   },
@@ -230,16 +248,6 @@ learningPages.learn.sections.push({
 });
 
 learningPages.pricing.kind = 'pricing';
-learningPages.pricing.cards = [
-  {eyebrow: 'Maintained strategy', title: 'NoGuru founding offer', price: '$49', unit: '/ month', body: ['Current checked founding rate while the offer is open. The alternative standard rate is $99 per month.'], note: 'First 100 subscribers; retained while the subscription stays active.', links: [link('Understand the two services', '?page=how-it-works#roles')]},
-  {eyebrow: 'Separate execution service', title: 'Cornix Advanced', price: '$49.90', unit: '/ month', body: ['Monthly billing. An annual option is displayed as $32.99 per month equivalent, billed annually. Confirm plan and exchange fit.'], links: [link('Understand the separate trial clock', '?page=trial')]},
-  {eyebrow: 'Readable cost example', title: 'Combined monthly services', price: '$98.90', unit: '/ month', body: ['$49 NoGuru founding rate + $49.90 Cornix Advanced monthly billing. At NoGuru’s $99 standard rate, the combined bill would be $148.90.'], note: 'Exchange trading fees and other applicable costs are additional. This is a bill, not a return or fee-payback prediction.', links: [link('Open setup preview', '?page=setup')]},
-];
-learningPages.pricing.sections = learningPages.pricing.sections.map(section => section.id === 'trials' ? {
-  id: 'trials', title: 'Understand the two trials after setup',
-  body: ['NoGuru and Cornix have separate 14-day offers and different clocks. Read the setup first, then inspect the dedicated trial page before choosing a provider link. Nothing activates merely by exploring this preview.'],
-  links: [link('Open setup preview', '?page=setup'), link('Read the full trial explanation', '?page=trial')],
-} : section);
 
 learningPages.trial = {
   title: 'Two services. Two separate trial clocks.',
@@ -252,7 +260,7 @@ learningPages.trial = {
     {eyebrow: 'Execution platform', title: 'Cornix Premium', price: '14 days', unit: 'free for new users', body: ['No payment details. The clock starts at the first created trade, including manual, smart-bot, signal, demo or backtesting trades.'], note: 'The trial is Premium; the paid plan you later choose may differ.'},
   ],
   sections: [
-    {id: 'prepare', title: 'Know what you are about to connect', body: ['Review the operating capital, separate subscriptions, compatible exchange and dedicated allocation. Confirm spot-trading permissions with withdrawals disabled. Your account in this guide is still unconnected.'], links: [link('Return to setup preview', '?page=setup'), link('Read setup and control', '?page=how-it-works#setup'), link('Review the full cost example', '?page=pricing')]},
+    {id: 'prepare', title: 'Know what you are about to connect', body: ['Review the operating capital, separate subscriptions, compatible exchange and dedicated allocation. Confirm spot-trading permissions with withdrawals disabled. Cornix does not serve every country, the United States, the United Kingdom and Canada among them; check the full list before you sign up. Your account in this guide is still unconnected.'], links: [link('Countries Cornix does not serve', '?page=pricing#cornix'), link('Return to setup preview', '?page=setup'), link('Read setup and control', '?page=how-it-works#setup'), link('Review the full cost example', '?page=pricing')]},
     {id: 'clocks', title: 'The clocks need not begin together', body: ['NoGuru access and Cornix’s first-trade-triggered trial are separate. A demo or backtest can start the Cornix clock before you place a real exchange trade. Confirm your actual dates with each service.', 'Use a trial to check setup and observed execution. It does not establish future returns. The public NoGuru offer excludes UK residents; other eligibility still needs confirmation.'], links: [link('Read the captured provider terms here', '?page=terms'), link('Primary source: Cornix’s official trial clock', 'https://help.cornix.io/en/articles/5814827-cornix-free-trial')]},
     {id: 'provider-links', title: 'Provider links, when you are ready', body: ['These intentional external links leave the local preview. NoGuru’s bot requires your own action in Telegram; Cornix registration is a separate service step. Viewing the guide starts neither.'], links: [link('Open the NoGuru provider bot — external', 'https://t.me/NoGuruMembers_bot?start=trial_cornixpage'), link('Open Cornix registration — external', 'https://dashboard.cornix.io/register')]},
   ],

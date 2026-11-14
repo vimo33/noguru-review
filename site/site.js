@@ -1,5 +1,6 @@
 // The site the film settles into: live record, five questions, guided start.
 import {record, reloadRecord} from './record.js';
+import {paybackCapital} from './pilot/data.js';
 
 const $ = (s) => document.querySelector(s);
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -61,10 +62,19 @@ async function showRecord(source = record) {
   const fast = ev.durationSummary?.under24hPct;
   $('#ev-fast').textContent = Number.isFinite(fast) ? `${Math.round(fast)}%` : '—';
   if (Number.isFinite(fast)) $('#x-fast').textContent = `${Math.round(fast)}%`;
+  const rate = Number.isFinite(ev.allocMonthly) ? ev.allocMonthly : ev.grossMonthly, need = paybackCapital(49, rate);
+  if (need) {
+    $('#q-payback').textContent = `$${need.toLocaleString('en-US')}`;
+    $('#q-payback-how').textContent = `The record’s pace is about ${rate.toFixed(1)}% a month on the money set aside for it, before fees. At that pace $${need.toLocaleString('en-US')} earns about $49 a month. A pace from the past, not a promise. $49 is the founding price; the standard price is $99 a month once founding places are gone.`;
+  }
   if (Number.isFinite(ev.grossMonthly)) $('#x-month').textContent = `${Math.round(ev.grossMonthly)}%`;
 
   const mean = ev.rows.reduce((sum, r) => sum + r.pct, 0) / ev.rows.length;
-  $('#ev-avg').textContent = `Across all ${ev.closed.toLocaleString('en-US')} finished trades, the average result was ${pct(mean, 1)} on the money in that trade. These are the latest six.`;
+  // The sale is not fixed at 2%: the bot follows a rise before selling, so show the spread, not only the middle.
+  const sorted = ev.rows.map((r) => r.pct).sort((a, b) => a - b), n = sorted.length;
+  const median = n % 2 ? sorted[(n - 1) / 2] : (sorted[n / 2 - 1] + sorted[n / 2]) / 2;
+  const over3 = Math.round(sorted.filter((v) => v > 3).length / n * 100);
+  $('#ev-avg').textContent = `Selling starts about 2% above a coin’s average, then the bot follows the price up. Across all ${ev.closed.toLocaleString('en-US')} finished trades, the typical one made ${pct(median, 1)} on the money in that trade, ${over3}% made more than 3%, and the best made ${pct(sorted[n - 1], 1)}. The average was ${pct(mean, 1)}. These are the latest six.`;
   const list = $('#ev-list'); list.textContent = '';
   [...ev.rows].sort((a, b) => (a.closedAt < b.closedAt ? 1 : -1)).slice(0, 6).forEach((row) => {
     const li = document.createElement('li');
@@ -102,6 +112,7 @@ const check = {
   title: 'First, check you can use it',
   say: 'Cornix places the orders, and it doesn’t serve every country. The US, the UK and Canada are among those it excludes.',
   note: 'If your country is on the list, stop here. I’d rather you knew now.',
+  more: ['See all 20 countries', './read/?page=pricing#cornix'],
   open: ['Read Cornix’s rules', LINKS.terms],
 };
 const cornix = {
@@ -188,6 +199,7 @@ function render(focus = false) {
   path.steps.forEach((_, i) => { const d = document.createElement('i'); if (i < state.step) d.className = 'done'; if (i === state.step) d.className = 'now'; ui.dots.append(d); });
   ui.title.textContent = step.title; ui.say.textContent = step.say;
   ui.note.textContent = step.note || ''; ui.note.hidden = !step.note;
+  if (step.more) { const m = document.createElement('a'); m.href = step.more[1]; m.textContent = step.more[0]; ui.note.append(' ', m); }
   ui.open.hidden = !step.open;
   if (step.open) { ui.open.textContent = `${step.open[0]} ↗`; ui.open.href = step.open[1]; }
   ui.next.hidden = last && !step.done;

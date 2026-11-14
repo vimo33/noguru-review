@@ -143,7 +143,7 @@ function layout() {
 const X0 = 10, X1 = 310, P_MIN = 72, P_MAX = 106, Y_TOP = 16, Y_BOT = 132;
 const px = (u) => lerp(X0, X1, u);
 const py = (price) => lerp(Y_BOT, Y_TOP, (price - P_MIN) / (P_MAX - P_MIN));
-// price over the cycle: buy at 100, falls to 80, dips, recovers to about 2% above the 88.89 average
+// price over the cycle: buy at 100, falls to 80, dips, recovers to about 2% above the 88.89 average (where selling starts; real sales often run higher)
 const KEYS = [[0, 101.5], [0.06, 100], [0.16, 95], [0.27, 88], [0.38, 80], [0.47, 76.5], [0.56, 79], [0.66, 85.5], [0.74, 88.6], [0.80, 90.67], [0.9, 93], [1, 94.5]];
 const U_BUY1 = 0.06, U_BUY2 = 0.38, U_SELL = 0.80;
 function priceAt(u) {
@@ -238,7 +238,7 @@ function applyDom(p) {
   el.in.textContent = money(Math.round(lerp(0, 100, b1) + lerp(0, 100, b2)));
   el.avg.textContent = b1 > 0.5 ? avg.toFixed(2) : '—';
   el.out.textContent = sold > 0.02 ? money(lerp(200, 204, sold)) : '—';
-  el.foot.textContent = sold > 0.6 ? '+4 USDT on 200: about 2%, a typical sale. An illustration with round numbers.' : 'An illustration with round numbers.';
+  el.foot.textContent = sold > 0.6 ? '+4 USDT on 200: about 2%, a typical sale. Some run much higher. Round numbers, for illustration.' : 'An illustration with round numbers.';
 
   // the record
   fade(el.record, Math.min(span(q, 0.035, 0.075), 1 - span(q, 0.575, 0.6)), 18);

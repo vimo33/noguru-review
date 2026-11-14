@@ -93,7 +93,7 @@ export function normalizeEvidence(data,{checkedAt=new Date().toISOString(),now=D
   const under24h=durations.filter(h=>h<24).length;
   const durationSummary={closed:n,under24h,under24hPct:n?under24h/n*100:null,medianHours:n?(n%2?durations[(n-1)/2]:(durations[n/2-1]+durations[n/2])/2):null,scope:'Completed cycles only; still-open cycles excluded.'};
   const limits=['Source generation and open-price observation timestamps are not supplied. Window end is coverage, not freshness proof.','The exact allocation denominator, capital weights, cash ledger and fee ledger are not public. No whole-account value or cash is inferred.','Separate from the frozen 9 November 10,000 USDT historical model; do not splice the datasets.'];
-  return {...evidenceEmpty(checkedAt),status:stale?'stale':'ready',windowStart:perf.window_start,windowEnd:perf.window_end,closed:stats.closed,up:stats.up,down:stats.down,open:stats.open,grossMonthly:perf.pct_month_gross,grossSinceStart,openVsCost:open.vs_cost_pct,allocatedInTrades:open.allocated_in_trades_pct,rows,durationSummary,latestClose:rows.reduce((last,row)=>!last||row.closedAt>last?row.closedAt:last,null),sourceMeta:meta('evidence',checkedAt,null,'not-supplied',stale?'stale-coverage':'unknown',limits,{coverage:{start:perf.window_start,end:perf.window_end},coverageMaxAgeSeconds:EVIDENCE_MAX_AGE_MS/1000,publishedGraphicUrl:SOURCE_URLS.publishedGraphic}),...(stale?{error:'Signal coverage window is more than two days old; generation time is not supplied.'}:{})};
+  return {...evidenceEmpty(checkedAt),status:stale?'stale':'ready',windowStart:perf.window_start,windowEnd:perf.window_end,closed:stats.closed,up:stats.up,down:stats.down,open:stats.open,grossMonthly:perf.pct_month_gross,allocMonthly:finite(perf.pct_month_allocation)&&perf.pct_month_allocation>0?perf.pct_month_allocation:null,grossSinceStart,openVsCost:open.vs_cost_pct,allocatedInTrades:open.allocated_in_trades_pct,rows,durationSummary,latestClose:rows.reduce((last,row)=>!last||row.closedAt>last?row.closedAt:last,null),sourceMeta:meta('evidence',checkedAt,null,'not-supplied',stale?'stale-coverage':'unknown',limits,{coverage:{start:perf.window_start,end:perf.window_end},coverageMaxAgeSeconds:EVIDENCE_MAX_AGE_MS/1000,publishedGraphicUrl:SOURCE_URLS.publishedGraphic}),...(stale?{error:'Signal coverage window is more than two days old; generation time is not supplied.'}:{})};
 }
 export function normalizeMarket(data,{checkedAt=new Date().toISOString(),now=Date.now()}={}) {
   const asOf=stamp(data?.updated_at);
@@ -133,6 +133,8 @@ async function load(id,normalize,empty,{signal}={}) {
   try{return normalize(await freshJSON(SOURCE_URLS[id],signal),{checkedAt,now:Date.now()});}
   catch(error){return {...empty(checkedAt),error:message(error)};}
 }
+// Trading money whose monthly result, at a given monthly pace, equals a monthly fee. Rounded up to the next 10 so the figure never understates it.
+export const paybackCapital = (fee, ratePct) => (Number.isFinite(ratePct) && ratePct > 0 ? Math.ceil(fee / (ratePct / 100) / 10) * 10 : null);
 export const loadEvidence = options => load('evidence',normalizeEvidence,evidenceEmpty,options);
 export const loadMarket = options => load('market',normalizeMarket,marketEmpty,options);
 export const loadEpisodes = options => load('episodes',normalizeEpisodes,episodesEmpty,options);
