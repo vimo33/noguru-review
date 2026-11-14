@@ -6,6 +6,8 @@ A static website preview for feedback, not a customer launch. The provider/terms
 
 The `site/` folder contains the reviewed static pages and assets. Paths use the `/noguru-review/` project prefix. The Pages workflow uploads only this folder. Changes to `main` deploy through GitHub Actions; confirm deployment success before treating a revision as live.
 
+The public Market widgets live inside the existing reading route. See [their implementation notes](docs/public-market-dashboard.md) before changing the integration.
+
 Keep future updates limited to reviewed website material. Do not add account records, research, transcripts, operational configuration or credentials.
 
 Original operator pages and documented supplier answers govern product mechanics, prices, subscription terms and setup. Improve clarity and organization while retaining meaning, useful examples and source depth. Read and date the exact source before calling an answer unknown; record genuine contradictions, legal uncertainty and unreproducible empirical claims separately, preserving prior evidence. These editorial rules add no approval gate.
