@@ -33,11 +33,16 @@ The site now says: selling starts about 2% above a coin's average, then the bot 
 
 **Questions**
 
-1. Is that description correct? If not, how would you put it in one or two sentences?
-2. What is the exact starting point, and how far behind the price does it follow? May we publish either number, or only "about 2%"?
-3. Is the follow-the-price part set by NoGuru's signal, or is it a Cornix setting a subscriber could change or get wrong?
-4. Do sales get bigger in strongly rising markets? The review claims 6% to 25% in bull markets. The record has 47 trades above 6% in a choppy period. Is there replay data for a bull stretch we could cite?
-5. Two trades closed below cost. How does that happen, in one sentence we can publish?
+We know the sale uses Cornix's trailing take-profit feature. What we do not know are the settings, so the questions are about those.
+
+1. At what percentage above the average cost does the trailing take-profit switch on? We have been saying "about 2%".
+2. What is the trailing distance: how far must the price fall back from its high before Cornix sells?
+3. Are those two settings the same for every coin and every trade, or do they change? If they change, what decides it?
+4. Do the settings arrive with NoGuru's signal, or does each subscriber set them in Cornix? Could a subscriber set them wrongly and get different results from the record?
+5. May we publish the two numbers, or should the site only describe the behaviour?
+6. Is this plain description right: "Selling starts about 2% above a coin's average. From there the bot follows the price up and sells when the rise runs out."
+7. Do sales get bigger in strongly rising markets? The review claims 6% to 25% in bull markets. The record has 47 trades above 6% in a choppy period. Is there replay data for a bull stretch we could cite?
+8. Two trades closed below cost. How does that happen, in one sentence we can publish?
 
 ## 2. The cap on buying
 
