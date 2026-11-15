@@ -1,6 +1,6 @@
 // The site the film settles into: live record, five questions, guided start.
 import {record, reloadRecord} from './record.js';
-import {paybackCapital} from './pilot/data.js';
+import {homeRecord, fmtDate} from './home-record.js';
 
 const $ = (s) => document.querySelector(s);
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -28,15 +28,6 @@ addEventListener('resize', updatePinned);
 updatePinned();
 
 /* ---------- the record, live ---------- */
-const fmtDate = (iso, withTime = false) => new Intl.DateTimeFormat('en-GB', {
-  day: 'numeric', month: 'short', ...(withTime ? {hour: '2-digit', minute: '2-digit'} : {year: 'numeric'}), timeZone: 'UTC',
-}).format(new Date(iso));
-const pct = (v, d = 1) => `${v > 0 ? '+' : v < 0 ? '−' : ''}${Math.abs(v).toFixed(d)}%`;
-function took(hours) {
-  if (hours < 1) return `${Math.max(1, Math.round(hours * 60))} min`;
-  if (hours < 48) return `${Math.round(hours)} h`;
-  return `${Math.round(hours / 24)} days`;
-}
 async function showRecord(source = record) {
   const status = $('#ev-status'), body = $('#ev-body');
   const ev = await source;
@@ -49,41 +40,16 @@ async function showRecord(source = record) {
     status.append(' ', retry);
     return;
   }
-  $('#ev-pct').textContent = pct(ev.grossSinceStart);
-  $('#ev-period').textContent = `${fmtDate(ev.windowStart)} – ${fmtDate(ev.windowEnd)}`;
-  $('#ev-closed').textContent = ev.closed.toLocaleString('en-US');
-  $('#ev-up').textContent = ev.up.toLocaleString('en-US');
-  $('#ev-open').textContent = ev.open.toLocaleString('en-US');
-  if (Number.isFinite(ev.openVsCost)) {
-    const below = ev.openVsCost < 0;
-    $('#ev-open-note').textContent = `still open, together ${Math.abs(ev.openVsCost).toFixed(1)}% ${below ? 'below' : 'above'} what they cost`;
-    $('#q-open-now').textContent = `Right now ${ev.open} trades are still open, together ${Math.abs(ev.openVsCost).toFixed(1)}% ${below ? 'below' : 'above'} what they cost.`;
-  }
-  const fast = ev.durationSummary?.under24hPct;
-  $('#ev-fast').textContent = Number.isFinite(fast) ? `${Math.round(fast)}%` : '—';
-  if (Number.isFinite(fast)) $('#x-fast').textContent = `${Math.round(fast)}%`;
-  const rate = Number.isFinite(ev.allocMonthly) ? ev.allocMonthly : ev.grossMonthly, need = paybackCapital(49, rate);
-  if (need) {
-    $('#q-payback').textContent = `$${need.toLocaleString('en-US')}`;
-    $('#q-payback-how').textContent = `The record’s pace is about ${rate.toFixed(1)}% a month on the money set aside for it, before fees. At that pace $${need.toLocaleString('en-US')} earns about $49 a month. A pace from the past, not a promise. $49 is the founding price; the standard price is $99 a month once founding places are gone.`;
-  }
-  if (Number.isFinite(ev.grossMonthly)) $('#x-month').textContent = `${Math.round(ev.grossMonthly)}%`;
-
-  const mean = ev.rows.reduce((sum, r) => sum + r.pct, 0) / ev.rows.length;
-  // The sale is not fixed at 2%: the bot follows a rise before selling, so show the spread, not only the middle.
-  const sorted = ev.rows.map((r) => r.pct).sort((a, b) => a - b), n = sorted.length;
-  const median = n % 2 ? sorted[(n - 1) / 2] : (sorted[n / 2 - 1] + sorted[n / 2]) / 2;
-  const over3 = Math.round(sorted.filter((v) => v > 3).length / n * 100);
-  $('#ev-avg').textContent = `Selling starts about 2% above a coin’s average, then follows the price up. Of ${ev.closed.toLocaleString('en-US')} finished trades, the typical one made ${pct(median, 1)}, ${over3}% made more than 3%, and the best made ${pct(sorted[n - 1], 1)}. The latest six:`;
+  const {texts, latest} = homeRecord(ev);
+  for (const [id, value] of Object.entries(texts)) { const node = document.getElementById(id); if (node) node.textContent = value; }
   const list = $('#ev-list'); list.textContent = '';
-  [...ev.rows].sort((a, b) => (a.closedAt < b.closedAt ? 1 : -1)).slice(0, 6).forEach((row) => {
+  for (const row of latest) {
     const li = document.createElement('li');
-    const hours = (Date.parse(row.closedAt) - Date.parse(row.openedAt)) / 3600000;
-    const r = document.createElement('b'); r.textContent = pct(row.pct, 2); if (row.pct < 0) r.className = 'neg';
-    const t = document.createElement('span'); t.textContent = `took ${took(hours)} · ${row.rungs} ${row.rungs === 1 ? 'buy' : 'buys'}`;
-    const d = document.createElement('time'); d.dateTime = row.closedAt; d.textContent = `${fmtDate(row.closedAt, true)} UTC`;
+    const r = document.createElement('b'); r.textContent = row.result; if (row.below) r.className = 'neg';
+    const t = document.createElement('span'); t.textContent = row.detail;
+    const d = document.createElement('time'); d.dateTime = row.dateTime; d.textContent = row.when;
     li.append(r, t, d); list.append(li);
-  });
+  }
 
   const stale = ev.status === 'stale';
   status.textContent = stale
@@ -112,7 +78,7 @@ const check = {
   title: 'First, check you can use it',
   say: 'Cornix places the orders, and it doesn’t serve every country. The US, the UK and Canada are among those it excludes.',
   note: 'If your country is on the list, stop here. I’d rather you knew now.',
-  more: ['See all 20 countries', './read/?page=pricing#cornix'],
+  more: ['See all 20 countries', './pricing/#learning-cornix'],
   open: ['Read Cornix’s rules', LINKS.terms],
 };
 const cornix = {

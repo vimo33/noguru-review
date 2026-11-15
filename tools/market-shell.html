@@ -1,0 +1,25 @@
+<div id="market-dashboard" aria-label="Public market dashboard">
+    <div class="refresh-bar" aria-label="Data refresh controls">
+      <div><span class="refresh-indicator" aria-hidden="true"></span><span id="refresh-status" role="status">Loading public sources…</span><span id="refresh-clock">Checks every 60 seconds while this tab is visible</span></div>
+      <div class="refresh-actions"><label class="auto-label"><input type="checkbox" id="auto-refresh" checked>Auto-refresh</label><button type="button" id="refresh-button"><span aria-hidden="true">↻</span> Refresh now</button></div>
+    </div>
+    <nav class="jump-nav" aria-label="Dashboard sections"><a data-route href="?page=market#market-overview">The broad picture <span>01</span></a><a data-route href="?page=market#market-momentum">Momentum <span>02</span></a><a data-route href="?page=market#market-positioning">Positioning <span>03</span></a><a data-route href="?page=market#market-calendar">On the calendar <span>04</span></a></nav>
+    <section class="dashboard-section" id="market-overview" aria-labelledby="market-overview-title"><div class="section-heading"><span>01</span><h2 id="market-overview-title">The broad picture</h2><p>Scale and sentiment. Different measures, read together.</p></div><div class="widget-grid overview-grid">
+      <article class="widget global-widget" id="widget-global" data-key="global"><header><h3>Global market</h3><span class="status">Loading</span></header><div class="widget-body"><p class="loading">Looking at the wider market…</p></div><footer class="widget-source"></footer></article>
+      <article class="widget" id="widget-sentiment" data-key="sentiment"><header><h3>Fear &amp; Greed</h3><span class="status">Loading</span></header><div class="widget-body"><p class="loading">Checking the published index…</p></div><footer class="widget-source"></footer></article>
+    </div></section>
+    <section class="dashboard-section" id="market-momentum" aria-labelledby="market-momentum-title"><div class="section-heading"><span>02</span><h2 id="market-momentum-title">Momentum, in perspective</h2><p>A short move and a longer trend can tell different stories.</p></div><div class="widget-grid">
+      <article class="widget wide" id="widget-trend" data-key="trend"><header><h3>Trend matrix</h3><span class="status">Loading</span></header><div class="widget-body"><p class="loading">Comparing four timeframes…</p></div><footer class="widget-source"></footer></article>
+      <article class="widget" id="widget-episodes" data-key="episodes"><header><h3>Flush state</h3><span class="status">Loading</span></header><div class="widget-body"><p class="loading">Checking public episodes…</p></div><footer class="widget-source"></footer></article>
+      <article class="widget" id="widget-oiFlow" data-key="oiFlow"><header><h3>Open-interest flow</h3><span class="status">Loading</span></header><div class="widget-body"><p class="loading">Reading price and open interest…</p></div><footer class="widget-source"></footer></article>
+      <article class="widget wide" id="widget-sessions" data-key="sessions"><header><h3>Session levels</h3><span class="status">Loading</span></header><div class="widget-body"><p class="loading">Checking session ranges…</p></div><footer class="widget-source"></footer></article>
+    </div></section>
+    <section class="dashboard-section" id="market-positioning" aria-labelledby="market-positioning-title"><div class="section-heading"><span>03</span><h2 id="market-positioning-title">The leverage around price</h2><p>Funding, account positioning and reported liquidations.</p></div><div class="widget-grid">
+      <article class="widget" id="widget-funding" data-key="funding"><header><h3>Funding rates</h3><span class="status">Loading</span></header><div class="widget-body"><p class="loading">Checking reported settlements…</p></div><footer class="widget-source"></footer></article>
+      <article class="widget" id="widget-longShort" data-key="longShort"><header><h3>Long / short accounts</h3><span class="status">Loading</span></header><div class="widget-body"><p class="loading">Checking account shares…</p></div><footer class="widget-source"></footer></article>
+      <article class="widget wide" id="widget-liquidations" data-key="liquidations"><header><h3>Liquidations · 14 days</h3><span class="status">Loading</span></header><div class="widget-body"><p class="loading">Checking the reported history…</p></div><footer class="widget-source"></footer></article>
+    </div></section>
+    <section class="dashboard-section" id="market-calendar" aria-labelledby="market-calendar-title"><div class="section-heading"><span>04</span><h2 id="market-calendar-title">A little room for what’s next</h2><p>Scheduled events and market hours, without a prediction.</p></div><div class="widget-grid">
+      <article class="widget wide" id="widget-calendar" data-key="calendar"><header><h3>Macro &amp; CME calendar</h3><span class="status">Loading</span></header><div class="widget-body"><p class="loading">Checking the public calendar…</p></div><footer class="widget-source"></footer></article>
+    </div></section>
+    </div>

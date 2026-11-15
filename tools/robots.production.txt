@@ -1,0 +1,40 @@
+# NoGuru production crawler policy. Written to robots.txt only by: node tools/build-static.mjs --production
+# Search engines and AI assistants answering a question may read the site. AI training may not.
+# Note: the live noguru.io robots.txt also carries Cloudflare-managed content signals; merge, don't replace, on the server.
+
+User-agent: *
+Allow: /
+# Affiliate redirects are not pages
+Disallow: /api/public/go/
+# The earlier one-address reader only redirects
+Disallow: /read/
+
+# AI search and user-requested fetches: allowed
+User-agent: OAI-SearchBot
+Allow: /
+User-agent: ChatGPT-User
+Allow: /
+User-agent: Claude-SearchBot
+Allow: /
+User-agent: Claude-User
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+User-agent: Perplexity-User
+Allow: /
+
+# AI training: refused
+User-agent: GPTBot
+Disallow: /
+User-agent: ClaudeBot
+Disallow: /
+User-agent: CCBot
+Disallow: /
+User-agent: Applebot-Extended
+Disallow: /
+# Google-Extended: undecided. Disallowing it refuses Gemini training but also removes the site from Gemini-app answers.
+# AI Overviews and AI Mode are not affected either way. Kept as on the live site until decided.
+User-agent: Google-Extended
+Disallow: /
+
+Sitemap: {ORIGIN}/sitemap.xml
