@@ -146,14 +146,14 @@ const SEO = {
   'how-it-works': ['How NoGuru works: an automated crypto bot on Cornix', 'How NoGuru’s automated crypto bot buys in steps, sells above its average cost and starts again, in your own exchange account through Cornix.'],
   pricing: ['NoGuru pricing: $49 a month after a 14-day free trial', 'One subscription: $49 a month at the founding price after 14 days free. What Cornix costs on top, and how much trading money covers the fee.'],
   faq: ['NoGuru FAQ: safety, costs, crashes and setup', 'Straight answers about NoGuru’s automated crypto bot: where your money stays, what happens in a crash, what it costs and how to start.'],
-  risks: ['The risks of an automated crypto bot with no stop loss | NoGuru', 'What can go wrong with NoGuru: coins it holds can fall and may not recover, there is no stop loss, and buying pauses when cash runs out.'],
+  risks: ['The risks of an automated crypto bot, said plainly | NoGuru', 'How NoGuru is built to avoid forced selling, and the risks that remain: coins it holds can sit below cost, and what NoGuru cannot control.'],
   glossary: ['Crypto trading glossary in plain language | NoGuru', 'Plain-language explanations of trading and crypto-bot terms, from API key and average cost to trailing take profit.'],
   academy: ['NoGuru Academy: risk, sizing and trading basics', 'Free lessons on risk per trade, drawdowns, leverage, funding and market structure, written in plain language.'],
   digest: ['NoGuru digest: dated market and bot updates', 'The dated archive of NoGuru’s daily and weekly digests: what the market did and what the bot finished.'],
-  trial: ['NoGuru free trial: 14 days, starting with pretend money', 'How the 14-day NoGuru trial and Cornix’s own trial work, what you need to start and what to note down.'],
+  trial: ['NoGuru free trial: 14 days, no card', 'How the 14-day NoGuru trial and Cornix’s own trial work, what you need to start and what to note down.'],
   methodology: ['How NoGuru’s public record is measured', 'What NoGuru’s published record counts, what it leaves out, and how its figures are worked out.'],
   record: ['NoGuru track record: every finished trade, live', 'NoGuru’s complete public record: completed profit with its basis, the spread of results, coins traded per month and every finished trade.'],
-  market: ['Crypto market context: a live public dashboard | NoGuru', 'Live public market readings: trend, sentiment, funding, open interest, liquidations and the calendar. Context, not a forecast.'],
+  market: ['Crypto market context: a live public dashboard | NoGuru', 'A free live dashboard of public market readings: trend, sentiment, funding, open interest and the calendar. Context, not a forecast.'],
   terms: ['Terms of Service | NoGuru', 'The terms that apply to NoGuru’s signal subscription: what the service is, what it is not, payment, cancellation and liability.'],
   privacy: ['Privacy | NoGuru', 'What personal data NoGuru handles, why, for how long, and how to use your rights of access, correction and deletion.'],
   impressum: ['Provider and contact | NoGuru', 'Who operates NoGuru: NoGuru LLC, Casper, Wyoming, USA, with the contact address for questions and legal notices.'],
@@ -183,7 +183,7 @@ function metaFor(page) {
 const PROFILES = [['Telegram', 'https://t.me/nogurusignals'], ['Telegram chat', 'https://t.me/NoGuru_Crypto_Chat'], ['X', 'https://x.com/nogurusignals'],
   ['YouTube', 'https://www.youtube.com/@nogurusignals'], ['Discord', 'https://discord.gg/AeQjGdUgKA'], ['Bluesky', 'https://bsky.app/profile/nogurusignals.bsky.social']];
 const ORG = {'@type': 'Organization', '@id': `${ORIGIN}/#organization`, name: 'NoGuru', legalName: 'NoGuru LLC', url: `${ORIGIN}/`,
-  logo: `${ORIGIN}/pilot/assets/noguru-guide-original.png`, email: 'noguru_noguru@proton.me',
+  logo: `${ORIGIN}/pilot/assets/noguru-guide-original.png`, email: 'hello@noguru.io',
   sameAs: PROFILES.map(([, url]) => url),
   address: {'@type': 'PostalAddress', streetAddress: '940 E 3rd St Ste 203', addressLocality: 'Casper', addressRegion: 'WY', postalCode: '82601', addressCountry: 'US'}};
 function crumbTrail(page) {
@@ -265,12 +265,12 @@ function frame(page, article, {extraCss = '', record = null} = {}) {
 ${article}
   <section class="read-cta" id="read-cta">
     <img src="${root}pilot/assets/noguru-guide-attentive-original.png" alt="" width="120" height="120" loading="lazy">
-    <div><h2>Rather see it than read about it?</h2><p>Watch it work with pretend money first. No deposit, no card.</p></div>
+    <div><h2>Rather see it than read about it?</h2><p>Fourteen days free, no card. It trades in your own exchange account.</p></div>
     <a class="button primary" href="${root}#start">Try it free for 14 days <span aria-hidden="true">→</span></a>
   </section>
 </main>
 <footer class="read-foot">
-  <nav aria-label="Library and legal"><a href="${root}">Home</a>${to('how-it-works', 'How it works')}${to('pricing', 'Pricing')}${to('record', 'Track record')}${to('library', 'Library')}${to('academy', 'Academy')}${to('glossary', 'Glossary')}${to('digest', 'Digest')}${to('terms', 'Terms')}${to('privacy', 'Privacy')}${to('impressum', 'Provider')}</nav>
+  <nav aria-label="Library and legal"><a href="${root}">Home</a>${to('how-it-works', 'How it works')}${to('pricing', 'Pricing')}${to('record', 'Track record')}${to('library', 'Library')}${to('academy', 'Academy')}${to('glossary', 'Glossary')}${to('digest', 'Digest')}${to('market', 'Free market dashboard')}${to('terms', 'Terms')}${to('privacy', 'Privacy')}${to('impressum', 'Provider')}</nav>
   <nav class="foot-social" aria-label="NoGuru elsewhere">${PROFILES.map(([name, url]) => `<a href="${url}" target="_blank" rel="noopener noreferrer me">${name}</a>`).join('')}</nav>
   <p>${PRODUCTION ? '' : 'Review preview. '}Trading crypto can lose money. Coins the bot holds can fall in value and may not recover. NoGuru is operated by NoGuru LLC, Casper, Wyoming, USA.</p>
 </footer>
@@ -331,7 +331,7 @@ function marketArticle() {
   const shell = fs.readFileSync(path.join(HERE, 'market-shell.html'), 'utf8').replace(/ data-route/g, '').replace(/href="\?page=market#/g, 'href="#');
   return `  <article id="market-page" class="learning-page" aria-labelledby="market-title">
     ${crumb('market')}
-    <header class="learning-header"><p class="eyebrow">A separate source</p><h1 id="market-title" tabindex="-1">A little market context.</h1><p class="summary">Recent price context is useful. It is not your account’s performance, a forecast or a trading instruction.</p></header>
+    <header class="learning-header"><p class="eyebrow">A separate source</p><h1 id="market-title" tabindex="-1">A little market context.</h1><p class="summary">A free service from NoGuru: the market readings you would otherwise gather from several sites, in one place. It is context, not your account’s performance, a forecast or a trading instruction.</p></header>
     ${shell.trim()}
   </article>`;
 }
@@ -339,6 +339,22 @@ function marketArticle() {
 /* ---------- write everything ---------- */
 function write(rel, content) { const file = path.join(SITE, rel); fs.mkdirSync(path.dirname(file), {recursive: true}); fs.writeFileSync(file, content); }
 const record = await snapshot();
+// NoGuru's referral list: the exchange links are written into the home page so they are there without JavaScript.
+async function referralList() {
+  if (!FETCH) return null;
+  try { const d = await getJSON('https://noguru.io/data/affiliates.json'); return Array.isArray(d.links) ? d.links : null; }
+  catch (error) { console.warn(`! The referral list could not be read (${error.message}); the home page keeps its current exchange list.`); return null; }
+}
+const referrals = await referralList();
+const httpsUrl = (value) => { try { const u = new URL(value); return u.protocol === 'https:' ? u.href : null; } catch { return null; } };
+function exchangeItems(links) {
+  const exchanges = links.filter((l) => l && typeof l.name === 'string' && /^exchange/.test(l.kind || '')).sort((x, y) => Number(!!y.recommended) - Number(!!x.recommended));
+  return exchanges.map((ex) => {
+    const url = httpsUrl(ex.url);
+    const head = url ? `<span class="adlabel">Ad</span><a href="${escAttr(url)}" target="_blank" rel="sponsored noopener noreferrer" data-event="signup-exchange-${escAttr(ex.key)}">${esc(ex.name)} <span aria-hidden="true">↗</span></a>` : `<b>${esc(ex.name)}</b>`;
+    return `<li><p>${head}${ex.recommended ? ' <i class="su-rec">Our recommendation</i>' : ''}</p>${typeof ex.blurb === 'string' && ex.blurb ? `<p class="su-blurb">${esc(ex.blurb)}</p>` : ''}${ex.free_month && url ? '<p class="su-offer">One free month of NoGuru.</p>' : ''}</li>`;
+  }).join('');
+}
 for (const page of pages) {
   const html = page === 'record' ? frame(page, recordArticle(record), {record})
     : page === 'market' ? frame(page, marketArticle(), {extraCss: `\n  <link rel="stylesheet" href="${rootOf(page)}dashboard.css">`})
@@ -400,6 +416,7 @@ function buildHome() {
     html = html.replace(/(<ol class="ev-list" id="ev-list">)[\s\S]*?(<\/ol>)/, (_, open, close) => `${open}${latest.map((r) => `<li><b${r.below ? ' class="neg"' : ''}>${esc(r.result)}</b><span>${esc(r.detail)}</span><time datetime="${escAttr(r.dateTime)}">${esc(r.when)}</time></li>`).join('')}${close}`);
     html = html.replace(/(id="ev-body") hidden/, '$1').replace(/(id="trades" aria-labelledby="tr-title") hidden/, '$1');
   }
+  if (referrals) { const items = exchangeItems(referrals); if (items) html = html.replace(/(<ul class="su-exchanges" id="su-exchanges">)[\s\S]*?(<\/ul>)/, (_, open, close) => `${open}${items}${close}`); }
   fs.writeFileSync(file, html);
 }
 buildHome();

@@ -6,7 +6,7 @@ const definitions = {
   episodes: ['flush-state', 'Market-drop episodes'], oiFlow: ['oi-flow', 'Price and open interest'],
   trend: ['trend-matrix', 'Trend matrix'], sessions: ['session-levels', 'Session price ranges'],
   funding: ['funding-board', 'Perpetual funding'], longShort: ['long-short', 'Long/short account shares'],
-  liquidations: ['liquidations', 'BTC and ETH liquidations'], sentiment: ['fng', 'Fear & Greed'],
+  sentiment: ['fng', 'Fear & Greed'],     // the liquidations panel is retired: its source feed lapsed in August 2026
   global: ['global', 'Market overview'], calendar: ['calendar', 'FOMC and CME calendar'],
 };
 export const DASHBOARD_SOURCES = Object.freeze(Object.fromEntries(Object.entries(definitions).map(([key,[path,label]]) => [key,Object.freeze({url:BASE+path,label})])));

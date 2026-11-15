@@ -79,12 +79,12 @@ export const learningPages = {
       },
       {
         id: 'capital', title: 'Your trading money is not a fee',
-        body: ['It stays in your own exchange account the whole time. NoGuru suggests about 3,000 USDT to go live, so the bot has room to buy in several steps across several coins. Your exchange charges its normal trading fees on each order.', 'With pretend money you need nothing at all. A larger amount gives the bot more room; it does not guarantee a higher percentage or a recovery.'],
-        links: [link('Why cash reserves matter', learn('reserves')), link('Start with pretend money', '?page=setup')],
+        body: ['It stays in your own exchange account the whole time. NoGuru suggests about 3,000 USDT or more, so the bot has room to buy in several steps across several coins. Your exchange charges its normal trading fees on each order.', 'Below 500 USDT the bot does not work. At about 2,000 USDT it can fill part of its orders; above 3,000 USDT it can fill most of them. A larger amount gives the bot more room; it does not guarantee a higher percentage or a recovery.'],
+        links: [link('Why cash reserves matter', learn('reserves')), link('Start your free trial', '?page=setup')],
       },
       {
         id: 'trials', title: 'What the 14 free days cover',
-        body: ['Both NoGuru and Cornix are free for 14 days, and neither asks for a card. The setup on the home page starts them in the right order.', 'Cornix starts counting when your first trade is created, and that includes a pretend-money trade. The exact start and end of the NoGuru trial have not been tested in this preview.', 'Two weeks show you how it works: purchases, sales, coins waiting. They cannot tell you what a year will bring.'],
+        body: ['Both NoGuru and Cornix are free for 14 days, and neither asks for a card. The setup on the home page starts them in the right order.', 'Cornix starts counting when your first trade is created, and that includes a demo trade. The exact start and end of the NoGuru trial have not been tested in this preview.', 'Two weeks show you how it works: purchases, sales, coins waiting. They cannot tell you what a year will bring.'],
         links: [link('What 14 days will show you', '?page=setup'), link('The two free trials', '?page=trial')],
       },
       {
@@ -244,7 +244,7 @@ for (const section of digestOrientation) {
 learningPages.learn.sections.push({
   id: 'full-collection', title: 'Explore the full public collection',
   body: ['The short explanations above focus on this strategy. The complete available public Academy, including its original tables and figures, is also local. Member-only remainders remain clearly marked as unavailable.'],
-  links: [link('Browse all 22 public lesson portions', '?page=academy'), link('Open the full glossary', '?page=glossary'), link('Browse the dated digest archive', '?page=digest')],
+  links: [link('Browse all 22 free lessons', '?page=academy'), link('Open the full glossary', '?page=glossary'), link('Browse the dated digest archive', '?page=digest')],
 });
 
 learningPages.pricing.kind = 'pricing';
@@ -286,7 +286,7 @@ const catalogGroups = [
 ];
 learningPages.library = {
   title: 'All the available reading, in one place.', eyebrow: 'Complete local reading catalog',
-  intro: 'The public lesson portions, dated digest archive, full glossary and available supporting pages are local. Member-only material stays unavailable. Current live evidence and market context are separate routes.',
+  intro: 'The free lessons, dated digest archive, full glossary and available supporting pages are local. Member-only material stays unavailable. Current live evidence and market context are separate routes.',
   sections: [
     {id: 'live', title: 'Current public data', body: ['These views request public sources rather than pretending a historical snapshot is current.'], links: [link('Evidence', '?page=evidence'), link('Market context and recent episodes', '?page=market'), link('Return to the story', '?page=story'), link('Setup preview', '?page=setup')]},
     ...catalogGroups.map(group => ({id: group.id, title: group.title, body: [], links: group.keys.map(key => link(learningPages[key].title, '?page=' + key))})),
@@ -315,6 +315,53 @@ const migratedAnchorTargets = {
   '?page=how-it-works#subscription-covers': '?page=how-it-works#roles',
   '?page=methodology#record-scope': '?page=evidence',
 };
+// The risks page, rewritten 15 November 2026 after the engine builder's review: lead with how the bot is
+// built, then say each remaining risk plainly and specifically. It replaces the earlier migrated review text.
+learningPages.risks = {
+  title: 'Built to avoid forced selling. Here is what can still go wrong.',
+  eyebrow: 'Risks, said plainly',
+  intro: 'The bot buys real coins with your own money, never borrows, and is built to sell a coin only above its average cost. That removes the usual ways traders are forced out at a loss. These are the risks that remain.',
+  sections: [
+    {id: 'design', title: 'It is built not to sell at a loss.',
+      body: ['Nothing is borrowed, so nothing can be force-sold. The bot buys a coin in steps and is built to sell it only once the price is above the average of what it paid. Almost every finished trade is a gain; the record lists every one, including the rare piece that closed below its own cost.',
+        'The risk sits in the trades that are still open. While a coin is below its average cost, it is worth less than you paid for it, and that can last a long time. So only put in money you can leave alone for months, and never money you need for bills.'],
+      links: [link('See every finished trade and the open ones', '?page=record')]},
+    {id: 'falling-prices', title: 'When prices keep falling.',
+      body: ['The bot buys more of a coin as it gets cheaper, up to a fixed limit per coin and a fixed total across all coins. After that it waits. It does not sell in a panic, and there is no stop loss.',
+        'Most trades finish within a day. A few take weeks or months, and the record shows those too. The bot trades established, large coins, so a coin failing outright or being removed from an exchange is unlikely. It is not impossible, and a coin that never recovers would be a real loss.',
+        'In a broad market fall several coins can be below cost at the same time. When the cash set aside for the bot is used up, buying pauses until a sale frees some.'],
+      links: [link('What staged buying does to the average', learn('weighted-average')), link('Cash reserves', learn('reserves'))]},
+    {id: 'signals', title: 'The signals, and what NoGuru cannot control.',
+      body: ['NoGuru’s signals have been delivered without an outage since the record began on 1 August 2026. If there is ever an extended outage on NoGuru’s side, the lost time is credited to your subscription.',
+        'Between a signal and a finished order there are two more services: Cornix and your exchange. NoGuru does not control them or your account settings. An order can arrive late, be rejected or fill only in part, and your own results depend on your settings, your start date and the cash in the account.',
+        'So look at Cornix now and then: open trades, free cash and any alerts. That is the whole job.'],
+      links: [link('How the three roles fit together', '?page=how-it-works#roles')]},
+    {id: 'exchange-and-key', title: 'Your exchange and your key.',
+      body: ['Your money stays at your exchange, in your own name, so the exchange’s security and solvency matter. Use one you trust.',
+        'Cornix trades with a key you create. Allow spot trading only and keep withdrawals switched off: the key can then trade but never move money out. Keep the bot’s money in a sub-account of its own, and never paste the key anywhere but Cornix.'],
+      links: [link('What an API key is', '?page=glossary#api-key')]},
+    {id: 'costs', title: 'What comes off the result.',
+      body: ['The record is shown before fees. Three costs come off your own result: your exchange’s trading fee on every buy and every sale, the NoGuru subscription, and the Cornix plan.',
+        'The two subscriptions are fixed amounts, so they weigh more on a small account. Below about 500 USDT the bot does not work; at about 2,000 USDT it can fill part of its orders; above 3,000 USDT it can fill most of them. The pricing page shows how much trading money covers the subscription at the record’s pace.'],
+      links: [link('Pricing and when it pays for itself', '?page=pricing#payback')]},
+    {id: 'stopping', title: 'If you want to stop.',
+      body: ['Stop the bot in Cornix. From then on it places no new orders. Stopping does not sell anything: the coins you hold stay in your exchange account, and you decide whether to keep them or sell them.',
+        'Billing is separate. NoGuru is renewed by invoice, so to end it you simply don’t pay the next one. A Cornix plan is managed in Cornix.'],
+      links: [link('NoGuru’s renewal terms', '?page=terms#4-subscription-and-payment'), link('How to cancel a Cornix plan', 'https://help.cornix.io/en/articles/14220111-how-to-manage-and-cancel-subscription-auto-renewal')]},
+    {id: 'the-record', title: 'What the record does and doesn’t show.',
+      body: ['The record is every signal NoGuru published, as a Cornix bot following the channel trades it, before fees. Finished trades and open trades are shown separately. It is not any customer’s account, and past results do not promise future ones.'],
+      links: [link('The live record', '?page=record'), link('The full risk disclaimer', '?page=disclaimer')]},
+  ],
+};
+// Data requests go to their own address.
+for (const section of learningPages.privacy?.sections || []) {
+  if (section.id !== 'your-rights') continue;
+  const swap = (value) => (typeof value === 'string' ? value.replaceAll('hello@noguru.io', 'privacy@noguru.io') : value);
+  section.body = (section.body || []).map(swap);
+  section.blocks = (section.blocks || []).map((b) => ({...b, text: swap(b.text), items: b.items?.map(swap)}));
+  section.links = (section.links || []).map((l) => ({...l, label: swap(l.label)}));
+}
+
 for (const page of Object.values(learningPages)) {
   for (const section of page.sections) {
     section.links = section.links.map(item => ({...item, url: migratedAnchorTargets[item.url] || item.url}));

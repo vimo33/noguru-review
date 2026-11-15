@@ -110,3 +110,12 @@ main{max-width:1180px;padding:0 24px}
 .record-all>summary::-webkit-details-marker{display:none}
 .record-all[open]>summary{background:none;color:var(--ink);border:1px solid var(--line)}
 .read-foot .foot-social{margin-bottom:10px}
+
+/* ---------- glossary: compact, two columns ---------- */
+body[data-page=glossary] #learning-sections{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 48px;margin-top:26px}
+body[data-page=glossary] .learning-section{display:block;padding:16px 0;margin:0;border-top:1px solid var(--line);scroll-margin-top:90px}
+body[data-page=glossary] .learning-section h2{font-size:21px;letter-spacing:-.02em;margin-bottom:6px}
+body[data-page=glossary] .learning-section p{font-size:14.5px;line-height:1.55;margin:0}
+body[data-page=glossary] .learning-section p+p{margin-top:6px}
+body[data-page=glossary] .learning-source-links{margin-top:8px;font-size:13px}
+@media (max-width:760px){body[data-page=glossary] #learning-sections{grid-template-columns:minmax(0,1fr)}}

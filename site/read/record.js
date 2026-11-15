@@ -149,22 +149,16 @@ export function renderRecord(body, rec, head) {
     body.append(s);
   }
 
-  // 5. Coins, per month only.
+  // 5. Coins: all those traded over the whole record; per coin only by month.
   if (rec.traded.length || rec.byMonth.length) {
     const c = el('section', 'record-block');
-    c.append(el('h2', '', 'Which coins it traded'));
-    if (rec.traded.length) {
-      const latest = rec.traded.reduce((m, t) => (t.month > m ? t.month : m), rec.traded[0].month);
-      c.append(el('p', '', `In ${monthName(latest)}: ${rec.traded.filter((t) => t.month === latest).map((t) => t.coin).join(', ')}.`));
-    }
+    c.append(el('h2', '', 'Which coins it trades'));
+    const coins = [...new Set([...rec.traded, ...rec.byMonth].map((t) => t.coin))].sort();
+    if (coins.length) c.append(el('p', '', `Traded coins include ${coins.join(', ')}.`));
     if (rec.byMonth.length) {
-      const headers = [['Month'], ['Coin'], ['Trades', 1], ['Result', 1]];
-      const row = (r) => ({cells: [monthName(r.month), r.coin, count(r.bags), pct(r.pct, 2)]});
-      const newest = rec.byMonth.reduce((m, r) => (r.month > m ? r.month : m), rec.byMonth[0].month);
-      const earlier = rec.byMonth.filter((r) => r.month !== newest);
-      c.append(table(headers, rec.byMonth.filter((r) => r.month === newest).map(row),
-        'Per coin, per month: finished trades and what they made on the money in them. A coin is listed for a month once it finished five or more trades in it.'));
-      if (earlier.length) c.append(more(`Earlier months (${new Set(earlier.map((r) => r.month)).size})`, table(headers, earlier.map(row))));
+      c.append(more(`Per coin, per month (${new Set(rec.byMonth.map((r) => r.month)).size} months)`, table([['Month'], ['Coin'], ['Trades', 1], ['Result', 1]],
+        rec.byMonth.map((r) => ({cells: [monthName(r.month), r.coin, count(r.bags), pct(r.pct, 2)]})),
+        'Finished trades and what they made on the money in them. A coin is listed for a month once it finished five or more trades in it.')));
     }
     body.append(c);
   }

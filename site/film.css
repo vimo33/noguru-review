@@ -329,3 +329,7 @@ h1 em,.caption em,.landing h2 em{font-style:italic;font-weight:420;color:var(--a
 .choose .expect-link{grid-column:1/-1}
 .foot-social{display:flex;flex-wrap:wrap;gap:4px 18px;margin:0 0 14px}
 @media (min-width:900px){.su-exchanges{grid-template-columns:1fr 1fr;gap:12px 28px}}
+.ev-why{margin-top:18px;max-width:46em;font-size:14.5px;line-height:1.6;color:var(--muted)}
+.ev-why b{color:var(--ink)}
+.signup code{font-size:12.5px;background:#f7f3ea14;border-radius:5px;padding:2px 6px;white-space:nowrap}
+.su-links .adlabel{margin-right:0}

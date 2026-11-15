@@ -10,7 +10,7 @@ export const migratedPages = {
         "id": "current-context",
         "title": "Read this lesson in context",
         "body": [
-          "This is the original public lesson portion. Its hypothetical examples teach general trading concepts. References to futures, stops, other strategies or older track-record formats are not statements of NoGuru’s current spot configuration."
+          "This is the original free lesson. Its hypothetical examples teach general trading concepts. References to futures, stops, other strategies or older track-record formats are not statements of NoGuru’s current spot configuration."
         ],
         "links": [
           {
@@ -136,7 +136,7 @@ export const migratedPages = {
       "label": "Original NoGuru public source",
       "url": "https://noguru.io/academy/arithmetic-of-losses.html",
       "capturedAt": "2026-11-12T14:36:55.879555+00:00",
-      "scope": "Public lesson portion captured 12 November 2026. Generic futures/stop-based examples are not this current spot strategy."
+      "scope": "Free lesson captured 12 November 2026. Generic futures/stop-based examples are not this current spot strategy."
     },
     "gateNotice": "Public portion migrated in full. The original site gates the remainder for members. No member token was used and that remainder is not available here.",
     "gateSourceText": "The rest of this lesson — the worked examples, the exercises, and how our own system applies it — is included with any paid NoGuru subscription. Members receive a personal access link by Telegram DM; open it once and every lesson unlocks on this device.",
@@ -161,7 +161,7 @@ export const migratedPages = {
         "id": "current-context",
         "title": "Read this lesson in context",
         "body": [
-          "This is the original public lesson portion. Its hypothetical examples teach general trading concepts. References to futures, stops, other strategies or older track-record formats are not statements of NoGuru’s current spot configuration."
+          "This is the original free lesson. Its hypothetical examples teach general trading concepts. References to futures, stops, other strategies or older track-record formats are not statements of NoGuru’s current spot configuration."
         ],
         "links": [
           {
@@ -277,7 +277,7 @@ export const migratedPages = {
       "label": "Original NoGuru public source",
       "url": "https://noguru.io/academy/leverage-and-liquidation.html",
       "capturedAt": "2026-11-12T14:36:56.038818+00:00",
-      "scope": "Public lesson portion captured 12 November 2026. Generic futures/stop-based examples are not this current spot strategy."
+      "scope": "Free lesson captured 12 November 2026. Generic futures/stop-based examples are not this current spot strategy."
     },
     "gateNotice": "Public portion migrated in full. The original site gates the remainder for members. No member token was used and that remainder is not available here.",
     "gateSourceText": "The rest of this lesson — the worked examples, the exercises, and how our own system applies it — is included with any paid NoGuru subscription. Members receive a personal access link by Telegram DM; open it once and every lesson unlocks on this device.",
@@ -302,7 +302,7 @@ export const migratedPages = {
         "id": "current-context",
         "title": "Read this lesson in context",
         "body": [
-          "This is the original public lesson portion. Its hypothetical examples teach general trading concepts. References to futures, stops, other strategies or older track-record formats are not statements of NoGuru’s current spot configuration.",
+          "This is the original free lesson. Its hypothetical examples teach general trading concepts. References to futures, stops, other strategies or older track-record formats are not statements of NoGuru’s current spot configuration.",
           "The source’s statement about track-record R-multiples and headline win percentages is older wording; the current evidence is a before-fee signal model with different fields."
         ],
         "links": [
@@ -423,7 +423,7 @@ export const migratedPages = {
       "label": "Original NoGuru public source",
       "url": "https://noguru.io/academy/expectancy.html",
       "capturedAt": "2026-11-12T14:36:55.896841+00:00",
-      "scope": "Public lesson portion captured 12 November 2026. Generic futures/stop-based examples are not this current spot strategy."
+      "scope": "Free lesson captured 12 November 2026. Generic futures/stop-based examples are not this current spot strategy."
     },
     "gateNotice": "Public portion migrated in full. The original site gates the remainder for members. No member token was used and that remainder is not available here.",
     "gateSourceText": "The rest of this lesson — the worked examples, the exercises, and how our own system applies it — is included with any paid NoGuru subscription. Members receive a personal access link by Telegram DM; open it once and every lesson unlocks on this device.",
@@ -448,7 +448,7 @@ export const migratedPages = {
         "id": "current-context",
         "title": "Read this lesson in context",
         "body": [
-          "This is the original public lesson portion. Its hypothetical examples teach general trading concepts. References to futures, stops, other strategies or older track-record formats are not statements of NoGuru’s current spot configuration."
+          "This is the original free lesson. Its hypothetical examples teach general trading concepts. References to futures, stops, other strategies or older track-record formats are not statements of NoGuru’s current spot configuration."
         ],
         "links": [
           {
@@ -562,7 +562,7 @@ export const migratedPages = {
       "label": "Original NoGuru public source",
       "url": "https://noguru.io/academy/survive-first.html",
       "capturedAt": "2026-11-12T14:36:56.301368+00:00",
-      "scope": "Public lesson portion captured 12 November 2026. Generic futures/stop-based examples are not this current spot strategy."
+      "scope": "Free lesson captured 12 November 2026. Generic futures/stop-based examples are not this current spot strategy."
     },
     "gateNotice": "Public portion migrated in full. The original site gates the remainder for members. No member token was used and that remainder is not available here.",
     "gateSourceText": "The rest of this lesson — the worked examples, the exercises, and how our own system applies it — is included with any paid NoGuru subscription. Members receive a personal access link by Telegram DM; open it once and every lesson unlocks on this device.",
@@ -587,7 +587,7 @@ export const migratedPages = {
         "id": "current-context",
         "title": "Read this lesson in context",
         "body": [
-          "This is the original public lesson portion. Its hypothetical examples teach general trading concepts. References to futures, stops, other strategies or older track-record formats are not statements of NoGuru’s current spot configuration."
+          "This is the original free lesson. Its hypothetical examples teach general trading concepts. References to futures, stops, other strategies or older track-record formats are not statements of NoGuru’s current spot configuration."
         ],
         "links": [
           {
@@ -707,7 +707,7 @@ export const migratedPages = {
       "label": "Original NoGuru public source",
       "url": "https://noguru.io/academy/risk-per-trade.html",
       "capturedAt": "2026-11-12T14:36:56.205679+00:00",
-      "scope": "Public lesson portion captured 12 November 2026. Generic futures/stop-based examples are not this current spot strategy."
+      "scope": "Free lesson captured 12 November 2026. Generic futures/stop-based examples are not this current spot strategy."
     },
     "gateNotice": "Public portion migrated in full. The original site gates the remainder for members. No member token was used and that remainder is not available here.",
     "gateSourceText": "The rest of this lesson — the worked examples, the exercises, and how our own system applies it — is included with any paid NoGuru subscription. Members receive a personal access link by Telegram DM; open it once and every lesson unlocks on this device.",
@@ -732,7 +732,7 @@ export const migratedPages = {
         "id": "current-context",
         "title": "Read this lesson in context",
         "body": [
-          "This is the original public lesson portion. Its hypothetical examples teach general trading concepts. References to futures, stops, other strategies or older track-record formats are not statements of NoGuru’s current spot configuration."
+          "This is the original free lesson. Its hypothetical examples teach general trading concepts. References to futures, stops, other strategies or older track-record formats are not statements of NoGuru’s current spot configuration."
         ],
         "links": [
           {
@@ -840,7 +840,7 @@ export const migratedPages = {
       "label": "Original NoGuru public source",
       "url": "https://noguru.io/academy/portfolio-heat.html",
       "capturedAt": "2026-11-12T14:36:56.116393+00:00",
-      "scope": "Public lesson portion captured 12 November 2026. Generic futures/stop-based examples are not this current spot strategy."
+      "scope": "Free lesson captured 12 November 2026. Generic futures/stop-based examples are not this current spot strategy."
     },
     "gateNotice": "Public portion migrated in full. The original site gates the remainder for members. No member token was used and that remainder is not available here.",
     "gateSourceText": "The rest of this lesson — the worked examples, the exercises, and how our own system applies it — is included with any paid NoGuru subscription. Members receive a personal access link by Telegram DM; open it once and every lesson unlocks on this device.",
@@ -865,7 +865,7 @@ export const migratedPages = {
         "id": "current-context",
         "title": "Read this lesson in context",
         "body": [
-          "This is the original public lesson portion. Its hypothetical examples teach general trading concepts. References to futures, stops, other strategies or older track-record formats are not statements of NoGuru’s current spot configuration.",
+          "This is the original free lesson. Its hypothetical examples teach general trading concepts. References to futures, stops, other strategies or older track-record formats are not statements of NoGuru’s current spot configuration.",
           "The source’s “own momentum basket” reference is not the current public spot offering."
         ],
         "links": [
@@ -961,7 +961,7 @@ export const migratedPages = {
       "label": "Original NoGuru public source",
       "url": "https://noguru.io/academy/correlation-one-bet.html",
       "capturedAt": "2026-11-12T14:36:55.853251+00:00",
-      "scope": "Public lesson portion captured 12 November 2026. Generic futures/stop-based examples are not this current spot strategy."
+      "scope": "Free lesson captured 12 November 2026. Generic futures/stop-based examples are not this current spot strategy."
     },
     "gateNotice": "Public portion migrated in full. The original site gates the remainder for members. No member token was used and that remainder is not available here.",
     "gateSourceText": "The rest of this lesson — the worked examples, the exercises, and how our own system applies it — is included with any paid NoGuru subscription. Members receive a personal access link by Telegram DM; open it once and every lesson unlocks on this device.",
@@ -986,7 +986,7 @@ export const migratedPages = {
         "id": "current-context",
         "title": "Read this lesson in context",
         "body": [
-          "This is the original public lesson portion. Its hypothetical examples teach general trading concepts. References to futures, stops, other strategies or older track-record formats are not statements of NoGuru’s current spot configuration."
+          "This is the original free lesson. Its hypothetical examples teach general trading concepts. References to futures, stops, other strategies or older track-record formats are not statements of NoGuru’s current spot configuration."
         ],
         "links": [
           {
@@ -1089,7 +1089,7 @@ export const migratedPages = {
       "label": "Original NoGuru public source",
       "url": "https://noguru.io/academy/when-to-size-down.html",
       "capturedAt": "2026-11-12T14:36:56.463278+00:00",
-      "scope": "Public lesson portion captured 12 November 2026. Generic futures/stop-based examples are not this current spot strategy."
+      "scope": "Free lesson captured 12 November 2026. Generic futures/stop-based examples are not this current spot strategy."
     },
     "gateNotice": "Public portion migrated in full. The original site gates the remainder for members. No member token was used and that remainder is not available here.",
     "gateSourceText": "The rest of this lesson — the worked examples, the exercises, and how our own system applies it — is included with any paid NoGuru subscription. Members receive a personal access link by Telegram DM; open it once and every lesson unlocks on this device.",
@@ -1114,7 +1114,7 @@ export const migratedPages = {
         "id": "current-context",
         "title": "Read this lesson in context",
         "body": [
-          "This is the original public lesson portion. Its hypothetical examples teach general trading concepts. References to futures, stops, other strategies or older track-record formats are not statements of NoGuru’s current spot configuration."
+          "This is the original free lesson. Its hypothetical examples teach general trading concepts. References to futures, stops, other strategies or older track-record formats are not statements of NoGuru’s current spot configuration."
         ],
         "links": [
           {
@@ -1215,7 +1215,7 @@ export const migratedPages = {
       "label": "Original NoGuru public source",
       "url": "https://noguru.io/academy/spot-futures-perps.html",
       "capturedAt": "2026-11-12T14:36:56.285650+00:00",
-      "scope": "Public lesson portion captured 12 November 2026. Generic futures/stop-based examples are not this current spot strategy."
+      "scope": "Free lesson captured 12 November 2026. Generic futures/stop-based examples are not this current spot strategy."
     },
     "gateNotice": "Public portion migrated in full. The original site gates the remainder for members. No member token was used and that remainder is not available here.",
     "gateSourceText": "The rest of this lesson — the worked examples, the exercises, and how our own system applies it — is included with any paid NoGuru subscription. Members receive a personal access link by Telegram DM; open it once and every lesson unlocks on this device.",
@@ -1240,7 +1240,7 @@ export const migratedPages = {
         "id": "current-context",
         "title": "Read this lesson in context",
         "body": [
-          "This is the original public lesson portion. Its hypothetical examples teach general trading concepts. References to futures, stops, other strategies or older track-record formats are not statements of NoGuru’s current spot configuration."
+          "This is the original free lesson. Its hypothetical examples teach general trading concepts. References to futures, stops, other strategies or older track-record formats are not statements of NoGuru’s current spot configuration."
         ],
         "links": [
           {
@@ -1334,7 +1334,7 @@ export const migratedPages = {
       "label": "Original NoGuru public source",
       "url": "https://noguru.io/academy/margin-isolated-vs-cross.html",
       "capturedAt": "2026-11-12T14:36:56.115082+00:00",
-      "scope": "Public lesson portion captured 12 November 2026. Generic futures/stop-based examples are not this current spot strategy."
+      "scope": "Free lesson captured 12 November 2026. Generic futures/stop-based examples are not this current spot strategy."
     },
     "gateNotice": "Public portion migrated in full. The original site gates the remainder for members. No member token was used and that remainder is not available here.",
     "gateSourceText": "The rest of this lesson — the worked examples, the exercises, and how our own system applies it — is included with any paid NoGuru subscription. Members receive a personal access link by Telegram DM; open it once and every lesson unlocks on this device.",
@@ -1359,7 +1359,7 @@ export const migratedPages = {
         "id": "current-context",
         "title": "Read this lesson in context",
         "body": [
-          "This is the original public lesson portion. Its hypothetical examples teach general trading concepts. References to futures, stops, other strategies or older track-record formats are not statements of NoGuru’s current spot configuration."
+          "This is the original free lesson. Its hypothetical examples teach general trading concepts. References to futures, stops, other strategies or older track-record formats are not statements of NoGuru’s current spot configuration."
         ],
         "links": [
           {
@@ -1458,7 +1458,7 @@ export const migratedPages = {
       "label": "Original NoGuru public source",
       "url": "https://noguru.io/academy/funding-rates.html",
       "capturedAt": "2026-11-12T14:36:55.902215+00:00",
-      "scope": "Public lesson portion captured 12 November 2026. Generic futures/stop-based examples are not this current spot strategy."
+      "scope": "Free lesson captured 12 November 2026. Generic futures/stop-based examples are not this current spot strategy."
     },
     "gateNotice": "Public portion migrated in full. The original site gates the remainder for members. No member token was used and that remainder is not available here.",
     "gateSourceText": "The rest of this lesson — the worked examples, the exercises, and how our own system applies it — is included with any paid NoGuru subscription. Members receive a personal access link by Telegram DM; open it once and every lesson unlocks on this device.",
@@ -1483,7 +1483,7 @@ export const migratedPages = {
         "id": "current-context",
         "title": "Read this lesson in context",
         "body": [
-          "This is the original public lesson portion. Its hypothetical examples teach general trading concepts. References to futures, stops, other strategies or older track-record formats are not statements of NoGuru’s current spot configuration."
+          "This is the original free lesson. Its hypothetical examples teach general trading concepts. References to futures, stops, other strategies or older track-record formats are not statements of NoGuru’s current spot configuration."
         ],
         "links": [
           {
@@ -1572,7 +1572,7 @@ export const migratedPages = {
       "label": "Original NoGuru public source",
       "url": "https://noguru.io/academy/open-interest.html",
       "capturedAt": "2026-11-12T14:36:56.092323+00:00",
-      "scope": "Public lesson portion captured 12 November 2026. Generic futures/stop-based examples are not this current spot strategy."
+      "scope": "Free lesson captured 12 November 2026. Generic futures/stop-based examples are not this current spot strategy."
     },
     "gateNotice": "Public portion migrated in full. The original site gates the remainder for members. No member token was used and that remainder is not available here.",
     "gateSourceText": "The rest of this lesson — the worked examples, the exercises, and how our own system applies it — is included with any paid NoGuru subscription. Members receive a personal access link by Telegram DM; open it once and every lesson unlocks on this device.",
@@ -1597,7 +1597,7 @@ export const migratedPages = {
         "id": "current-context",
         "title": "Read this lesson in context",
         "body": [
-          "This is the original public lesson portion. Its hypothetical examples teach general trading concepts. References to futures, stops, other strategies or older track-record formats are not statements of NoGuru’s current spot configuration."
+          "This is the original free lesson. Its hypothetical examples teach general trading concepts. References to futures, stops, other strategies or older track-record formats are not statements of NoGuru’s current spot configuration."
         ],
         "links": [
           {
@@ -1695,7 +1695,7 @@ export const migratedPages = {
       "label": "Original NoGuru public source",
       "url": "https://noguru.io/academy/liquidation-cascades.html",
       "capturedAt": "2026-11-12T14:36:56.049767+00:00",
-      "scope": "Public lesson portion captured 12 November 2026. Generic futures/stop-based examples are not this current spot strategy."
+      "scope": "Free lesson captured 12 November 2026. Generic futures/stop-based examples are not this current spot strategy."
     },
     "gateNotice": "Public portion migrated in full. The original site gates the remainder for members. No member token was used and that remainder is not available here.",
     "gateSourceText": "The rest of this lesson — the worked examples, the exercises, and how our own system applies it — is included with any paid NoGuru subscription. Members receive a personal access link by Telegram DM; open it once and every lesson unlocks on this device.",
@@ -1720,7 +1720,7 @@ export const migratedPages = {
         "id": "current-context",
         "title": "Read this lesson in context",
         "body": [
-          "This is the original public lesson portion. Its hypothetical examples teach general trading concepts. References to futures, stops, other strategies or older track-record formats are not statements of NoGuru’s current spot configuration."
+          "This is the original free lesson. Its hypothetical examples teach general trading concepts. References to futures, stops, other strategies or older track-record formats are not statements of NoGuru’s current spot configuration."
         ],
         "links": [
           {
@@ -1816,7 +1816,7 @@ export const migratedPages = {
       "label": "Original NoGuru public source",
       "url": "https://noguru.io/academy/weekend-drift.html",
       "capturedAt": "2026-11-12T14:36:56.345469+00:00",
-      "scope": "Public lesson portion captured 12 November 2026. Generic futures/stop-based examples are not this current spot strategy."
+      "scope": "Free lesson captured 12 November 2026. Generic futures/stop-based examples are not this current spot strategy."
     },
     "gateNotice": "Public portion migrated in full. The original site gates the remainder for members. No member token was used and that remainder is not available here.",
     "gateSourceText": "The rest of this lesson — the worked examples, the exercises, and how our own system applies it — is included with any paid NoGuru subscription. Members receive a personal access link by Telegram DM; open it once and every lesson unlocks on this device.",
@@ -1841,7 +1841,7 @@ export const migratedPages = {
         "id": "current-context",
         "title": "Read this lesson in context",
         "body": [
-          "This is the original public lesson portion. Its hypothetical examples teach general trading concepts. References to futures, stops, other strategies or older track-record formats are not statements of NoGuru’s current spot configuration."
+          "This is the original free lesson. Its hypothetical examples teach general trading concepts. References to futures, stops, other strategies or older track-record formats are not statements of NoGuru’s current spot configuration."
         ],
         "links": [
           {
@@ -1936,7 +1936,7 @@ export const migratedPages = {
       "label": "Original NoGuru public source",
       "url": "https://noguru.io/academy/timeframes.html",
       "capturedAt": "2026-11-12T14:36:56.305264+00:00",
-      "scope": "Public lesson portion captured 12 November 2026. Generic futures/stop-based examples are not this current spot strategy."
+      "scope": "Free lesson captured 12 November 2026. Generic futures/stop-based examples are not this current spot strategy."
     },
     "gateNotice": "Public portion migrated in full. The original site gates the remainder for members. No member token was used and that remainder is not available here.",
     "gateSourceText": "The rest of this lesson — the worked examples, the exercises, and how our own system applies it — is included with any paid NoGuru subscription. Members receive a personal access link by Telegram DM; open it once and every lesson unlocks on this device.",
@@ -1961,7 +1961,7 @@ export const migratedPages = {
         "id": "current-context",
         "title": "Read this lesson in context",
         "body": [
-          "This is the original public lesson portion. Its hypothetical examples teach general trading concepts. References to futures, stops, other strategies or older track-record formats are not statements of NoGuru’s current spot configuration."
+          "This is the original free lesson. Its hypothetical examples teach general trading concepts. References to futures, stops, other strategies or older track-record formats are not statements of NoGuru’s current spot configuration."
         ],
         "links": [
           {
@@ -2045,7 +2045,7 @@ export const migratedPages = {
       "label": "Original NoGuru public source",
       "url": "https://noguru.io/academy/trend-vs-range.html",
       "capturedAt": "2026-11-12T14:36:56.336838+00:00",
-      "scope": "Public lesson portion captured 12 November 2026. Generic futures/stop-based examples are not this current spot strategy."
+      "scope": "Free lesson captured 12 November 2026. Generic futures/stop-based examples are not this current spot strategy."
     },
     "gateNotice": "Public portion migrated in full. The original site gates the remainder for members. No member token was used and that remainder is not available here.",
     "gateSourceText": "The rest of this lesson — the worked examples, the exercises, and how our own system applies it — is included with any paid NoGuru subscription. Members receive a personal access link by Telegram DM; open it once and every lesson unlocks on this device.",
@@ -2070,7 +2070,7 @@ export const migratedPages = {
         "id": "current-context",
         "title": "Read this lesson in context",
         "body": [
-          "This is the original public lesson portion. Its hypothetical examples teach general trading concepts. References to futures, stops, other strategies or older track-record formats are not statements of NoGuru’s current spot configuration."
+          "This is the original free lesson. Its hypothetical examples teach general trading concepts. References to futures, stops, other strategies or older track-record formats are not statements of NoGuru’s current spot configuration."
         ],
         "links": [
           {
@@ -2136,7 +2136,7 @@ export const migratedPages = {
       "label": "Original NoGuru public source",
       "url": "https://noguru.io/academy/zones-not-lines.html",
       "capturedAt": "2026-11-12T14:36:56.458484+00:00",
-      "scope": "Public lesson portion captured 12 November 2026. Generic futures/stop-based examples are not this current spot strategy."
+      "scope": "Free lesson captured 12 November 2026. Generic futures/stop-based examples are not this current spot strategy."
     },
     "gateNotice": "Public portion migrated in full. The original site gates the remainder for members. No member token was used and that remainder is not available here.",
     "gateSourceText": "The rest of this lesson — the worked examples, the exercises, and how our own system applies it — is included with any paid NoGuru subscription. Members receive a personal access link by Telegram DM; open it once and every lesson unlocks on this device.",
@@ -2161,7 +2161,7 @@ export const migratedPages = {
         "id": "current-context",
         "title": "Read this lesson in context",
         "body": [
-          "This is the original public lesson portion. Its hypothetical examples teach general trading concepts. References to futures, stops, other strategies or older track-record formats are not statements of NoGuru’s current spot configuration."
+          "This is the original free lesson. Its hypothetical examples teach general trading concepts. References to futures, stops, other strategies or older track-record formats are not statements of NoGuru’s current spot configuration."
         ],
         "links": [
           {
@@ -2251,7 +2251,7 @@ export const migratedPages = {
       "label": "Original NoGuru public source",
       "url": "https://noguru.io/academy/what-ta-can-do.html",
       "capturedAt": "2026-11-12T14:36:56.406282+00:00",
-      "scope": "Public lesson portion captured 12 November 2026. Generic futures/stop-based examples are not this current spot strategy."
+      "scope": "Free lesson captured 12 November 2026. Generic futures/stop-based examples are not this current spot strategy."
     },
     "gateNotice": "Public portion migrated in full. The original site gates the remainder for members. No member token was used and that remainder is not available here.",
     "gateSourceText": "The rest of this lesson — the worked examples, the exercises, and how our own system applies it — is included with any paid NoGuru subscription. Members receive a personal access link by Telegram DM; open it once and every lesson unlocks on this device.",
@@ -2276,7 +2276,7 @@ export const migratedPages = {
         "id": "current-context",
         "title": "Read this lesson in context",
         "body": [
-          "This is the original public lesson portion. Its hypothetical examples teach general trading concepts. References to futures, stops, other strategies or older track-record formats are not statements of NoGuru’s current spot configuration."
+          "This is the original free lesson. Its hypothetical examples teach general trading concepts. References to futures, stops, other strategies or older track-record formats are not statements of NoGuru’s current spot configuration."
         ],
         "links": [
           {
@@ -2386,7 +2386,7 @@ export const migratedPages = {
       "label": "Original NoGuru public source",
       "url": "https://noguru.io/academy/variance-and-sample-size.html",
       "capturedAt": "2026-11-12T14:36:56.354223+00:00",
-      "scope": "Public lesson portion captured 12 November 2026. Generic futures/stop-based examples are not this current spot strategy."
+      "scope": "Free lesson captured 12 November 2026. Generic futures/stop-based examples are not this current spot strategy."
     },
     "gateNotice": "Public portion migrated in full. The original site gates the remainder for members. No member token was used and that remainder is not available here.",
     "gateSourceText": "The rest of this lesson — the worked examples, the exercises, and how our own system applies it — is included with any paid NoGuru subscription. Members receive a personal access link by Telegram DM; open it once and every lesson unlocks on this device.",
@@ -2411,7 +2411,7 @@ export const migratedPages = {
         "id": "current-context",
         "title": "Read this lesson in context",
         "body": [
-          "This is the original public lesson portion. Its hypothetical examples teach general trading concepts. References to futures, stops, other strategies or older track-record formats are not statements of NoGuru’s current spot configuration."
+          "This is the original free lesson. Its hypothetical examples teach general trading concepts. References to futures, stops, other strategies or older track-record formats are not statements of NoGuru’s current spot configuration."
         ],
         "links": [
           {
@@ -2480,7 +2480,7 @@ export const migratedPages = {
       "label": "Original NoGuru public source",
       "url": "https://noguru.io/academy/journaling.html",
       "capturedAt": "2026-11-12T14:36:55.903278+00:00",
-      "scope": "Public lesson portion captured 12 November 2026. Generic futures/stop-based examples are not this current spot strategy."
+      "scope": "Free lesson captured 12 November 2026. Generic futures/stop-based examples are not this current spot strategy."
     },
     "gateNotice": "Public portion migrated in full. The original site gates the remainder for members. No member token was used and that remainder is not available here.",
     "gateSourceText": "The rest of this lesson — the worked examples, the exercises, and how our own system applies it — is included with any paid NoGuru subscription. Members receive a personal access link by Telegram DM; open it once and every lesson unlocks on this device.",
@@ -2505,7 +2505,7 @@ export const migratedPages = {
         "id": "current-context",
         "title": "Read this lesson in context",
         "body": [
-          "This is the original public lesson portion. Its hypothetical examples teach general trading concepts. References to futures, stops, other strategies or older track-record formats are not statements of NoGuru’s current spot configuration."
+          "This is the original free lesson. Its hypothetical examples teach general trading concepts. References to futures, stops, other strategies or older track-record formats are not statements of NoGuru’s current spot configuration."
         ],
         "links": [
           {
@@ -2575,7 +2575,7 @@ export const migratedPages = {
       "label": "Original NoGuru public source",
       "url": "https://noguru.io/academy/first-loss.html",
       "capturedAt": "2026-11-12T14:36:55.907923+00:00",
-      "scope": "Public lesson portion captured 12 November 2026. Generic futures/stop-based examples are not this current spot strategy."
+      "scope": "Free lesson captured 12 November 2026. Generic futures/stop-based examples are not this current spot strategy."
     },
     "gateNotice": "Public portion migrated in full. The original site gates the remainder for members. No member token was used and that remainder is not available here.",
     "gateSourceText": "The rest of this lesson — the worked examples, the exercises, and how our own system applies it — is included with any paid NoGuru subscription. Members receive a personal access link by Telegram DM; open it once and every lesson unlocks on this device.",
@@ -2600,7 +2600,7 @@ export const migratedPages = {
         "id": "current-context",
         "title": "Read this lesson in context",
         "body": [
-          "This is the original public lesson portion. Its hypothetical examples teach general trading concepts. References to futures, stops, other strategies or older track-record formats are not statements of NoGuru’s current spot configuration."
+          "This is the original free lesson. Its hypothetical examples teach general trading concepts. References to futures, stops, other strategies or older track-record formats are not statements of NoGuru’s current spot configuration."
         ],
         "links": [
           {
@@ -2665,7 +2665,7 @@ export const migratedPages = {
       "label": "Original NoGuru public source",
       "url": "https://noguru.io/academy/losing-months.html",
       "capturedAt": "2026-11-12T14:36:56.115749+00:00",
-      "scope": "Public lesson portion captured 12 November 2026. Generic futures/stop-based examples are not this current spot strategy."
+      "scope": "Free lesson captured 12 November 2026. Generic futures/stop-based examples are not this current spot strategy."
     },
     "gateNotice": "Public portion migrated in full. The original site gates the remainder for members. No member token was used and that remainder is not available here.",
     "gateSourceText": "The rest of this lesson — the worked examples, the exercises, and how our own system applies it — is included with any paid NoGuru subscription. Members receive a personal access link by Telegram DM; open it once and every lesson unlocks on this device.",
@@ -2690,7 +2690,7 @@ export const migratedPages = {
         "id": "current-context",
         "title": "Read this lesson in context",
         "body": [
-          "This is the original public lesson portion. Its hypothetical examples teach general trading concepts. References to futures, stops, other strategies or older track-record formats are not statements of NoGuru’s current spot configuration."
+          "This is the original free lesson. Its hypothetical examples teach general trading concepts. References to futures, stops, other strategies or older track-record formats are not statements of NoGuru’s current spot configuration."
         ],
         "links": [
           {
@@ -2806,7 +2806,7 @@ export const migratedPages = {
   "academy": {
     "title": "The full public Academy collection.",
     "eyebrow": "22 lessons across 5 modules",
-    "intro": "Every available public lesson is here, with its original examples, tables and figures. The member-only remainder stays gated; current strategy mechanics are explained separately.",
+    "intro": "Every available free lesson is here, with its original examples, tables and figures. The member-only remainder stays gated; current strategy mechanics are explained separately.",
     "kind": "academy-index",
     "cards": [
       {
@@ -2818,7 +2818,7 @@ export const migratedPages = {
         "note": "Full public portion; member-only remainder unavailable.",
         "links": [
           {
-            "label": "Read the public lesson",
+            "label": "Read the free lesson",
             "url": "?page=academy-arithmetic-of-losses"
           }
         ]
@@ -2832,7 +2832,7 @@ export const migratedPages = {
         "note": "Full public portion; member-only remainder unavailable.",
         "links": [
           {
-            "label": "Read the public lesson",
+            "label": "Read the free lesson",
             "url": "?page=academy-leverage-and-liquidation"
           }
         ]
@@ -2846,7 +2846,7 @@ export const migratedPages = {
         "note": "Full public portion; member-only remainder unavailable.",
         "links": [
           {
-            "label": "Read the public lesson",
+            "label": "Read the free lesson",
             "url": "?page=academy-expectancy"
           }
         ]
@@ -2860,7 +2860,7 @@ export const migratedPages = {
         "note": "Full public portion; member-only remainder unavailable.",
         "links": [
           {
-            "label": "Read the public lesson",
+            "label": "Read the free lesson",
             "url": "?page=academy-survive-first"
           }
         ]
@@ -2874,7 +2874,7 @@ export const migratedPages = {
         "note": "Full public portion; member-only remainder unavailable.",
         "links": [
           {
-            "label": "Read the public lesson",
+            "label": "Read the free lesson",
             "url": "?page=academy-risk-per-trade"
           }
         ]
@@ -2888,7 +2888,7 @@ export const migratedPages = {
         "note": "Full public portion; member-only remainder unavailable.",
         "links": [
           {
-            "label": "Read the public lesson",
+            "label": "Read the free lesson",
             "url": "?page=academy-portfolio-heat"
           }
         ]
@@ -2902,7 +2902,7 @@ export const migratedPages = {
         "note": "Full public portion; member-only remainder unavailable.",
         "links": [
           {
-            "label": "Read the public lesson",
+            "label": "Read the free lesson",
             "url": "?page=academy-correlation-one-bet"
           }
         ]
@@ -2916,7 +2916,7 @@ export const migratedPages = {
         "note": "Full public portion; member-only remainder unavailable.",
         "links": [
           {
-            "label": "Read the public lesson",
+            "label": "Read the free lesson",
             "url": "?page=academy-when-to-size-down"
           }
         ]
@@ -2930,7 +2930,7 @@ export const migratedPages = {
         "note": "Full public portion; member-only remainder unavailable.",
         "links": [
           {
-            "label": "Read the public lesson",
+            "label": "Read the free lesson",
             "url": "?page=academy-spot-futures-perps"
           }
         ]
@@ -2944,7 +2944,7 @@ export const migratedPages = {
         "note": "Full public portion; member-only remainder unavailable.",
         "links": [
           {
-            "label": "Read the public lesson",
+            "label": "Read the free lesson",
             "url": "?page=academy-margin-isolated-vs-cross"
           }
         ]
@@ -2958,7 +2958,7 @@ export const migratedPages = {
         "note": "Full public portion; member-only remainder unavailable.",
         "links": [
           {
-            "label": "Read the public lesson",
+            "label": "Read the free lesson",
             "url": "?page=academy-funding-rates"
           }
         ]
@@ -2972,7 +2972,7 @@ export const migratedPages = {
         "note": "Full public portion; member-only remainder unavailable.",
         "links": [
           {
-            "label": "Read the public lesson",
+            "label": "Read the free lesson",
             "url": "?page=academy-open-interest"
           }
         ]
@@ -2986,7 +2986,7 @@ export const migratedPages = {
         "note": "Full public portion; member-only remainder unavailable.",
         "links": [
           {
-            "label": "Read the public lesson",
+            "label": "Read the free lesson",
             "url": "?page=academy-liquidation-cascades"
           }
         ]
@@ -3000,7 +3000,7 @@ export const migratedPages = {
         "note": "Full public portion; member-only remainder unavailable.",
         "links": [
           {
-            "label": "Read the public lesson",
+            "label": "Read the free lesson",
             "url": "?page=academy-weekend-drift"
           }
         ]
@@ -3014,7 +3014,7 @@ export const migratedPages = {
         "note": "Full public portion; member-only remainder unavailable.",
         "links": [
           {
-            "label": "Read the public lesson",
+            "label": "Read the free lesson",
             "url": "?page=academy-timeframes"
           }
         ]
@@ -3028,7 +3028,7 @@ export const migratedPages = {
         "note": "Full public portion; member-only remainder unavailable.",
         "links": [
           {
-            "label": "Read the public lesson",
+            "label": "Read the free lesson",
             "url": "?page=academy-trend-vs-range"
           }
         ]
@@ -3042,7 +3042,7 @@ export const migratedPages = {
         "note": "Full public portion; member-only remainder unavailable.",
         "links": [
           {
-            "label": "Read the public lesson",
+            "label": "Read the free lesson",
             "url": "?page=academy-zones-not-lines"
           }
         ]
@@ -3056,7 +3056,7 @@ export const migratedPages = {
         "note": "Full public portion; member-only remainder unavailable.",
         "links": [
           {
-            "label": "Read the public lesson",
+            "label": "Read the free lesson",
             "url": "?page=academy-what-ta-can-do"
           }
         ]
@@ -3070,7 +3070,7 @@ export const migratedPages = {
         "note": "Full public portion; member-only remainder unavailable.",
         "links": [
           {
-            "label": "Read the public lesson",
+            "label": "Read the free lesson",
             "url": "?page=academy-variance-and-sample-size"
           }
         ]
@@ -3084,7 +3084,7 @@ export const migratedPages = {
         "note": "Full public portion; member-only remainder unavailable.",
         "links": [
           {
-            "label": "Read the public lesson",
+            "label": "Read the free lesson",
             "url": "?page=academy-journaling"
           }
         ]
@@ -3098,7 +3098,7 @@ export const migratedPages = {
         "note": "Full public portion; member-only remainder unavailable.",
         "links": [
           {
-            "label": "Read the public lesson",
+            "label": "Read the free lesson",
             "url": "?page=academy-first-loss"
           }
         ]
@@ -3112,7 +3112,7 @@ export const migratedPages = {
         "note": "Full public portion; member-only remainder unavailable.",
         "links": [
           {
-            "label": "Read the public lesson",
+            "label": "Read the free lesson",
             "url": "?page=academy-losing-months"
           }
         ]
@@ -6504,7 +6504,7 @@ export const migratedPages = {
         "body": [
           "NoGuru is operated by:",
           "NoGuru LLC 940 E 3rd St Ste 203 Casper, WY 82601, USA",
-          "E-mail: noguru_noguru@proton.me Telegram: the NoGuru gate bot (see How it works )",
+          "E-mail: hello@noguru.io Telegram: the NoGuru gate bot (see How it works )",
           "Responsible for content: NoGuru LLC, address as above.",
           "Anti-impersonation notice: our ONLY official surfaces are noguru.io, the Telegram channels linked from this site, and the gate bot named on the checkout page. We never DM first, never ask for your keys or seed phrase, and never offer \"account management.\""
         ],
@@ -6519,7 +6519,7 @@ export const migratedPages = {
           },
           {
             "type": "paragraph",
-            "text": "E-mail: noguru_noguru@proton.me Telegram: the NoGuru gate bot (see How it works )"
+            "text": "E-mail: hello@noguru.io Telegram: the NoGuru gate bot (see How it works )"
           },
           {
             "type": "paragraph",
@@ -6532,7 +6532,7 @@ export const migratedPages = {
         ],
         "links": [
           {
-            "label": "noguru_noguru@proton.me",
+            "label": "hello@noguru.io",
             "url": "https://noguru.io/cdn-cgi/l/email-protection#630d0c041611163c0d0c041611162313110c170c0d4d0e06"
           },
           {
@@ -6624,17 +6624,17 @@ export const migratedPages = {
         "id": "your-rights",
         "title": "Your rights",
         "body": [
-          "Access, rectification, erasure, restriction, portability, objection — under Art. 15-21 GDPR if you are in the EU, and under the FADP if you are in Switzerland — and complaint to a supervisory authority (your EU member state's data protection authority, or the Swiss FDPIC). Contact: noguru_noguru@proton.me ."
+          "Access, rectification, erasure, restriction, portability, objection — under Art. 15-21 GDPR if you are in the EU, and under the FADP if you are in Switzerland — and complaint to a supervisory authority (your EU member state's data protection authority, or the Swiss FDPIC). Contact: hello@noguru.io ."
         ],
         "blocks": [
           {
             "type": "paragraph",
-            "text": "Access, rectification, erasure, restriction, portability, objection — under Art. 15-21 GDPR if you are in the EU, and under the FADP if you are in Switzerland — and complaint to a supervisory authority (your EU member state's data protection authority, or the Swiss FDPIC). Contact: noguru_noguru@proton.me ."
+            "text": "Access, rectification, erasure, restriction, portability, objection — under Art. 15-21 GDPR if you are in the EU, and under the FADP if you are in Switzerland — and complaint to a supervisory authority (your EU member state's data protection authority, or the Swiss FDPIC). Contact: hello@noguru.io ."
           }
         ],
         "links": [
           {
-            "label": "noguru_noguru@proton.me",
+            "label": "hello@noguru.io",
             "url": "https://noguru.io/cdn-cgi/l/email-protection#0e6061697b7c7b516061697b7c7b4e7e7c617a616020636b"
           }
         ]
@@ -6702,17 +6702,17 @@ export const migratedPages = {
         "id": "1-who-we-are",
         "title": "1. Who we are",
         "body": [
-          "noguru.io and the NoGuru channels are operated by NoGuru LLC, 940 E 3rd St Ste 203, Casper, WY 82601, USA ( noguru_noguru@proton.me )."
+          "noguru.io and the NoGuru channels are operated by NoGuru LLC, 940 E 3rd St Ste 203, Casper, WY 82601, USA ( hello@noguru.io )."
         ],
         "blocks": [
           {
             "type": "paragraph",
-            "text": "noguru.io and the NoGuru channels are operated by NoGuru LLC, 940 E 3rd St Ste 203, Casper, WY 82601, USA ( noguru_noguru@proton.me )."
+            "text": "noguru.io and the NoGuru channels are operated by NoGuru LLC, 940 E 3rd St Ste 203, Casper, WY 82601, USA ( hello@noguru.io )."
           }
         ],
         "links": [
           {
-            "label": "noguru_noguru@proton.me",
+            "label": "hello@noguru.io",
             "url": "https://noguru.io/cdn-cgi/l/email-protection#3f5150584a4d4a605150584a4d4a7f4f4d504b505111525a"
           }
         ]
@@ -6885,13 +6885,13 @@ export const migratedPages = {
         "id": "12-contact",
         "title": "12. Contact",
         "body": [
-          "noguru_noguru@proton.me , or the NoGuru gate bot on Telegram.",
+          "hello@noguru.io , or the NoGuru gate bot on Telegram.",
           "Version 2026-11-01."
         ],
         "blocks": [
           {
             "type": "paragraph",
-            "text": "noguru_noguru@proton.me , or the NoGuru gate bot on Telegram."
+            "text": "hello@noguru.io , or the NoGuru gate bot on Telegram."
           },
           {
             "type": "paragraph",
@@ -6900,7 +6900,7 @@ export const migratedPages = {
         ],
         "links": [
           {
-            "label": "noguru_noguru@proton.me",
+            "label": "hello@noguru.io",
             "url": "https://noguru.io/cdn-cgi/l/email-protection#bed0d1d9cbcccbe1d0d1d9cbcccbfececcd1cad1d090d3db"
           }
         ]
@@ -9233,7 +9233,7 @@ export const migratedPages = {
         "title": "NoGuru access & signals",
         "body": [
           "For membership or strategy questions, NoGuru publishes this email address in its official contact notice.",
-          "noguru_noguru@proton.me",
+          "hello@noguru.io",
           "View the published contact notice ↗ · checked 2 November 2026."
         ],
         "blocks": [
@@ -9243,7 +9243,7 @@ export const migratedPages = {
           },
           {
             "type": "paragraph",
-            "text": "noguru_noguru@proton.me"
+            "text": "hello@noguru.io"
           },
           {
             "type": "paragraph",
