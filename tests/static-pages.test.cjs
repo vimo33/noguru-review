@@ -72,3 +72,13 @@ test('a review build stays out of search engines; old addresses redirect', () =>
   if (/Disallow: \/\s*$/.test(robots.split('\n').slice(0, 2).join('\n'))) for (const p of ['', ...pages.slice(0, 5)]) assert.match(read(`${p}index.html`), /<meta name="robots" content="noindex, nofollow">/);
   for (const old of ['how-it-works.html', 'pricing.html', 'track-record.html', 'academy/expectancy.html', 'legal/terms.html', 'read/index.html']) assert.match(read(old), /http-equiv="refresh"|location\.replace/, `${old} redirects`);
 });
+
+test('sign-up links carry an event name; statistics stay off unless switched on', () => {
+  const home = read('index.html');
+  for (const name of ['signup-trial', 'signup-cornix', 'signup-cornix-bot']) assert.match(home, new RegExp(`data-umami-event="${name}"`), name);
+  for (const p of ['', ...pages]) {
+    const html = read(`${p}index.html`);
+    for (const tag of html.match(/<a\b[^>]*href="https:\/\/(t\.me\/NoGuruMembers_bot|noguru\.io\/api\/public\/go\/)[^>]*>/g) || []) assert.match(tag, /data-umami-event="signup-/, `${p}: ${tag}`);
+    if (/data-website-id=/.test(html)) assert.doesNotMatch(read('legal/privacy/index.html'), /we run no third-party analytics, no advertising trackers, and set no cookies/, 'privacy page matches the statistics script');
+  }
+});

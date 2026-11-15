@@ -74,7 +74,7 @@ const httpsUrl = (value) => { try { const u = new URL(value); return u.protocol 
 function adLink(name, url, event) {
   const frag = document.createDocumentFragment(), label = document.createElement('span'), a = document.createElement('a');
   label.className = 'adlabel'; label.textContent = 'Ad';
-  a.href = url; a.target = '_blank'; a.rel = 'sponsored noopener noreferrer'; a.dataset.event = event;
+  a.href = url; a.target = '_blank'; a.rel = 'sponsored noopener noreferrer'; a.dataset.event = event; a.dataset.umamiEvent = event;
   a.textContent = `${name} `; const arrow = document.createElement('span'); arrow.setAttribute('aria-hidden', 'true'); arrow.textContent = '↗'; a.append(arrow);
   frag.append(label, a);
   return frag;

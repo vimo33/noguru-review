@@ -39,3 +39,15 @@ The review host must stay on the review build. A production build is only for th
 ## Changing a page's search title or description
 
 Edit the `SEO` table in `tools/build-static.mjs`, rebuild, and run the tests. The tests fail if two pages share a title or description, a link or anchor is broken, or anything points back to the old site.
+
+## Visitor statistics (Umami)
+
+Off by default. To switch on, add the website id from the Umami account to the build:
+
+    node tools/build-static.mjs --production --umami=<website id>
+
+For an installation of your own instead of Umami's hosted service, also give `--umami-src=https://<your host>/script.js`.
+
+With the option set, every page loads the Umami script (counted only on the build's own address), and the privacy page's sentence "we run no third-party analytics…" is replaced with a description of the counting. That wording is a draft and needs the provider's approval before a production build. Without the option nothing is loaded and the privacy page is unchanged.
+
+Sign-up links always carry `data-umami-event` names (`signup-trial`, `signup-cornix`, `signup-exchange-<name>`, `signup-cornix-bot`); they do nothing until the script is present.
