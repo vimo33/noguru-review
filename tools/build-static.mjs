@@ -166,6 +166,7 @@ const SEO = {
   examples: ['Worked examples: what happens to the money | NoGuru', 'Worked examples with round numbers: buying in steps, the average cost, a sale above it, and a path where the target is not reached.'],
   support: ['NoGuru support: find the detail you need', 'Where to find answers about NoGuru’s setup and service, and the provider information for questions.'],
   learn: ['Learn the choices behind the strategy | NoGuru', 'Eight short explanations of the choices behind NoGuru’s strategy: staged buying, weighted averages, separate cycles and cash reserves.'],
+  'dca-bot-vs-grid-bot': ['DCA bot vs grid bot vs Stepgrid: how they differ | NoGuru', 'How a grid bot and a DCA bot work, when each earns and when each struggles, and where NoGuru’s Stepgrid fits, side by side.'],
   library: ['NoGuru library: everything there is to read', 'All of NoGuru’s reading in one place: how it works, pricing, risks, the academy, the glossary and the dated digest.'],
 };
 const clip = (text, max) => { const t = String(text || '').replace(/\s+/g, ' ').trim(); if (t.length <= max) return t; const cut = t.slice(0, max - 1); return `${cut.slice(0, Math.max(cut.lastIndexOf(' '), max - 40)).replace(/[\s,;:.–-]+$/, '')}…`; };
@@ -229,7 +230,7 @@ function headTags({title, description, url, root, extraCss = '', ld}) {
 }
 
 /* ---------- the frame every reading page shares ---------- */
-const NAMES = {record: 'Trade by trade', library: 'Library', academy: 'Academy', glossary: 'Glossary', digest: 'Digest', pricing: 'Pricing', 'how-it-works': 'How it works', faq: 'FAQ', risks: 'Risks', market: 'Market context', trial: 'The free trials', learn: 'Learn'};
+const NAMES = {'dca-bot-vs-grid-bot': 'DCA bot vs grid bot', record: 'Trade by trade', library: 'Library', academy: 'Academy', glossary: 'Glossary', digest: 'Digest', pricing: 'Pricing', 'how-it-works': 'How it works', faq: 'FAQ', risks: 'Risks', market: 'Market context', trial: 'The free trials', learn: 'Learn'};
 function frame(page, article, {extraCss = '', record = null} = {}) {
   const root = rootOf(page), {title, description, name} = metaFor(page), url = `${ORIGIN}/${pathOf(page)}`;
   const to = (target, label, cls = '') => `<a href="${root}${pathOf(target)}"${cls ? ` class="${cls}"` : ''}${target === page ? ' aria-current="page"' : ''}>${label}</a>`;
