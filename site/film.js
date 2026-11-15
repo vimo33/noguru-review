@@ -115,9 +115,12 @@ function layout() {
   camera.aspect = w / h; camera.updateProjectionMatrix();
   const visH = 2 * Math.tan((FOV * Math.PI) / 360) * CAM_Z, visW = visH * camera.aspect;
   const portrait = camera.aspect < 0.9;
+  // Measure against the film's own frame, not the screen: on a phone the browser's toolbar fires a resize
+  // while scrolling, and the frame may then be partly or wholly scrolled out of view.
+  const frameTop = canvas.getBoundingClientRect().top;
   // On phones the robot gets whatever space is left between the top bar and the words below it.
   const fit = (panel, maxShare) => {
-    const top = 62, bottom = Math.max(top + 90, panel.getBoundingClientRect().top - 10);
+    const top = 62, bottom = Math.max(top + 90, panel.getBoundingClientRect().top - frameTop - 10);
     const size = Math.min(visW * 0.86, ((bottom - top) / h) * visH, visH * maxShare);
     return {size, y: visH / 2 - (((top + bottom) / 2) / h) * visH};
   };
@@ -134,7 +137,7 @@ function layout() {
   // where the picked coins line up: just under the "picks a handful of coins" caption
   const capBox = $('#captions').getBoundingClientRect(), capH = document.querySelector('[data-cap=pick]').offsetHeight;
   const gapPx = portrait ? Math.min(82, (w - 40) / 4) : Math.min(130, capBox.width / 4.4);
-  const rowX = portrait ? w / 2 : capBox.left + gapPx * 2, rowY = capBox.top + capH + gapPx * (portrait ? 0.95 : 0.9);
+  const rowX = portrait ? w / 2 : capBox.left + gapPx * 2, rowY = capBox.top - frameTop + capH + gapPx * (portrait ? 0.95 : 0.9);
   L.row = {x: (rowX / w - 0.5) * visW, y: (0.5 - rowY / h) * visH, gap: (gapPx / h) * visH, r: ((gapPx * 0.4) / h) * visH};
   dirty = true;
 }
