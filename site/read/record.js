@@ -118,7 +118,7 @@ export function renderRecord(body, rec, head) {
   const cell = (value, label, cls = '') => { const d = el('div', cls); d.append(el('b', '', value), el('span', '', label)); return d; };
   grid.append(cell(count(rec.closed), 'finished trades'), cell(count(rec.up), 'closed in profit'), cell(count(rec.down), 'closed below cost'), cell(count(rec.open), 'still open', 'quiet'));
   body.append(grid);
-  if (rec.down > 0) body.append(el('p', 'record-fine record-under', `Why ${rec.down === 1 ? 'one closed' : `${rec.down} closed`} below cost: Cornix allows at most ten buys in one trade, so a longer run of buys on one coin is split into several Cornix trades. One piece can close below its own cost while the run as a whole closes above it.`));
+  if (rec.down > 0) body.append(el('p', 'record-fine record-under', `Why ${rec.down === 1 ? 'one closed' : `${rec.down} closed`} below cost: The bot never sells a cycle at a loss. Cornix allows at most ten buys in one trade, so a longer cycle is split into several Cornix trades. One trade of such a group can show a loss on its own; the group as a whole, which is the cycle, never does.`));
 
   // 3. Open trades, as one total.
   if (rec.open > 0 && rec.openShare !== null) {
