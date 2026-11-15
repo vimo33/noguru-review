@@ -179,8 +179,12 @@ function metaFor(page) {
     : [clip(`${name} | NoGuru`, 70), clip(data.intro || data.sections?.[0]?.body?.[0] || name, 158)]);
   return {title, description, name};
 }
+// NoGuru's own profiles, as listed in the footer of noguru.io.
+const PROFILES = [['Telegram', 'https://t.me/nogurusignals'], ['Telegram chat', 'https://t.me/NoGuru_Crypto_Chat'], ['X', 'https://x.com/nogurusignals'],
+  ['YouTube', 'https://www.youtube.com/@nogurusignals'], ['Discord', 'https://discord.gg/AeQjGdUgKA'], ['Bluesky', 'https://bsky.app/profile/nogurusignals.bsky.social']];
 const ORG = {'@type': 'Organization', '@id': `${ORIGIN}/#organization`, name: 'NoGuru', legalName: 'NoGuru LLC', url: `${ORIGIN}/`,
   logo: `${ORIGIN}/pilot/assets/noguru-guide-original.png`, email: 'noguru_noguru@proton.me',
+  sameAs: PROFILES.map(([, url]) => url),
   address: {'@type': 'PostalAddress', streetAddress: '940 E 3rd St Ste 203', addressLocality: 'Casper', addressRegion: 'WY', postalCode: '82601', addressCountry: 'US'}};
 function crumbTrail(page) {
   const trail = [['Home', '']];
@@ -267,6 +271,7 @@ ${article}
 </main>
 <footer class="read-foot">
   <nav aria-label="Library and legal"><a href="${root}">Home</a>${to('how-it-works', 'How it works')}${to('pricing', 'Pricing')}${to('record', 'Track record')}${to('library', 'Library')}${to('academy', 'Academy')}${to('glossary', 'Glossary')}${to('digest', 'Digest')}${to('terms', 'Terms')}${to('privacy', 'Privacy')}${to('impressum', 'Provider')}</nav>
+  <nav class="foot-social" aria-label="NoGuru elsewhere">${PROFILES.map(([name, url]) => `<a href="${url}" target="_blank" rel="noopener noreferrer me">${name}</a>`).join('')}</nav>
   <p>${PRODUCTION ? '' : 'Review preview. '}Trading crypto can lose money. Coins the bot holds can fall in value and may not recover. NoGuru is operated by NoGuru LLC, Casper, Wyoming, USA.</p>
 </footer>
 <script type="module" src="${root}read/page.js"></script>

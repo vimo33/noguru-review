@@ -109,3 +109,4 @@ main{max-width:1180px;padding:0 24px}
 .record-all>summary{display:inline-flex;align-items:center;min-height:46px;padding:0 22px;border-radius:99px;background:var(--ink);color:var(--cream);font-weight:650;font-size:14px;cursor:pointer;list-style:none}
 .record-all>summary::-webkit-details-marker{display:none}
 .record-all[open]>summary{background:none;color:var(--ink);border:1px solid var(--line)}
+.read-foot .foot-social{margin-bottom:10px}

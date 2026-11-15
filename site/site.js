@@ -144,6 +144,50 @@ const PATHS = {
   },
 };
 const KEY = 'noguru-start-v1';
+/* ---------- sign-up links ----------
+   Referral links are read from NoGuru's own list each time, never copied into this site. A link with an
+   address is an affiliate link and carries a visible "Ad" label before the click; an entry without one
+   is shown as plain text. If the list can't be read, the plain sign-up links in the page stay as they are. */
+const AFFILIATES = 'https://noguru.io/data/affiliates.json';
+const httpsUrl = (value) => { try { const u = new URL(value); return u.protocol === 'https:' ? u.href : null; } catch { return null; } };
+function adLink(name, url, cls, event) {
+  const frag = document.createDocumentFragment(), label = document.createElement('span'), a = document.createElement('a');
+  label.className = 'adlabel'; label.textContent = 'Ad';
+  a.href = url; a.target = '_blank'; a.rel = 'sponsored noopener noreferrer'; a.dataset.event = event; if (cls) a.className = cls;
+  a.textContent = `${name} `; const arrow = document.createElement('span'); arrow.setAttribute('aria-hidden', 'true'); arrow.textContent = '↗'; a.append(arrow);
+  frag.append(label, a);
+  return frag;
+}
+async function showSignupLinks() {
+  let links;
+  try {
+    const res = await fetch(AFFILIATES, {cache: 'no-store', headers: {Accept: 'application/json'}});
+    links = (await res.json()).links;
+    if (!res.ok || !Array.isArray(links)) return;
+  } catch { return; }
+  let ads = false;
+  const cornixUrl = httpsUrl(links.find((l) => l?.key === 'cornix')?.url);
+  if (cornixUrl) {
+    $('#su-cornix').replaceChildren(adLink('Create a Cornix account', cornixUrl, 'button outline', 'signup-cornix'));
+    cornix.open = ['Create a Cornix account', cornixUrl]; cornix.ad = true; ads = true;
+    if (state) render();
+  }
+  const exchanges = links.filter((l) => l && typeof l.name === 'string' && /^exchange/.test(l.kind || ''));
+  if (exchanges.length) {
+    const list = $('#su-exchanges'); list.replaceChildren();
+    for (const ex of [...exchanges].sort((x, y) => Number(!!y.recommended) - Number(!!x.recommended))) {
+      const li = document.createElement('li'), url = httpsUrl(ex.url), head = document.createElement('p');
+      if (url) { head.append(adLink(ex.name, url, '', `signup-exchange-${ex.key}`)); ads = true; } else { const b = document.createElement('b'); b.textContent = ex.name; head.append(b); }
+      if (ex.recommended) { const r = document.createElement('i'); r.className = 'su-rec'; r.textContent = 'Our recommendation'; head.append(' ', r); }
+      li.append(head);
+      if (typeof ex.blurb === 'string' && ex.blurb) { const blurb = document.createElement('p'); blurb.className = 'su-blurb'; blurb.textContent = ex.blurb; li.append(blurb); }
+      if (ex.free_month && url) { const offer = document.createElement('p'); offer.className = 'su-offer'; offer.textContent = 'Get one free month of NoGuru when you open your account through this link.'; li.append(offer); }
+      list.append(li);
+    }
+  }
+  $('#su-ad').hidden = !ads;
+}
+
 const store = {
   read() { try { const v = JSON.parse(localStorage.getItem(KEY)); return v && PATHS[v.path] ? v : null; } catch { return null; } },
   write(v) { try { v ? localStorage.setItem(KEY, JSON.stringify(v)) : localStorage.removeItem(KEY); } catch { /* private mode */ } },
@@ -167,7 +211,7 @@ function render(focus = false) {
   ui.note.textContent = step.note || ''; ui.note.hidden = !step.note;
   if (step.more) { const m = document.createElement('a'); m.href = step.more[1]; m.textContent = step.more[0]; ui.note.append(' ', m); }
   ui.open.hidden = !step.open;
-  if (step.open) { ui.open.textContent = `${step.open[0]} ↗`; ui.open.href = step.open[1]; }
+  if (step.open) { ui.open.textContent = `${step.ad ? 'Ad · ' : ''}${step.open[0]} ↗`; ui.open.href = step.open[1]; ui.open.rel = step.ad ? 'sponsored noopener noreferrer' : 'noopener noreferrer'; }
   ui.next.hidden = last && !step.done;
   ui.next.firstChild.textContent = last && step.done ? `${step.done[0]} ` : 'Done, next ';
   ui.back.hidden = state.step === 0;
@@ -184,6 +228,7 @@ ui.next.addEventListener('click', () => {
 ui.back.addEventListener('click', () => { state.step -= 1; render(true); });
 ui.reset.addEventListener('click', () => { state = null; store.write(null); render(); });
 render();
+showSignupLinks();
 
 /* ---------- sections reveal piece by piece as they come into view ---------- */
 if (!reduced && 'IntersectionObserver' in window) {
@@ -191,7 +236,7 @@ if (!reduced && 'IntersectionObserver' in window) {
     ['#evidence', '.eyebrow, h2, .sec-lede, .ev-status, .ev-hero, .ev-grid > div'],
     ['#trades', '.eyebrow, h2, .sec-lede, .ev-list, .ev-note'],
     ['#questions', '.q-head, .q-list details, .q-more'],
-    ['#start', '.eyebrow, h2, .choose > *, .walk'],
+    ['#start', '.eyebrow, h2, .choose > :not(.signup), .signup > li, .walk'],
     ['#expect', '.eyebrow, h2, .expect-list li, .expect-take, .button'],
   ];
   const io = new IntersectionObserver((entries) => {
