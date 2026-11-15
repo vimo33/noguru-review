@@ -43,5 +43,5 @@ export function renderReadingPage(data,{sections,toc,cards,source,link,page}){
  if(data.widget==='recovery'){cards.hidden=false;cards.append(recoveryWidget());}
  if(data.gateSourceText)source.append(el('blockquote','gate-source',data.gateSourceText));
  if(data.gateNotice)source.append(el('p','gate-notice',data.gateNotice));
- if(data.source){const p=el('p','reading-source');p.append(document.createTextNode(`${data.source.scope||'Public source'}${data.source.capturedAt?` · checked ${data.source.capturedAt}`:''}. `));const a=link(data.source.label||'Original source',data.source.url);if(a)p.append(a);source.append(p);}
+ if(data.source){const p=el('p','reading-source');p.append(document.createTextNode(`${data.source.scope||'Public source'}${data.source.capturedAt?` · checked ${data.source.capturedAt}`:''}. `));const a=link(data.source.label||'Original source',data.source.url);if(a){p.append(a);source.append(p);}}
 }

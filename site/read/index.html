@@ -27,7 +27,7 @@
         <p>Home</p>
         <a href="../#evidence">The record</a><a href="../#questions">Questions</a><a href="../#start">Start your free trial</a><a href="../#expect">What to expect</a>
         <p>Read more</p>
-        <a href="?page=how-it-works" data-route>How it works</a><a href="?page=pricing" data-route>Pricing</a><a href="?page=faq" data-route>FAQ</a><a href="?page=risks" data-route>Risks</a><a href="?page=market" data-route>Market context</a>
+        <a href="?page=how-it-works" data-route>How it works</a><a href="?page=pricing" data-route>Pricing</a><a href="?page=faq" data-route>FAQ</a><a href="?page=risks" data-route>Risks</a><a href="?page=record" data-route>Trade by trade</a><a href="?page=market" data-route>Market context</a>
         <p>Library</p>
         <a href="?page=library" data-route>Everything</a><a href="?page=academy" data-route>Academy</a><a href="?page=glossary" data-route>Glossary</a><a href="?page=digest" data-route>Digest</a>
         <p>Legal</p>
@@ -44,6 +44,13 @@
     <details class="reading-tools"><summary>Find something on this page</summary><label class="search-field">Search this page<input id="learning-search" type="search" placeholder="A word or topic" autocomplete="off"></label><p id="search-status" role="status"></p><nav id="learning-toc" aria-label="On this page"></nav></details>
     <div id="learning-sections"></div>
     <aside id="learning-source"></aside>
+  </article>
+  <article id="record-page" class="learning-page" hidden aria-labelledby="record-title">
+    <a href="../#evidence" class="text-link return-to-guide" id="record-crumb">← The record</a>
+    <header class="learning-header"><p class="eyebrow">Trade by trade</p><h1 id="record-title" tabindex="-1">Every finished trade. <em>Nothing left out.</em></h1><p class="summary">NoGuru’s published record, read live: what it made, how the results spread, which coins it traded, and every finished trade one by one.</p></header>
+    <div class="record-bar"><span class="record-dot" aria-hidden="true"></span><span id="record-status" role="status" data-state="loading">Reading the live record…</span><button type="button" id="record-refresh"><span aria-hidden="true">↻</span> Refresh</button></div>
+    <div id="record-down" class="record-block" hidden><p>The record can’t be reached right now, so nothing is shown rather than old numbers.</p><button type="button" class="record-more" id="record-retry">Try again</button></div>
+    <div id="record-body" hidden></div>
   </article>
   <article id="market-page" class="learning-page" hidden aria-labelledby="market-title">
     <a href="../#evidence" class="text-link return-to-guide" id="market-crumb">← The record</a>

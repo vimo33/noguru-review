@@ -4,6 +4,7 @@ import {learningPages} from '../pilot/learning.js';
 import {renderReadingPage} from '../pilot/reading-ui.js';
 import {loadEvidence, paybackCapital} from '../pilot/data.js';
 import {createDashboardController} from '../dashboard.js';
+import {createRecordPage} from './record.js';
 
 const $ = (s) => document.querySelector(s);
 const text = (s, v) => { $(s).textContent = v; };
@@ -22,7 +23,26 @@ function parse(value) {
     return {page, anchor};
   } catch { return null; }
 }
-const known = (page) => page === 'market' || Object.hasOwn(learningPages, page);
+const SPECIAL = {market: 'Market context', record: 'Trade by trade'};
+const known = (page) => Object.hasOwn(SPECIAL, page) || Object.hasOwn(learningPages, page);
+// Pages of the old site now live here. A link to one goes to its page in this site, or is left out
+// when the reader is already on it. Nothing leads back to the old site; its data feeds are not pages.
+const OLD_SITE = /^https:\/\/(www\.)?noguru\.io(\/|$)/;
+const OLD_PAGES = {'': null, 'index.html': null, 'track-record.html': 'record', 'dashboard.html': 'market', 'market.html': 'market', 'how-it-works.html': 'how-it-works',
+  'pricing.html': 'pricing', 'glossary.html': 'glossary', 'methodology.html': 'methodology', 'faq.html': 'faq', 'risks.html': 'risks', 'academy/': 'academy', 'academy/index.html': 'academy',
+  'digest/': 'digest', 'digest/index.html': 'digest', 'legal/terms.html': 'terms', 'legal/privacy.html': 'privacy', 'legal/impressum.html': 'impressum', 'legal/disclaimer.html': 'disclaimer'};
+function fromOldSite(label, value) {
+  const url = new URL(value), path = url.pathname.replace(/^\//, '');
+  // the old site's e-mail protection does not work outside it: use the address itself
+  if (path.startsWith('cdn-cgi/l/email-protection')) return /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(label) ? Object.assign(document.createElement('a'), {href: `mailto:${label}`, textContent: label}) : null;
+  if (/^(api|data)\//.test(path) && !path.startsWith('api/public/go/')) return 'feed';
+  let page = Object.hasOwn(OLD_PAGES, path) ? OLD_PAGES[path] : null;
+  const m = path.match(/^(academy|digest)\/([\w-]+)\.html$/); if (m) page = `${m[1]}-${m[2]}`;
+  if (!page || !known(page) || page === document.body.dataset.page) return null;
+  const a = document.createElement('a'); a.textContent = /source/i.test(label) ? (SPECIAL[page] || learningPages[page].title) : label.replace(/\s*↗$/, '');
+  a.href = `?page=${page}${url.hash}`; a.dataset.route = '';
+  return a;
+}
 const safeExternal = (value) => { try { const u = new URL(value); return u.protocol === 'https:' ? u.href : null; } catch { return null; } };
 
 function externalLink(label, value) {
@@ -40,11 +60,13 @@ function contentLink(label, value) {
     a.href = `?page=${route.page}${route.anchor ? `#${route.anchor}` : ''}`; a.dataset.route = '';
     return a;
   }
+  if (typeof value === 'string' && OLD_SITE.test(value)) { const a = fromOldSite(label, value); if (a !== 'feed') return a; }
   return externalLink(label, value);
 }
 
 /* ---------- market dashboard lifecycle ---------- */
 const marketDashboard = createDashboardController($('#market-dashboard'));
+const recordPage = createRecordPage($('#record-page'));
 // Inspection only: the shared reading router remains the navigation authority.
 window.NoGuruDashboard = marketDashboard;
 addEventListener('pageshow', () => {
@@ -89,7 +111,7 @@ function crumbFor(page) {
 }
 // The link at the top goes back to wherever the reader actually came from. Only someone who landed
 // here directly gets the fixed parent page instead.
-const NAMES = {library: 'Library', academy: 'Academy', glossary: 'Glossary', digest: 'Digest', pricing: 'Pricing', 'how-it-works': 'How it works', faq: 'FAQ', risks: 'Risks', market: 'Market context', trial: 'The free trials', learn: 'Learn'};
+const NAMES = {record: 'Trade by trade', library: 'Library', academy: 'Academy', glossary: 'Glossary', digest: 'Digest', pricing: 'Pricing', 'how-it-works': 'How it works', faq: 'FAQ', risks: 'Risks', market: 'Market context', trial: 'The free trials', learn: 'Learn'};
 const cameFromSite = (() => { try { return !!document.referrer && new URL(document.referrer).origin === location.origin; } catch { return false; } })();
 function setCrumb(crumb, label, href) {
   const from = history.state?.from, back = from !== undefined || (cameFromSite && history.length > 1);
@@ -116,7 +138,7 @@ $('#learning-search').addEventListener('input', (e) => {
 });
 
 function show(route, {push = false, focus = false} = {}) {
-  if (HOME[route.page]) { marketDashboard.stop(); location.replace(HOME[route.page]); return; }
+  if (HOME[route.page]) { marketDashboard.stop(); recordPage.stop(); location.replace(HOME[route.page]); return; }
   if (!known(route.page)) route = {page: DEFAULT, anchor: ''};
   const isMarket = route.page === 'market';
   // the new history entry remembers the page it was opened from, so its back link can name it
@@ -126,10 +148,13 @@ function show(route, {push = false, focus = false} = {}) {
     if (isMarket && route.anchor && document.body.dataset.page === 'market') history.replaceState(history.state, '', href);
     else history.pushState(route.page === document.body.dataset.page ? history.state : {from: NAMES[document.body.dataset.page] || ''}, '', href);
   }
-  $('#learning-page').hidden = isMarket; $('#market-page').hidden = !isMarket;
+  const isRecord = route.page === 'record';
+  $('#learning-page').hidden = isMarket || isRecord; $('#market-page').hidden = !isMarket; $('#record-page').hidden = !isRecord;
   document.body.dataset.page = route.page;
-  if (isMarket) { marketDashboard.start(); setCrumb($('#market-crumb'), '← The record', '../#evidence'); } else { marketDashboard.stop(); renderLearning(route.page); }
-  const title = isMarket ? 'Market context' : learningPages[route.page].title;
+  if (isMarket) { marketDashboard.start(); setCrumb($('#market-crumb'), '← The record', '../#evidence'); } else marketDashboard.stop();
+  if (isRecord) { recordPage.start(); setCrumb($('#record-crumb'), '← The record', '../#evidence'); } else recordPage.stop();
+  if (!isMarket && !isRecord) renderLearning(route.page);
+  const title = SPECIAL[route.page] || learningPages[route.page].title;
   document.title = `${title} — NoGuru`;
   for (const a of document.querySelectorAll('.bar a[data-route], .read-foot a[data-route]')) {
     if (parse(a.getAttribute('href'))?.page === route.page) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
@@ -137,7 +162,7 @@ function show(route, {push = false, focus = false} = {}) {
   const target = route.anchor && (document.getElementById(`learning-${route.anchor}`) || document.getElementById(route.anchor));
   if (target) target.scrollIntoView({behavior: reduced ? 'auto' : 'smooth', block: 'start'});
   else if (push || focus) scrollTo(0, 0);
-  if (focus && !target) $(isMarket ? '#market-title' : '#learning-title').focus({preventScroll: true});
+  if (focus && !target) $(isMarket ? '#market-title' : isRecord ? '#record-title' : '#learning-title').focus({preventScroll: true});
 }
 document.addEventListener('click', (e) => {
   const back = e.target.closest('a[data-back]');
