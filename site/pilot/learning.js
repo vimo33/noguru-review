@@ -403,6 +403,19 @@ learningPages.risks = {
       links: [link('The live record', '?page=record'), link('The full risk disclaimer', '?page=disclaimer')]},
   ],
 };
+// The site calls it the NoGuru bot (15 November 2026). "Stepgrid" stays in the terms (legal text) and in the
+// dated digests, which are kept as published.
+{
+  const rename = (value) => (typeof value !== 'string' ? value : value
+    .replace('The public website sometimes calls the strategy “Stepgrid.” ', '')
+    .replaceAll('Stepgrid-only sub-account', 'sub-account for the NoGuru bot only')
+    .replaceAll('dedicated Stepgrid sub-account', 'dedicated sub-account for the NoGuru bot')
+    .replaceAll('Stepgrid channel', 'NoGuru channel')
+    .replaceAll('published Stepgrid setup', 'published setup for the NoGuru bot')
+    .replaceAll('Stepgrid', 'the NoGuru bot'));
+  const deep = (value) => (Array.isArray(value) ? value.map(deep) : value && typeof value === 'object' ? Object.fromEntries(Object.entries(value).map(([k, v]) => [k, k === 'url' || k === 'id' || k === 'src' ? v : deep(v)])) : rename(value));
+  for (const key of ['about', 'resources', 'setup-guide']) if (learningPages[key]) learningPages[key] = deep(learningPages[key]);
+}
 // Data requests go to their own address.
 for (const section of learningPages.privacy?.sections || []) {
   if (section.id !== 'your-rights') continue;
