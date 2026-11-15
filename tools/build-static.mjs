@@ -166,7 +166,7 @@ const SEO = {
   examples: ['Worked examples: what happens to the money | NoGuru', 'Worked examples with round numbers: buying in steps, the average cost, a sale above it, and a path where the target is not reached.'],
   support: ['NoGuru support: find the detail you need', 'Where to find answers about NoGuru’s setup and service, and the provider information for questions.'],
   learn: ['Learn the choices behind the strategy | NoGuru', 'Eight short explanations of the choices behind NoGuru’s strategy: staged buying, weighted averages, separate cycles and cash reserves.'],
-  'dca-bot-vs-grid-bot': ['DCA bot vs grid bot vs the NoGuru bot: how they differ', 'How a grid bot and a DCA bot work, when each earns and when each struggles, and where the NoGuru bot fits, side by side.'],
+  'dca-bot-vs-grid-bot': ['DCA bot vs grid bot vs NoGuru Stepgrid: how they differ', 'How a grid bot and a DCA bot work, when each earns and when each struggles, and where Stepgrid, the NoGuru bot, fits, side by side.'],
   library: ['NoGuru library: everything there is to read', 'All of NoGuru’s reading in one place: how it works, pricing, risks, the academy, the glossary and the dated digest.'],
 };
 const clip = (text, max) => { const t = String(text || '').replace(/\s+/g, ' ').trim(); if (t.length <= max) return t; const cut = t.slice(0, max - 1); return `${cut.slice(0, Math.max(cut.lastIndexOf(' '), max - 40)).replace(/[\s,;:.–-]+$/, '')}…`; };
