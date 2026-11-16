@@ -1,6 +1,8 @@
 // Behaviour for the reading pages. Each page's text is already in its HTML (tools/build-static.mjs);
 // this file only adds what needs a browser: the menu, the back link, in-page search, and the parts
 // that read live data (the pricing pay-back figure, the trade-by-trade record, the market dashboard).
+import {applyCampaign} from '../campaign.js';
+applyCampaign();
 const $ = (s) => document.querySelector(s);
 const page = document.body.dataset.page, pageName = document.body.dataset.name || '';
 

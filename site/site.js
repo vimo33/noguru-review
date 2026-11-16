@@ -1,6 +1,8 @@
 // The site the film settles into: live record, six questions, guided start.
 import {record, reloadRecord} from './record.js';
 import {homeRecord, fmtDate} from './home-record.js';
+import {applyCampaign} from './campaign.js';
+applyCampaign();
 
 const $ = (s) => document.querySelector(s);
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;

@@ -50,3 +50,7 @@ Umami runs on NoGuru's own server (`stats.noguru.io`). `tools/analytics.json` ho
 With statistics on, every page loads the script (counted only on the build's own hostname, and not for browsers that send "Do Not Track"), and the privacy page's sentence "we run no third-party analytics…" is replaced by the text the provider approved on 16 November 2026. Keep that text the same as on noguru.io; it lives in `tools/build-static.mjs`.
 
 Sign-up links always carry `data-umami-event` names (`signup-trial`, `signup-cornix`, `signup-exchange-<name>`, `signup-cornix-bot`).
+
+## Campaign tags on the sign-up links
+
+`site/campaign.js` reads `utm_campaign` (or, failing that, `utm_source`) from the address a visitor lands on and writes it into the sign-up links for the rest of that visit: `trial_<tag>` for the members bot and `s=<tag>` for the tracked Cornix links. A tag must be lowercase letters, digits and hyphen, 1 to 16 characters; anything else leaves the links at `trial_cornixpage` and `s=site-home`. The tag is kept in the browser's session storage and is gone when the tab closes.
