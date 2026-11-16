@@ -1,0 +1,8 @@
+{
+  "note": "Visitor statistics (Umami on NoGuru's own server). The build picks the website id by the hostname it builds for. Values from UMAMI_CONNECT_2026-11-16_ANSWERS.md; they are not secrets.",
+  "src": "https://stats.noguru.io/script.js",
+  "websites": {
+    "vimo33.github.io": "0a7d241e-13e4-4a27-937c-ff306c1e2b00",
+    "noguru.io": "2c9ae77f-d825-41c6-b862-9740ae4dcf2a"
+  }
+}

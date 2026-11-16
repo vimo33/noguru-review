@@ -42,12 +42,11 @@ Edit the `SEO` table in `tools/build-static.mjs`, rebuild, and run the tests. Th
 
 ## Visitor statistics (Umami)
 
-Off by default. To switch on, add the website id from the Umami account to the build:
+Umami runs on NoGuru's own server (`stats.noguru.io`). `tools/analytics.json` holds the script address and one website id per hostname, so the build switches statistics on by itself: a review build counts under the review id, a production build under the production id, and a daily rebuild keeps the script without extra options.
 
-    node tools/build-static.mjs --production --umami=<website id>
+- `--no-umami` leaves the script out.
+- `--umami=<website id>` and `--umami-src=<script address>` use other values.
 
-For an installation of your own instead of Umami's hosted service, also give `--umami-src=https://<your host>/script.js`.
+With statistics on, every page loads the script (counted only on the build's own hostname, and not for browsers that send "Do Not Track"), and the privacy page's sentence "we run no third-party analytics…" is replaced by the text the provider approved on 16 November 2026. Keep that text the same as on noguru.io; it lives in `tools/build-static.mjs`.
 
-With the option set, every page loads the Umami script (counted only on the build's own address), and the privacy page's sentence "we run no third-party analytics…" is replaced with a description of the counting. That wording is a draft and needs the provider's approval before a production build. Without the option nothing is loaded and the privacy page is unchanged.
-
-Sign-up links always carry `data-umami-event` names (`signup-trial`, `signup-cornix`, `signup-exchange-<name>`, `signup-cornix-bot`); they do nothing until the script is present.
+Sign-up links always carry `data-umami-event` names (`signup-trial`, `signup-cornix`, `signup-exchange-<name>`, `signup-cornix-bot`).

@@ -4,7 +4,8 @@
 //   node tools/build-static.mjs                 review build: every page stays "noindex", robots.txt blocks all
 //   node tools/build-static.mjs --production    production build for https://noguru.io: indexable, production robots.txt
 //   options: --origin=https://example.org   --no-fetch (skip the live record snapshot)
-//            --umami=<website id> [--umami-src=<script address>]   switch on visitor statistics (off by default)
+//            --no-umami   leave out visitor statistics (tools/analytics.json switches them on for the hostnames it lists)
+//            --umami=<website id> [--umami-src=<script address>]   use other values than tools/analytics.json
 //
 // The page content lives in site/pilot/learning.js and is drawn by the same renderer the browser used
 // (site/pilot/reading-ui.js), run here against a small stand-in for the browser's document. So a
@@ -19,10 +20,11 @@ const args = process.argv.slice(2);
 const PRODUCTION = args.includes('--production');
 const ORIGIN = (args.find((a) => a.startsWith('--origin='))?.slice(9) || (PRODUCTION ? 'https://noguru.io' : 'https://vimo33.github.io/noguru-review')).replace(/\/$/, '');
 const FETCH = !args.includes('--no-fetch');
-// Visitor statistics with Umami: off unless a website id is given. The script address defaults to Umami's hosted
-// service; give --umami-src for an installation of your own.
-const UMAMI = args.find((a) => a.startsWith('--umami='))?.slice(8) || '';
-const UMAMI_SRC = args.find((a) => a.startsWith('--umami-src='))?.slice(12) || 'https://cloud.umami.is/script.js';
+// Visitor statistics with Umami. tools/analytics.json names the script address and one website id per hostname, so a
+// review build and a production build each count under their own id, and a rebuild never drops the script.
+const STATS = JSON.parse(fs.readFileSync(path.join(HERE, 'analytics.json'), 'utf8'));
+const UMAMI = args.includes('--no-umami') ? '' : args.find((a) => a.startsWith('--umami='))?.slice(8) || STATS.websites?.[new URL(ORIGIN).hostname] || '';
+const UMAMI_SRC = args.find((a) => a.startsWith('--umami-src='))?.slice(12) || STATS.src || 'https://cloud.umami.is/script.js';
 const UMAMI_HOSTED = /(^|\.)umami\.is$/.test(new URL(UMAMI_SRC).hostname);
 const BUILD_DAY = new Date().toISOString().slice(0, 10);
 
@@ -31,7 +33,8 @@ const VOID = new Set(['img', 'input', 'br', 'hr', 'meta', 'link']);
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 const escAttr = (s) => esc(s).replace(/"/g, '&quot;');
 // data-domains keeps the count to the real address, so local previews and copies are not counted.
-const ANALYTICS = UMAMI ? `<script defer src="${escAttr(UMAMI_SRC)}" data-website-id="${escAttr(UMAMI)}" data-domains="${escAttr(new URL(ORIGIN).hostname)}"></script>` : '';
+// data-do-not-track keeps the privacy page's promise: a browser's "Do Not Track" setting switches the counting off.
+const ANALYTICS = UMAMI ? `<script defer src="${escAttr(UMAMI_SRC)}" data-website-id="${escAttr(UMAMI)}" data-domains="${escAttr(new URL(ORIGIN).hostname)}" data-do-not-track="true"></script>` : '';
 // Every sign-up link carries an event name, so a click on it is counted as a step. Links already named keep their name.
 const STEP_LINKS = [[/^https:\/\/t\.me\/NoGuruMembers_bot/, 'signup-trial'], [/\/api\/public\/go\/cornix-signup/, 'signup-cornix'], [/\/api\/public\/go\/cornix-bot/, 'signup-cornix-bot']];
 const tagSteps = (html) => html.replace(/<a\b[^>]*>/g, (tag) => {
@@ -89,12 +92,13 @@ globalThis.location = {href: `${BUILD_BASE}pilot/page.html`, origin: new URL(BUI
 const load = (rel) => import(pathToFileURL(path.join(SITE, rel)).href);
 const {learningPages} = await load('pilot/learning.js');
 // The privacy page says the site runs no analytics. With statistics switched on that sentence is replaced, and the
-// hosted service is named as a recipient. DRAFT wording: the provider has to approve it before a production build.
+// hosted service is named as a recipient. The wording for our own installation is the text the provider approved and
+// published on noguru.io on 16 November 2026; keep the two the same. The hosted wording is an unapproved draft.
 if (UMAMI) {
   const OLD = 'we run no third-party analytics, no advertising trackers, and set no cookies.';
   const NEW = UMAMI_HOSTED
     ? 'we count visits with Umami, a privacy-focused statistics service: which pages are opened, where visitors arrive from, their country and device type, and which sign-up links are clicked. It sets no cookies and builds no visitor profiles (Art. 6(1)(f) GDPR). We run no advertising trackers.'
-    : 'we count visits ourselves with our own installation of the open-source tool Umami: which pages are opened, where visitors arrive from, their country and device type, and which sign-up links are clicked. It sets no cookies and builds no visitor profiles (Art. 6(1)(f) GDPR). We run no third-party analytics and no advertising trackers.';
+    : 'we count visits ourselves, with our own installation of the open-source tool Umami on our own server. It records which pages are opened, the site and campaign link a visitor came from, country, browser, operating system, device type, screen size and language, and which sign-up links are clicked. Your IP address is used for a moment to find the country and to form an anonymous visitor number that changes every day; the address itself is not stored. Umami sets no cookies and stores nothing on your device. Legal basis: our legitimate interest in knowing which pages are useful (Art. 6(1)(f) GDPR). You can object at any time through the contact below, and a "Do Not Track" setting in your browser switches the counting off. Visit records are deleted after 12 months. We run no third-party analytics and no advertising trackers.';
   const swap = (v) => (typeof v === 'string' ? v.replace(OLD, NEW).replace('message delivery — governed by Telegram\'s own terms once you use it); no one else.', UMAMI_HOSTED ? 'message delivery — governed by Telegram\'s own terms once you use it); Umami Software, Inc. (website statistics); no one else.' : 'message delivery — governed by Telegram\'s own terms once you use it); no one else.') : v);
   let done = false;
   for (const section of learningPages.privacy.sections) {
