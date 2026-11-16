@@ -1,6 +1,7 @@
-// Editorial preview, checked 12 November 2026. Plain data; no HTML or account data.
+// The reading pages' content. Plain data; no HTML or account data.
 // Core explanations live here. HTTPS links identify supporting primary sources.
 import {migratedPages} from './migration.js';
+import {supportPages} from './support-pages.js';
 const link = (label, url) => ({label, url});
 const learn = id => `?page=learn#${id}`;
 const glossary = id => `?page=glossary#${id}`;
@@ -33,7 +34,7 @@ export const learningPages = {
       },
       {
         id: 'setup', title: 'Keep the intended allocation separate',
-        body: ['The published setup calls for a dedicated exchange subaccount holding only the capital set aside for the strategy. This keeps percentage-based instructions separate from other funds or bots.', 'Before activating anything, confirm exchange and Cornix-plan compatibility and use spot-trading API permissions with withdrawals disabled. Never paste credentials into this guide. It remains unconnected.'],
+        body: ['The published setup calls for a dedicated exchange subaccount holding only the capital set aside for the strategy. This keeps percentage-based instructions separate from other funds or bots.', 'Before activating anything, confirm exchange and Cornix-plan compatibility and use spot-trading API permissions with withdrawals disabled. Never paste credentials into this site. It remains unconnected.'],
         links: [link('Review capital, subscriptions and trial clocks', '?page=pricing'), link('API key', glossary('api-key')), link('Source: original published setup', 'https://noguru.io/how-it-works.html')],
       },
       {
@@ -55,7 +56,7 @@ export const learningPages = {
         links: [link('Start my 14 days', '?page=setup')],
       },
       {
-        eyebrow: 'When it covers its own cost', title: 'Pays for itself from about', price: '$500', unit: 'of trading money',
+        eyebrow: 'When it covers its own cost', title: 'Pays for itself from about', price: '—', unit: 'of trading money',
         body: ['At the pace of the public record, roughly this much trading money earns what the subscription costs in a month. Anything above it is yours.'],
         note: 'A pace from the past, before exchange fees. It is not a promise: months differ, and coins the bot holds can sit below cost.',
         links: [link('How this is worked out', '?page=pricing#payback')],
@@ -84,7 +85,7 @@ export const learningPages = {
       },
       {
         id: 'trials', title: 'What the 14 free days cover',
-        body: ['Both NoGuru and Cornix are free for 14 days, and neither asks for a card. The setup on the home page starts them in the right order.', 'Cornix starts counting when your first trade is created, and that includes a demo trade. The exact start and end of the NoGuru trial have not been tested in this preview.', 'Two weeks show you how it works: purchases, sales, coins waiting. They cannot tell you what a year will bring.'],
+        body: ['Both NoGuru and Cornix are free for 14 days, and neither asks for a card. The setup on the home page starts them in the right order.', 'Cornix starts counting when your first trade is created, and that includes a demo trade. The members bot shows when your NoGuru trial starts and ends.', 'Two weeks show you how it works: purchases, sales, coins waiting. They cannot tell you what a year will bring.'],
         links: [link('What 14 days will show you', '?page=setup'), link('The two free trials', '?page=trial')],
       },
       {
@@ -177,7 +178,7 @@ export const learningPages = {
     sections: [
       {
         id: 'signals', title: 'Published signal history',
-        body: ['The Evidence view requests the public signal feed and shows its coverage window, fetch status and stated before-fee basis. It contains completed-cycle rows and open aggregates, not customer balances.', 'The server’s exact allocation normalization and a current monetary account reconciliation are not exposed. An unavailable source stays unavailable in this preview; no remembered figure silently replaces it.'],
+        body: ['The Evidence view requests the public signal feed and shows its coverage window, fetch status and stated before-fee basis. It contains completed-cycle rows and open aggregates, not customer balances.', 'The server’s exact allocation normalization and a current monetary account reconciliation are not exposed. If the source cannot be reached, the page says so; no remembered figure silently replaces it.'],
         links: [link('Open Evidence here', '?page=evidence'), link('Primary source: public signal endpoint', 'https://noguru.io/api/public/track-record')],
       },
       {
@@ -187,12 +188,12 @@ export const learningPages = {
       },
       {
         id: 'market', title: 'Market context is a separate source',
-        body: ['The pilot’s market panel reads a timestamped trend matrix. Its readings describe where prices sit relative to recent averages, in units of typical movement. They are not percentage returns, strategy fills or buying instructions.', 'Recent market-drop episodes on the original dashboard are market observations. Pricing’s historical crash replays are a different set of strategy scenarios. Neither is a customer account.'],
+        body: ['The market page reads a timestamped trend matrix. Its readings describe where prices sit relative to recent averages, in units of typical movement. They are not percentage returns, strategy fills or buying instructions.', 'Recent market-drop episodes on the original dashboard are market observations. Pricing’s historical crash replays are a different set of strategy scenarios. Neither is a customer account.'],
         links: [link('Primary source: trend matrix', 'https://noguru.io/api/public/trend-matrix'), link('Primary source: original market dashboard', 'https://noguru.io/dashboard.html')],
       },
       {
         id: 'dates', title: 'Three dates can mean three things',
-        body: ['Coverage dates tell you which period a result describes. An observation or generation timestamp tells you when the source was measured or built. Fetch time tells you when this browser received it.', 'A fresh download can still contain old observations. Where the source supplies no generation timestamp, the guide says so rather than inventing one. Stale and failed states should remain visible.'],
+        body: ['Coverage dates tell you which period a result describes. An observation or generation timestamp tells you when the source was measured or built. Fetch time tells you when this browser received it.', 'A fresh download can still contain old observations. Where the source supplies no generation timestamp, the page says so rather than inventing one. Stale and failed states should remain visible.'],
         links: [link('Completed results and current holdings', learn('completed-and-held')), link('Return to your story', '?page=story')],
       },
     ],
@@ -253,27 +254,26 @@ learningPages.trial = {
   title: 'Two services. Two separate trial clocks.',
   eyebrow: 'After you understand the setup · checked 12 November 2026',
   intro: 'Take a moment to get comfortable with the two services and their timing. When you’re ready, the provider links are below.',
-  notice: 'This preview starts neither service and leaves your exchange unconnected.',
   kind: 'trial',
   cards: [
-    {eyebrow: 'Strategy access', title: 'NoGuru', price: '14 days', unit: 'free', body: ['No card or payment details. Public terms say once per Telegram account; access ends unless you pay.'], note: 'The exact activation trigger and cutoff were not tested in this preview.'},
+    {eyebrow: 'Strategy access', title: 'NoGuru', price: '14 days', unit: 'free', body: ['No card or payment details. Public terms say once per Telegram account; access ends unless you pay.'], note: 'The members bot shows your start and end dates.'},
     {eyebrow: 'Execution platform', title: 'Cornix Premium', price: '14 days', unit: 'free for new users', body: ['No payment details. The clock starts at the first created trade, including manual, smart-bot, signal, demo or backtesting trades.'], note: 'The trial is Premium; the paid plan you later choose may differ.'},
   ],
   sections: [
-    {id: 'prepare', title: 'Know what you are about to connect', body: ['Review the operating capital, separate subscriptions, compatible exchange and dedicated allocation. Confirm spot-trading permissions with withdrawals disabled. Cornix does not serve every country, the United States, the United Kingdom and Canada among them; check the full list before you sign up. Your account in this guide is still unconnected.'], links: [link('Countries Cornix does not serve', '?page=pricing#cornix'), link('Return to setup preview', '?page=setup'), link('Read setup and control', '?page=how-it-works#setup'), link('Review the full cost example', '?page=pricing')]},
-    {id: 'clocks', title: 'The clocks need not begin together', body: ['NoGuru access and Cornix’s first-trade-triggered trial are separate. A demo or backtest can start the Cornix clock before you place a real exchange trade. Confirm your actual dates with each service.', 'Use a trial to check setup and observed execution. It does not establish future returns. The public NoGuru offer excludes UK residents; other eligibility still needs confirmation.'], links: [link('Read the captured provider terms here', '?page=terms'), link('Primary source: Cornix’s official trial clock', 'https://help.cornix.io/en/articles/5814827-cornix-free-trial')]},
-    {id: 'provider-links', title: 'Provider links, when you are ready', body: ['These intentional external links leave the local preview. NoGuru’s bot requires your own action in Telegram; Cornix registration is a separate service step. Viewing the guide starts neither.'], links: [link('Open the NoGuru provider bot — external', 'https://t.me/NoGuruMembers_bot?start=trial_cornixpage'), link('Open Cornix registration — external', 'https://dashboard.cornix.io/register')]},
+    {id: 'prepare', title: 'Know what you are about to connect', body: ['Review the operating capital, separate subscriptions, compatible exchange and dedicated allocation. Confirm spot-trading permissions with withdrawals disabled. Cornix does not serve every country, the United States, the United Kingdom and Canada among them; check the full list before you sign up. '], links: [link('Countries Cornix does not serve', '?page=pricing#cornix'), link('The setup on the home page', '?page=setup'), link('Read setup and control', '?page=how-it-works#setup'), link('Review the full cost example', '?page=pricing')]},
+    {id: 'clocks', title: 'The clocks need not begin together', body: ['NoGuru access and Cornix’s first-trade-triggered trial are separate. A demo or backtest can start the Cornix clock before you place a real exchange trade. Confirm your actual dates with each service.', 'Use a trial to check setup and observed execution. It does not establish future returns. The public NoGuru offer excludes UK residents; other eligibility still needs confirmation.'], links: [link('NoGuru’s terms', '?page=terms'), link('Primary source: Cornix’s official trial clock', 'https://help.cornix.io/en/articles/5814827-cornix-free-trial')]},
+    {id: 'provider-links', title: 'Provider links, when you are ready', body: ['These links leave this site. NoGuru’s trial starts in Telegram, with the members bot; Cornix registration is a separate step with Cornix. Reading this page starts neither.'], links: [link('Open the NoGuru members bot ↗', 'https://t.me/NoGuruMembers_bot?start=trial_cornixpage'), link('Open Cornix registration ↗', 'https://dashboard.cornix.io/register')]},
   ],
   source: {label: 'Checked primary offer and trial sources', url: 'https://noguru.io/pricing.html', capturedAt: '2026-11-12', scope: 'NoGuru pricing and terms; official Cornix pricing and trial article. No activation, purchase or authenticated setup tested.'},
 };
 
 learningPages.support = {
   title: 'Find the detail you need.', eyebrow: 'Support and information',
-  intro: 'Current core explanations and dated source readings share the same local journey. Original source editions keep their dates and limits visible.',
+  intro: 'Where to find each answer: how it works and what it costs, the questions people ask, and who is behind it.',
   sections: [
-    {id: 'current', title: 'Current setup and service reading', body: ['Start with the roles, costs, risks and connection preview.'], links: [link('How it works', '?page=how-it-works'), link('Pricing and the combined bill', '?page=pricing'), link('Setup preview', '?page=setup'), link('Trial clocks and later provider links', '?page=trial')]},
-    {id: 'questions', title: 'The available support collection', body: ['These pages preserve the available prior review reading, with current-context notes where the source is older.'], links: [link('Questions and answers', '?page=faq'), link('Exchange directory', '?page=exchanges'), link('Risks and control', '?page=risks'), link('About the service', '?page=about'), link('Setup source reading', '?page=setup-guide'), link('Worked examples source reading', '?page=examples'), link('Sharp-market-fall source reading', '?page=market-stress'), link('Resource source reading', '?page=resources')]},
-    {id: 'provider', title: 'Original public provider information', body: ['The provider pages are captured source texts, not a new legal clearance or a trial activation.'], links: [link('Provider identity', '?page=impressum'), link('Terms', '?page=terms'), link('Privacy', '?page=privacy'), link('Risk disclaimer', '?page=disclaimer'), link('Historical methodology and its source conflict', '?page=methodology')]},
+    {id: 'current', title: 'Setup and service', body: ['Start with the roles, the costs, the risks and the setup.'], links: [link('How it works', '?page=how-it-works'), link('Pricing and the combined bill', '?page=pricing'), link('Start the free trial', '?page=setup'), link('The two free trials', '?page=trial')]},
+    {id: 'questions', title: 'Questions, setup and examples', body: ['Short answers, the setup step by step, the exchange list and worked examples.'], links: [link('Questions and answers', '?page=faq'), link('Exchange directory', '?page=exchanges'), link('Risks and control', '?page=risks'), link('About the service', '?page=about'), link('The setup, step by step', '?page=setup-guide'), link('A worked example', '?page=examples'), link('A sharp market fall', '?page=market-stress'), link('Resources and contacts', '?page=resources')]},
+    {id: 'provider', title: 'Provider and legal', body: ['Who operates NoGuru, and the terms that apply.'], links: [link('Provider identity', '?page=impressum'), link('Terms', '?page=terms'), link('Privacy', '?page=privacy'), link('Risk disclaimer', '?page=disclaimer'), link('Methodology', '?page=methodology')]},
   ],
 };
 
@@ -403,28 +403,9 @@ learningPages.risks = {
       links: [link('The live record', '?page=record'), link('The full risk disclaimer', '?page=disclaimer')]},
   ],
 };
-// The site calls it the NoGuru bot (15 November 2026). "Stepgrid" stays in the terms (legal text) and in the
-// dated digests, which are kept as published.
-{
-  const rename = (value) => (typeof value !== 'string' ? value : value
-    .replace('The public website sometimes calls the strategy “Stepgrid.” ', '')
-    .replaceAll('Stepgrid-only sub-account', 'sub-account for the NoGuru bot only')
-    .replaceAll('dedicated Stepgrid sub-account', 'dedicated sub-account for the NoGuru bot')
-    .replaceAll('Stepgrid channel', 'NoGuru channel')
-    .replaceAll('published Stepgrid setup', 'published setup for the NoGuru bot')
-    .replaceAll('Stepgrid', 'the NoGuru bot'));
-  const deep = (value) => (Array.isArray(value) ? value.map(deep) : value && typeof value === 'object' ? Object.fromEntries(Object.entries(value).map(([k, v]) => [k, k === 'url' || k === 'id' || k === 'src' ? v : deep(v)])) : rename(value));
-  for (const key of ['about', 'resources', 'setup-guide']) if (learningPages[key]) learningPages[key] = deep(learningPages[key]);
-}
-// FAQ entry added 16 November 2026: a Cornix trade that closes in the red although the bot never sells at a loss.
-{
-  const sections = learningPages.faq.sections, at = sections.findIndex((x) => x.id === 'can-it-lose-money');
-  sections.splice(at + 1, 0, {id: 'why-does-one-cornix-trade-show-a-loss', title: 'Why does one of my Cornix trades show a loss?',
-    body: ['Cornix allows at most ten buys in one trade. When a coin keeps falling and the bot needs more buys than that, it opens a second Cornix trade for the same coin, and sometimes a third.',
-      'The first trade holds the buys made at the highest prices. The bot sells only once the price is above the average of everything it bought, across all the trades of the group. So the later, cheaper trades show a gain, and now and then the first one may show a loss when you look at it alone.',
-      'Add the trades of the group together and the result is positive. The bot never sells a group at a loss.'],
-    links: [link('Every trade, one by one', '?page=record')]});
-}
+// The seven supporting pages are written as current pages in support-pages.js (16 November 2026). They replace
+// the earlier review-site texts that the migration carried over with a "dated prior review" banner.
+Object.assign(learningPages, supportPages(link));
 
 // Data requests go to their own address.
 for (const section of learningPages.privacy?.sections || []) {
@@ -434,6 +415,9 @@ for (const section of learningPages.privacy?.sections || []) {
   section.blocks = (section.blocks || []).map((b) => ({...b, text: swap(b.text), items: b.items?.map(swap)}));
   section.links = (section.links || []).map((l) => ({...l, label: swap(l.label)}));
 }
+
+// The digests are dated source texts; only the note under each one is ours.
+for (const [key, page] of Object.entries(learningPages)) if (key.startsWith('digest-') && page.source?.scope) page.source = {...page.source, scope: page.source.scope.replace('a fresh report generated by this preview', 'a fresh report')};
 
 for (const page of Object.values(learningPages)) {
   for (const section of page.sections) {

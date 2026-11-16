@@ -83,3 +83,21 @@ test('sign-up links carry an event name; statistics stay off unless switched on'
     if (/data-website-id=/.test(html)) assert.doesNotMatch(read('legal/privacy/index.html'), /we run no third-party analytics, no advertising trackers, and set no cookies/, 'privacy page matches the statistics script');
   }
 });
+
+test('no public page carries review-site leftovers, and the pay-back figure is the same everywhere', () => {
+  for (const p of ['', ...pages]) {
+    const html = read(`${p}index.html`), body = text(html.replace(/<footer[\s\S]*?<\/footer>/g, ' '));
+    for (const stale of [/Dated prior review/i, /Historical review content/i, /review preview/i, /this preview/i, /Prior shareable review/i])
+      assert.doesNotMatch(body, stale, `${p || 'home'} still has review wording`);
+    assert.doesNotMatch(html, /href="https:\/\/vimo33\.github\.io\/noguru-review\/[a-z-]+\.html"/, `${p || 'home'} links to an old review page`);
+  }
+  for (const p of ['about/', 'faq/', 'exchanges/', 'resources/', 'setup-guide/', 'market-stress/', 'examples/'])
+    assert.ok(text(read(`${p}index.html`)).length > 1500, `${p} has its own text`);
+  const home = text(read('index.html')), pricing = text(read('pricing/index.html'));
+  const onHome = home.match(/about (\$[\d,]+) of trading money covers that/)?.[1], onPricing = pricing.match(/Pays for itself from about (\$[\d,]+|—)/)?.[1];
+  assert.ok(onHome && onPricing, 'both pages state a pay-back figure');
+  if (onPricing !== '—') assert.equal(onPricing, onHome, 'home and pricing show the same pay-back figure');
+  const pace = home.match(/pace is about ([\d.]+)% a month/)?.[1], rounded = home.match(/averaged about (\d+)% a month/)?.[1];
+  if (pace && rounded) assert.equal(rounded, String(Math.round(Number(pace))), 'the home page quotes one monthly pace');
+  assert.doesNotMatch(home, /1,046 of 1,048/, 'no typed-in record figure on the home page');
+});

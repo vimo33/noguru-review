@@ -35,7 +35,8 @@ export function homeRecord(ev) {
     texts['q-payback'] = `$${need.toLocaleString('en-US')}`;
     texts['q-payback-how'] = `The record’s pace is about ${rate.toFixed(1)}% a month on the money set aside for it, before fees. At that pace $${need.toLocaleString('en-US')} earns about $49 a month. A pace from the past, not a promise. $49 is the founding price; the standard price is $99 a month once founding places are gone.`;
   }
-  if (Number.isFinite(ev.grossMonthly)) texts['x-month'] = `${Math.round(ev.grossMonthly)}%`;
+  // One pace for the whole page: the same monthly figure the pay-back answer uses.
+  if (Number.isFinite(rate)) texts['x-month'] = `${Math.round(rate)}%`;
 
   // The sale is not fixed at 2%: the bot follows a rise before selling, so show the spread, not only the middle.
   const sorted = ev.rows.map((r) => r.pct).sort((a, b) => a - b), n = sorted.length;

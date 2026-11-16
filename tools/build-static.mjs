@@ -387,6 +387,18 @@ function marketArticle() {
 /* ---------- write everything ---------- */
 function write(rel, content) { const file = path.join(SITE, rel); fs.mkdirSync(path.dirname(file), {recursive: true}); fs.writeFileSync(file, rel.endsWith('.html') ? tagSteps(content) : content); }
 const record = await snapshot();
+// Pricing: the pay-back figure is worked out from the record, the same way the page does it when it loads
+// (site/read/page.js) and the home page does (site/home-record.js). No typed-in figure.
+{
+  const {paybackCapital} = await load('pilot/data.js');
+  const card = learningPages.pricing.cards.find((c) => c.title === 'Pays for itself from about');
+  const ev = record?.evidence, rate = ev && (Number.isFinite(ev.allocMonthly) ? ev.allocMonthly : ev.grossMonthly), need = paybackCapital(49, rate);
+  if (!card) throw new Error('The pricing page no longer has its pay-back card; update tools/build-static.mjs.');
+  if (need) {
+    card.price = `$${need.toLocaleString('en-US')}`;
+    card.body = [`The record’s pace is about ${rate.toFixed(1)}% a month on the money set aside for it, before fees. At that pace, $${need.toLocaleString('en-US')} earns about $49 a month. Anything above it is yours.`];
+  } else { card.price = '—'; card.body = ['The figure is the monthly price divided by the record’s monthly pace. It is filled in from the live record when the page loads.']; }
+}
 // NoGuru's referral list: the exchange links are written into the home page so they are there without JavaScript.
 async function referralList() {
   if (!FETCH) return null;
@@ -457,9 +469,20 @@ function buildHome() {
   ${ANALYTICS ? `${ANALYTICS}\n  ` : ''}<!-- seo:end -->`;
   html = /<!-- seo:start[\s\S]*?<!-- seo:end -->/.test(html) ? html.replace(/<!-- seo:start[\s\S]*?<!-- seo:end -->/, seo) : html.replace(/(<title>[^<]*<\/title>)/, `$1\n  ${seo}`);
   html = html.replace(/\n?\s*<meta name="robots" content="noindex, nofollow">/, '').replace(/(<meta name="theme-color"[^>]*>)/, `$1${ROBOTS}`);
+  // The footer's "Review preview." belongs to the review build only.
+  html = html.replace(/<p>(?:Review preview\. )?Trading crypto can lose money\./, `<p>${PRODUCTION ? '' : 'Review preview. '}Trading crypto can lose money.`);
   if (record) {
     const {texts, latest} = homeRecord(record.evidence);
     for (const [id, text] of Object.entries(texts)) html = setText(html, id, text);
+    // The film's figures (site/film.js fills the same places from the live record).
+    const ev = record.evidence;
+    if (ev.closed && Number.isFinite(ev.grossSinceStart)) {
+      const day = (iso) => new Intl.DateTimeFormat('en-GB', {day: 'numeric', month: 'short', timeZone: 'UTC'}).format(new Date(iso));
+      const rec = {pct: `+${ev.grossSinceStart.toFixed(1)}%`, period: `${day(ev.windowStart)} – ${day(ev.windowEnd)} ${new Date(ev.windowEnd).getUTCFullYear()}`,
+        closed: ev.closed.toLocaleString('en-US'), up: ev.up.toLocaleString('en-US'), down: String(ev.down), open: String(ev.open)};
+      html = html.replace(/(<[a-z0-9]+\b[^>]*\bdata-rec="([a-z]+)"[^>]*>)[^<]*(<)/g, (all, open, key, close) => (key in rec ? `${open}${esc(rec[key])}${close}` : all));
+      html = setText(html, 'count', rec.closed); html = setText(html, 'proof-pct', rec.pct);
+    }
     html = setText(html, 'ev-status', `Snapshot of ${utcDay(BUILD_DAY)}. The live record replaces it when the page loads.`);
     html = html.replace(/(<ol class="ev-list" id="ev-list">)[\s\S]*?(<\/ol>)/, (_, open, close) => `${open}${latest.map((r) => `<li><b${r.below ? ' class="neg"' : ''}>${esc(r.result)}</b><span>${esc(r.detail)}</span><time datetime="${escAttr(r.dateTime)}">${esc(r.when)}</time></li>`).join('')}${close}`);
     html = html.replace(/(id="ev-body") hidden/, '$1').replace(/(id="trades" aria-labelledby="tr-title") hidden/, '$1');
