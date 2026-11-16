@@ -131,17 +131,17 @@
     <p class="eyebrow">See it for yourself</p>
     <h2 id="ev-title">The record, <em>as it stands.</em></h2>
     <p class="sec-lede">Read straight from NoGuru’s published record each time this page opens. Nothing here is typed in by hand.</p>
-    <p class="ev-status" id="ev-status" role="status">Snapshot of 15 Nov 2026. The live record replaces it when the page loads.</p>
+    <p class="ev-status" id="ev-status" role="status">Snapshot of 16 Nov 2026. The live record replaces it when the page loads.</p>
     <div class="ev-body" id="ev-body">
       <div class="ev-hero">
-        <b id="ev-pct">+34.9%</b>
-        <span>completed profit on allocated funds<br><span id="ev-period">1 Aug 2026 – 15 Nov 2026</span> · before fees</span>
+        <b id="ev-pct">+35.0%</b>
+        <span>completed profit on allocated funds<br><span id="ev-period">1 Aug 2026 – 16 Nov 2026</span> · before fees</span>
       </div>
       <div class="ev-grid">
         <div><b id="ev-closed">1,051</b><span>finished trades</span></div>
         <div><b id="ev-up">1,049</b><span>of them closed in profit</span></div>
         <div><b id="ev-fast">79%</b><span>finished within a day</span></div>
-        <div class="quiet"><b id="ev-open">20</b><span id="ev-open-note">still open, together 25.8% below what they cost</span></div>
+        <div class="quiet"><b id="ev-open">20</b><span id="ev-open-note">still open, together 26.4% below what they cost</span></div>
       </div>
     </div>
   </section>
@@ -158,7 +158,7 @@
   <section class="sec slice questions" id="questions" aria-labelledby="q-title">
     <div class="q-head">
       <img src="./pilot/assets/noguru-guide-original.png" alt="" width="160" height="160" loading="lazy">
-      <div><p class="eyebrow">Ask me anything</p><h2 id="q-title">The five questions <em>everyone asks.</em></h2></div>
+      <div><p class="eyebrow">Ask me anything</p><h2 id="q-title">The six questions <em>everyone asks.</em></h2></div>
     </div>
     <div class="q-list">
       <details><summary><span>Is my money safe?</span><b>It stays in your own exchange account. The bot can trade it. It can’t withdraw it.</b></summary>
@@ -167,17 +167,22 @@
         <p class="more">Go deeper: <a href="./how-it-works/">How it works</a><a href="./exchanges/">Exchanges</a><a href="./glossary/#learning-api-key">What an API key is</a></p></details>
       <details><summary><span>What happens in a crash?</span><b>It buys in steps on the way down, then holds and waits. It doesn’t sell in a panic.</b></summary>
         <p>There is no stop loss. Coins it holds can lose value for a long time, and some may never come back. If the cash set aside runs out, buying pauses until a sale frees some up.</p>
-        <p id="q-open-now">Right now 20 trades are still open, together 25.8% below what they cost.</p>
+        <p id="q-open-now">Right now 20 trades are still open, together 26.4% below what they cost.</p>
         <p>NoGuru’s own replay of a market top like October 2025 shows the account worth 48% less at market prices at its lowest point.</p>
         <p class="more">Go deeper: <a href="./risks/">The risks</a><a href="./market-stress/">Under market stress</a><a href="./academy/arithmetic-of-losses/">The arithmetic of losses</a></p></details>
-      <details><summary><span>What does it cost?</span><b>$49 a month for NoGuru, after 14 days free. At the record’s pace, about <span id="q-payback">$520</span> of trading money covers that.</b></summary>
-        <p id="q-payback-how">The record’s pace is about 9.5% a month on the money set aside for it, before fees. At that pace $520 earns about $49 a month. A pace from the past, not a promise. $49 is the founding price; the standard price is $99 a month once founding places are gone.</p>
+      <details><summary><span>What does it cost?</span><b>$49 a month for NoGuru, after 14 days free. At the record’s pace, about <span id="q-payback">$530</span> of trading money covers that.</b></summary>
+        <p id="q-payback-how">The record’s pace is about 9.4% a month on the money set aside for it, before fees. At that pace $530 earns about $49 a month. A pace from the past, not a promise. $49 is the founding price; the standard price is $99 a month once founding places are gone.</p>
         <p>Today the bot runs through Cornix, a separate tool with its own plan: 14 days free, then from about $33 a month. Your exchange charges its normal trading fees. Neither trial asks for a card.</p>
         <p class="more">Go deeper: <a href="./pricing/">Pricing</a><a href="./pricing/#learning-payback">When it pays for itself</a><a href="./trial/">The two free trials</a></p></details>
       <details><summary><span>How much do I need?</span><b>About 3,000 USDT or more lets the bot fill most of its orders.</b></summary>
         <p>Below 500 USDT it doesn’t work. At about 2,000 USDT it can fill part of the orders. Above 3,000 USDT it can fill most of them, because there is room to buy in several steps across several coins.</p>
         <p>Only put in money you can leave alone for months, and keep the subscriptions separate from it.</p>
         <p class="more">Go deeper: <a href="./pricing/">Capital and costs</a><a href="./learn/#learning-reserves">Cash reserves</a></p></details>
+      <details id="q-cornix-loss"><summary><span>Why does one of my Cornix trades show a loss?</span><b>A long run of buys is split into several Cornix trades. Added up they end in profit, but the first one can show a loss on its own.</b></summary>
+        <p>Cornix allows at most ten buys in one trade. When a coin keeps falling and the bot needs more buys than that, it opens a second Cornix trade for the same coin, and sometimes a third.</p>
+        <p>The first trade holds the buys made at the highest prices. The bot sells only once the price is above the average of everything it bought, across all the trades of the group. So the later, cheaper trades show a gain, and now and then the first one shows a loss when you look at it alone.</p>
+        <p>Add the trades of the group together and the result is positive. The bot never sells a group at a loss.</p>
+        <p class="more">Go deeper: <a href="./track-record/">Every trade, one by one</a><a href="./risks/">The risks</a></p></details>
       <details><summary><span>Who is behind it?</span><b>People who built it for their own money first, then decided to share it. No gurus, no faces.</b></summary>
         <p>It began as an answer to a market that has changed: one that makes it hard for an ordinary person to trade by hand without losing money. The bot does the patient part that people find hardest.</p>
         <p>That is on purpose. Judge it by the public record and by watching it work on a free trial, not by a personality.</p>

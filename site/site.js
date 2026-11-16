@@ -1,4 +1,4 @@
-// The site the film settles into: live record, five questions, guided start.
+// The site the film settles into: live record, six questions, guided start.
 import {record, reloadRecord} from './record.js';
 import {homeRecord, fmtDate} from './home-record.js';
 
