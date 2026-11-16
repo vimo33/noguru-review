@@ -134,6 +134,10 @@ async function load(id,normalize,empty,{signal}={}) {
   catch(error){return {...empty(checkedAt),error:message(error)};}
 }
 // Trading money whose monthly result, at a given monthly pace, equals a monthly fee. Rounded up to the next 10 so the figure never understates it.
+// The record's monthly pace, in one place. Every page that quotes a pace or a pay-back figure uses this, so they
+// cannot disagree. It is the figure the provider's own record page shows (pct_month_gross), and the one the total
+// since the start is built from; pct_month_allocation is only the fallback, as on that page. Decided 16 November 2026.
+export const recordPace = (ev) => (ev && Number.isFinite(ev.grossMonthly) && ev.grossMonthly > 0 ? ev.grossMonthly : ev && Number.isFinite(ev.allocMonthly) && ev.allocMonthly > 0 ? ev.allocMonthly : null);
 export const paybackCapital = (fee, ratePct) => (Number.isFinite(ratePct) && ratePct > 0 ? Math.ceil(fee / (ratePct / 100) / 10) * 10 : null);
 export const loadEvidence = options => load('evidence',normalizeEvidence,evidenceEmpty,options);
 export const loadMarket = options => load('market',normalizeMarket,marketEmpty,options);

@@ -29,6 +29,16 @@ Working pages from the migration (`source-*`, `review-*`, `all-pages`) are left 
 
 The review host must stay on the review build. A production build is only for the production server, and publishing either one needs Vimo's go-ahead for that revision.
 
+## The production bundle
+
+```bash
+node tools/bundle-production.mjs
+```
+
+Writes `dist/production/`: a production build and only the files its pages use. The working copy stays a review build. See `docs/PRODUCTION-HANDOVER.md`.
+
+The record's monthly pace comes from one function, `recordPace` in `site/pilot/data.js`. Home, pricing and the build all use it, and so does the pay-back figure.
+
 ## For the production server
 
 - **Rebuild daily** so the dated snapshot stays close to the live record (visitors always see the live figures; the snapshot is what crawlers read).

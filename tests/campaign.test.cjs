@@ -29,3 +29,13 @@ test('the tag goes into the trial link and the Cornix links, and nowhere else', 
   for (const href of [TRIAL, SIGNUP, BOT]) { assert.equal(withCampaign(href, ''), href); assert.equal(withCampaign(href, 'Not_Valid'), href); }
   for (const other of ['https://t.me/NoGuruMembers_bot', 'https://t.me/NoGuruMembers_bot?start=REF123', 'https://t.me/nogurusignals', 'https://www.binance.com/register?ref=1211286433', 'https://noguru.io/api/public/track-record', './pricing/']) assert.equal(withCampaign(other, 'reddit-dca'), other, other);
 });
+
+test('the record has one monthly pace, and the pay-back figure follows from it', async () => {
+  globalThis.location ||= {href: 'https://noguru.io/pilot/page.html', origin: 'https://noguru.io', search: ''};
+  const {recordPace, paybackCapital} = await import(pathToFileURL(path.join(__dirname, '..', 'site', 'pilot', 'data.js')).href);
+  assert.equal(recordPace({grossMonthly: 9.94, allocMonthly: 9.42}), 9.94, 'the figure the record page shows');
+  assert.equal(recordPace({grossMonthly: null, allocMonthly: 9.42}), 9.42, 'the fallback');
+  assert.equal(recordPace({grossMonthly: 0}), null); assert.equal(recordPace(null), null);
+  assert.equal(paybackCapital(49, 9.94), 500, 'rounded up to the next $10');
+  assert.equal(paybackCapital(49, null), null);
+});

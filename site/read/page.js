@@ -54,7 +54,7 @@ if (page === 'market') import('../dashboard.js').then(({createDashboardControlle
 });
 
 // Pricing: the pay-back figure comes from the live record, never from a typed-in number.
-if (page === 'pricing') import('../pilot/data.js').then(async ({loadEvidence, paybackCapital}) => {
+if (page === 'pricing') import('../pilot/data.js').then(async ({loadEvidence, paybackCapital, recordPace}) => {
   const FEE = 49, CORNIX = 49.9, SUGGESTED = 3000;
   const day = (iso) => new Intl.DateTimeFormat('en-GB', {day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC'}).format(new Date(`${iso}T00:00:00Z`));
   const usd = (n) => `$${Math.round(n).toLocaleString('en-US')}`;
@@ -63,7 +63,7 @@ if (page === 'pricing') import('../pilot/data.js').then(async ({loadEvidence, pa
   const price = card.querySelector('.plan-price'), body = card.querySelector('.plan-description');
   if (!price || !body) return;
   const ev = await loadEvidence();
-  const rate = Number.isFinite(ev.allocMonthly) ? ev.allocMonthly : ev.grossMonthly, need = paybackCapital(FEE, rate);
+  const rate = recordPace(ev), need = paybackCapital(FEE, rate);
   if (ev.status === 'unavailable' || !need) {
     price.firstChild.textContent = '—';
     body.textContent = 'I can’t reach the public record right now, so I’m not showing a figure. It is the monthly price divided by the record’s monthly pace.';

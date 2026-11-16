@@ -385,14 +385,15 @@ function marketArticle() {
 }
 
 /* ---------- write everything ---------- */
-function write(rel, content) { const file = path.join(SITE, rel); fs.mkdirSync(path.dirname(file), {recursive: true}); fs.writeFileSync(file, rel.endsWith('.html') ? tagSteps(content) : content); }
+const WRITTEN = ['index.html'];   // every file this build writes; tools/bundle-production.mjs starts from this list
+function write(rel, content) { WRITTEN.push(rel); const file = path.join(SITE, rel); fs.mkdirSync(path.dirname(file), {recursive: true}); fs.writeFileSync(file, rel.endsWith('.html') ? tagSteps(content) : content); }
 const record = await snapshot();
 // Pricing: the pay-back figure is worked out from the record, the same way the page does it when it loads
 // (site/read/page.js) and the home page does (site/home-record.js). No typed-in figure.
 {
-  const {paybackCapital} = await load('pilot/data.js');
+  const {paybackCapital, recordPace} = await load('pilot/data.js');
   const card = learningPages.pricing.cards.find((c) => c.title === 'Pays for itself from about');
-  const ev = record?.evidence, rate = ev && (Number.isFinite(ev.allocMonthly) ? ev.allocMonthly : ev.grossMonthly), need = paybackCapital(49, rate);
+  const rate = recordPace(record?.evidence), need = paybackCapital(49, rate);
   if (!card) throw new Error('The pricing page no longer has its pay-back card; update tools/build-static.mjs.');
   if (need) {
     card.price = `$${need.toLocaleString('en-US')}`;
@@ -492,6 +493,25 @@ function buildHome() {
 }
 buildHome();
 
+// A page for addresses that do not exist. It can be served from any address, so its links hang on a <base>.
+// GitHub Pages serves 404.html by itself; the production server has to be told to (see docs/PRODUCTION-HANDOVER.md).
+{
+  const base = `${new URL(`${ORIGIN}/`).pathname}${pathOf('library')}`;
+  const links = [['Home', '../'], ['How it works', `../${pathOf('how-it-works')}`], ['Pricing', `../${pathOf('pricing')}`], ['Questions and answers', `../${pathOf('faq')}`], ['Every trade, one by one', `../${pathOf('record')}`], ['Everything there is to read', './']];
+  const article = `  <article class="learning-page" aria-labelledby="learning-title">
+    <header class="learning-header"><p class="eyebrow">Page not found</p><h1 id="learning-title" tabindex="-1">This page isn’t here.</h1><p class="summary">The address may be old or mistyped. One of these will get you back on track.</p></header>
+    <div class="learning-source-links">${links.map(([label, href]) => `<a href="${href}">${esc(label)}</a>`).join('')}</div>
+  </article>`;
+  const html = frame('library', article)
+    .replace(/<title>[^<]*<\/title>/, '<title>Page not found | NoGuru</title>')
+    .replace(/\s*<link rel="canonical"[^>]*>/, '').replace(/\s*<meta property="og:[a-z_:]+"[^>]*>/g, '').replace(/\s*<meta name="twitter:card"[^>]*>/, '')
+    .replace(/\s*<script type="application\/ld\+json">[\s\S]*?<\/script>/, '').replace(/\s*<meta name="robots"[^>]*>/, '')
+    .replace(/(<meta name="description" content=")[^"]*(")/, '$1This address does not exist on noguru.io.$2')
+    .replace(/<head>/, `<head>\n  <base href="${escAttr(base)}">\n  <meta name="robots" content="noindex">`)
+    .replace(/data-page="library"/, 'data-page="not-found"');
+  write('404.html', html);
+}
+
 const today = new Set(['', pathOf('record'), pathOf('market')]);
 write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -500,4 +520,5 @@ ${['', ...pages.map(pathOf)].map((p) => `  <url><loc>${ORIGIN}/${p}</loc>${today
 `);
 write('robots.txt', PRODUCTION ? fs.readFileSync(path.join(HERE, 'robots.production.txt'), 'utf8').replace(/\{ORIGIN\}/g, ORIGIN) : 'User-agent: *\nDisallow: /\n');
 
+if (process.env.NOGURU_MANIFEST) fs.writeFileSync(process.env.NOGURU_MANIFEST, JSON.stringify([...new Set(WRITTEN)].sort(), null, 1));
 console.log(`${PRODUCTION ? 'Production' : 'Review'} build for ${ORIGIN}: ${pages.length} pages, ${stubs} redirects from old addresses, record snapshot ${record ? `of ${BUILD_DAY}` : 'not included'}.`);
