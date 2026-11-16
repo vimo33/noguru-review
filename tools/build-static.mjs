@@ -91,6 +91,16 @@ globalThis.location = {href: `${BUILD_BASE}pilot/page.html`, origin: new URL(BUI
 
 const load = (rel) => import(pathToFileURL(path.join(SITE, rel)).href);
 const {learningPages} = await load('pilot/learning.js');
+// Campaign tags (site/campaign.js) are passed to the sign-up links. The provider asked for this sentence on the privacy
+// page and approved the wording on 16 November 2026 (CAMPAIGN_TAGS_2026-11-16_ANSWERS.md); keep it word for word.
+{
+  const CAMPAIGN = ' If you arrive through one of our campaign links, the name of that campaign is kept in your browser until you close the tab and is passed along when you start a trial or open Cornix through our links, so we can count sign-ups per campaign. If you start a trial, it is stored with your sign-up.';
+  const add = (v) => (typeof v === 'string' && v.startsWith('Website:') && v.endsWith('technical logs.') ? v + CAMPAIGN : v);
+  const section = learningPages.privacy.sections.find((s) => s.id === 'what-we-collect-and-why');
+  const before = JSON.stringify(section);
+  if (section) { section.body = (section.body || []).map(add); section.blocks = (section.blocks || []).map((b) => ({...b, text: add(b.text)})); }
+  if (!section || JSON.stringify(section) === before) throw new Error('The privacy page no longer has the "Website:" paragraph; update the campaign sentence in tools/build-static.mjs.');
+}
 // The privacy page says the site runs no analytics. With statistics switched on that sentence is replaced, and the
 // hosted service is named as a recipient. The wording for our own installation is the text the provider approved and
 // published on noguru.io on 16 November 2026; keep the two the same. The hosted wording is an unapproved draft.

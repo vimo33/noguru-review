@@ -2,9 +2,12 @@
 // per channel. The tag is the landing address's utm_campaign (or utm_source), kept for the visit only.
 // Formats agreed with the server side on 16 November 2026: the members bot takes trial_<tag>, the Cornix links
 // take s=<tag>. One tag serves both, so it follows the stricter rule: lowercase letters, digits and hyphen, 1 to 16.
-// Anything else leaves the links as they are.
+// Anything else leaves the links as they are. Four names are already rows in the server's report and are never sent
+// as a campaign. A personal referral link, trial_<tag>_<CODE>, keeps its code; only the tag in the middle changes.
 const KEY = 'noguru-campaign';
-const VALID = /^[a-z0-9-]{1,16}$/;
+const FORMAT = /^[a-z0-9-]{1,16}$/;
+const RESERVED = new Set(['none', 'other', 'plain', 'site-form']);
+const VALID = {test: (tag) => FORMAT.test(tag) && !RESERVED.has(tag)};
 
 export function campaignTag(search, stored = '') {
   const params = new URLSearchParams(search);
@@ -18,7 +21,7 @@ export function campaignTag(search, stored = '') {
 export function withCampaign(href, tag) {
   if (!VALID.test(tag)) return href;
   let url; try { url = new URL(href); } catch { return href; }
-  if (url.hostname === 't.me' && url.pathname === '/NoGuruMembers_bot' && /^trial_[a-z0-9-]+$/.test(url.searchParams.get('start') || '')) url.searchParams.set('start', `trial_${tag}`);
+  if (url.hostname === 't.me' && url.pathname === '/NoGuruMembers_bot' && /^trial_[a-z0-9-]+(_[A-Za-z0-9]+)?$/.test(url.searchParams.get('start') || '')) url.searchParams.set('start', url.searchParams.get('start').replace(/^trial_[a-z0-9-]+/, `trial_${tag}`));
   else if (url.hostname === 'noguru.io' && /^\/api\/public\/go\/cornix-(signup|bot)$/.test(url.pathname)) url.searchParams.set('s', tag);
   else return href;
   return url.href;

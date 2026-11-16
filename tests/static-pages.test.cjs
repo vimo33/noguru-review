@@ -79,6 +79,7 @@ test('sign-up links carry an event name; statistics stay off unless switched on'
   for (const p of ['', ...pages]) {
     const html = read(`${p}index.html`);
     for (const tag of html.match(/<a\b[^>]*href="https:\/\/(t\.me\/NoGuruMembers_bot|noguru\.io\/api\/public\/go\/)[^>]*>/g) || []) assert.match(tag, /data-umami-event="signup-/, `${p}: ${tag}`);
+    assert.match(read('legal/privacy/index.html'), /the name of that campaign is kept in your browser until you close the tab.*If you start a trial, it is stored with your sign-up\./, 'privacy page says what happens to a campaign name');
     if (/data-website-id=/.test(html)) assert.doesNotMatch(read('legal/privacy/index.html'), /we run no third-party analytics, no advertising trackers, and set no cookies/, 'privacy page matches the statistics script');
   }
 });
