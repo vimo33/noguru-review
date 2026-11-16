@@ -141,7 +141,7 @@
         <div><b id="ev-closed">1,051</b><span>finished trades</span></div>
         <div><b id="ev-up">1,049</b><span>of them closed in profit</span></div>
         <div><b id="ev-fast">79%</b><span>finished within a day</span></div>
-        <div class="quiet"><b id="ev-open">20</b><span id="ev-open-note">still open, together 26.4% below what they cost</span></div>
+        <div class="quiet"><b id="ev-open">20</b><span id="ev-open-note">still open, together 27.0% below what they cost</span></div>
       </div>
     </div>
   </section>
@@ -167,7 +167,7 @@
         <p class="more">Go deeper: <a href="./how-it-works/">How it works</a><a href="./exchanges/">Exchanges</a><a href="./glossary/#learning-api-key">What an API key is</a></p></details>
       <details><summary><span>What happens in a crash?</span><b>It buys in steps on the way down, then holds and waits. It doesn’t sell in a panic.</b></summary>
         <p>There is no stop loss. Coins it holds can lose value for a long time, and some may never come back. If the cash set aside runs out, buying pauses until a sale frees some up.</p>
-        <p id="q-open-now">Right now 20 trades are still open, together 26.4% below what they cost.</p>
+        <p id="q-open-now">Right now 20 trades are still open, together 27.0% below what they cost.</p>
         <p>NoGuru’s own replay of a market top like October 2025 shows the account worth 48% less at market prices at its lowest point.</p>
         <p class="more">Go deeper: <a href="./risks/">The risks</a><a href="./market-stress/">Under market stress</a><a href="./academy/arithmetic-of-losses/">The arithmetic of losses</a></p></details>
       <details><summary><span>What does it cost?</span><b>$49 a month for NoGuru, after 14 days free. At the record’s pace, about <span id="q-payback">$530</span> of trading money covers that.</b></summary>
@@ -180,7 +180,7 @@
         <p class="more">Go deeper: <a href="./pricing/">Capital and costs</a><a href="./learn/#learning-reserves">Cash reserves</a></p></details>
       <details id="q-cornix-loss"><summary><span>Why does one of my Cornix trades show a loss?</span><b>A long run of buys is split into several Cornix trades. Added up they end in profit, but the first one can show a loss on its own.</b></summary>
         <p>Cornix allows at most ten buys in one trade. When a coin keeps falling and the bot needs more buys than that, it opens a second Cornix trade for the same coin, and sometimes a third.</p>
-        <p>The first trade holds the buys made at the highest prices. The bot sells only once the price is above the average of everything it bought, across all the trades of the group. So the later, cheaper trades show a gain, and now and then the first one shows a loss when you look at it alone.</p>
+        <p>The first trade holds the buys made at the highest prices. The bot sells only once the price is above the average of everything it bought, across all the trades of the group. So the later, cheaper trades show a gain, and now and then the first one may show a loss when you look at it alone.</p>
         <p>Add the trades of the group together and the result is positive. The bot never sells a group at a loss.</p>
         <p class="more">Go deeper: <a href="./track-record/">Every trade, one by one</a><a href="./risks/">The risks</a></p></details>
       <details><summary><span>Who is behind it?</span><b>People who built it for their own money first, then decided to share it. No gurus, no faces.</b></summary>

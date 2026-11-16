@@ -421,7 +421,7 @@ learningPages.risks = {
   const sections = learningPages.faq.sections, at = sections.findIndex((x) => x.id === 'can-it-lose-money');
   sections.splice(at + 1, 0, {id: 'why-does-one-cornix-trade-show-a-loss', title: 'Why does one of my Cornix trades show a loss?',
     body: ['Cornix allows at most ten buys in one trade. When a coin keeps falling and the bot needs more buys than that, it opens a second Cornix trade for the same coin, and sometimes a third.',
-      'The first trade holds the buys made at the highest prices. The bot sells only once the price is above the average of everything it bought, across all the trades of the group. So the later, cheaper trades show a gain, and now and then the first one shows a loss when you look at it alone.',
+      'The first trade holds the buys made at the highest prices. The bot sells only once the price is above the average of everything it bought, across all the trades of the group. So the later, cheaper trades show a gain, and now and then the first one may show a loss when you look at it alone.',
       'Add the trades of the group together and the result is positive. The bot never sells a group at a loss.'],
     links: [link('Every trade, one by one', '?page=record')]});
 }
