@@ -408,3 +408,7 @@ html.video-open{overflow:hidden}
 }
 .topbar.over{background:#0e1c18d9;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
 @media (max-width:480px){.hero .stat{align-items:flex-start;gap:12px}.hero .stat span{font-size:11px;padding-top:3px}}
+
+/* profile links with their icons */
+.foot-social a{display:inline-flex;align-items:center;gap:8px;min-height:40px}
+.foot-social svg{flex:none;opacity:.85}
