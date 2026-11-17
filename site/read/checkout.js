@@ -3,10 +3,12 @@
 // It does exactly what the live noguru.io pricing page has done since October 2026, through the same three
 // routes of NoGuru's own server (the member gate):
 //   GET  /gate/api/price    the price table a new buyer gets (founding or standard), never typed in here
-//   POST /gate/api/trial    {buyer_tg, consent, ref}                 -> starts the 14 days
+//   POST /gate/api/trial    {buyer_tg, consent, ref, src}            -> starts the 14 days; src is the campaign
+//                           of this visit, the same tag the Telegram link carries as trial_<tag> (optional)
 //   POST /gate/api/invoice  {plan, asset, buyer_tg, consent, ref}    -> {id}; the payment page is /gate/i/<id>
 // Nothing is sent before the four agreement boxes are ticked. No payment details are handled on this site.
 import {track} from '../track.js';
+import {currentCampaign} from '../campaign.js';
 
 // The agreement text is stored on the server under this version, so a stored consent can be traced to the exact
 // words that were on screen. Change it in the same commit as ANY change to the four sentences in tools/checkout.html.
@@ -95,7 +97,8 @@ if (form && dialog) {
     try {
       if (kind === 'trial') {
         msg.textContent = 'Starting your 14 days free…';
-        const r = await post('/gate/api/trial', {buyer_tg: tg, consent, ref: refCode()}), d = await r.json();
+        const src = currentCampaign();
+        const r = await post('/gate/api/trial', {buyer_tg: tg, consent, ref: refCode(), ...(src ? {src} : {})}), d = await r.json();
         if (!r.ok) { msg.textContent = d.error || 'Could not start the trial — try again shortly.'; track('checkout-trial-failed'); return; }
         // A bot cannot message anyone who has not started it, so the last step has to be on screen.
         msg.textContent = 'One step left: open @NoGuruMembers_bot on Telegram and tap Start. Your invite arrives there. ';

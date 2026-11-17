@@ -27,6 +27,12 @@ export function withCampaign(href, tag) {
   return url.href;
 }
 
+// The campaign of this visit, or '' — for the pricing page's trial form, which sends it as `src`.
+export function currentCampaign() {
+  let stored = ''; try { stored = sessionStorage.getItem(KEY) || ''; } catch { /* private mode */ }
+  return campaignTag(location.search, stored);
+}
+
 export function applyCampaign(root = document) {
   let stored = ''; try { stored = sessionStorage.getItem(KEY) || ''; } catch { /* private mode */ }
   const tag = campaignTag(location.search, stored);
