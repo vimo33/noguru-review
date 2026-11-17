@@ -46,3 +46,11 @@ test('the whole pot is completed profit plus the open trades at the latest price
   assert.equal(wholePot({openShare: null, openVsCost: -27.2}, {pct: 34.9}), null);
   assert.equal(wholePot({openShare: 138.0, openVsCost: -27.2}, null), null, 'no figure without the completed profit');
 });
+
+test('record figures are shown as money on one example amount', async () => {
+  const {EXAMPLE, onExample, exampleAmount} = await import(pathToFileURL(path.join(__dirname, '..', 'site', 'example.js')).href);
+  assert.equal(EXAMPLE, 10000);
+  assert.equal(onExample(34.9), 3490); assert.equal(exampleAmount(34.9), '3,490 USDT');
+  assert.equal(exampleAmount(-0.2), '−20 USDT', 'a loss keeps its sign');
+  assert.equal(exampleAmount(NaN), null);
+});

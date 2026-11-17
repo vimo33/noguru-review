@@ -3,6 +3,7 @@
 //   node tools/bundle-production.mjs                 -> dist/production
 //   node tools/bundle-production.mjs --out=/some/dir -> that folder (it must be empty or not exist)
 //   --origin=https://… and --no-fetch are passed on to tools/build-static.mjs
+//   --allow-draft-video   bundle although the home page still plays the draft film (trial runs only)
 //
 // The working copy is not touched: the build runs in a temporary copy, so site/ stays a review build.
 // Drafts, earlier experiments and working pages stay behind because no public page refers to them.
@@ -17,6 +18,7 @@ const HERE = path.dirname(fileURLToPath(import.meta.url)), REPO = path.join(HERE
 const args = process.argv.slice(2);
 const OUT = path.resolve(args.find((a) => a.startsWith('--out='))?.slice(6) || path.join(REPO, 'dist', 'production'));
 const pass = args.filter((a) => a.startsWith('--origin=') || a === '--no-fetch');
+const DRAFT_VIDEO_OK = args.includes('--allow-draft-video');   // for a trial run only: the draft film says "not for publication" on screen
 if (fs.existsSync(OUT) && fs.readdirSync(OUT).length) { console.error(`${OUT} is not empty. Empty it yourself or choose another --out; this tool does not delete folders.`); process.exit(1); }
 
 /* ---------- 1. a production build in a temporary copy ---------- */
@@ -44,7 +46,7 @@ function references(rel, text) {
   return out;
 }
 // Paths a script builds at run time, which the patterns above cannot see. Each is [the script, what it loads].
-const BUILT_AT_RUN_TIME = [['film.js', ['pilot/assets/noguru-guide-original.png', 'pilot/assets/noguru-guide-attentive-original.png']]];
+const BUILT_AT_RUN_TIME = [['hero.js', ['pilot/assets/noguru-guide-original.png']], ['video.js', ['media/noguru-explainer.mp4']]];
 
 const keep = new Set(), missing = [];
 const queue = written.filter((rel) => exists(rel));
@@ -79,6 +81,7 @@ for (const rel of keep) {
   if (/vimo33|noguru-review|github\.io/.test(text)) problems.push(`${rel} mentions the review site`);
   if (rel.endsWith('.html') && /Review preview|Dated prior review/.test(text)) problems.push(`${rel} carries review wording`);
 }
+if (!DRAFT_VIDEO_OK && /<video\b[^>]*\bdata-draft\b/.test(fs.readFileSync(path.join(SITE, 'index.html'), 'utf8'))) problems.push('index.html still plays the draft film. Replace site/media/noguru-explainer.mp4 with the final film and remove data-draft from the video tag in site/index.html (or pass --allow-draft-video for a trial run)');
 const sitemapPages = [...fs.readFileSync(path.join(SITE, 'sitemap.xml'), 'utf8').matchAll(/<loc>https?:\/\/[^/]+\/([^<]*)<\/loc>/g)].map((m) => `${m[1]}index.html`);
 for (const rel of sitemapPages) {
   if (!keep.has(rel)) problems.push(`${rel} is in the sitemap but not in the bundle`);

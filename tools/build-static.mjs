@@ -104,11 +104,13 @@ const {learningPages} = await load('pilot/learning.js');
 // The privacy page says the site runs no analytics. With statistics switched on that sentence is replaced, and the
 // hosted service is named as a recipient. The wording for our own installation is the text the provider approved and
 // published on noguru.io on 16 November 2026; keep the two the same. The hosted wording is an unapproved draft.
+// One clause was added here on 17 November 2026 for the video, the questions, reading depth and time on a page
+// (site/track.js); the provider has not approved that clause yet.
 if (UMAMI) {
   const OLD = 'we run no third-party analytics, no advertising trackers, and set no cookies.';
   const NEW = UMAMI_HOSTED
     ? 'we count visits with Umami, a privacy-focused statistics service: which pages are opened, where visitors arrive from, their country and device type, and which sign-up links are clicked. It sets no cookies and builds no visitor profiles (Art. 6(1)(f) GDPR). We run no advertising trackers.'
-    : 'we count visits ourselves, with our own installation of the open-source tool Umami on our own server. It records which pages are opened, the site and campaign link a visitor came from, country, browser, operating system, device type, screen size and language, and which sign-up links are clicked. Your IP address is used for a moment to find the country and to form an anonymous visitor number that changes every day; the address itself is not stored. Umami sets no cookies and stores nothing on your device. Legal basis: our legitimate interest in knowing which pages are useful (Art. 6(1)(f) GDPR). You can object at any time through the contact below, and a "Do Not Track" setting in your browser switches the counting off. Visit records are deleted after 12 months. We run no third-party analytics and no advertising trackers.';
+    : 'we count visits ourselves, with our own installation of the open-source tool Umami on our own server. It records which pages are opened, the site and campaign link a visitor came from, country, browser, operating system, device type, screen size and language, which sign-up links are clicked, whether the video is played and how much of it is watched, which questions are opened, how far a page is read and roughly how long it stays open. Your IP address is used for a moment to find the country and to form an anonymous visitor number that changes every day; the address itself is not stored. Umami sets no cookies and stores nothing on your device. Legal basis: our legitimate interest in knowing which pages are useful (Art. 6(1)(f) GDPR). You can object at any time through the contact below, and a "Do Not Track" setting in your browser switches the counting off. Visit records are deleted after 12 months. We run no third-party analytics and no advertising trackers.';
   const swap = (v) => (typeof v === 'string' ? v.replace(OLD, NEW).replace('message delivery — governed by Telegram\'s own terms once you use it); no one else.', UMAMI_HOSTED ? 'message delivery — governed by Telegram\'s own terms once you use it); Umami Software, Inc. (website statistics); no one else.' : 'message delivery — governed by Telegram\'s own terms once you use it); no one else.') : v);
   let done = false;
   for (const section of learningPages.privacy.sections) {
@@ -273,7 +275,7 @@ function headTags({title, description, url, root, extraCss = '', ld}) {
   <link rel="preload" href="${root}pilot/fonts/Fraunces.woff" as="font" type="font/woff" crossorigin>
   <link rel="stylesheet" href="${root}pilot/styles.css">
   <link rel="stylesheet" href="${root}read/read.css">${extraCss}
-  ${jsonLd(ld)}${ANALYTICS ? `\n  ${ANALYTICS}` : ''}`;
+  ${jsonLd(ld)}${ANALYTICS ? `\n  ${ANALYTICS}\n  <script type="module" src="${root}track.js"></script>` : ''}`;
 }
 
 /* ---------- the frame every reading page shares ---------- */
@@ -391,14 +393,15 @@ const record = await snapshot();
 // Pricing: the pay-back figure is worked out from the record, the same way the page does it when it loads
 // (site/read/page.js) and the home page does (site/home-record.js). No typed-in figure.
 {
-  const {paybackCapital, recordPace} = await load('pilot/data.js');
-  const card = learningPages.pricing.cards.find((c) => c.title === 'Pays for itself from about');
-  const rate = recordPace(record?.evidence), need = paybackCapital(49, rate);
-  if (!card) throw new Error('The pricing page no longer has its pay-back card; update tools/build-static.mjs.');
-  if (need) {
-    card.price = `$${need.toLocaleString('en-US')}`;
-    card.body = [`The record’s pace is about ${rate.toFixed(1)}% a month on the money set aside for it, before fees. At that pace, $${need.toLocaleString('en-US')} earns about $49 a month. Anything above it is yours. The record uses fixed buy sizes and never runs out of cash; a real account has only what you put in.`];
-  } else { card.price = '—'; card.body = ['The figure is the monthly price divided by the record’s monthly pace. It is filled in from the live record when the page loads.']; }
+  const {recordPace} = await load('pilot/data.js'), {EXAMPLE_TEXT, exampleAmount} = await load('example.js');
+  const card = learningPages.pricing.cards.find((c) => c.title === 'On 10,000 USDT, about');
+  const rate = recordPace(record?.evidence);
+  if (!card) throw new Error('The pricing page no longer has its record-pace card; update tools/build-static.mjs.');
+  if (!card.title.includes(EXAMPLE_TEXT)) throw new Error('The pricing card names another example amount than site/example.js.');
+  if (Number.isFinite(rate)) {
+    card.price = exampleAmount(rate);
+    card.body = [`The record’s pace is about ${rate.toFixed(1)}% a month on the money set aside for it, before fees. On ${EXAMPLE_TEXT} that is about ${exampleAmount(rate)} a month; the subscription is $49. The record uses fixed buy sizes and never runs out of cash; a real account has only what you put in.`];
+  } else { card.price = '—'; card.body = ['The figure is the record’s monthly pace on 10,000 USDT. It is filled in from the live record when the page loads.']; }
 }
 // NoGuru's referral list: the exchange links are written into the home page so they are there without JavaScript.
 async function referralList() {
@@ -456,6 +459,7 @@ for (const page of pages) {
 
 // The home page keeps its hand-written file; the build refreshes its search tags and the dated record snapshot in place.
 const setText = (html, id, text) => html.replace(new RegExp(`(<[a-z0-9]+\\b[^>]*\\bid="${id}"[^>]*>)[^<]*(<)`), (_, open, close) => `${open}${esc(text)}${close}`);
+const EXAMPLE = await load('example.js');
 function buildHome() {
   const file = path.join(SITE, 'index.html'); let html = fs.readFileSync(file, 'utf8');
   const title = 'NoGuru — an automated crypto trading bot', description = 'An automated crypto bot that buys in steps, sells above its average and starts again, in your own exchange account. See the live record and try it free for 14 days.';
@@ -475,14 +479,14 @@ function buildHome() {
   if (record) {
     const {texts, latest} = homeRecord(record.evidence);
     for (const [id, text] of Object.entries(texts)) html = setText(html, id, text);
-    // The film's figures (site/film.js fills the same places from the live record).
+    // The hero's figures (site/hero.js fills the same places from the live record).
     const ev = record.evidence;
     if (ev.closed && Number.isFinite(ev.grossSinceStart)) {
       const day = (iso) => new Intl.DateTimeFormat('en-GB', {day: 'numeric', month: 'short', timeZone: 'UTC'}).format(new Date(iso));
       const rec = {pct: `+${ev.grossSinceStart.toFixed(1)}%`, period: `${day(ev.windowStart)} – ${day(ev.windowEnd)} ${new Date(ev.windowEnd).getUTCFullYear()}`,
+        amount: `About ${EXAMPLE.exampleAmount(ev.grossSinceStart)} per ${EXAMPLE.EXAMPLE_TEXT}.`,
         closed: ev.closed.toLocaleString('en-US'), up: ev.up.toLocaleString('en-US'), down: String(ev.down), open: String(ev.open)};
       html = html.replace(/(<[a-z0-9]+\b[^>]*\bdata-rec="([a-z]+)"[^>]*>)[^<]*(<)/g, (all, open, key, close) => (key in rec ? `${open}${esc(rec[key])}${close}` : all));
-      html = setText(html, 'count', rec.closed); html = setText(html, 'proof-pct', rec.pct);
     }
     html = setText(html, 'ev-status', `Snapshot of ${utcDay(BUILD_DAY)}. The live record replaces it when the page loads.`);
     html = html.replace(/(<ol class="ev-list" id="ev-list">)[\s\S]*?(<\/ol>)/, (_, open, close) => `${open}${latest.map((r) => `<li><b${r.below ? ' class="neg"' : ''}>${esc(r.result)}</b><span>${esc(r.detail)}</span><time datetime="${escAttr(r.dateTime)}">${esc(r.when)}</time></li>`).join('')}${close}`);

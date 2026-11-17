@@ -1,4 +1,4 @@
-// The site the film settles into: live record, six questions, guided start.
+// The home page below the hero: live record, six questions, guided start.
 import {record, reloadRecord} from './record.js';
 import {homeRecord, fmtDate} from './home-record.js';
 import {applyCampaign} from './campaign.js';
@@ -18,11 +18,13 @@ for (const a of document.querySelectorAll('[data-jump]')) {
 }
 
 /* ---------- pinned trial button: after the film, until the Start section ---------- */
-const pinned = $('#pinned'), film = $('#film'), start = $('#start');
+const pinned = $('#pinned'), hero = $('#hero'), start = $('#start');
 function updatePinned() {
-  const pastFilm = scrollY > film.offsetHeight - innerHeight * 0.35;
+  const pastFilm = scrollY > hero.offsetHeight * 0.65;
   const atStart = start.getBoundingClientRect().top < innerHeight * 0.75;
-  $('#topbar').classList.toggle('solid', scrollY > innerHeight * 0.6);
+  const onPage = scrollY > hero.offsetHeight - 80;
+  $('#topbar').classList.toggle('solid', onPage);
+  $('#topbar').classList.toggle('over', !onPage && scrollY > 24);   // scrolling within the hero: keep the bar readable
   pinned.classList.toggle('show', pastFilm && !atStart);
 }
 addEventListener('scroll', updatePinned, {passive: true});

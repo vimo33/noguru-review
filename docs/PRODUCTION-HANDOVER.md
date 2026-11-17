@@ -37,6 +37,10 @@ Requirements: Node 20 or newer. No packages to install. The build reads the publ
 6. **After the first release:** submit `https://noguru.io/sitemap.xml` in Google Search Console and Bing
    Webmaster Tools.
 
+## The video
+
+The home page plays `media/noguru-explainer.mp4` (about 11 MB for the draft). The server must answer byte-range requests for it (`Accept-Ranges: bytes`, status 206), or visitors cannot jump within the film; nginx, Caddy and Cloudflare do this by default. The bundle is not written while the home page still carries the draft film.
+
 ## Checks after a release
 
 - `https://noguru.io/` shows the record's figures and today's date in "Snapshot of …" before scripts run.

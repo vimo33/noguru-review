@@ -94,10 +94,25 @@ test('no public page carries review-site leftovers, and the pay-back figure is t
   for (const p of ['about/', 'faq/', 'exchanges/', 'resources/', 'setup-guide/', 'market-stress/', 'examples/'])
     assert.ok(text(read(`${p}index.html`)).length > 1500, `${p} has its own text`);
   const home = text(read('index.html')), pricing = text(read('pricing/index.html'));
-  const onHome = home.match(/about (\$[\d,]+) of trading money covers that/)?.[1], onPricing = pricing.match(/Pays for itself from about (\$[\d,]+|—)/)?.[1];
-  assert.ok(onHome && onPricing, 'both pages state a pay-back figure');
-  if (onPricing !== '—') assert.equal(onPricing, onHome, 'home and pricing show the same pay-back figure');
+  // Record figures are shown as money on one example amount, 10,000 USDT, on every page that states one.
+  const onHome = home.match(/10,000 USDT made about ([\d,]+ USDT) a month/)?.[1], onPricing = pricing.match(/On 10,000 USDT, about\s+([\d,]+ USDT|—)/)?.[1];
+  assert.ok(onHome && onPricing, 'both pages state the monthly figure on 10,000 USDT');
+  if (onPricing !== '—') assert.equal(onPricing, onHome, 'home and pricing show the same monthly figure');
+  assert.match(home, /About [\d,]+ USDT per 10,000 USDT\./, 'the home page gives the completed profit on the example amount');
+  for (const p of ['', 'pricing/', 'track-record/']) assert.doesNotMatch(text(read(`${p}index.html`)), /38[,.]?600/, `${p || 'home'} states the record's own pot`);
+  assert.match(text(read('track-record/index.html')), /On every 10,000 USDT that is about −?[\d,]+ USDT/, 'the record page gives amounts on the example amount');
   const pace = home.match(/pace is about ([\d.]+)% a month/)?.[1], rounded = home.match(/averaged about (\d+)% a month/)?.[1];
   if (pace && rounded) assert.equal(rounded, String(Math.round(Number(pace))), 'the home page quotes one monthly pace');
   assert.doesNotMatch(home, /1,046 of 1,048/, 'no typed-in record figure on the home page');
+});
+
+test('the home page opens with the hero and the video, not the scroll film', () => {
+  const html = read('index.html');
+  assert.match(html, /<p class="claim">NoGuru\. <em>No guessing\.<\/em><\/p>/);
+  assert.match(html, /data-video-open="hero"/, 'the hero has a button for the video');
+  assert.match(html, /<dialog class="video" id="video"/);
+  assert.doesNotMatch(html, /film\.js|Play the film|id="story"/, 'the scroll film is gone from the page');
+  assert.doesNotMatch(html, /<video\b[^>]*\bautoplay/, 'the video never starts by itself');
+  assert.ok(fs.existsSync(path.join(SITE, 'media', 'noguru-explainer.mp4')), 'the video file is in place');
+  for (const p of ['pricing/', 'faq/', 'track-record/']) assert.match(read(`${p}index.html`), /<script type="module" src="\.\.\/track\.js"><\/script>/, `${p} loads the counting script`);
 });

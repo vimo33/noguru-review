@@ -54,8 +54,8 @@ if (page === 'market') import('../dashboard.js').then(({createDashboardControlle
 });
 
 // Pricing: the pay-back figure comes from the live record, never from a typed-in number.
-if (page === 'pricing') import('../pilot/data.js').then(async ({loadEvidence, paybackCapital, recordPace}) => {
-  const FEE = 49, CORNIX = 49.9, SUGGESTED = 3000;
+if (page === 'pricing') Promise.all([import('../pilot/data.js'), import('../example.js')]).then(async ([{loadEvidence, paybackCapital, recordPace}, {EXAMPLE_TEXT, exampleAmount}]) => {
+  const FEE = 49, CORNIX = 49.9;
   const day = (iso) => new Intl.DateTimeFormat('en-GB', {day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC'}).format(new Date(`${iso}T00:00:00Z`));
   const usd = (n) => `$${Math.round(n).toLocaleString('en-US')}`;
   const card = $('#learning-cards .plan-card:nth-child(2)'), section = document.getElementById('learning-payback');
@@ -69,14 +69,13 @@ if (page === 'pricing') import('../pilot/data.js').then(async ({loadEvidence, pa
     body.textContent = 'I can’t reach the public record right now, so I’m not showing a figure. It is the monthly price divided by the record’s monthly pace.';
     return;
   }
-  const pace = `${rate.toFixed(1)}% a month on the money set aside for it`, period = `${day(ev.windowStart)} to ${day(ev.windowEnd)}, before fees`;
-  price.firstChild.textContent = usd(need);
-  body.textContent = `The record’s pace is about ${pace} (${period}). At that pace, ${usd(need)} earns about $${FEE} a month. Anything above it is yours. The record uses fixed buy sizes and never runs out of cash; a real account has only what you put in.`;
+  const period = `${day(ev.windowStart)} to ${day(ev.windowEnd)}, before fees`;
+  price.firstChild.textContent = exampleAmount(rate);
+  body.textContent = `The record’s pace is about ${rate.toFixed(1)}% a month on the money set aside for it (${period}). On ${EXAMPLE_TEXT} that is about ${exampleAmount(rate)} a month; the subscription is $${FEE}. The record uses fixed buy sizes and never runs out of cash; a real account has only what you put in.`;
   if (!section) return;
   const live = document.createElement('p'); live.className = 'learning-example';
-  live.textContent = `Today: $${FEE} ÷ ${rate.toFixed(2)}% = ${usd(FEE / (rate / 100))}, rounded up to ${usd(need)}. `
-    + `Counting a Cornix plan at $${CORNIX.toFixed(2)} a month as well, the figure is about ${usd(paybackCapital(FEE + CORNIX, rate))}. `
-    + `For scale, about ${rate.toFixed(1)}% a month on the suggested ${SUGGESTED.toLocaleString('en-US')} USDT would be about ${usd(SUGGESTED * rate / 100)} a month at the same pace, before exchange fees. `
+  live.textContent = `Today: ${rate.toFixed(2)}% of ${EXAMPLE_TEXT} is about ${exampleAmount(rate)} a month, before exchange fees. `
+    + `The subscription pays for itself from about ${usd(need)} of trading money ($${FEE} ÷ ${rate.toFixed(2)}%, rounded up); counting a Cornix plan at $${CORNIX.toFixed(2)} a month as well, from about ${usd(paybackCapital(FEE + CORNIX, rate))}. `
     + `${ev.status === 'stale' ? 'The record is out of date, so treat this as an older reading. ' : ''}A pace from the past, not a forecast.`;
   (section.querySelector('.learning-source-links') || section.lastElementChild).before(live);
 });

@@ -37,7 +37,22 @@ node tools/bundle-production.mjs
 
 Writes `dist/production/`: a production build and only the files its pages use. The working copy stays a review build. See `docs/PRODUCTION-HANDOVER.md`.
 
-The record's monthly pace comes from one function, `recordPace` in `site/pilot/data.js`. Home, pricing and the build all use it, and so does the pay-back figure.
+The record's monthly pace comes from one function, `recordPace` in `site/pilot/data.js`. Home, pricing and the build all use it.
+
+Record figures are shown as money on one example amount, 10,000 USDT. It is set once, in `site/example.js`; the home page, pricing, the record page and the build read it from there.
+
+## The explainer video
+
+The home page's hero opens the video in a player over the page (`site/video.js`). It never starts by itself.
+
+- **The file:** `site/media/noguru-explainer.mp4`. To put in a new film, replace that file and keep the name. Export it with the index at the front ("fast start") so it can begin before it has fully loaded: `ffmpeg -i in.mp4 -c copy -movflags +faststart site/media/noguru-explainer.mp4`.
+- **The length** on the button is read from the file when it loads; the `4:51` in `site/index.html` is what shows before that, so correct it for a new film.
+- **The draft marker:** the video tag in `site/index.html` carries `data-draft` while the placeholder draft is in place. `tools/bundle-production.mjs` refuses to bundle until it is removed.
+- **A direct link:** `/?video` opens the player on arrival.
+
+## What is counted
+
+`site/track.js` sends events to Umami on every page; its header lists them. In short: time on a page (30 s, 1, 3, 5 minutes, while visible), reading depth (50%, 90%), the home page sections that were looked at, questions opened, every step of the video (`video-open`, `video-play`, `video-25`, `video-50`, `video-75`, `video-complete`, `video-close` with the seconds watched) and the clicks on the trial and sign-up links. Video progress counts seconds that really played, so dragging the bar to the end is not a full view. Nothing is stored on the visitor's device.
 
 ## For the production server
 

@@ -56,8 +56,8 @@ export const learningPages = {
         links: [link('Start my 14 days', '?page=setup')],
       },
       {
-        eyebrow: 'When it covers its own cost', title: 'Pays for itself from about', price: '—', unit: 'of trading money',
-        body: ['At the pace of the public record, roughly this much trading money earns what the subscription costs in a month. Anything above it is yours.'],
+        eyebrow: 'What the record’s pace means', title: 'On 10,000 USDT, about', price: '—', unit: 'a month',
+        body: ['The monthly pace of the public record, shown on 10,000 USDT of trading money. The subscription is $49 a month.'],
         note: 'A pace from the past, before exchange fees. It is not a promise: months differ, and coins the bot holds can sit below cost.',
         links: [link('How this is worked out', '?page=pricing#payback')],
       },

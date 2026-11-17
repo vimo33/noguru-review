@@ -1,7 +1,8 @@
 // The home page's record wording, worked out from the published record. Pure: no page access, so the
 // same wording is used live in the browser (site.js) and for the dated snapshot written into the HTML
 // when the site is built (tools/build-static.mjs).
-import {paybackCapital, recordPace} from './pilot/data.js';
+import {recordPace} from './pilot/data.js';
+import {EXAMPLE_TEXT, exampleAmount} from './example.js';
 
 export const fmtDate = (iso, withTime = false) => new Intl.DateTimeFormat('en-GB', {
   day: 'numeric', month: 'short', ...(withTime ? {hour: '2-digit', minute: '2-digit'} : {year: 'numeric'}), timeZone: 'UTC',
@@ -17,6 +18,7 @@ function took(hours) {
 export function homeRecord(ev) {
   const texts = {
     'ev-pct': pct(ev.grossSinceStart),
+    'ev-amount': `About ${exampleAmount(ev.grossSinceStart)} per ${EXAMPLE_TEXT}.`,
     'ev-period': `${fmtDate(ev.windowStart)} – ${fmtDate(ev.windowEnd)}`,
     'ev-closed': ev.closed.toLocaleString('en-US'),
     'ev-up': ev.up.toLocaleString('en-US'),
@@ -30,10 +32,10 @@ export function homeRecord(ev) {
   const fast = ev.durationSummary?.under24hPct;
   texts['ev-fast'] = Number.isFinite(fast) ? `${Math.round(fast)}%` : '—';
   if (Number.isFinite(fast)) texts['x-fast'] = `${Math.round(fast)}%`;
-  const rate = recordPace(ev), need = paybackCapital(49, rate);
-  if (need) {
-    texts['q-payback'] = `$${need.toLocaleString('en-US')}`;
-    texts['q-payback-how'] = `The record’s pace is about ${rate.toFixed(1)}% a month on the money set aside for it, before fees. At that pace $${need.toLocaleString('en-US')} earns about $49 a month. A pace from the past, not a promise. $49 is the founding price; the standard price is $99 a month once founding places are gone.`;
+  const rate = recordPace(ev);
+  if (Number.isFinite(rate)) {
+    texts['q-payback'] = exampleAmount(rate);
+    texts['q-payback-how'] = `The record’s pace is about ${rate.toFixed(1)}% a month on the money set aside for it, before fees. On ${EXAMPLE_TEXT} that is about ${exampleAmount(rate)} a month. A pace from the past, not a promise: the record uses fixed buy sizes and never runs out of cash, and a real account has only what you put in. $49 is the founding price; the standard price is $99 a month once founding places are gone.`;
   }
   // One pace for the whole page: the same monthly figure the pay-back answer uses.
   if (Number.isFinite(rate)) texts['x-month'] = `${Math.round(rate)}%`;

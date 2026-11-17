@@ -10,6 +10,8 @@
 // - trades still open are shown as one total, never one by one;
 // - wins and losses are counts, never turned into a "win rate".
 
+import {EXAMPLE_TEXT, exampleAmount} from '../example.js';
+
 const BASE = 'https://noguru.io';
 export const FEEDS = {record: `${BASE}/api/public/track-record`, headline: `${BASE}/data/published_signals.json`};
 const REFRESH_MS = 10 * 60 * 1000;          // the record is refreshed on the server every 10 minutes
@@ -107,8 +109,7 @@ export function renderRecord(body, rec, head) {
   const top = el('section', 'record-block record-head');
   if (head) {
     const big = el('p', 'record-big'); big.append(el('b', '', pct(head.pct)), el('span', '', ' completed profit'));
-    const gain = head.pot * head.pct / 100;
-    top.append(big, el('p', 'record-basis', `On the ${count(head.pot)} USDT set aside for the bot, from ${utcDay(head.since)} to ${utcDay(head.asOf)}, before fees: about ${count(Math.round(gain))} USDT.`));
+    top.append(big, el('p', 'record-basis', `On the money set aside for the bot, from ${utcDay(head.since)} to ${utcDay(head.asOf)}, before fees. On every ${EXAMPLE_TEXT} that is about ${exampleAmount(head.pct)}.`));
     if (head.perMonth) top.append(el('p', 'record-basis', `That is about ${head.perMonth.toFixed(1)}% a month on the same money. A pace from the past, not a forecast.`));
     top.append(el('p', 'record-fine', 'Completed profit counts only trades that have been sold. The trades still open are counted separately below, at where they stand today.'));
   } else {
@@ -130,7 +131,7 @@ export function renderRecord(body, rec, head) {
     o.append(el('p', '', `The ${rec.open} trades still open hold ${rec.openShare.toFixed(1)}% of the money set aside${rec.openVsCost === null ? '.' : `, and together stand ${pct(rec.openVsCost)} against what they cost, at the latest price.`}`));
     const whole = wholePot(rec, head);
     if (whole !== null) {
-      const line = el('p', 'record-whole'); line.append(el('b', '', pct(whole)), document.createTextNode(` is the whole pot today: the completed profit and the open trades together, on the same ${count(head.pot)} USDT, since ${utcDay(head.since)}, before fees. That is about ${whole < 0 ? '−' : ''}${count(Math.abs(Math.round(head.pot * whole / 100)))} USDT. It moves with the price of the open trades.`));
+      const line = el('p', 'record-whole'); line.append(el('b', '', pct(whole)), document.createTextNode(` is the whole pot today: the completed profit and the open trades together, on the same money, since ${utcDay(head.since)}, before fees. On every ${EXAMPLE_TEXT} that is about ${exampleAmount(whole)}. It moves with the price of the open trades.`));
       o.append(line);
     }
     o.append(el('p', 'record-fine', `This is where the risk sits. There is no stop loss: open trades wait for their price, they can fall further, and some may not come back. ${rec.openShare > 100 ? 'The open trades cost more than the money set aside, because the record' : 'The record'} uses fixed buy sizes and never runs out of cash. A real account has only what you put in. Open trades are shown only as this one total, never one by one.`));
@@ -187,7 +188,7 @@ export function renderRecord(body, rec, head) {
   // 7. What it is, and what it leaves out.
   const foot = el('section', 'record-block record-about');
   foot.append(el('h2', '', 'What this record is'));
-  foot.append(el('p', '', 'Every trade NoGuru published as a signal, as a Cornix bot following the channel trades it, at today\'s buy sizes, before exchange fees and the subscriptions. Nothing is retyped and nothing is left out. It is not a customer\'s account: your own results depend on when you start, how much you set aside and your exchange\'s fees. Past results do not promise future ones.'));
+  foot.append(el('p', '', 'Every trade NoGuru published as a signal, as a Cornix bot following the channel trades it, at today\'s buy sizes, before exchange fees and the subscriptions. Nothing is retyped and nothing is left out. Amounts are shown per ' + EXAMPLE_TEXT + ', by proportion; the record\'s own pot is larger. It is not a customer\'s account: your own results depend on when you start, how much you set aside and your exchange\'s fees. Past results do not promise future ones.'));
   const src = el('p', 'record-fine');
   src.append(document.createTextNode('Read from NoGuru\'s public data: '));
   [['the record', FEEDS.record], ['the profit figure', FEEDS.headline]].forEach(([label, url], i) => {
