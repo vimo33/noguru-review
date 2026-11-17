@@ -14,12 +14,21 @@ function took(hours) {
   return `${Math.round(hours / 24)} days`;
 }
 
+// One completed-profit figure for the whole site: the published cumulative figure (the "headline" feed the
+// record page shows), with its own dates. Without it, the figure worked out from the record's monthly pace.
+export function withHeadline(ev, head) {
+  if (!ev || !ev.closed) return ev;
+  const ok = head && Number.isFinite(head.pct);
+  return {...ev, profitPct: ok ? head.pct : ev.grossSinceStart, profitStart: ok ? head.since : ev.windowStart, profitEnd: ok ? head.asOf : ev.windowEnd};
+}
+
 // Returns {texts: {elementId: text}, latest: [{result, below, detail, dateTime, when}]}.
 export function homeRecord(ev) {
+  if (!Number.isFinite(ev.profitPct)) ev = withHeadline(ev, null);
   const texts = {
-    'ev-pct': pct(ev.grossSinceStart),
-    'ev-amount': `About ${exampleAmount(ev.grossSinceStart)} per ${EXAMPLE_TEXT}.`,
-    'ev-period': `${fmtDate(ev.windowStart)} – ${fmtDate(ev.windowEnd)}`,
+    'ev-pct': pct(ev.profitPct),
+    'ev-amount': `About ${exampleAmount(ev.profitPct)}.`,
+    'ev-period': `${fmtDate(ev.profitStart)} – ${fmtDate(ev.profitEnd)}`,
     'ev-closed': ev.closed.toLocaleString('en-US'),
     'ev-up': ev.up.toLocaleString('en-US'),
     'ev-open': ev.open.toLocaleString('en-US'),
@@ -35,7 +44,7 @@ export function homeRecord(ev) {
   const rate = recordPace(ev);
   if (Number.isFinite(rate)) {
     texts['q-payback'] = exampleAmount(rate);
-    texts['q-payback-how'] = `The record’s pace is about ${rate.toFixed(1)}% a month on the money set aside for it, before fees. On ${EXAMPLE_TEXT} that is about ${exampleAmount(rate)} a month. A pace from the past, not a promise: the record uses fixed buy sizes and never runs out of cash, and a real account has only what you put in. $49 is the founding price; the standard price is $99 a month once founding places are gone.`;
+    texts['q-payback-how'] = `The record’s pace is about ${rate.toFixed(1)}% a month before fees. On ${EXAMPLE_TEXT} of capital that is about ${exampleAmount(rate)} a month. A pace from the past, not a promise. $49 is the founding price; the standard price is $99 a month once founding places are gone.`;
   }
   // One pace for the whole page: the same monthly figure the pay-back answer uses.
   if (Number.isFinite(rate)) texts['x-month'] = `${Math.round(rate)}%`;

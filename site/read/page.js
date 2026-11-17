@@ -71,7 +71,7 @@ if (page === 'pricing') Promise.all([import('../pilot/data.js'), import('../exam
   }
   const period = `${day(ev.windowStart)} to ${day(ev.windowEnd)}, before fees`;
   price.firstChild.textContent = exampleAmount(rate);
-  body.textContent = `The record’s pace is about ${rate.toFixed(1)}% a month on the money set aside for it (${period}). On ${EXAMPLE_TEXT} that is about ${exampleAmount(rate)} a month; the subscription is $${FEE}. The record uses fixed buy sizes and never runs out of cash; a real account has only what you put in.`;
+  body.textContent = `The record’s pace is about ${rate.toFixed(1)}% a month (${period}). On ${EXAMPLE_TEXT} of capital that is about ${exampleAmount(rate)} a month; the subscription is $${FEE}.`;
   if (!section) return;
   const live = document.createElement('p'); live.className = 'learning-example';
   live.textContent = `Today: ${rate.toFixed(2)}% of ${EXAMPLE_TEXT} is about ${exampleAmount(rate)} a month, before exchange fees. `

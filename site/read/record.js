@@ -51,6 +51,8 @@ export function readRecord(data) {
   const coins = b.coins || {};
   return {
     windowStart: perf.window_start, windowEnd: perf.window_end,
+    // the one monthly pace the whole site quotes (recordPace in site/pilot/data.js reads the same fields)
+    pace: num(perf.pct_month_gross) && perf.pct_month_gross > 0 ? perf.pct_month_gross : num(perf.pct_month_allocation) && perf.pct_month_allocation > 0 ? perf.pct_month_allocation : null,
     closed: b.closed, up: b.up, down: b.down, open: b.open, rows,
     openShare: num(open.allocated_in_trades_pct) ? open.allocated_in_trades_pct : null,
     openVsCost: num(open.vs_cost_pct) ? open.vs_cost_pct : null,
@@ -63,10 +65,6 @@ export function readHeadline(data) {
   const months = (Date.parse(`${data.as_of}T00:00:00Z`) - Date.parse(`${data.since}T00:00:00Z`)) / 86400000 / 30.44;
   return {pct: data.cum_pct, pot: data.pot, since: data.since, asOf: data.as_of, months, perMonth: months > 0.5 ? data.cum_pct / months : null};
 }
-// Completed profit plus the open trades at the latest price, both as a share of the money set aside.
-// The engine builder confirmed on 17 Nov 2026 that allocated_in_trades_pct is open cost divided by that same pot.
-export const wholePot = (rec, head) => (head && rec && num(head.pct) && num(rec.openShare) && num(rec.openVsCost) ? head.pct + rec.openShare * rec.openVsCost / 100 : null);
-
 const BINS = [
   {label: 'Below cost', test: (p) => p < 0},
   {label: '0 to 1%', test: (p) => p >= 0 && p < 1},
@@ -109,8 +107,8 @@ export function renderRecord(body, rec, head) {
   const top = el('section', 'record-block record-head');
   if (head) {
     const big = el('p', 'record-big'); big.append(el('b', '', pct(head.pct)), el('span', '', ' completed profit'));
-    top.append(big, el('p', 'record-basis', `On the money set aside for the bot, from ${utcDay(head.since)} to ${utcDay(head.asOf)}, before fees. On every ${EXAMPLE_TEXT} that is about ${exampleAmount(head.pct)}.`));
-    if (head.perMonth) top.append(el('p', 'record-basis', `That is about ${head.perMonth.toFixed(1)}% a month on the same money. A pace from the past, not a forecast.`));
+    top.append(big, el('p', 'record-basis', `On ${EXAMPLE_TEXT} of capital, from ${utcDay(head.since)} to ${utcDay(head.asOf)}, before fees: about ${exampleAmount(head.pct)}.`));
+    if (rec.pace) top.append(el('p', 'record-basis', `That is about ${rec.pace.toFixed(1)}% a month on the same capital. A pace from the past, not a forecast.`));
     top.append(el('p', 'record-fine', 'Completed profit counts only trades that have been sold. The trades still open are counted separately below, at where they stand today.'));
   } else {
     top.append(el('p', 'record-fine', 'The profit figure could not be read just now. The trades below are unaffected.'));
@@ -128,13 +126,8 @@ export function renderRecord(body, rec, head) {
   if (rec.open > 0 && rec.openShare !== null) {
     const o = el('section', 'record-block record-open');
     o.append(el('h2', '', 'Still open'));
-    o.append(el('p', '', `The ${rec.open} trades still open hold ${rec.openShare.toFixed(1)}% of the money set aside${rec.openVsCost === null ? '.' : `, and together stand ${pct(rec.openVsCost)} against what they cost, at the latest price.`}`));
-    const whole = wholePot(rec, head);
-    if (whole !== null) {
-      const line = el('p', 'record-whole'); line.append(el('b', '', pct(whole)), document.createTextNode(` is the whole pot today: the completed profit and the open trades together, on the same money, since ${utcDay(head.since)}, before fees. On every ${EXAMPLE_TEXT} that is about ${exampleAmount(whole)}. It moves with the price of the open trades.`));
-      o.append(line);
-    }
-    o.append(el('p', 'record-fine', `This is where the risk sits. There is no stop loss: open trades wait for their price, they can fall further, and some may not come back. ${rec.openShare > 100 ? 'The open trades cost more than the money set aside, because the record' : 'The record'} uses fixed buy sizes and never runs out of cash. A real account has only what you put in. Open trades are shown only as this one total, never one by one.`));
+    o.append(el('p', '', `The ${rec.open} trades still open hold ${rec.openShare.toFixed(1)}% of the capital${rec.openVsCost === null ? '.' : `, and together stand ${pct(rec.openVsCost)} against what they cost, at the latest price.`}`));
+    o.append(el('p', 'record-fine', 'This is where the risk sits. There is no stop loss: open trades wait for their price, they can fall further, and some may not come back. Open trades are shown only as this one total, never one by one.'));
     body.append(o);
   }
 
@@ -188,7 +181,7 @@ export function renderRecord(body, rec, head) {
   // 7. What it is, and what it leaves out.
   const foot = el('section', 'record-block record-about');
   foot.append(el('h2', '', 'What this record is'));
-  foot.append(el('p', '', 'Every trade NoGuru published as a signal, as a Cornix bot following the channel trades it, at today\'s buy sizes, before exchange fees and the subscriptions. Nothing is retyped and nothing is left out. Amounts are shown per ' + EXAMPLE_TEXT + ', by proportion; the record\'s own pot is larger. It is not a customer\'s account: your own results depend on when you start, how much you set aside and your exchange\'s fees. Past results do not promise future ones.'));
+  foot.append(el('p', '', 'Every trade NoGuru published as a signal, as a Cornix bot following the channel trades it, at today\'s buy sizes, before exchange fees and the subscriptions. Nothing is retyped and nothing is left out. It is not a customer\'s account: your own results depend on when you start, how much you set aside and your exchange\'s fees. Past results do not promise future ones.'));
   const src = el('p', 'record-fine');
   src.append(document.createTextNode('Read from NoGuru\'s public data: '));
   [['the record', FEEDS.record], ['the profit figure', FEEDS.headline]].forEach(([label, url], i) => {

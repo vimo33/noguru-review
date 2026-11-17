@@ -95,12 +95,16 @@ test('no public page carries review-site leftovers, and the pay-back figure is t
     assert.ok(text(read(`${p}index.html`)).length > 1500, `${p} has its own text`);
   const home = text(read('index.html')), pricing = text(read('pricing/index.html'));
   // Record figures are shown as money on one example amount, 10,000 USDT, on every page that states one.
-  const onHome = home.match(/10,000 USDT made about ([\d,]+ USDT) a month/)?.[1], onPricing = pricing.match(/On 10,000 USDT, about\s+([\d,]+ USDT|—)/)?.[1];
+  const onHome = home.match(/10,000 USDT of capital made about ([\d,]+ USDT) a month/)?.[1], onPricing = pricing.match(/On 10,000 USDT, about\s+([\d,]+ USDT|—)/)?.[1];
   assert.ok(onHome && onPricing, 'both pages state the monthly figure on 10,000 USDT');
   if (onPricing !== '—') assert.equal(onPricing, onHome, 'home and pricing show the same monthly figure');
-  assert.match(home, /About [\d,]+ USDT per 10,000 USDT\./, 'the home page gives the completed profit on the example amount');
+  const record = text(read('track-record/index.html'));
+  const homePct = home.match(/([+−][\d.]+%)\s*completed profit on 10,000 USDT of capital/)?.[1], recordPct = record.match(/([+−][\d.]+%)\s*completed profit/)?.[1];
+  assert.ok(homePct && recordPct, 'home and the record page state the completed profit');
+  assert.equal(homePct, recordPct, 'home and the record page state the same completed profit');
+  for (const p of ['', 'pricing/', 'track-record/']) { const body = text(read(`${p}index.html`)); assert.doesNotMatch(body, /by proportion|fixed buy sizes|whole pot/i, `${p || 'home'} carries wording that was taken out`); }
   for (const p of ['', 'pricing/', 'track-record/']) assert.doesNotMatch(text(read(`${p}index.html`)), /38[,.]?600/, `${p || 'home'} states the record's own pot`);
-  assert.match(text(read('track-record/index.html')), /On every 10,000 USDT that is about −?[\d,]+ USDT/, 'the record page gives amounts on the example amount');
+  assert.match(record, /On 10,000 USDT of capital, from [^.]+ before fees: about [\d,]+ USDT\./, 'the record page gives the amount on the example capital');
   const pace = home.match(/pace is about ([\d.]+)% a month/)?.[1], rounded = home.match(/averaged about (\d+)% a month/)?.[1];
   if (pace && rounded) assert.equal(rounded, String(Math.round(Number(pace))), 'the home page quotes one monthly pace');
   assert.doesNotMatch(home, /1,046 of 1,048/, 'no typed-in record figure on the home page');

@@ -40,11 +40,11 @@ test('the record has one monthly pace, and the pay-back figure follows from it',
   assert.equal(paybackCapital(49, null), null);
 });
 
-test('the whole pot is completed profit plus the open trades at the latest price', async () => {
-  const {wholePot} = await import(pathToFileURL(path.join(__dirname, '..', 'site', 'read', 'record.js')).href);
-  assert.equal(wholePot({openShare: 138.0, openVsCost: -27.2}, {pct: 34.9}).toFixed(1), '-2.6', 'the figure checked with the engine builder');
-  assert.equal(wholePot({openShare: null, openVsCost: -27.2}, {pct: 34.9}), null);
-  assert.equal(wholePot({openShare: 138.0, openVsCost: -27.2}, null), null, 'no figure without the completed profit');
+test('every page states one completed-profit figure: the published one', async () => {
+  const {withHeadline} = await import(pathToFileURL(path.join(__dirname, '..', 'site', 'home-record.js')).href);
+  const ev = {closed: 10, grossSinceStart: 35.04, windowStart: '2026-08-01', windowEnd: '2026-11-17'};
+  assert.deepEqual(withHeadline(ev, {pct: 34.9, since: '2026-08-01', asOf: '2026-11-16'}), {...ev, profitPct: 34.9, profitStart: '2026-08-01', profitEnd: '2026-11-16'});
+  assert.equal(withHeadline(ev, null).profitPct, 35.04, 'the fallback when the published figure cannot be read');
 });
 
 test('record figures are shown as money on one example amount', async () => {

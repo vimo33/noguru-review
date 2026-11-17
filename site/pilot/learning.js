@@ -57,7 +57,7 @@ export const learningPages = {
       },
       {
         eyebrow: 'What the record’s pace means', title: 'On 10,000 USDT, about', price: '—', unit: 'a month',
-        body: ['The monthly pace of the public record, shown on 10,000 USDT of trading money. The subscription is $49 a month.'],
+        body: ['The monthly pace of the public record on 10,000 USDT of capital. The subscription is $49 a month.'],
         note: 'A pace from the past, before exchange fees. It is not a promise: months differ, and coins the bot holds can sit below cost.',
         links: [link('How this is worked out', '?page=pricing#payback')],
       },

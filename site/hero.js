@@ -2,7 +2,7 @@
 // It is the opening picture of the earlier scroll film (site/film.js), without the film.
 import * as THREE from './pilot/vendor/three.module.min.js';
 import {record} from './record.js';
-import {EXAMPLE_TEXT, exampleAmount} from './example.js';
+import {exampleAmount} from './example.js';
 
 const $ = (s) => document.querySelector(s);
 const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
@@ -17,9 +17,9 @@ record.then((ev) => {
   if (ev.status === 'unavailable' || !ev.closed) return; // keep the last checked figures rather than show nothing
   const day = (iso) => new Intl.DateTimeFormat('en-GB', {day: 'numeric', month: 'short', timeZone: 'UTC'}).format(new Date(iso));
   const set = (key, value) => document.querySelectorAll(`[data-rec="${key}"]`).forEach((n) => { n.textContent = value; });
-  set('pct', `+${ev.grossSinceStart.toFixed(1)}%`);
-  set('period', `${day(ev.windowStart)} – ${day(ev.windowEnd)} ${new Date(ev.windowEnd).getUTCFullYear()}`);
-  set('amount', `About ${exampleAmount(ev.grossSinceStart)} per ${EXAMPLE_TEXT}.`);
+  set('pct', `+${ev.profitPct.toFixed(1)}%`);
+  set('period', `${day(ev.profitStart)} – ${day(ev.profitEnd)} ${new Date(ev.profitEnd).getUTCFullYear()}`);
+  set('amount', `About ${exampleAmount(ev.profitPct)}.`);
 });
 
 /* ---------- scene ---------- */

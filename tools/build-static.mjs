@@ -104,8 +104,8 @@ const {learningPages} = await load('pilot/learning.js');
 // The privacy page says the site runs no analytics. With statistics switched on that sentence is replaced, and the
 // hosted service is named as a recipient. The wording for our own installation is the text the provider approved and
 // published on noguru.io on 16 November 2026; keep the two the same. The hosted wording is an unapproved draft.
-// One clause was added here on 17 November 2026 for the video, the questions, reading depth and time on a page
-// (site/track.js); the provider has not approved that clause yet.
+// One clause was added on 17 November 2026 for the video, the questions, reading depth and time on a page
+// (site/track.js); the provider approved it the same day.
 if (UMAMI) {
   const OLD = 'we run no third-party analytics, no advertising trackers, and set no cookies.';
   const NEW = UMAMI_HOSTED
@@ -124,7 +124,7 @@ if (UMAMI) {
 const {renderReadingPage} = await load('pilot/reading-ui.js');
 const {renderRecord, readRecord, readHeadline, getJSON, FEEDS, utcDay} = await load('read/record.js');
 const {normalizeEvidence} = await load('pilot/data.js');
-const {homeRecord} = await load('home-record.js');
+const {homeRecord, withHeadline} = await load('home-record.js');
 
 /* ---------- which pages exist, and where each one lives ---------- */
 const SPECIAL = {market: 'Market context', record: 'Trade by trade'};
@@ -362,7 +362,7 @@ async function snapshot() {
   try {
     const [raw, headRaw] = await Promise.all([getJSON(FEEDS.record), getJSON(FEEDS.headline).catch(() => null)]);
     let head = null; try { head = headRaw ? readHeadline(headRaw) : null; } catch { head = null; }
-    return {rec: readRecord(raw), head, evidence: normalizeEvidence(raw)};
+    return {rec: readRecord(raw), head, evidence: withHeadline(normalizeEvidence(raw), head)};
   } catch (error) { console.warn(`! The live record could not be read (${error.message}); pages are built without a snapshot.`); return null; }
 }
 function recordArticle(record) {
@@ -400,7 +400,7 @@ const record = await snapshot();
   if (!card.title.includes(EXAMPLE_TEXT)) throw new Error('The pricing card names another example amount than site/example.js.');
   if (Number.isFinite(rate)) {
     card.price = exampleAmount(rate);
-    card.body = [`The record’s pace is about ${rate.toFixed(1)}% a month on the money set aside for it, before fees. On ${EXAMPLE_TEXT} that is about ${exampleAmount(rate)} a month; the subscription is $49. The record uses fixed buy sizes and never runs out of cash; a real account has only what you put in.`];
+    card.body = [`The record’s pace is about ${rate.toFixed(1)}% a month, before fees. On ${EXAMPLE_TEXT} of capital that is about ${exampleAmount(rate)} a month; the subscription is $49.`];
   } else { card.price = '—'; card.body = ['The figure is the record’s monthly pace on 10,000 USDT. It is filled in from the live record when the page loads.']; }
 }
 // NoGuru's referral list: the exchange links are written into the home page so they are there without JavaScript.
@@ -481,10 +481,10 @@ function buildHome() {
     for (const [id, text] of Object.entries(texts)) html = setText(html, id, text);
     // The hero's figures (site/hero.js fills the same places from the live record).
     const ev = record.evidence;
-    if (ev.closed && Number.isFinite(ev.grossSinceStart)) {
+    if (ev.closed && Number.isFinite(ev.profitPct)) {
       const day = (iso) => new Intl.DateTimeFormat('en-GB', {day: 'numeric', month: 'short', timeZone: 'UTC'}).format(new Date(iso));
-      const rec = {pct: `+${ev.grossSinceStart.toFixed(1)}%`, period: `${day(ev.windowStart)} – ${day(ev.windowEnd)} ${new Date(ev.windowEnd).getUTCFullYear()}`,
-        amount: `About ${EXAMPLE.exampleAmount(ev.grossSinceStart)} per ${EXAMPLE.EXAMPLE_TEXT}.`,
+      const rec = {pct: `+${ev.profitPct.toFixed(1)}%`, period: `${day(ev.profitStart)} – ${day(ev.profitEnd)} ${new Date(ev.profitEnd).getUTCFullYear()}`,
+        amount: `About ${EXAMPLE.exampleAmount(ev.profitPct)}.`,
         closed: ev.closed.toLocaleString('en-US'), up: ev.up.toLocaleString('en-US'), down: String(ev.down), open: String(ev.open)};
       html = html.replace(/(<[a-z0-9]+\b[^>]*\bdata-rec="([a-z]+)"[^>]*>)[^<]*(<)/g, (all, open, key, close) => (key in rec ? `${open}${esc(rec[key])}${close}` : all));
     }
