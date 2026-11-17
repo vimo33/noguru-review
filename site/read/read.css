@@ -119,3 +119,28 @@ body[data-page=glossary] .learning-section p{font-size:14.5px;line-height:1.55;m
 body[data-page=glossary] .learning-section p+p{margin-top:6px}
 body[data-page=glossary] .learning-source-links{margin-top:8px;font-size:13px}
 @media (max-width:760px){body[data-page=glossary] #learning-sections{grid-template-columns:minmax(0,1fr)}}
+
+/* ---------- the checkout on the pricing page ---------- */
+.checkout{max-width:640px;margin:34px 0 10px;padding:26px 26px 22px;border:1px solid var(--line);border-radius:20px;background:#fffdf7;scroll-margin-top:90px}
+.checkout h2{margin:0 0 6px;font-size:30px}
+.checkout p{margin:10px 0}
+.checkout-price{display:flex;align-items:baseline;gap:8px}
+.checkout-price b{font-family:var(--display,Fraunces,Georgia,serif);font-weight:450;font-size:44px;letter-spacing:-.04em;line-height:1}
+.checkout-price span,.checkout-fine{font-size:13.5px!important;line-height:1.55;color:var(--muted)}
+.checkout-step{display:flex;align-items:center;gap:10px;margin-top:22px!important;font-weight:650}
+.checkout-step b{flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:13px;background:var(--ink,#263e3a);color:#f7f3ea}
+.checkout input,.checkout select{width:100%;max-width:380px;min-height:48px;padding:0 14px;border:1px solid #263e3a55;border-radius:12px;background:#fff;color:inherit;font:inherit;font-size:16px}
+.checkout input:focus-visible,.checkout select:focus-visible,.checkout-btn:focus-visible{outline:2px solid #d4a17c;outline-offset:3px}
+.checkout-btn{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 26px;border-radius:99px;border:1px solid var(--ink,#263e3a);background:var(--ink,#263e3a);color:#f7f3ea;font:inherit;font-size:15px;font-weight:650;text-decoration:none;cursor:pointer}
+.checkout-btn.ghost{background:none;color:inherit}
+.checkout-btn:disabled{opacity:.45;cursor:not-allowed}
+.checkout-msg{min-height:1.4em;font-weight:600}
+.checkout-msg .checkout-btn{margin:10px 0 0;display:flex;width:fit-content}
+.agree{width:min(640px,calc(100vw - 28px));max-height:88dvh;padding:0;border:1px solid var(--line);border-radius:18px;background:#f7f3ea;color:inherit;overflow:auto}
+.agree::backdrop{background:#0e1c18b8}
+#agree-box{padding:24px}
+#agree-box h2{margin:0 0 6px;font-size:26px}
+#agree-box label{display:flex;gap:12px;align-items:flex-start;margin:16px 0;cursor:pointer;line-height:1.5}
+#agree-box input[type=checkbox]{flex:none;width:22px;height:22px;margin-top:2px;accent-color:#263e3a}
+.agree-actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:flex-end;margin-top:18px}
+@media (max-width:480px){.checkout{padding:20px 18px}.agree-actions .checkout-btn{flex:1}}

@@ -120,3 +120,14 @@ test('the home page opens with the hero and the video, not the scroll film', () 
   assert.ok(fs.existsSync(path.join(SITE, 'media', 'noguru-explainer.mp4')), 'the video file is in place');
   for (const p of ['pricing/', 'faq/', 'track-record/']) assert.match(read(`${p}index.html`), /<script type="module" src="\.\.\/track\.js"><\/script>/, `${p} loads the counting script`);
 });
+
+test('the pricing page carries the checkout: trial and payment through the member gate, behind the agreement', () => {
+  const html = read('pricing/index.html'), js = read('read/checkout.js');
+  for (const id of ['tg', 'term', 'asset', 'trial', 'buy', 'buy-msg', 'agree-ok', 'ck-terms', 'ck-instr', 'ck-risk', 'ck-exec'])
+    assert.match(html, new RegExp(`id="${id}"`), `the checkout has #${id}, as the server expects`);
+  for (const route of ['/gate/api/price', '/gate/api/trial', '/gate/api/invoice', '/gate/i/']) assert.ok(js.includes(route), `checkout.js uses ${route}`);
+  assert.match(js, /AGREEMENT_VERSION = '2026-11-01\.3'/, 'the agreement version matches the wording on the page');
+  assert.match(text(html), /I understand that NoGuru delivers the signals only; the Cornix connection to my exchange and the execution of my orders are outside NoGuru’s responsibility\./);
+  assert.match(html, /id="agree-ok" disabled/, 'nothing can be sent before the boxes are ticked');
+  assert.doesNotMatch(html, /\$49\/month after|<b id="big-price">\$\d/, 'no typed-in price in the checkout headline');
+});

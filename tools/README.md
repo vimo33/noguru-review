@@ -29,6 +29,14 @@ Working pages from the migration (`source-*`, `review-*`, `all-pages`) are left 
 
 The review host must stay on the review build. A production build is only for the production server, and publishing either one needs Vimo's go-ahead for that revision.
 
+## Releasing to production
+
+```bash
+node tools/release-production.mjs --push
+```
+
+The production server watches the branch `production` and builds whatever is pushed there. This tool takes the committed state, leaves out the paths in `tools/production-exclude.txt`, runs the server's own build and tests, stops if anything still mentions the review address, and adds one commit on top of `production`. Without `--push` it only prepares and checks. The server writes its result to `site-publish/STATUS.md` in the private data repository within about ten minutes. Going public on noguru.io is a separate switch on the server.
+
 ## The production bundle
 
 ```bash
@@ -45,10 +53,14 @@ Record figures are shown as money on one example amount, 10,000 USDT. It is set 
 
 The home page's hero opens the video in a player over the page (`site/video.js`). It never starts by itself.
 
-- **The file:** `site/media/noguru-explainer.mp4`. To put in a new film, replace that file and keep the name. Export it with the index at the front ("fast start") so it can begin before it has fully loaded: `ffmpeg -i in.mp4 -c copy -movflags +faststart site/media/noguru-explainer.mp4`.
-- **The length** on the button is read from the file when it loads; the `4:51` in `site/index.html` is what shows before that, so correct it for a new film.
-- **The draft marker:** the video tag in `site/index.html` carries `data-draft` while the placeholder draft is in place. `tools/bundle-production.mjs` refuses to bundle until it is removed.
+- **The files:** in `site/media/`: `noguru-explainer.mp4` (720p, the default), `noguru-explainer-1080p.mp4` (large screens), `noguru-explainer-poster.jpg` (shown before play) and `noguru-explainer.en.vtt` (captions). They come from the film's web package (`analysis/2026-11-15/explainer-video/web/`); for a new cut, copy the four files over these and keep the names. Export it with the index at the front ("fast start") so it can begin before it has fully loaded: `ffmpeg -i in.mp4 -c copy -movflags +faststart site/media/noguru-explainer.mp4`.
+- **The length** on the button is read from the file when it loads; the `4:56` in `site/index.html` is what shows before that, so correct it for a new film.
+- **A film that is not signed off:** add `data-draft` to the video tag in `site/index.html`; `tools/release-production.mjs` then warns on every release until it is removed. The film of 17 November is signed off.
 - **A direct link:** `/?video` opens the player on arrival.
+
+## The checkout on the pricing page
+
+`tools/checkout.html` is the form and the agreement; `site/read/checkout.js` drives it. It is the live noguru.io checkout: the same field ids, the same three routes of the member gate (`/gate/api/price`, `/gate/api/trial`, `/gate/api/invoice`) and the same four agreement sentences, recorded on the server under `AGREEMENT_VERSION`. Change that version together with any change to the sentences, and tell the server side. On any address other than noguru.io the form shows the prices but sends nothing.
 
 ## What is counted
 
