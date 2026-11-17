@@ -46,7 +46,7 @@ function references(rel, text) {
   return out;
 }
 // Paths a script builds at run time, which the patterns above cannot see. Each is [the script, what it loads].
-const BUILT_AT_RUN_TIME = [['hero.js', ['pilot/assets/noguru-guide-original.png']], ['video.js', ['media/noguru-explainer.mp4']]];
+const BUILT_AT_RUN_TIME = [['hero.js', ['pilot/assets/noguru-guide-original.png']], ['video.js', ['media/noguru-explainer.mp4', 'media/noguru-explainer-1080p.mp4']]];
 
 const keep = new Set(), missing = [];
 const queue = written.filter((rel) => exists(rel));
@@ -81,7 +81,7 @@ for (const rel of keep) {
   if (/vimo33|noguru-review|github\.io/.test(text)) problems.push(`${rel} mentions the review site`);
   if (rel.endsWith('.html') && /Review preview|Dated prior review/.test(text)) problems.push(`${rel} carries review wording`);
 }
-if (!DRAFT_VIDEO_OK && /<video\b[^>]*\bdata-draft\b/.test(fs.readFileSync(path.join(SITE, 'index.html'), 'utf8'))) problems.push('index.html still plays the draft film. Replace site/media/noguru-explainer.mp4 with the final film and remove data-draft from the video tag in site/index.html (or pass --allow-draft-video for a trial run)');
+if (!DRAFT_VIDEO_OK && /<video\b[^>]*\bdata-draft\b/.test(fs.readFileSync(path.join(SITE, 'index.html'), 'utf8'))) problems.push('The film on the home page is not signed off for the live site yet. Once it is, remove data-draft from the video tag in site/index.html (or pass --allow-draft-video for a trial run)');
 const sitemapPages = [...fs.readFileSync(path.join(SITE, 'sitemap.xml'), 'utf8').matchAll(/<loc>https?:\/\/[^/]+\/([^<]*)<\/loc>/g)].map((m) => `${m[1]}index.html`);
 for (const rel of sitemapPages) {
   if (!keep.has(rel)) problems.push(`${rel} is in the sitemap but not in the bundle`);

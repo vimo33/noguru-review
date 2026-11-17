@@ -29,10 +29,12 @@ if (dialog && video) {
   video.addEventListener('loadedmetadata', () => { document.querySelectorAll('[data-video-length]').forEach((n) => { n.textContent = length(video.duration); }); });
   video.addEventListener('error', () => { dialog.classList.add('failed'); track('video-error'); });
 
+  // The larger file only where the screen can show it and the visitor has not asked to save data.
+  const source = () => (video.dataset.srcLarge && screen.width * (devicePixelRatio || 1) >= 1600 && Math.min(innerWidth, innerHeight) >= 600 && !navigator.connection?.saveData ? video.dataset.srcLarge : video.dataset.src);
   function open(place) {
     from = place || 'page';
     if (!dialog.showModal) { location.href = video.dataset.src; return; }      // very old browsers: open the file itself
-    if (!video.getAttribute('src')) video.setAttribute('src', video.dataset.src);
+    if (!video.getAttribute('src')) video.setAttribute('src', source());
     end.hidden = true; dialog.classList.remove('failed');
     dialog.showModal(); root.classList.add('video-open'); document.dispatchEvent(new Event('noguru:video'));
     track('video-open', {from});

@@ -53,9 +53,9 @@ Record figures are shown as money on one example amount, 10,000 USDT. It is set 
 
 The home page's hero opens the video in a player over the page (`site/video.js`). It never starts by itself.
 
-- **The file:** `site/media/noguru-explainer.mp4`. To put in a new film, replace that file and keep the name. Export it with the index at the front ("fast start") so it can begin before it has fully loaded: `ffmpeg -i in.mp4 -c copy -movflags +faststart site/media/noguru-explainer.mp4`.
-- **The length** on the button is read from the file when it loads; the `4:51` in `site/index.html` is what shows before that, so correct it for a new film.
-- **The draft marker:** the video tag in `site/index.html` carries `data-draft` while the placeholder draft is in place. `tools/bundle-production.mjs` refuses to bundle until it is removed.
+- **The files:** in `site/media/`: `noguru-explainer.mp4` (720p, the default), `noguru-explainer-1080p.mp4` (large screens), `noguru-explainer-poster.jpg` (shown before play) and `noguru-explainer.en.vtt` (captions). They come from the film's web package (`analysis/2026-11-15/explainer-video/web/`); for a new cut, copy the four files over these and keep the names. Export it with the index at the front ("fast start") so it can begin before it has fully loaded: `ffmpeg -i in.mp4 -c copy -movflags +faststart site/media/noguru-explainer.mp4`.
+- **The length** on the button is read from the file when it loads; the `4:56` in `site/index.html` is what shows before that, so correct it for a new film.
+- **The sign-off marker:** the video tag in `site/index.html` carries `data-draft` until the film is signed off for the live site. `tools/release-production.mjs` warns while it is there.
 - **A direct link:** `/?video` opens the player on arrival.
 
 ## What is counted

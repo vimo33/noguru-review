@@ -48,7 +48,7 @@ const files = []; (function walk(dir) { for (const e of fs.readdirSync(dir, {wit
 const review = files.filter((rel) => /\.(html|js|mjs|css|json|xml|txt|svg|webmanifest)$/.test(rel) && !SOURCE_DATA.has(rel) && /vimo33|noguru-review|github\.io/.test(fs.readFileSync(path.join(work, rel), 'utf8')));
 if (review.length) stop(`These files still mention the review address:\n  ${review.join('\n  ')}\nFix them, or add them to tools/production-exclude.txt if no page uses them.`);
 const bytes = files.reduce((sum, rel) => sum + fs.statSync(path.join(work, rel)).size, 0);
-if (/<video\b[^>]*\bdata-draft\b/.test(fs.readFileSync(path.join(work, 'site', 'index.html'), 'utf8'))) console.warn('! The home page still plays the draft film ("not for publication" on screen). Replace it before the site goes public.');
+if (/<video\b[^>]*\bdata-draft\b/.test(fs.readFileSync(path.join(work, 'site', 'index.html'), 'utf8'))) console.warn('! The film on the home page is still marked as not signed off (data-draft in site/index.html). Remove the mark once it is signed off for the live site.');
 
 /* ---------- 5: one commit on top of production ---------- */
 try { git(['fetch', '--quiet', 'origin', 'production'], {stdio: 'ignore'}); } catch { /* the branch does not exist yet */ }
