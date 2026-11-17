@@ -47,7 +47,7 @@ function oiView(d) {
 }
 function sessionBlock(r,d) {
   const label={asia:'Asia',london:'London',new_york:'New York'};
-  const row=(name,s,window)=>`<tr><th scope="row">${escape(name)}<small>${escape(window||'')}</small><small>${!valid(s.high)||!valid(s.low)||s.high===s.low?'Range position unavailable':r.price>s.high?'Now above range':r.price<s.low?'Now below range':'Now within range'}</small></th><td class="numeric">${price(s.high)}<small>${s.takenOutHigh?'High breached':'High not breached'}</small></td><td class="numeric">${price(s.low)}<small>${s.takenOutLow?'Low breached':'Low not breached'}</small></td></tr>`;
+  const row=(name,s,window)=>`<tr><th scope="row">${escape(name)}<small>${escape(window||'')}</small><small>${!valid(s.high)||!valid(s.low)||s.high===s.low?'Range position unavailable':r.price>s.high?'Now above range':r.price<s.low?'Now below range':'Now within range'}</small></th><td class="numeric">${price(s.high)}<small>${s.takenOutHigh===null?'High so far':s.takenOutHigh?'High breached':'High not breached'}</small></td><td class="numeric">${price(s.low)}<small>${s.takenOutLow===null?'Low so far':s.takenOutLow?'Low breached':'Low not breached'}</small></td></tr>`;
   return `<div class="session-block"><h4 class="session-symbol">${escape(r.symbol)} <span class="session-price">${price(r.price)}</span></h4>${table(['Window','High','Low'],Object.entries(r.sessions).map(([key,s])=>row(label[key],s,`${d.windowsUtc[key]} · ${s.status.replaceAll('_',' ')}`)).join('')+row('Prior day',r.priorDay,d.windowsUtc.prior_day),`${r.symbol} quote-price ranges`)}<p class="note">${Object.values(r.sessions).map(s=>`${date(s.start)}`).filter((v,i,a)=>a.indexOf(v)===i).join(' · ')} · UTC windows</p></div>`;
 }
 function sessionsView(d) {

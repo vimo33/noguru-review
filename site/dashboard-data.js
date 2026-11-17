@@ -82,8 +82,10 @@ function sessions(raw,ctx) {
   const rr=rows(raw.symbols);uniqueSymbols(rr);const asOf=observed(raw.as_of,ctx.now);
   ensure(record(raw.session_windows_utc)&&record(raw.tradfi)&&typeof raw.tradfi.open==='boolean','Session windows or venue state are missing.');
   const windowsUtc={};for(const k of ['asia','london','new_york','prior_day']){ensure(string(raw.session_windows_utc[k],80),'A UTC window label is invalid.');windowsUtc[k]=raw.session_windows_utc[k];}
-  const bands=r=>{
-    ensure(record(r)&&positive(r.high)&&positive(r.low)&&r.high>=r.low&&typeof r.taken_out_high==='boolean'&&typeof r.taken_out_low==='boolean','A session range is invalid.');
+  // While a window is still open the source gives its range so far and null for "taken out": not known yet.
+  const bands=(r,open=false)=>{
+    const flag=v=>typeof v==='boolean'||(open&&v===null);
+    ensure(record(r)&&positive(r.high)&&positive(r.low)&&r.high>=r.low&&flag(r.taken_out_high)&&flag(r.taken_out_low),'A session range is invalid.');
     return {high:r.high,low:r.low,takenOutHigh:r.taken_out_high,takenOutLow:r.taken_out_low};
   };
   const normalized=rr.map(r=>{
@@ -92,7 +94,7 @@ function sessions(raw,ctx) {
       const v=r.sessions[key];ensure(record(v)&&['not_started','in_progress','complete'].includes(v.status),'A session status is invalid.');
       const start=timestamp(v.start),end=timestamp(v.end);ensure(start&&end&&start<end,'A session time window is invalid.');
       if(v.status==='complete')ensure(Date.parse(end)<=ctx.now+FUTURE_TOLERANCE,'A completed session ends in the future.');
-      const band=v.status==='not_started'&&v.high===null&&v.low===null?{high:null,low:null,takenOutHigh:false,takenOutLow:false}:bands(v);
+      const band=v.status==='not_started'&&v.high===null&&v.low===null?{high:null,low:null,takenOutHigh:false,takenOutLow:false}:bands(v,v.status==='in_progress');
       out[key]={status:v.status,start,end,...band};
     }
     return {symbol:r.symbol,price:r.price,sessions:out,priorDay:bands(r.prior_day)};

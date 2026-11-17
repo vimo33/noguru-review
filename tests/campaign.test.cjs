@@ -81,3 +81,16 @@ test('the trial form sends the campaign of the visit as src, and nothing when th
   assert.match(js, /post\('\/gate\/api\/trial', \{buyer_tg: tg, consent, ref: refCode\(\), \.\.\.\(src \? \{src\} : \{\}\)\}\)/);
   assert.doesNotMatch(js, /\/gate\/api\/invoice'[^\n]*src/, 'the server takes src on the trial route only');
 });
+
+test('the market page reads session ranges while a window is still open', async () => {
+  const {normalizeDashboardWidget} = await import(pathToFileURL(path.join(__dirname, '..', 'site', 'dashboard-data.js')).href);
+  const now = Date.parse('2026-11-17T17:15:00Z'), band = (status, start, end, flag) => ({status, start, end, high: 65447, low: 63336, taken_out_high: flag, taken_out_low: flag});
+  const feed = (nyFlag, londonFlag = false) => ({as_of: '2026-11-17T17:14:43+00:00', session_windows_utc: {asia: '00:00-08:00', london: '07:00-16:00', new_york: '12:00-21:00', prior_day: 'prior UTC calendar day'},
+    tradfi: {open: true, reason: null, note: null, venues: [{venue: 'London', open: true, reason: null, holiday: null}]},
+    symbols: [{symbol: 'BTC', price: 63747.09, prior_day: band('complete', '', '', true), sessions: {asia: band('complete', '2026-11-17T00:00:00+00:00', '2026-11-17T08:00:00+00:00', true),
+      london: band('complete', '2026-11-17T07:00:00+00:00', '2026-11-17T16:00:00+00:00', londonFlag), new_york: band('in_progress', '2026-11-17T12:00:00+00:00', '2026-11-17T21:00:00+00:00', nyFlag)}}]});
+  const open = normalizeDashboardWidget('sessions', feed(null), {now});
+  assert.equal(open.status, 'ready', JSON.stringify(open).slice(0, 300));
+  assert.equal(open.data.rows[0].sessions.new_york.takenOutHigh, null, 'not known yet stays not known');
+  assert.throws(() => normalizeDashboardWidget('sessions', feed(null, null), {now}), /session range/, 'a finished window must say whether its range was taken out');
+});

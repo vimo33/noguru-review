@@ -7,7 +7,7 @@ const video = dialog?.querySelector('video');
 
 if (dialog && video) {
   const end = dialog.querySelector('#video-end'), root = document.documentElement;
-  const length = (s) => `${Math.floor(s / 60)}:${String(Math.round(s % 60)).padStart(2, '0')}`;
+  const length = (s) => { const t = Math.round(s); return `${Math.floor(t / 60)}:${String(t % 60).padStart(2, '0')}`; };   // 299.6 s is 5:00, never 4:60
 
   // How much was really watched: seconds that played, not the furthest point reached, so that
   // dragging the bar to the end does not count as watching it.
