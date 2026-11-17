@@ -1,0 +1,17 @@
+# Files and folders that stay out of the production branch (one path per line, relative to the repository).
+# They are drafts and earlier experiments: no public page uses them, and some still link to the review address.
+# tools/release-production.mjs reads this list. Everything else in the repository goes to production as it is.
+site/drafts
+site/sitemap.html
+site/results-first.html
+site/calculator.html
+site/brand-options.html
+site/guide.html
+site/assets/guide.js
+site/assets/record.js
+site/experience/assets/robot-layer
+site/experience/assets/fonts
+site/experience/assets/noguru-guide.png
+site/experience/assets/noguru-guide-attentive.png
+site/experience/assets/portfolio-world.png
+site/pilot/audio
