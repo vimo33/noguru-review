@@ -29,6 +29,14 @@ Working pages from the migration (`source-*`, `review-*`, `all-pages`) are left 
 
 The review host must stay on the review build. A production build is only for the production server, and publishing either one needs Vimo's go-ahead for that revision.
 
+## Releasing to production
+
+```bash
+node tools/release-production.mjs --push
+```
+
+The production server watches the branch `production` and builds whatever is pushed there. This tool takes the committed state, leaves out the paths in `tools/production-exclude.txt`, runs the server's own build and tests, stops if anything still mentions the review address, and adds one commit on top of `production`. Without `--push` it only prepares and checks. The server writes its result to `site-publish/STATUS.md` in the private data repository within about ten minutes. Going public on noguru.io is a separate switch on the server.
+
 ## The production bundle
 
 ```bash
