@@ -61,6 +61,9 @@ export function readHeadline(data) {
   const months = (Date.parse(`${data.as_of}T00:00:00Z`) - Date.parse(`${data.since}T00:00:00Z`)) / 86400000 / 30.44;
   return {pct: data.cum_pct, pot: data.pot, since: data.since, asOf: data.as_of, months, perMonth: months > 0.5 ? data.cum_pct / months : null};
 }
+// Completed profit plus the open trades at the latest price, both as a share of the money set aside.
+// The engine builder confirmed on 17 Nov 2026 that allocated_in_trades_pct is open cost divided by that same pot.
+export const wholePot = (rec, head) => (head && rec && num(head.pct) && num(rec.openShare) && num(rec.openVsCost) ? head.pct + rec.openShare * rec.openVsCost / 100 : null);
 
 const BINS = [
   {label: 'Below cost', test: (p) => p < 0},
@@ -125,7 +128,12 @@ export function renderRecord(body, rec, head) {
     const o = el('section', 'record-block record-open');
     o.append(el('h2', '', 'Still open'));
     o.append(el('p', '', `The ${rec.open} trades still open hold ${rec.openShare.toFixed(1)}% of the money set aside${rec.openVsCost === null ? '.' : `, and together stand ${pct(rec.openVsCost)} against what they cost, at the latest price.`}`));
-    o.append(el('p', 'record-fine', 'This is where the risk sits. There is no stop loss: open trades wait for their price, they can fall further, and some may not come back. The share can be above 100% because the same money cycles through several trades over time. Open trades are shown only as this one total, never one by one.'));
+    const whole = wholePot(rec, head);
+    if (whole !== null) {
+      const line = el('p', 'record-whole'); line.append(el('b', '', pct(whole)), document.createTextNode(` is the whole pot today: the completed profit and the open trades together, on the same ${count(head.pot)} USDT, since ${utcDay(head.since)}, before fees. That is about ${whole < 0 ? '−' : ''}${count(Math.abs(Math.round(head.pot * whole / 100)))} USDT. It moves with the price of the open trades.`));
+      o.append(line);
+    }
+    o.append(el('p', 'record-fine', `This is where the risk sits. There is no stop loss: open trades wait for their price, they can fall further, and some may not come back. ${rec.openShare > 100 ? 'The open trades cost more than the money set aside, because the record' : 'The record'} uses fixed buy sizes and never runs out of cash. A real account has only what you put in. Open trades are shown only as this one total, never one by one.`));
     body.append(o);
   }
 

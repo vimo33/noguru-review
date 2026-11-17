@@ -71,7 +71,7 @@ if (page === 'pricing') import('../pilot/data.js').then(async ({loadEvidence, pa
   }
   const pace = `${rate.toFixed(1)}% a month on the money set aside for it`, period = `${day(ev.windowStart)} to ${day(ev.windowEnd)}, before fees`;
   price.firstChild.textContent = usd(need);
-  body.textContent = `The record’s pace is about ${pace} (${period}). At that pace, ${usd(need)} earns about $${FEE} a month. Anything above it is yours.`;
+  body.textContent = `The record’s pace is about ${pace} (${period}). At that pace, ${usd(need)} earns about $${FEE} a month. Anything above it is yours. The record uses fixed buy sizes and never runs out of cash; a real account has only what you put in.`;
   if (!section) return;
   const live = document.createElement('p'); live.className = 'learning-example';
   live.textContent = `Today: $${FEE} ÷ ${rate.toFixed(2)}% = ${usd(FEE / (rate / 100))}, rounded up to ${usd(need)}. `

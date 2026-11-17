@@ -39,3 +39,10 @@ test('the record has one monthly pace, and the pay-back figure follows from it',
   assert.equal(paybackCapital(49, 9.94), 500, 'rounded up to the next $10');
   assert.equal(paybackCapital(49, null), null);
 });
+
+test('the whole pot is completed profit plus the open trades at the latest price', async () => {
+  const {wholePot} = await import(pathToFileURL(path.join(__dirname, '..', 'site', 'read', 'record.js')).href);
+  assert.equal(wholePot({openShare: 138.0, openVsCost: -27.2}, {pct: 34.9}).toFixed(1), '-2.6', 'the figure checked with the engine builder');
+  assert.equal(wholePot({openShare: null, openVsCost: -27.2}, {pct: 34.9}), null);
+  assert.equal(wholePot({openShare: 138.0, openVsCost: -27.2}, null), null, 'no figure without the completed profit');
+});

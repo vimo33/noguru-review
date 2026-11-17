@@ -397,7 +397,7 @@ const record = await snapshot();
   if (!card) throw new Error('The pricing page no longer has its pay-back card; update tools/build-static.mjs.');
   if (need) {
     card.price = `$${need.toLocaleString('en-US')}`;
-    card.body = [`The record’s pace is about ${rate.toFixed(1)}% a month on the money set aside for it, before fees. At that pace, $${need.toLocaleString('en-US')} earns about $49 a month. Anything above it is yours.`];
+    card.body = [`The record’s pace is about ${rate.toFixed(1)}% a month on the money set aside for it, before fees. At that pace, $${need.toLocaleString('en-US')} earns about $49 a month. Anything above it is yours. The record uses fixed buy sizes and never runs out of cash; a real account has only what you put in.`];
   } else { card.price = '—'; card.body = ['The figure is the monthly price divided by the record’s monthly pace. It is filled in from the live record when the page loads.']; }
 }
 // NoGuru's referral list: the exchange links are written into the home page so they are there without JavaScript.

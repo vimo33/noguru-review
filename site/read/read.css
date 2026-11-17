@@ -119,3 +119,5 @@ body[data-page=glossary] .learning-section p{font-size:14.5px;line-height:1.55;m
 body[data-page=glossary] .learning-section p+p{margin-top:6px}
 body[data-page=glossary] .learning-source-links{margin-top:8px;font-size:13px}
 @media (max-width:760px){body[data-page=glossary] #learning-sections{grid-template-columns:minmax(0,1fr)}}
+.record-whole{margin-top:14px}
+.record-whole b{font-size:1.25em;margin-right:4px}
