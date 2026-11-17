@@ -54,3 +54,30 @@ test('record figures are shown as money on one example amount', async () => {
   assert.equal(exampleAmount(-0.2), '−20 USDT', 'a loss keeps its sign');
   assert.equal(exampleAmount(NaN), null);
 });
+
+test('new digests come from the feed in the stored shape; a malformed one is left out', async () => {
+  const {readDigestList, digestPage, addDigests} = await import(pathToFileURL(path.join(__dirname, '..', 'tools', 'digests.mjs')).href);
+  const daily = {slug: '2026-11-17-daily', kind: 'daily', date: '2026-11-17', headline: 'A headline', body: {results: 'Results text.', headline: 'A headline', novice_note: 'A note.', week_review: [], market_picture: ['Market line.']}};
+  const weekly = {slug: '2026-11-15-weekly', kind: 'weekly', date: '2026-11-15', headline: 'Weekly', body: {results: 'This week.', week_review: ['One.', 'Two.'], market_picture: [], novice_note: ''}};
+  assert.deepEqual(readDigestList({digests: [{slug: '2026-11-17-daily', kind: 'daily', date: '2026-11-17', title: 'T'}, {slug: '../x', title: 'T'}, {slug: '2026-11-16-daily'}, null]}).map((d) => d.slug), ['2026-11-17-daily']);
+  assert.throws(() => readDigestList({}));
+  const page = digestPage(daily, '2026-11-17T13:00:00.000Z');
+  assert.deepEqual(page.sections.map((s) => s.id), ['context', 'results', 'market-picture', 'novice-note']);
+  assert.equal(page.source.url, 'https://noguru.io/api/public/digest/2026-11-17-daily');
+  assert.deepEqual(digestPage(weekly, '').sections.map((s) => s.id), ['context', 'results', 'week-review']);
+  for (const bad of [null, {}, {...daily, slug: 'x'}, {...daily, kind: 'weekly'}, {...daily, date: '2026-11-16'}, {...daily, headline: ''}, {...daily, body: null}, {...daily, body: {results: 7}}]) assert.equal(digestPage(bad, ''), null);
+  const pages = {'digest-2026-11-12-daily': {title: 'Stored'}, digest: {eyebrow: '', sections: [{id: 'commentary', body: ['old', 'kept']}, {id: 'dates', body: []}, {id: '2026-11-12-daily', body: ['Stored']}]},
+    library: {sections: [{id: 'digest', links: [{label: 'Stored', url: '?page=digest-2026-11-12-daily'}]}]}};
+  assert.equal(addDigests(pages, [daily, weekly, {...daily, slug: 'bad'}, {...daily, slug: '2026-11-12-daily', date: '2026-11-12'}], ''), 2, 'a stored digest is never replaced');
+  assert.equal(pages['digest-2026-11-12-daily'].title, 'Stored');
+  assert.deepEqual(pages.digest.sections.map((s) => s.id), ['commentary', 'dates', '2026-11-17-daily', '2026-11-15-weekly', '2026-11-12-daily']);
+  assert.equal(pages.digest.eyebrow, '3 public entries · latest 2026-11-17');
+  assert.equal(pages.digest.sections[0].body[1], 'kept');
+  assert.deepEqual(pages.library.sections[0].links.map((l) => l.url), ['?page=digest-2026-11-17-daily', '?page=digest-2026-11-15-weekly', '?page=digest-2026-11-12-daily']);
+});
+
+test('the trial form sends the campaign of the visit as src, and nothing when there is none', () => {
+  const js = require('node:fs').readFileSync(path.join(__dirname, '..', 'site', 'read', 'checkout.js'), 'utf8');
+  assert.match(js, /post\('\/gate\/api\/trial', \{buyer_tg: tg, consent, ref: refCode\(\), \.\.\.\(src \? \{src\} : \{\}\)\}\)/);
+  assert.doesNotMatch(js, /\/gate\/api\/invoice'[^\n]*src/, 'the server takes src on the trial route only');
+});

@@ -62,6 +62,10 @@ The home page's hero opens the video in a player over the page (`site/video.js`)
 
 `tools/checkout.html` is the form and the agreement; `site/read/checkout.js` drives it. It is the live noguru.io checkout: the same field ids, the same three routes of the member gate (`/gate/api/price`, `/gate/api/trial`, `/gate/api/invoice`) and the same four agreement sentences, recorded on the server under `AGREEMENT_VERSION`. Change that version together with any change to the sentences, and tell the server side. On any address other than noguru.io the form shows the prices but sends nothing.
 
+## The dated digests
+
+Digests up to 12 November 2026 are stored in `site/pilot/migration.js`. Every later one is read by the build from the server's digest feed (`tools/digests.mjs`): the list at `https://noguru.io/api/public/digests`, then `https://noguru.io/api/public/digest/<slug>` for each digest not stored yet, one request after the other. Each becomes a page under `/digest/<slug>/`, a row in the digest index and a link in the library. A digest that cannot be read is left out and the build says how many; a stored digest is never replaced. The production server hands the build these addresses the same way as the record feeds, so its daily rebuild adds each new digest.
+
 ## What is counted
 
 `site/track.js` sends events to Umami on every page; its header lists them. In short: time on a page (30 s, 1, 3, 5 minutes, while visible), reading depth (50%, 90%), the home page sections that were looked at, questions opened, every step of the video (`video-open`, `video-play`, `video-25`, `video-50`, `video-75`, `video-complete`, `video-close` with the seconds watched) and the clicks on the trial and sign-up links. Video progress counts seconds that really played, so dragging the bar to the end is not a full view. Nothing is stored on the visitor's device.
@@ -90,4 +94,4 @@ Sign-up links always carry `data-umami-event` names (`signup-trial`, `signup-cor
 
 ## Campaign tags on the sign-up links
 
-`site/campaign.js` reads `utm_campaign` (or, failing that, `utm_source`) from the address a visitor lands on and writes it into the sign-up links for the rest of that visit: `trial_<tag>` for the members bot and `s=<tag>` for the tracked Cornix links. A tag must be lowercase letters, digits and hyphen, 1 to 16 characters; anything else leaves the links at `trial_cornixpage` and `s=site-home`. The tag is kept in the browser's session storage and is gone when the tab closes.
+`site/campaign.js` reads `utm_campaign` (or, failing that, `utm_source`) from the address a visitor lands on and writes it into the sign-up links for the rest of that visit: `trial_<tag>` for the members bot and `s=<tag>` for the tracked Cornix links. A tag must be lowercase letters, digits and hyphen, 1 to 16 characters; anything else leaves the links at `trial_cornixpage` and `s=site-home`. The trial form on the pricing page sends the same tag to `/gate/api/trial` as `src` (agreed with the server side on 17 November 2026) and sends no `src` when the visit has no campaign. The tag is kept in the browser's session storage and is gone when the tab closes.

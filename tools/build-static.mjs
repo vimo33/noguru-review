@@ -124,6 +124,19 @@ if (UMAMI) {
 const {renderReadingPage} = await load('pilot/reading-ui.js');
 const {renderRecord, readRecord, readHeadline, getJSON, FEEDS, utcDay} = await load('read/record.js');
 const {normalizeEvidence} = await load('pilot/data.js');
+
+/* ---------- the dated digests after the stored ones, from the server's digest feed (tools/digests.mjs) ---------- */
+{
+  const {DIGEST_LIST, digestAddress, readDigestList, addDigests} = await import('./digests.mjs');
+  if (FETCH) try {
+    const fresh = readDigestList(await getJSON(DIGEST_LIST)).filter((d) => !learningPages[`digest-${d.slug}`]);
+    const entries = []; let missed = 0;
+    // One after the other: the public address answers 429 to a burst.
+    for (const d of fresh) try { entries.push(await getJSON(digestAddress(d.slug))); } catch { missed += 1; }
+    const added = addDigests(learningPages, entries, new Date().toISOString());
+    if (fresh.length) console.log(`Digests: ${added} added from the feed${missed || added < entries.length ? `, ${fresh.length - added} could not be read` : ''}.`);
+  } catch (error) { console.warn(`! The digest feed could not be read (${error.message}); the digest pages stop at the stored ones.`); }
+}
 const {homeRecord, withHeadline} = await load('home-record.js');
 
 /* ---------- which pages exist, and where each one lives ---------- */
