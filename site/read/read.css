@@ -144,3 +144,7 @@ body[data-page=glossary] .learning-source-links{margin-top:8px;font-size:13px}
 #agree-box input[type=checkbox]{flex:none;width:22px;height:22px;margin-top:2px;accent-color:#263e3a}
 .agree-actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:flex-end;margin-top:18px}
 @media (max-width:480px){.checkout{padding:20px 18px}.agree-actions .checkout-btn{flex:1}}
+
+/* profile links with their icons */
+.foot-social a{display:inline-flex;align-items:center;gap:8px;min-height:40px}
+.foot-social svg{flex:none;opacity:.85}

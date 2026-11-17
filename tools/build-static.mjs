@@ -230,8 +230,17 @@ function metaFor(page) {
   return {title, description, name};
 }
 // NoGuru's own profiles, as listed in the footer of noguru.io.
-const PROFILES = [['Telegram', 'https://t.me/nogurusignals'], ['Telegram chat', 'https://t.me/NoGuru_Crypto_Chat'], ['X', 'https://x.com/nogurusignals'],
+const PROFILES = [['Telegram channel', 'https://t.me/nogurusignals'], ['Telegram chat', 'https://t.me/NoGuru_Crypto_Chat'], ['X', 'https://x.com/nogurusignals'],
   ['YouTube', 'https://www.youtube.com/@nogurusignals'], ['Discord', 'https://discord.gg/AeQjGdUgKA'], ['Bluesky', 'https://bsky.app/profile/nogurusignals.bsky.social']];
+// The same profiles in every footer, each with a small drawn icon (our own line drawings, not the brands' logo files).
+const ICONS = {
+  Telegram: '<path d="M21 4 3 11.2l5.6 2 2.1 6.3 3.1-4 4.4 3.2z"/><path d="m8.6 13.2 8.2-5.6"/>',
+  X: '<path d="M4.5 4.5 19.5 19.5M19.5 4.5 4.5 19.5"/>',
+  YouTube: '<rect x="2.5" y="6" width="19" height="12" rx="3.5"/><path d="m10 9.4 4.6 2.6-4.6 2.6z"/>',
+  Discord: '<path d="M8.2 6.2C6.6 6.5 5.4 7 4.6 7.5 3 10.300 2.500 13.600 2.800 16.800c1.400 1 2.800 1.600 4.200 2l1-1.900M15.800 6.200c1.600.3 2.800.8 3.600 1.300 1.600 2.800 2.100 6.100 1.800 9.300-1.400 1-2.800 1.600-4.200 2l-1-1.900"/><path d="M8.200 6.200c2.500-.6 5.100-.6 7.600 0M7.900 16.900c2.700.9 5.500.9 8.200 0"/><circle cx="9.200" cy="12.400" r="1.300"/><circle cx="14.800" cy="12.400" r="1.300"/>',
+  Bluesky: '<path d="M12 11.300C10.600 8.500 7.500 5.300 5.200 4.800 3.600 4.500 3 5.500 3.200 7.400c.2 1.800.5 4.300 2.300 5.100 1.200.5 2.800.3 4-.2-2.200.6-4 2-2.600 4 1.800 2.400 4-.3 5.100-2.900 1.100 2.600 3.300 5.300 5.100 2.900 1.400-2-.4-3.400-2.600-4 1.200.5 2.800.7 4 .2 1.800-.8 2.100-3.300 2.300-5.100.2-1.900-.4-2.900-2-2.600-2.300.500-5.400 3.700-6.800 6.500z"/>',
+};
+const SOCIAL_NAV = `<nav class="foot-social" aria-label="NoGuru elsewhere">${PROFILES.map(([name, url]) => `<a href="${url}" target="_blank" rel="noopener noreferrer me" data-umami-event="social-${name.toLowerCase().replace(/[^a-z]+/g, '-')}"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.600" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[name.split(' ')[0]]}</svg><span>${name}</span></a>`).join('')}</nav>`;
 const ORG = {'@type': 'Organization', '@id': `${ORIGIN}/#organization`, name: 'NoGuru', legalName: 'NoGuru LLC', url: `${ORIGIN}/`,
   logo: `${ORIGIN}/pilot/assets/noguru-guide-original.png`, email: 'hello@noguru.io',
   sameAs: PROFILES.map(([, url]) => url),
@@ -321,7 +330,7 @@ ${article}
 </main>
 <footer class="read-foot">
   <nav aria-label="Library and legal"><a href="${root}">Home</a>${to('how-it-works', 'How it works')}${to('pricing', 'Pricing')}${to('record', 'Track record')}${to('library', 'Library')}${to('academy', 'Academy')}${to('glossary', 'Glossary')}${to('digest', 'Digest')}${to('market', 'Free market dashboard')}${to('terms', 'Terms')}${to('privacy', 'Privacy')}${to('impressum', 'Provider')}</nav>
-  <nav class="foot-social" aria-label="NoGuru elsewhere">${PROFILES.map(([name, url]) => `<a href="${url}" target="_blank" rel="noopener noreferrer me">${name}</a>`).join('')}</nav>
+  ${SOCIAL_NAV}
   <p>${PRODUCTION ? '' : 'Review preview. '}Trading crypto can lose money. Coins the bot holds can fall in value and may not recover. NoGuru is operated by NoGuru LLC, Casper, Wyoming, USA.</p>
 </footer>
 <script type="module" src="${root}read/page.js"></script>
@@ -475,6 +484,9 @@ function buildHome() {
   ${jsonLd({'@context': 'https://schema.org', '@graph': [ORG, {'@type': 'WebSite', '@id': `${ORIGIN}/#website`, name: 'NoGuru', url: `${ORIGIN}/`, publisher: {'@id': ORG['@id']}}]})}
   ${ANALYTICS ? `${ANALYTICS}\n  ` : ''}<!-- seo:end -->`;
   html = /<!-- seo:start[\s\S]*?<!-- seo:end -->/.test(html) ? html.replace(/<!-- seo:start[\s\S]*?<!-- seo:end -->/, seo) : html.replace(/(<title>[^<]*<\/title>)/, `$1\n  ${seo}`);
+  // The home page's footer carries the same profile links as every other page.
+  if (!/<nav class="foot-social"[\s\S]*?<\/nav>/.test(html)) throw new Error('The home page no longer has its social links; update tools/build-static.mjs.');
+  html = html.replace(/<nav class="foot-social"[\s\S]*?<\/nav>/, SOCIAL_NAV);
   html = html.replace(/\n?\s*<meta name="robots" content="noindex, nofollow">/, '').replace(/(<meta name="theme-color"[^>]*>)/, `$1${ROBOTS}`);
   // The footer's "Review preview." belongs to the review build only.
   html = html.replace(/<p>(?:Review preview\. )?Trading crypto can lose money\./, `<p>${PRODUCTION ? '' : 'Review preview. '}Trading crypto can lose money.`);
