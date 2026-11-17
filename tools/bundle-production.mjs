@@ -46,7 +46,7 @@ function references(rel, text) {
   return out;
 }
 // Paths a script builds at run time, which the patterns above cannot see. Each is [the script, what it loads].
-const BUILT_AT_RUN_TIME = [['hero.js', ['pilot/assets/noguru-guide-original.png']], ['video.js', ['media/noguru-explainer.mp4', 'media/noguru-explainer-1080p.mp4']]];
+const BUILT_AT_RUN_TIME = [['hero.js', ['pilot/assets/noguru-guide-original.png']], ['video.js', ['media/noguru-explainer.mp4', 'media/noguru-explainer-1080p.mp4']], ['read/page.js', ['read/checkout.js']]];
 
 const keep = new Set(), missing = [];
 const queue = written.filter((rel) => exists(rel));

@@ -53,6 +53,8 @@ if (page === 'market') import('../dashboard.js').then(({createDashboardControlle
   addEventListener('pageshow', () => dashboard.start());
 });
 
+// Pricing: the checkout (14 days free, or a paid term), then the figure from the live record.
+if (page === 'pricing') import('./checkout.js');
 // Pricing: the pay-back figure comes from the live record, never from a typed-in number.
 if (page === 'pricing') Promise.all([import('../pilot/data.js'), import('../example.js')]).then(async ([{loadEvidence, paybackCapital, recordPace}, {EXAMPLE_TEXT, exampleAmount}]) => {
   const FEE = 49, CORNIX = 49.9;

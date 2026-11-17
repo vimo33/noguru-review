@@ -339,6 +339,8 @@ function crumbFor(page) {
 }
 const crumb = (page) => { const [label, href] = crumbFor(page); return `<a href="${href}" class="text-link return-to-guide" id="crumb">${label}</a>`; };
 
+// Pricing carries the checkout (trial and payment) right under its cards.
+const checkout = () => new Raw(fs.readFileSync(path.join(HERE, 'checkout.html'), 'utf8').replace(/<!--[\s\S]*?-->\s*/, '').split('{root}').join(rootOf('pricing')).trim());
 function readingArticle(page) {
   const data = learningPages[page];
   const article = new El('article'); article.id = 'learning-page'; article.className = 'learning-page'; article.setAttribute('aria-labelledby', 'learning-title');
@@ -350,7 +352,7 @@ function readingArticle(page) {
   tools.append(new Raw('<summary>Find something on this page</summary><label class="search-field">Search this page<input id="learning-search" type="search" placeholder="A word or topic" autocomplete="off"></label><p id="search-status" role="status"></p>'), toc);
   if ((data.sections || []).length < 4) tools.hidden = true;
   article.append(new Raw(`${crumb(page)}\n    <header class="learning-header">${data.eyebrow ? `<p id="learning-eyebrow" class="eyebrow">${esc(data.eyebrow)}</p>` : ''}<h1 id="learning-title" tabindex="-1">${esc(data.title)}</h1>${data.intro ? `<p id="learning-intro" class="summary">${esc(data.intro)}</p>` : ''}</header>`),
-    cards, tools, sections, source);
+    cards, ...(page === 'pricing' ? [checkout()] : []), tools, sections, source);
   renderReadingPage(data, {page, sections, toc, cards, source, link: linkFor(page)});
   // Content images are stored beside the content modules.
   return `  ${article.outerHTML.split(`${BUILD_BASE}pilot/`).join(`${rootOf(page)}pilot/`)}`;

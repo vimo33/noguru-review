@@ -55,8 +55,12 @@ The home page's hero opens the video in a player over the page (`site/video.js`)
 
 - **The files:** in `site/media/`: `noguru-explainer.mp4` (720p, the default), `noguru-explainer-1080p.mp4` (large screens), `noguru-explainer-poster.jpg` (shown before play) and `noguru-explainer.en.vtt` (captions). They come from the film's web package (`analysis/2026-11-15/explainer-video/web/`); for a new cut, copy the four files over these and keep the names. Export it with the index at the front ("fast start") so it can begin before it has fully loaded: `ffmpeg -i in.mp4 -c copy -movflags +faststart site/media/noguru-explainer.mp4`.
 - **The length** on the button is read from the file when it loads; the `4:56` in `site/index.html` is what shows before that, so correct it for a new film.
-- **The sign-off marker:** the video tag in `site/index.html` carries `data-draft` until the film is signed off for the live site. `tools/release-production.mjs` warns while it is there.
+- **A film that is not signed off:** add `data-draft` to the video tag in `site/index.html`; `tools/release-production.mjs` then warns on every release until it is removed. The film of 17 November is signed off.
 - **A direct link:** `/?video` opens the player on arrival.
+
+## The checkout on the pricing page
+
+`tools/checkout.html` is the form and the agreement; `site/read/checkout.js` drives it. It is the live noguru.io checkout: the same field ids, the same three routes of the member gate (`/gate/api/price`, `/gate/api/trial`, `/gate/api/invoice`) and the same four agreement sentences, recorded on the server under `AGREEMENT_VERSION`. Change that version together with any change to the sentences, and tell the server side. On any address other than noguru.io the form shows the prices but sends nothing.
 
 ## What is counted
 
