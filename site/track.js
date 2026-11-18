@@ -8,6 +8,8 @@
 //   question-open {question}               a question was opened
 //   video-open, video-play, video-25/50/75, video-complete, video-close {seconds, percent}   (site/video.js)
 //   cta-start {place}, signup-…            links, named in the HTML with data-umami-event
+//   campaign-unusable {name}               a visitor arrived with a campaign name the sign-up links cannot carry (site/campaign.js)
+// Every page view and event of a visit also carries the visit's campaign as Umami's tag (see STAT_HOOK in tools/build-static.mjs).
 export function track(name, data) {
   try { window.umami?.track(name, data); } catch { /* statistics must never break the page */ }
   document.dispatchEvent(new CustomEvent('noguru:track', {detail: {name, data}}));

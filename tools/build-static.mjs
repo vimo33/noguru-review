@@ -34,7 +34,13 @@ const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replac
 const escAttr = (s) => esc(s).replace(/"/g, '&quot;');
 // data-domains keeps the count to the real address, so local previews and copies are not counted.
 // data-do-not-track keeps the privacy page's promise: a browser's "Do Not Track" setting switches the counting off.
-const ANALYTICS = UMAMI ? `<script defer src="${escAttr(UMAMI_SRC)}" data-website-id="${escAttr(UMAMI)}" data-domains="${escAttr(new URL(ORIGIN).hostname)}" data-do-not-track="true"></script>` : '';
+// Umami files a campaign only with the page a visitor lands on. So that the rest of the visit (later pages, the film,
+// the sign-up clicks) can be read per campaign too, every page view and event carries the visit's campaign as Umami's
+// "tag". The rule is the one in site/campaign.js; a test keeps the two the same. It has to be a plain script that
+// stands before the statistics script, which looks the function up by name when it loads.
+const STAT_HOOK = `window.noguruStat=function(t,p){try{var m=/^[a-z0-9-]{1,16}$/,r={none:1,other:1,plain:1,"site-form":1},q=new URLSearchParams(location.search),c="";["utm_campaign","utm_source"].some(function(n){var v=(q.get(n)||"").trim().toLowerCase();return m.test(v)&&!r[v]&&(c=v)});if(!c){c=sessionStorage.getItem("noguru-campaign")||"";if(!m.test(c)||r[c])c=""}if(c&&p)p.tag=c}catch(e){}return p}`;
+const ANALYTICS = UMAMI ? `<script>${STAT_HOOK}</script>
+  <script defer src="${escAttr(UMAMI_SRC)}" data-website-id="${escAttr(UMAMI)}" data-domains="${escAttr(new URL(ORIGIN).hostname)}" data-do-not-track="true" data-before-send="noguruStat"></script>` : '';
 // Every sign-up link carries an event name, so a click on it is counted as a step. Links already named keep their name.
 const STEP_LINKS = [[/^https:\/\/t\.me\/NoGuruMembers_bot/, 'signup-trial'], [/\/api\/public\/go\/cornix-signup/, 'signup-cornix'], [/\/api\/public\/go\/cornix-bot/, 'signup-cornix-bot']];
 const tagSteps = (html) => html.replace(/<a\b[^>]*>/g, (tag) => {
