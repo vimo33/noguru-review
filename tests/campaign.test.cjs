@@ -94,3 +94,12 @@ test('the market page reads session ranges while a window is still open', async 
   assert.equal(open.data.rows[0].sessions.new_york.takenOutHigh, null, 'not known yet stays not known');
   assert.throws(() => normalizeDashboardWidget('sessions', feed(null, null), {now}), /session range/, 'a finished window must say whether its range was taken out');
 });
+
+test('the market page reads funding rates when a row is newer than the feed\'s own time', async () => {
+  const {normalizeDashboardWidget} = await import(pathToFileURL(path.join(__dirname, '..', 'site', 'dashboard-data.js')).href);
+  const now = Date.parse('2026-11-17T23:45:00Z');
+  const feed = {as_of: '2026-11-17 16:00:00+00:00', rows: [{symbol: 'AAA', rate: 0.0015, rate_24h: -0.007, funding_time: '2026-11-17 16:00:00+00:00'}, {symbol: 'BBB', rate: 0.0009, rate_24h: 0.0018, funding_time: '2026-11-17 20:00:00+00:00'}]};
+  const read = normalizeDashboardWidget('funding', feed, {now});
+  assert.equal(read.data.rows.length, 2);
+  assert.equal(read.source.asOf, '2026-11-17T20:00:00.000Z', 'the latest settlement is the newest row');
+});
