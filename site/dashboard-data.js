@@ -104,11 +104,13 @@ function sessions(raw,ctx) {
   return sourceResult('sessions',{rows:normalized,windowsUtc,venues,venueNote:raw.tradfi.note||null,priceUnit:'source unspecified'},ctx,{asOf,asOfKind:'source as_of',maxAgeMs:TEN_MINUTES,limitations:[priceBasis,'Fixed UTC crypto price windows, not an assertion that a traditional venue is open. Keep closed/weekend/holiday venue labels alongside ranges.','High/low breaches describe observed prices; they do not establish the next direction.']});
 }
 function funding(raw,ctx) {
-  const rr=rows(raw.rows);uniqueSymbols(rr);const asOf=observed(raw.as_of,ctx.now);
+  const rr=rows(raw.rows);uniqueSymbols(rr);
+  // Markets settle at different hours, and the source's as_of can lag behind its newest row: the latest settlement is the newest of them all.
+  const asOf=[observed(raw.as_of,ctx.now),...rr.map(r=>observed(r.funding_time,ctx.now))].sort().at(-1);
   if(raw.rate_unit!==undefined)ensure(raw.rate_unit==='fraction','Funding rate unit changed.');
   const result=rr.map(r=>{
     ensure(finite(r.rate)&&Math.abs(r.rate)<=1&&finite(r.rate_24h)&&Math.abs(r.rate_24h)<=3,'Funding rates must be finite fractions, not percentage strings or percentage-point units.');
-    const settledAt=observed(r.funding_time,ctx.now);ensure(settledAt<=asOf,'Funding settlement is after the supplied latest settlement time.');
+    const settledAt=observed(r.funding_time,ctx.now);
     return {symbol:r.symbol,ratePct:r.rate*100,sum24hPct:r.rate_24h*100,settledAt};
   });
   return sourceResult('funding',{rows:result},ctx,{asOf,asOfKind:'latest supplied funding settlement',maxAgeMs:DAY,unknown:true,limitations:['Rates are fractions in the source, converted ×100 to percentages. The latest rate and the reported 24-hour sum are different periods.','Positive funding means longs pay shorts. Negative means shorts pay longs. These are perpetual-market payments, not spot strategy returns.','Settlement times vary by row. The payload does not provide each market’s funding interval; no uniform eight-hour rate or annualized yield is asserted.','Latest settlement time is not feed generation time; current retrieval does not certify a fresh quote.']});
