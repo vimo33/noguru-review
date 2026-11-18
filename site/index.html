@@ -13,7 +13,8 @@
   <meta property="og:url" content="https://noguru.io/"><meta property="og:image" content="https://noguru.io/pilot/assets/noguru-guide-original.png">
   <meta name="twitter:card" content="summary">
   <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://noguru.io/#organization","name":"NoGuru","legalName":"NoGuru LLC","url":"https://noguru.io/","logo":"https://noguru.io/pilot/assets/noguru-guide-original.png","email":"hello@noguru.io","sameAs":["https://t.me/nogurusignals","https://t.me/NoGuru_Crypto_Chat","https://x.com/nogurusignals","https://www.youtube.com/@nogurusignals","https://discord.gg/AeQjGdUgKA","https://bsky.app/profile/nogurusignals.bsky.social"],"address":{"@type":"PostalAddress","streetAddress":"940 E 3rd St Ste 203","addressLocality":"Casper","addressRegion":"WY","postalCode":"82601","addressCountry":"US"}},{"@type":"WebSite","@id":"https://noguru.io/#website","name":"NoGuru","url":"https://noguru.io/","publisher":{"@id":"https://noguru.io/#organization"}}]}</script>
-  <script defer src="https://stats.noguru.io/script.js" data-website-id="2c9ae77f-d825-41c6-b862-9740ae4dcf2a" data-domains="noguru.io" data-do-not-track="true"></script>
+  <script>window.noguruStat=function(t,p){try{var m=/^[a-z0-9-]{1,16}$/,r={none:1,other:1,plain:1,"site-form":1},q=new URLSearchParams(location.search),c="";["utm_campaign","utm_source"].some(function(n){var v=(q.get(n)||"").trim().toLowerCase();return m.test(v)&&!r[v]&&(c=v)});if(!c){c=sessionStorage.getItem("noguru-campaign")||"";if(!m.test(c)||r[c])c=""}if(c&&p)p.tag=c}catch(e){}return p}</script>
+  <script defer src="https://stats.noguru.io/script.js" data-website-id="2c9ae77f-d825-41c6-b862-9740ae4dcf2a" data-domains="noguru.io" data-do-not-track="true" data-before-send="noguruStat"></script>
   <!-- seo:end -->
   <link rel="icon" href="./experience/assets/companion-mark.svg" type="image/svg+xml">
   <link rel="preload" href="./pilot/fonts/Manrope.woff" as="font" type="font/woff" crossorigin>
@@ -73,7 +74,7 @@
         <div><b id="ev-closed">1,053</b><span>finished trades</span></div>
         <div><b id="ev-up">1,051</b><span>of them closed in profit</span></div>
         <div><b id="ev-fast">79%</b><span>finished within a day</span></div>
-        <div class="quiet"><b id="ev-open">20</b><span id="ev-open-note">still open, together 25.5% below what they cost</span></div>
+        <div class="quiet"><b id="ev-open">20</b><span id="ev-open-note">still open, together 25.0% below what they cost</span></div>
       </div>
     </div>
   </section>
@@ -99,7 +100,7 @@
         <p class="more">Go deeper: <a href="./how-it-works/">How it works</a><a href="./exchanges/">Exchanges</a><a href="./glossary/#learning-api-key">What an API key is</a></p></details>
       <details><summary><span>What happens in a crash?</span><b>It buys in steps on the way down, then holds and waits. It doesn’t sell in a panic.</b></summary>
         <p>There is no stop loss. Coins it holds can lose value for a long time, and some may never come back. If the cash set aside runs out, buying pauses until a sale frees some up.</p>
-        <p id="q-open-now">Right now 20 trades are still open, together 25.5% below what they cost.</p>
+        <p id="q-open-now">Right now 20 trades are still open, together 25.0% below what they cost.</p>
         <p>NoGuru’s own replay of a market top like October 2025 shows the account worth 48% less at market prices at its lowest point.</p>
         <p class="more">Go deeper: <a href="./risks/">The risks</a><a href="./market-stress/">Under market stress</a><a href="./academy/arithmetic-of-losses/">The arithmetic of losses</a></p></details>
       <details><summary><span>What does it cost?</span><b>$49 a month for NoGuru, after 14 days free. At the record’s pace, 10,000 USDT of capital made about <span id="q-payback">980 USDT</span> a month, before fees.</b></summary>

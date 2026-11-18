@@ -36,6 +36,9 @@ export function currentCampaign() {
 export function applyCampaign(root = document) {
   let stored = ''; try { stored = sessionStorage.getItem(KEY) || ''; } catch { /* private mode */ }
   const tag = campaignTag(location.search, stored);
+  // A campaign name the links cannot carry would otherwise vanish without a trace: it is counted, with the name.
+  const named = (new URLSearchParams(location.search).get('utm_campaign') || '').trim();
+  if (named && named.toLowerCase() !== tag) try { window.umami?.track('campaign-unusable', {name: named.slice(0, 60)}); } catch { /* statistics must never break the page */ }
   if (!tag) return '';
   if (tag !== stored) try { sessionStorage.setItem(KEY, tag); } catch { /* private mode */ }
   for (const a of root.querySelectorAll('a[href^="https://t.me/NoGuruMembers_bot"], a[href*="/api/public/go/cornix-"]')) a.href = withCampaign(a.href, tag);

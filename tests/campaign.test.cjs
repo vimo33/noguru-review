@@ -103,3 +103,22 @@ test('the market page reads funding rates when a row is newer than the feed\'s o
   assert.equal(read.data.rows.length, 2);
   assert.equal(read.source.asOf, '2026-11-17T20:00:00.000Z', 'the latest settlement is the newest row');
 });
+
+test('every page view and event carries the visit\'s campaign as the tag, by the same rule as the links', async () => {
+  const {campaignTag} = await import(pathToFileURL(path.join(__dirname, '..', 'site', 'campaign.js')).href);
+  const html = require('node:fs').readFileSync(path.join(__dirname, '..', 'site', 'index.html'), 'utf8');
+  const hook = html.match(/<script>(window\.noguruStat=[\s\S]*?)<\/script>\s*<script defer src="[^"]+"[^>]*data-before-send="noguruStat"/);
+  assert.ok(hook, 'the hook stands before the statistics script, which names it');
+  const tagFor = (search, stored) => {
+    const window = {}, sessionStorage = {getItem: () => stored}, location = {search};
+    new Function('window', 'sessionStorage', 'location', 'URLSearchParams', hook[1])(window, sessionStorage, location, URLSearchParams);
+    return window.noguruStat('event', {url: '/'}).tag || '';
+  };
+  for (const [search, stored] of [['?utm_campaign=tg-launch', ''], ['?utm_campaign=Spring_Launch&utm_source=telegram', ''], ['?utm_campaign=NONE', ''], ['', 'x-nov'], ['', 'none'],
+    ['?utm_campaign=seventeen-chars-x', 'kept'], ['?utm_source=Reddit', ''], ['', ''], ['?utm_campaign=other&utm_source=site-form', 'plain']]) {
+    assert.equal(tagFor(search, stored), campaignTag(search, stored), `${search} / ${stored}`);
+  }
+  assert.equal(tagFor('?utm_campaign=tg-launch', ''), 'tg-launch');
+  const window = {}; new Function('window', 'sessionStorage', 'location', 'URLSearchParams', hook[1])(window, {getItem() { throw new Error('private mode'); }}, {search: ''}, URLSearchParams);
+  assert.deepEqual(window.noguruStat('event', {url: '/'}), {url: '/'}, 'a browser without storage still sends');
+});
