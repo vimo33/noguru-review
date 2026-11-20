@@ -1,0 +1,40 @@
+# NoGuru
+
+> Stepgrid, the NoGuru bot, is an automated crypto spot trading bot. It buys in steps as prices fall and sells above its average, in the customer's own exchange account, through Cornix. NoGuru never holds the customer's money or keys. Trading crypto can lose money.
+
+Figures on this site are read live from NoGuru's published record; quote them with their date.
+
+## The product
+
+- [How NoGuru works: an automated crypto bot on Cornix](https://vimo33.github.io/noguru-review/how-it-works/): How NoGuru’s automated crypto bot buys in steps, sells above its average cost and starts again, in your own exchange account through Cornix.
+- [NoGuru pricing: $49 a month after a 14-day free trial](https://vimo33.github.io/noguru-review/pricing/): One subscription: $49 a month at the founding price after 14 days free. What Cornix costs on top, and how much trading money covers the fee.
+- [NoGuru free trial: 14 days, no card](https://vimo33.github.io/noguru-review/trial/): How the 14-day NoGuru trial and Cornix’s own trial work, what you need to start and what to note down.
+- [NoGuru FAQ: safety, costs, crashes and setup](https://vimo33.github.io/noguru-review/faq/): Straight answers about NoGuru’s automated crypto bot: where your money stays, what happens in a crash, what it costs and how to start.
+- [DCA bot vs grid bot vs NoGuru Stepgrid: how they differ](https://vimo33.github.io/noguru-review/dca-bot-vs-grid-bot/): How a grid bot and a DCA bot work, when each earns and when each struggles, and where Stepgrid, the NoGuru bot, fits, side by side.
+- [Exchanges and Cornix compatibility](https://vimo33.github.io/noguru-review/exchanges/): What to check before connecting an exchange account to Cornix for NoGuru: eligibility, account type and trading pairs.
+- [NoGuru setup guide: understand it first, then try it](https://vimo33.github.io/noguru-review/setup-guide/): A guide to trying NoGuru: what to read first and the steps of the workflow, from Cornix to your own exchange account.
+
+## The record and the risks
+
+- [NoGuru track record: every finished trade, live](https://vimo33.github.io/noguru-review/track-record/): NoGuru’s complete public record: completed profit with its basis, the spread of results, coins traded per month and every finished trade.
+- [How NoGuru’s public record is measured](https://vimo33.github.io/noguru-review/methodology/): What NoGuru’s published record counts, what it leaves out, and how its figures are worked out.
+- [The risks of an automated crypto bot, said plainly](https://vimo33.github.io/noguru-review/risks/): How NoGuru is built to avoid forced selling, and the risks that remain: coins it holds can sit below cost, and what NoGuru cannot control.
+- [What a sharp market fall does to a crypto bot](https://vimo33.github.io/noguru-review/market-stress/): A dated look at a sharp Bitcoin decline on 29–30 October 2026 and what buying in steps means when prices fall fast.
+- [Worked examples: what happens to the money](https://vimo33.github.io/noguru-review/examples/): Worked examples with round numbers: buying in steps, the average cost, a sale above it, and a path where the target is not reached.
+
+## Learning
+
+- [Learn the choices behind the strategy](https://vimo33.github.io/noguru-review/learn/): Eight short explanations of the choices behind NoGuru’s strategy: staged buying, weighted averages, separate cycles and cash reserves.
+- [NoGuru Academy: risk, sizing and trading basics](https://vimo33.github.io/noguru-review/academy/): Free lessons on risk per trade, drawdowns, leverage, funding and market structure, written in plain language.
+- [Crypto trading glossary in plain language](https://vimo33.github.io/noguru-review/glossary/): Plain-language explanations of trading and crypto-bot terms, from API key and average cost to trailing take profit.
+- [NoGuru digest: dated market and bot updates](https://vimo33.github.io/noguru-review/digest/): The dated archive of NoGuru’s daily and weekly digests: what the market did and what the bot finished.
+- [NoGuru library: everything there is to read](https://vimo33.github.io/noguru-review/library/): All of NoGuru’s reading in one place: how it works, pricing, risks, the academy, the glossary and the dated digest.
+
+## The company
+
+- [About NoGuru: a process you can inspect](https://vimo33.github.io/noguru-review/about/): What NoGuru does and does not do: a repeatable, automated process with a public record, and no guru to follow.
+- [Provider and contact](https://vimo33.github.io/noguru-review/legal/impressum/): Who operates NoGuru: NoGuru LLC, Casper, Wyoming, USA, with the contact address for questions and legal notices.
+- [Terms of Service](https://vimo33.github.io/noguru-review/legal/terms/): The terms that apply to NoGuru’s signal subscription: what the service is, what it is not, payment, cancellation and liability.
+- [Privacy](https://vimo33.github.io/noguru-review/legal/privacy/): What personal data NoGuru handles, why, for how long, and how to use your rights of access, correction and deletion.
+- [Risk disclaimer](https://vimo33.github.io/noguru-review/legal/disclaimer/): NoGuru publishes what an automated system did or would do. It is not investment advice, and trading crypto can lose money.
+- [NoGuru support: find the detail you need](https://vimo33.github.io/noguru-review/support/): Where to find answers about NoGuru’s setup and service, and the provider information for questions.

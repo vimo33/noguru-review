@@ -20,7 +20,7 @@ export const learningPages = {
       {
         id: 'entries', title: 'Buy at planned levels, in stages',
         body: ['The next purchase is triggered by a planned price level, rather than a date on the calendar. Several purchases can belong to one cycle. A lower-price purchase lowers that cycle’s weighted average cost and commits more capital.'],
-        links: [link('See a worked average-cost example', learn('weighted-average')), link('Price stages and calendar DCA', learn('price-staged'))],
+        links: [link('See a worked average-cost example', learn('weighted-average')), link('Price stages and calendar DCA', learn('price-staged')), link('DCA bot, grid bot or Stepgrid: the difference', '?page=dca-bot-vs-grid-bot')],
       },
       {
         id: 'sales', title: 'A sale can make capital available again',
@@ -109,7 +109,7 @@ export const learningPages = {
       {
         id: 'price-staged', title: 'Price-staged buying and calendar DCA',
         body: ['Calendar dollar-cost averaging buys on a schedule, such as each month. This strategy plans purchase levels around price movement. A later purchase happens only if its level and the strategy’s conditions are met.', 'Both approaches spread buying across time, but they answer different questions: when the calendar says to buy, or when price reaches a planned level. Neither removes the risk that the coin keeps falling.'],
-        links: [link('See the cycle illustration', '?page=story&chapter=cycle'), link('Ladder and rung', glossary('ladder'))],
+        links: [link('See the cycle illustration', '?page=story&chapter=cycle'), link('Ladder and rung', glossary('ladder')), link('DCA bot, grid bot or Stepgrid: the difference', '?page=dca-bot-vs-grid-bot')],
       },
       {
         id: 'weighted-average', title: 'Why the average is weighted by quantity',
