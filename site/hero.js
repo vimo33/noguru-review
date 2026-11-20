@@ -73,8 +73,8 @@ else {
   glow.renderOrder = -1;
   scene.add(glow);
 
-  // the approved artwork, unchanged
-  const tex = new THREE.TextureLoader().load(new URL('./pilot/assets/noguru-guide-original.png', import.meta.url).href);
+  // the approved artwork at its full size, stored as WebP: about a tenth of the PNG's weight
+  const tex = new THREE.TextureLoader().load(new URL('./pilot/assets/noguru-guide.webp', import.meta.url).href);
   tex.colorSpace = THREE.SRGBColorSpace; tex.premultiplyAlpha = true;
   tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
   const robot = new THREE.Mesh(new THREE.PlaneGeometry(1, 1),
