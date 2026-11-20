@@ -18,6 +18,11 @@ export const learningPages = {
         links: [link('How ongoing review works', learn('ongoing-review'))],
       },
       {
+        id: 'cornix-channel', title: 'NoGuru as a Cornix signal channel',
+        body: ['NoGuru’s signals go to a private Telegram channel. Your Cornix bot follows that channel and places the orders in your own exchange account. NoGuru decides what to buy and sell, Cornix places the orders, and your exchange holds the coins and the cash.', 'Today NoGuru runs through Cornix only. Cornix is a separate company and is paid separately: 14 days free, then $49.90 a month, or $32.99 a month billed yearly. Cornix does not serve every country; the pricing page lists the ones it leaves out.'],
+        links: [link('What each one costs', '?page=pricing'), link('The setup, step by step', '?page=setup-guide')],
+      },
+      {
         id: 'entries', title: 'Buy at planned levels, in stages',
         body: ['The next purchase is triggered by a planned price level, rather than a date on the calendar. Several purchases can belong to one cycle. A lower-price purchase lowers that cycle’s weighted average cost and commits more capital.'],
         links: [link('See a worked average-cost example', learn('weighted-average')), link('Price stages and calendar DCA', learn('price-staged')), link('DCA bot, grid bot or Stepgrid: the difference', '?page=dca-bot-vs-grid-bot')],
