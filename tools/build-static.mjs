@@ -244,7 +244,7 @@ function metaFor(page) {
   const digest = page.match(/^digest-(\d{4}-\d{2}-\d{2})-(daily|weekly)$/);
   // Each dated digest is described by its own date and headline; they all share one introduction.
   const [title, description] = SEO[page] || (digest
-    ? [clip(`NoGuru ${digest[2]} digest, ${utcDay(digest[1])}`, 70), clip(`NoGuru’s ${digest[2]} digest of ${utcDay(digest[1])}: ${data.title}. A dated entry, kept as published.`, 165)]
+    ? [clip(`NoGuru ${digest[2]} digest, ${utcDay(digest[1])}`, 70), clip(`NoGuru’s ${digest[2]} digest of ${utcDay(digest[1])}: ${data.title}. A dated entry, kept as published.`, 158)]
     : [clip(`${name} | NoGuru`, 70), clip(data.intro || data.sections?.[0]?.body?.[0] || name, 158)]);
   return {title, description, name};
 }
@@ -260,10 +260,17 @@ const ICONS = {
   Bluesky: '<path d="M12 11.300C10.600 8.500 7.500 5.300 5.200 4.800 3.600 4.500 3 5.500 3.200 7.400c.2 1.800.5 4.300 2.300 5.100 1.200.5 2.800.3 4-.2-2.200.6-4 2-2.600 4 1.800 2.400 4-.3 5.100-2.900 1.100 2.600 3.300 5.300 5.100 2.900 1.400-2-.4-3.400-2.600-4 1.200.5 2.800.7 4 .2 1.800-.8 2.100-3.300 2.300-5.100.2-1.900-.4-2.900-2-2.600-2.300.500-5.400 3.700-6.800 6.500z"/>',
 };
 const SOCIAL_NAV = `<nav class="foot-social" aria-label="NoGuru elsewhere">${PROFILES.map(([name, url]) => `<a href="${url}" target="_blank" rel="noopener noreferrer me" data-umami-event="social-${name.toLowerCase().replace(/[^a-z]+/g, '-')}"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.600" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[name.split(' ')[0]]}</svg><span>${name}</span></a>`).join('')}</nav>`;
+const INDEXNOW_KEY = '5a2be5031a137218170e74292429a186';   // public by design: it is served at /<key>.txt
 const ORG = {'@type': 'Organization', '@id': `${ORIGIN}/#organization`, name: 'NoGuru', legalName: 'NoGuru LLC', url: `${ORIGIN}/`,
   logo: `${ORIGIN}/pilot/assets/noguru-guide-original.png`, email: 'hello@noguru.io',
   sameAs: PROFILES.map(([, url]) => url),
   address: {'@type': 'PostalAddress', streetAddress: '940 E 3rd St Ste 203', addressLocality: 'Casper', addressRegion: 'WY', postalCode: '82601', addressCountry: 'US'}};
+// What is sold, in the words of the pricing page. On the pricing page and the home page.
+const serviceNode = (url) => ({'@type': 'Service', '@id': `${ORIGIN}/#service`, name: 'NoGuru', alternateName: 'Stepgrid, the NoGuru bot', serviceType: 'Automated crypto trading signals, run through Cornix', provider: {'@id': ORG['@id']}, url,
+  offers: {'@type': 'Offer', price: '49.00', priceCurrency: 'USD', description: 'Founding price per month after a 14-day free trial; the standard price is 99 USD a month.', url: `${ORIGIN}/${pathOf('pricing')}`}});
+// The picture a shared link shows: the name and the line, 1200 x 630 (made from tools/share-card.html).
+const SHARE = `<meta property="og:image" content="${ORIGIN}/pilot/assets/noguru-share-card.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="NoGuru. An automated crypto trading bot.">
+  <meta name="twitter:card" content="summary_large_image">`;
 function crumbTrail(page) {
   const trail = [['Home', '']];
   if (page.startsWith('academy-')) trail.push(['Academy', pathOf('academy')]);
@@ -274,8 +281,7 @@ function crumbTrail(page) {
 function structuredData(page, record) {
   const url = `${ORIGIN}/${pathOf(page)}`, {title, description} = metaFor(page), data = learningPages[page];
   const graph = [ORG, crumbTrail(page)];
-  if (page === 'pricing') graph.push({'@type': 'Service', name: 'NoGuru', serviceType: 'Automated crypto trading signals, run through Cornix', provider: {'@id': ORG['@id']}, url,
-    offers: {'@type': 'Offer', price: '49.00', priceCurrency: 'USD', description: 'Founding price per month after a 14-day free trial; the standard price is 99 USD a month.', url}});
+  if (page === 'pricing') graph.push(serviceNode(url));
   else if (page === 'faq' && data?.sections?.length) graph.push({'@type': 'FAQPage', mainEntity: data.sections.filter((s) => s.body?.length).map((s) => ({'@type': 'Question', name: s.title, acceptedAnswer: {'@type': 'Answer', text: s.body.join(' ')}}))});
   else if (page === 'record') graph.push({'@type': 'Dataset', name: 'NoGuru published trade record', description, url, creator: {'@id': ORG['@id']}, isAccessibleForFree: true,
     ...(record ? {temporalCoverage: `${record.rec.windowStart}/${record.rec.windowEnd}`, dateModified: BUILD_DAY} : {}),
@@ -296,9 +302,9 @@ function headTags({title, description, url, root, extraCss = '', ld}) {
   <link rel="canonical" href="${escAttr(url)}">
   <meta property="og:type" content="website"><meta property="og:site_name" content="NoGuru">
   <meta property="og:title" content="${escAttr(title)}"><meta property="og:description" content="${escAttr(description)}">
-  <meta property="og:url" content="${escAttr(url)}"><meta property="og:image" content="${ORIGIN}/pilot/assets/noguru-guide-original.png">
-  <meta name="twitter:card" content="summary">
+  <meta property="og:url" content="${escAttr(url)}">${SHARE}
   <link rel="icon" href="${root}experience/assets/companion-mark.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="${root}pilot/assets/noguru-touch-icon.png">
   <link rel="preload" href="${root}pilot/fonts/Manrope.woff" as="font" type="font/woff" crossorigin>
   <link rel="preload" href="${root}pilot/fonts/Fraunces.woff" as="font" type="font/woff" crossorigin>
   <link rel="stylesheet" href="${root}pilot/styles.css">
@@ -342,7 +348,7 @@ function frame(page, article, {extraCss = '', record = null} = {}) {
 <main id="main">
 ${article}
   <section class="read-cta" id="read-cta">
-    <img src="${root}pilot/assets/noguru-guide-attentive-original.png" alt="" width="120" height="120" loading="lazy">
+    <img src="${root}pilot/assets/noguru-guide-attentive-240.webp" alt="" width="120" height="120" loading="lazy">
     <div><h2>Rather see it than read about it?</h2><p>Fourteen days free, no card. It trades in your own exchange account.</p></div>
     <a class="button primary" href="${root}#start">Try it free for 14 days <span aria-hidden="true">→</span></a>
   </section>
@@ -498,9 +504,9 @@ function buildHome() {
   <link rel="canonical" href="${ORIGIN}/">
   <meta property="og:type" content="website"><meta property="og:site_name" content="NoGuru">
   <meta property="og:title" content="${escAttr(title)}"><meta property="og:description" content="${escAttr(description)}">
-  <meta property="og:url" content="${ORIGIN}/"><meta property="og:image" content="${ORIGIN}/pilot/assets/noguru-guide-original.png">
-  <meta name="twitter:card" content="summary">
-  ${jsonLd({'@context': 'https://schema.org', '@graph': [ORG, {'@type': 'WebSite', '@id': `${ORIGIN}/#website`, name: 'NoGuru', url: `${ORIGIN}/`, publisher: {'@id': ORG['@id']}}]})}
+  <meta property="og:url" content="${ORIGIN}/">${SHARE}
+  <link rel="apple-touch-icon" href="./pilot/assets/noguru-touch-icon.png">
+  ${jsonLd({'@context': 'https://schema.org', '@graph': [ORG, {'@type': 'WebSite', '@id': `${ORIGIN}/#website`, name: 'NoGuru', url: `${ORIGIN}/`, publisher: {'@id': ORG['@id']}}, serviceNode(`${ORIGIN}/`)]})}
   ${ANALYTICS ? `${ANALYTICS}\n  ` : ''}<!-- seo:end -->`;
   html = /<!-- seo:start[\s\S]*?<!-- seo:end -->/.test(html) ? html.replace(/<!-- seo:start[\s\S]*?<!-- seo:end -->/, seo) : html.replace(/(<title>[^<]*<\/title>)/, `$1\n  ${seo}`);
   // The home page's footer carries the same profile links as every other page.
@@ -555,6 +561,18 @@ write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>
 ${['', ...pages.map(pathOf)].map((p) => `  <url><loc>${ORIGIN}/${p}</loc>${today.has(p) ? `<lastmod>${BUILD_DAY}</lastmod>` : ''}</url>`).join('\n')}
 </urlset>
 `);
+// A plain-text guide to the site for AI assistants (llmstxt.org). No assistant is documented to rely on it; it costs nothing to offer.
+{
+  const line = (p) => { const {title, description} = metaFor(p); return `- [${title.replace(/ \| NoGuru$/, '')}](${ORIGIN}/${pathOf(p)}): ${description}`; };
+  const group = (name, list) => { const rows = list.filter((p) => pages.includes(p)).map(line); return rows.length ? `## ${name}\n\n${rows.join('\n')}\n` : ''; };
+  write('llms.txt', [`# NoGuru\n\n> Stepgrid, the NoGuru bot, is an automated crypto spot trading bot. It buys in steps as prices fall and sells above its average, in the customer's own exchange account, through Cornix. NoGuru never holds the customer's money or keys. Trading crypto can lose money.\n\nFigures on this site are read live from NoGuru's published record; quote them with their date.\n`,
+    group('The product', ['how-it-works', 'pricing', 'trial', 'faq', 'dca-bot-vs-grid-bot', 'exchanges', 'setup-guide']),
+    group('The record and the risks', ['record', 'methodology', 'risks', 'market-stress', 'examples']),
+    group('Learning', ['learn', 'academy', 'glossary', 'digest', 'library']),
+    group('The company', ['about', 'impressum', 'terms', 'privacy', 'disclaimer', 'support'])].filter(Boolean).join('\n'));
+}
+// IndexNow: the key file that proves a change notice comes from this site (sent by tools/indexnow.mjs after a release).
+if (PRODUCTION) write(`${INDEXNOW_KEY}.txt`, INDEXNOW_KEY);
 write('robots.txt', PRODUCTION ? fs.readFileSync(path.join(HERE, 'robots.production.txt'), 'utf8').replace(/\{ORIGIN\}/g, ORIGIN) : 'User-agent: *\nDisallow: /\n');
 
 if (process.env.NOGURU_MANIFEST) fs.writeFileSync(process.env.NOGURU_MANIFEST, JSON.stringify([...new Set(WRITTEN)].sort(), null, 1));
